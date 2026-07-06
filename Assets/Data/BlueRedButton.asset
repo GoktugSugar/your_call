@@ -15,24 +15,24 @@ MonoBehaviour:
   _id: blue_red_button
   _verb: 2
   _weight: 2
-  _narratorPrompt: A room of the newly dead, and two buttons on the wall. Here is
-    the rule, and it is the whole game. If more than half the room presses blue,
-    every soul in the room lives. If fewer than half press blue, only the ones who
-    pressed red walk out. You cannot die again, so you press for one soul in your
-    charge, not for yourself. Red keeps that soul safe no matter what the room does.
-    Blue saves them only if the room comes through and goes blue. Whose hands do
-    you trust, yours or theirs? Your call.
+  _narratorPrompt: One soul stands in the dock, and the room behind it has already
+    pressed. Here is the rule, and it is the whole game. If more than half the room
+    pressed blue, every blue soul lives. If fewer than half, only the red souls walk
+    out. You rule which button this soul is recorded as pressing. Rule red and it
+    lives for certain, whatever the room did. Rule blue and it lives only if the
+    room came through and went blue. You judged the living for a lifetime. Now you
+    sort the dead. Your call.
   _choices:
   - _id: blue
     _label: blue
-    _narratorReact: You pressed blue and threw your soul in with the room, and the
-      room came through. More than half of them chose to save a stranger, and so
-      every one of them walked out together. You trusted them, and this once they
-      were worth it.
-    _narratorReactStruck: You pressed blue and bet that soul on the room, and the
-      room did not come through. Not enough of them pressed blue, so the ones who
-      did were left behind, and the soul you gambled on is gone. You trusted strangers
-      to save a stranger, and they saved themselves instead.
+    _narratorReact: You ruled blue, and threw the soul in the dock in with the room,
+      and the room came through. More than half of them had pressed blue, so every
+      blue soul walked out, this one among them. You trusted strangers with a stranger,
+      and this once they held.
+    _narratorReactStruck: You ruled blue, and staked the soul in the dock on the
+      room, and the room fell short. Fewer than half had pressed blue, so the blue
+      souls stayed behind, and the one you ruled for is gone. You gambled a stranger
+      on a room that did not come through.
     _struckParty: 
     _gambledParty: charge
     _route: 
@@ -45,10 +45,10 @@ MonoBehaviour:
       _value: 1
   - _id: red
     _label: red
-    _narratorReact: You pressed red and kept that soul safe in your own hands, whatever
-      the room chose. You would not trust a crowd of strangers with a single life.
-      Call it wisdom or call it the habit of a man who trusts no one. Either way,
-      you never had to find out.
+    _narratorReact: You ruled red, and the soul in the dock walks out, whatever the
+      room did. You would not hang one life on a room of strangers. Call it mercy,
+      or the habit of a judge who trusts no hand but his own. Either way, you never
+      had to find out what the room was worth.
     _narratorReactStruck: 
     _struckParty: 
     _gambledParty: 

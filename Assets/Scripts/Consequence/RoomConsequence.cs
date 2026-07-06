@@ -51,7 +51,7 @@ namespace YourCall
 
             if (_buttons != null)
             {
-                _buttons.Build(dilemma);
+                _buttons.Build();
                 _buttons.Chosen += RaiseChosen;
                 _buttons.Arm(false);
             }

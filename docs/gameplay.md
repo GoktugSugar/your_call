@@ -9,6 +9,8 @@
 
 **No fail state.** The player can't lose or die. Choices only steer which ending is reached.
 
+**The judge never stakes his own life.** Because the protagonist is already dead, no dilemma puts his own survival on the line. He always rules on the fate of other souls. Any dilemma whose original form is about the chooser's own skin (like the viral blue/red button) is reframed so he decides for a soul in the dock, never for himself. Copy that says the judge himself lives or dies is a framing bug.
+
 ## The four verbs (launch scope)
 - **Binary choice** — e.g. the lever (kill 1 vs. 5). Outcome from the player's choice alone.
 - **Allocation** — divide or ration a limited good among parties.
