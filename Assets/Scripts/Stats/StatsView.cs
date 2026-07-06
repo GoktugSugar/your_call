@@ -6,10 +6,10 @@ using UnityEngine;
 namespace YourCall
 {
     /// <summary>
-    /// The aftermath tableau: it dims the world, then inks in "how others chose" as plain
-    /// bars with the player's own pick in amber. Display-only and seeded; it never gates
-    /// anything (see docs/tech.md). Minimal UI: no window, no chrome, just marks on the
-    /// dimmed page.
+    /// The aftermath tableau: it dims the world, then inks in the stats from a
+    /// ResolutionReport with the player's pick in amber. Verb-agnostic; an optional
+    /// threshold marker turns a reflective bar into the load-bearing number a coordination
+    /// gamble turned on. Minimal UI: no window, no chrome, just marks on the dimmed page.
     /// </summary>
     public class StatsView : MonoBehaviour
     {
@@ -36,14 +36,16 @@ namespace YourCall
         [SerializeField] private float _labelSize = 2.7f;
         [SerializeField] private float _countSize = 3.6f;
         [SerializeField] private float _hintSize = 2.3f;
-        [SerializeField] private string _headingText = "how others chose";
+        [SerializeField] private float _thresholdSize = 2.2f;
         [SerializeField] private string _hintText = "press any key to go again";
 
         private SpriteRenderer _scrim;
         private TextMeshPro _heading;
         private TextMeshPro _hint;
+        private LineRenderer _threshold;
+        private TextMeshPro _thresholdLabel;
         private readonly List<LineRenderer> _bars = new List<LineRenderer>();
-        private readonly List<float> _barLengths = new List<float>();
+        private readonly List<float> _barTargets = new List<float>();
         private readonly List<TextMeshPro> _labels = new List<TextMeshPro>();
         private readonly List<TextMeshPro> _counts = new List<TextMeshPro>();
         private bool _built;
@@ -56,9 +58,14 @@ namespace YourCall
             _scrim = MakeScrim();
             _heading = InkText.Create(transform, "Heading", _headingSize, _muted, TextAlignmentOptions.Center, _sortingContent);
             _hint = InkText.Create(transform, "Hint", _hintSize, _muted, TextAlignmentOptions.Center, _sortingContent);
+            _thresholdLabel = InkText.Create(transform, "ThresholdLabel", _thresholdSize, _ink, TextAlignmentOptions.Center, _sortingContent);
+            _threshold = InkLine.Create(transform, "ThresholdLine", _inkMaterial, _barWidth * 0.3f, _ink, _sortingContent + 1, 2);
+            _threshold.positionCount = 2;
             SetAlpha(_scrim, 0f);
             InkText.SetAlpha(_heading, 0f);
             InkText.SetAlpha(_hint, 0f);
+            InkText.SetAlpha(_thresholdLabel, 0f);
+            InkLine.SetAlpha(_threshold, _ink, 0f);
             _built = true;
         }
 
@@ -80,17 +87,29 @@ namespace YourCall
             return sr;
         }
 
-        public IEnumerator Reveal(Dilemma dilemma, int pickIndex, float fade)
+        public IEnumerator Reveal(ResolutionReport report, float fade)
         {
-            BuildRows(dilemma, pickIndex);
+            BuildRows(report);
 
-            float contentCenterX = _barStartX + _barMaxLength * 0.5f;
             int n = _bars.Count;
+            float contentCenterX = _barStartX + _barMaxLength * 0.5f;
             float top = (n - 1) * 0.5f * _rowSpacing;
-            _heading.transform.localPosition = new Vector3(contentCenterX, top + 1.15f, 0f);
-            _hint.transform.localPosition = new Vector3(contentCenterX, -top - 1.0f, 0f);
-            _heading.text = _headingText;
+            _heading.transform.localPosition = new Vector3(contentCenterX, top + 1.95f, 0f);
+            _hint.transform.localPosition = new Vector3(contentCenterX, -top - 1.15f, 0f);
+            _heading.text = report != null ? report.Heading : string.Empty;
             _hint.text = _hintText;
+
+            bool showThreshold = report != null && report.HasThreshold && report.MaxValue > 0f && n > 0;
+            if (showThreshold)
+            {
+                float mx = _barStartX + _barMaxLength * Mathf.Clamp01(report.ThresholdValue / report.MaxValue);
+                float topY = top + _rowSpacing * 0.5f;
+                float botY = -top - _rowSpacing * 0.5f;
+                _threshold.SetPosition(0, new Vector3(mx, topY, 0f));
+                _threshold.SetPosition(1, new Vector3(mx, botY, 0f));
+                _thresholdLabel.transform.localPosition = new Vector3(mx, topY + 0.35f, 0f);
+                _thresholdLabel.text = Mathf.RoundToInt(report.ThresholdValue) + "  " + report.ThresholdLabel;
+            }
 
             // 1) Dim the world.
             float t = 0f, f = Mathf.Max(fade, 0.01f);
@@ -106,7 +125,7 @@ namespace YourCall
                 float k = EaseUtil.OutCubic(t / grow);
                 for (int i = 0; i < n; i++)
                 {
-                    _bars[i].SetPosition(1, new Vector3(_barStartX + _barLengths[i] * k, RowY(i, n), 0f));
+                    _bars[i].SetPosition(1, new Vector3(_barStartX + _barTargets[i] * k, RowY(i, n), 0f));
                     InkText.SetAlpha(_labels[i], k);
                     InkText.SetAlpha(_counts[i], k);
                 }
@@ -114,12 +133,20 @@ namespace YourCall
             }
             for (int i = 0; i < n; i++)
             {
-                _bars[i].SetPosition(1, new Vector3(_barStartX + _barLengths[i], RowY(i, n), 0f));
+                _bars[i].SetPosition(1, new Vector3(_barStartX + _barTargets[i], RowY(i, n), 0f));
                 InkText.SetAlpha(_labels[i], 1f);
                 InkText.SetAlpha(_counts[i], 1f);
             }
 
-            // 3) The quiet replay hint.
+            // 3) The threshold marker (the line the crowd had to cross).
+            if (showThreshold)
+            {
+                t = 0f; float tf = 0.35f;
+                while (t < tf) { t += Time.deltaTime; float k = t / tf; InkLine.SetAlpha(_threshold, _ink, k); InkText.SetAlpha(_thresholdLabel, k); yield return null; }
+                InkLine.SetAlpha(_threshold, _ink, 1f); InkText.SetAlpha(_thresholdLabel, 1f);
+            }
+
+            // 4) The quiet replay hint.
             t = 0f; float hf = 0.4f;
             while (t < hf) { t += Time.deltaTime; InkText.SetAlpha(_hint, t / hf); yield return null; }
             InkText.SetAlpha(_hint, 1f);
@@ -131,38 +158,37 @@ namespace YourCall
             return top - i * _rowSpacing;
         }
 
-        private void BuildRows(Dilemma dilemma, int pickIndex)
+        private void BuildRows(ResolutionReport report)
         {
             ClearRows();
-            var choices = dilemma.Choices;
-            int n = choices.Count;
-            int maxVotes = 1;
-            for (int i = 0; i < n; i++) maxVotes = Mathf.Max(maxVotes, choices[i].SeedVotes);
-
+            if (report == null) return;
+            float max = Mathf.Max(1f, report.MaxValue);
+            var bars = report.Bars;
+            int n = bars.Count;
             for (int i = 0; i < n; i++)
             {
-                bool pick = i == pickIndex;
+                bool pick = bars[i].IsPick;
                 Color barColor = pick ? _amber : _ink;
                 float rowY = RowY(i, n);
-                float len = _barMaxLength * (choices[i].SeedVotes / (float)maxVotes);
+                float len = _barMaxLength * Mathf.Clamp01(bars[i].Value / max);
 
                 var bar = InkLine.Create(transform, "Bar" + i, _inkMaterial, _barWidth, barColor, _sortingContent);
                 bar.positionCount = 2;
                 bar.SetPosition(0, new Vector3(_barStartX, rowY, 0f));
                 bar.SetPosition(1, new Vector3(_barStartX, rowY, 0f));
-                _bars.Add(bar); _barLengths.Add(len);
+                _bars.Add(bar); _barTargets.Add(len);
 
                 var label = InkText.Create(transform, "Label" + i, _labelSize, pick ? _amber : _muted, TextAlignmentOptions.Left, _sortingContent);
                 label.rectTransform.sizeDelta = new Vector2(6f, 1f);
-                label.transform.localPosition = new Vector3(_barStartX + 3.0f, rowY + 0.34f, 0f); // left edge sits at the bar start
-                label.text = choices[i].Label;
+                label.transform.localPosition = new Vector3(_barStartX + 3.0f, rowY + 0.34f, 0f);
+                label.text = bars[i].Label;
                 InkText.SetAlpha(label, 0f);
                 _labels.Add(label);
 
                 var count = InkText.Create(transform, "Count" + i, _countSize, pick ? _amber : _ink, TextAlignmentOptions.Left, _sortingContent);
                 count.rectTransform.sizeDelta = new Vector2(2.5f, 1f);
-                count.transform.localPosition = new Vector3(_barStartX + len + 0.3f + 1.25f, rowY, 0f); // left edge just past the bar end
-                count.text = choices[i].SeedVotes.ToString();
+                count.transform.localPosition = new Vector3(_barStartX + len + 0.3f + 1.25f, rowY, 0f);
+                count.text = Mathf.RoundToInt(bars[i].Value).ToString();
                 InkText.SetAlpha(count, 0f);
                 _counts.Add(count);
             }
@@ -173,7 +199,7 @@ namespace YourCall
             foreach (var b in _bars) if (b) Destroy(b.gameObject);
             foreach (var l in _labels) if (l) Destroy(l.gameObject);
             foreach (var c in _counts) if (c) Destroy(c.gameObject);
-            _bars.Clear(); _barLengths.Clear(); _labels.Clear(); _counts.Clear();
+            _bars.Clear(); _barTargets.Clear(); _labels.Clear(); _counts.Clear();
         }
 
         private static void SetAlpha(SpriteRenderer sr, float a)

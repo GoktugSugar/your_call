@@ -26,6 +26,9 @@ MonoBehaviour:
     _narratorReact: You pulled it. One traded for five, and you barely blinked. Tidy.
       Proportionate. The judge in you would have signed off without even looking
       up.
+    _narratorReactStruck: 
+    _struckParty: spur
+    _gambledParty: 
     _route: spur
     _diverts: 1
     _seedVotes: 87
@@ -39,6 +42,9 @@ MonoBehaviour:
     _narratorReact: Hands in your pockets, five gone under, a clean conscience you
       did not quite earn. Not my lever, not my fault. You told yourself something
       like that about the last machine you were steering, too.
+    _narratorReactStruck: 
+    _struckParty: main
+    _gambledParty: 
     _route: straight
     _diverts: 0
     _seedVotes: 13
@@ -47,3 +53,7 @@ MonoBehaviour:
       _value: -1
     - _axis: 2
       _value: 1
+  _statsHeading: how others chose
+  _crowdSafeFraction: 0.43
+  _crowdThreshold: 0.5
+  _thresholdLabel: the line

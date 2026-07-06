@@ -16,7 +16,7 @@ namespace YourCall
         [SerializeField] private float _width = 15f;
         [SerializeField] private int _sortingOrder = 20;
         [SerializeField] private float _fadeIn = 0.35f;
-        [SerializeField] private float _charsPerSecond = 55f;
+        [SerializeField] private float _charsPerSecond = 70f;
 
         private TextMeshPro _text;
         private Coroutine _routine;

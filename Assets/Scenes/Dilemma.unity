@@ -236,7 +236,7 @@ MonoBehaviour:
   _labelSize: 2.7
   _countSize: 3.6
   _hintSize: 2.3
-  _headingText: how others chose
+  _thresholdSize: 2.2
   _hintText: press any key to go again
 --- !u!4 &210867220
 Transform:
@@ -592,21 +592,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.DilemmaStage
   _dilemma: {fileID: 11400000, guid: 44f2dc0b870fc2a4c8ac11897575db1d, type: 2}
   _camera: {fileID: 1321624764}
-  _track: {fileID: 564373475}
-  _trolley: {fileID: 1714387907}
-  _lever: {fileID: 148502844}
+  _presenter: {fileID: 1814560583}
   _narrator: {fileID: 933681128}
-  _choices: {fileID: 816950998}
   _stats: {fileID: 210867219}
-  _figurePrefab: {fileID: 1666028741476117448, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
   _profile: {fileID: 301796485}
-  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _showTextFallback: 1
+  _choices: {fileID: 816950998}
   _presentHold: 0.7
   _postChoiceBeat: 0.45
-  _lightDuration: 1.7
-  _mediumDuration: 2.5
-  _heavyDuration: 3.6
-  _foldDuration: 0.6
   _preStatsBeat: 0.9
   _statsFade: 0.5
   _endInputDelay: 0.5
@@ -693,6 +686,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e6e7e58563b84140831d6f8ff6e325b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.Trolley
+--- !u!1 &1814560582
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1814560584}
+  - component: {fileID: 1814560583}
+  m_Layer: 0
+  m_Name: TrolleyConsequence
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1814560583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814560582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a15b3af1720a3849968c9d47a14ee19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.TrolleyConsequence
+  _track: {fileID: 564373475}
+  _trolley: {fileID: 1714387907}
+  _lever: {fileID: 148502844}
+  _figurePrefab: {fileID: 1666028741476117448, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _lightDuration: 1.7
+  _mediumDuration: 2.5
+  _heavyDuration: 3.6
+  _foldDuration: 0.6
+  _foldSettle: 0.4
+--- !u!4 &1814560584
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814560582}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -706,3 +753,4 @@ SceneRoots:
   - {fileID: 210867220}
   - {fileID: 301796486}
   - {fileID: 1453995853}
+  - {fileID: 1814560584}

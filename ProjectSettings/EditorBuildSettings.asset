@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Dilemma.unity
     guid: eabbc95458ac8db48bd08e6612b91784
+  - enabled: 1
+    path: Assets/Scenes/Gamble.unity
+    guid: 72ac124c12394bd4cb7e671c8610d50d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
