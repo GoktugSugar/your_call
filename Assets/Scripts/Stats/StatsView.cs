@@ -153,6 +153,42 @@ namespace YourCall
             InkText.SetAlpha(_hint, 1f);
         }
 
+        /// <summary>
+        /// Lift the whole tableau back off the page and clear it, so a chained sequence can
+        /// carry on to the next beat over a clean void. Standalone scenes reload instead and
+        /// never call this.
+        /// </summary>
+        public IEnumerator Hide(float fade)
+        {
+            float t = 0f, f = Mathf.Max(fade, 0.01f);
+            while (t < f)
+            {
+                t += Time.deltaTime;
+                float k = 1f - EaseUtil.OutCubic(t / f);
+                SetAlpha(_scrim, _scrimAlpha * k);
+                InkText.SetAlpha(_heading, k);
+                InkText.SetAlpha(_hint, k);
+                InkText.SetAlpha(_thresholdLabel, k);
+                InkLine.SetAlpha(_threshold, _ink, k);
+                for (int i = 0; i < _bars.Count; i++) FadeLine(_bars[i], k);
+                for (int i = 0; i < _labels.Count; i++) InkText.SetAlpha(_labels[i], k);
+                for (int i = 0; i < _counts.Count; i++) InkText.SetAlpha(_counts[i], k);
+                yield return null;
+            }
+            SetAlpha(_scrim, 0f);
+            InkText.SetAlpha(_heading, 0f);
+            InkText.SetAlpha(_hint, 0f);
+            InkText.SetAlpha(_thresholdLabel, 0f);
+            InkLine.SetAlpha(_threshold, _ink, 0f);
+            ClearRows();
+        }
+
+        private static void FadeLine(LineRenderer lr, float k)
+        {
+            if (lr == null) return;
+            var c = lr.startColor; c.a = k; InkLine.SetColor(lr, c);
+        }
+
         private float RowY(int i, int n)
         {
             float top = (n - 1) * 0.5f * _rowSpacing;

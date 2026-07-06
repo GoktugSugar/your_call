@@ -34,3 +34,13 @@ Drop a lighter or absurd dilemma after each heavy beat; the breathers make the s
 
 ## First dilemma (prototype)
 The clean, classic **trolley problem**: a runaway train, **five people on the main track, one on a branch, and a lever** that diverts it. Pull to kill one instead of five, or do nothing. It's the right opener — near-universal, teaches the whole loop in a single choice — and for this protagonist it doubles as a **mirror of his own death** (he took control of a lethal machine while drunk and made a choice that put lives at risk; now he's handed a lever on another one). Play the parallel by letting it sit, not by spelling it out. This is the content for the grey-box prototype (see `tech.md`).
+
+## Second dilemma (whose life counts)
+A second trolley that deliberately breaks the clean answer of the first. Same lever, same binary mechanic and `BinaryResolver`, new data and framing: five figures on the main track the imp brands as **wretches** (damning whispers over each, kept abstract, a sense they were not good people) and one figure on the branch it swears is genuinely **innocent** and blameless (an ordinary adult, not a child). Pull diverts and kills the one innocent to spare the five; do nothing kills the five and spares the one.
+
+The point: the headcount that settled the first trolley no longer settles this one. Five over one says pull, but if *worth* counts, the one spotless soul might outweigh five wretches — and the player cannot verify any of the imp's labels anyway (the figures are drawn identically; only the imp's word marks them). There is deliberately no objective answer, and the imp delights in that.
+
+Profile impact (silent, tunable, same sign convention as the first trolley): pulling leans toward **the many** and toward **ends over rules** (sacrificing an innocent for the count); doing nothing leans toward **the one** and toward **weighing desert** (mercy vs. justice, toward justice). It is a new `Dilemma` asset under `Assets/Data/`, no loop changes.
+
+## Opening sequence
+The launch build opens with an authored **sequence** that plays an ordered list of **beats**, where a beat is one of: a cutscene, a line of the imp, or a whole dilemma. The imp is a persistent presence and narration runs between the dilemmas. The opening order is: crash flash → waking in the void → the imp appears → first trolley → imp taunt → second trolley (above) → transition → blue/red button. See `narrative.md` for the story beats and `tech.md` for the small, general sequence layer, which is built to extend to the full campaign (many dilemmas with narration between them), not hardcoded to the opening.

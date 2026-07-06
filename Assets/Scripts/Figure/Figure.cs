@@ -36,6 +36,10 @@ namespace YourCall
         [SerializeField] private float _squash = 0.82f;
         [SerializeField] private float _anticipation = 6f;
 
+        [Header("Appearance")]
+        [Tooltip("Build fully faded out, so it can ink in later (the player waking in the void).")]
+        [SerializeField] private bool _startHidden = false;
+
         private LineRenderer _lr;
         private LineBoil _boilComp;
         private Color _baseColor;
@@ -56,7 +60,17 @@ namespace YourCall
                 _boilComp = _lr.gameObject.AddComponent<LineBoil>();
                 _boilComp.Capture();
             }
+            if (_startHidden) InkLine.SetAlpha(_lr, _baseColor, 0f);
             _built = true;
+        }
+
+        /// <summary>Set the ink alpha directly, so the figure can ink in or dissolve without
+        /// folding (the player waking, or quietly stepping out of a scene). Strike still owns
+        /// the fold-and-fade on impact.</summary>
+        public void SetInkAlpha(float alpha)
+        {
+            if (!_built) Build();
+            if (_lr != null) InkLine.SetAlpha(_lr, _baseColor, Mathf.Clamp01(alpha));
         }
 
         private List<Vector3> BuildStroke()

@@ -24,6 +24,13 @@ namespace YourCall
         /// <summary>True while the line is still inking in, so the flow can wait for it.</summary>
         public bool IsShowing { get; private set; }
 
+        /// <summary>
+        /// Raised true when a line starts inking on and false when it finishes or clears, so
+        /// a speaker (the imp) can stir while the words appear. The narrator stays generic;
+        /// whoever embodies the voice listens.
+        /// </summary>
+        public event System.Action<bool> Speaking;
+
         private void Awake()
         {
             _text = InkText.Create(transform, "Line", _fontSize, _color, TextAlignmentOptions.Top, _sortingOrder);
@@ -35,6 +42,7 @@ namespace YourCall
         {
             if (_routine != null) StopCoroutine(_routine);
             IsShowing = true;
+            Speaking?.Invoke(true);
             _routine = StartCoroutine(Ink(line));
         }
 
@@ -42,6 +50,7 @@ namespace YourCall
         {
             if (_routine != null) StopCoroutine(_routine);
             IsShowing = false;
+            Speaking?.Invoke(false);
             if (_text != null) { _text.text = string.Empty; InkText.SetAlpha(_text, 0f); }
         }
 
@@ -68,6 +77,7 @@ namespace YourCall
             _text.maxVisibleCharacters = total;
             InkText.SetAlpha(_text, 1f);
             IsShowing = false;
+            Speaking?.Invoke(false);
         }
     }
 }
