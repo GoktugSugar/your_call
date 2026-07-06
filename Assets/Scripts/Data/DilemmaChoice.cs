@@ -24,7 +24,7 @@ namespace YourCall
         [Header("Resolution (read by the verb resolver)")]
         [Tooltip("A party this choice always strikes, for example \"main\" or \"spur\". Empty means none.")]
         [SerializeField] private string _struckParty;
-        [Tooltip("A party struck only if a coordination gamble fails, for example \"crowd\". Empty means none.")]
+        [Tooltip("A party struck only if a coordination gamble fails, for example \"charge\". Empty means none.")]
         [SerializeField] private string _gambledParty;
 
         [Header("Trolley presentation")]

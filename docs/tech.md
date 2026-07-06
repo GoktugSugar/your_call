@@ -18,7 +18,7 @@ Shared state (the moral profile) lives in a `Profile` service: a persistent sing
 ## Verb architecture (resolvers and presenters)
 Each dilemma has a `verb`, and each verb maps to two seams so the loop stays generic as verbs accumulate:
 - A `VerbResolver` (pure logic, `Scripts/Resolution/`): the player's choice plus the dilemma data (and, for coordination, the seeded crowd) produce a `DilemmaOutcome` (which party ids fold, the narrator reaction to show, and a `ResolutionReport` for the stats). `BinaryResolver` (the trolley) and `CoordinationGambleResolver` are built; `AllocationResolver` and `SelfSacrificeResolver` are stubbed seams. `VerbResolvers.For(verb)` is the only place the verb-to-resolver mapping lives.
-- A `ConsequencePresenter` (a MonoBehaviour, `Scripts/Consequence/`): owns the verb's scene apparatus (figures, diegetic input, the animated consequence) and raises `Chosen` for a diegetic pick. `TrolleyConsequence` (track, trolley, lever; the struck group folds on impact) and `CrowdConsequence` (a crowd and the two ink marks; the crowd folds as one when the gamble fails).
+- A `ConsequencePresenter` (a MonoBehaviour, `Scripts/Consequence/`): owns the verb's scene apparatus (figures, diegetic input, the animated consequence) and raises `Chosen` for a diegetic pick. `TrolleyConsequence` (track, trolley, lever; the struck group folds on impact) and `RoomConsequence` (a seeded room and one distinguished charge, plus the two ink buttons; only the charge folds when the gamble fails, while the room stays standing).
 
 `DilemmaStage` holds a resolver (looked up by verb) and a `ConsequencePresenter` reference (assigned per scene) and never branches on verb: it presents, arms the presenter's diegetic input plus an optional text fallback, resolves, plays the consequence, reveals the stats from the report, and records the profile silently. Adding a dilemma is a new asset; a new verb is a new resolver, a new presenter, and one line in `VerbResolvers`, never edits to the loop.
 
@@ -36,11 +36,11 @@ Composed from small prefabs, one component (MonoBehaviour) each. No monolithic d
 - `StatsView` (`StatsView.cs`): display-only bars over a dimmed world, the player's pick in amber (minimal UI).
 - `Profile` (`Profile.cs`): the persistent profile singleton (`DontDestroyOnLoad`).
 - `Dilemma.cs`, `DilemmaChoice.cs` (plus the enums `MoralAxis`, `DilemmaWeight`, `DilemmaVerb` and the serializable `AxisImpact`): the data (ScriptableObject plus serializable classes).
-- `OptionMarks` (`Choices/OptionMarks.cs`): the coordination gamble's two ink marks, told apart by form, pattern, and label; amber on hover and selection only. Raises `Chosen`.
+- `ButtonChoice` (`Choices/ButtonChoice.cs`): the blue/red button's two ink buttons, told apart by label alone (the narrator names them); amber on hover and selection only. Raises `Chosen`.
 - `Resolution/` (`VerbResolver` plus `BinaryResolver`, `CoordinationGambleResolver`, the `Allocation`/`SelfSacrifice` stubs, `VerbResolvers`; and the data `DilemmaContext`, `DilemmaOutcome`, `ResolutionReport`, `StatBar`): the per-verb outcome logic and the stats report.
-- `Consequence/` (`ConsequencePresenter` plus `TrolleyConsequence`, `CrowdConsequence`): the per-verb scene apparatus and animated consequence.
+- `Consequence/` (`ConsequencePresenter` plus `TrolleyConsequence`, `RoomConsequence`): the per-verb scene apparatus and animated consequence.
 - `Common/` helpers, one job each: `InkLine` (builds the shared ink strokes), `LineBoil` (the boil), `EaseUtil` (easing), `PointerInput` (new Input System), `PuffCue` (the impact cue), `InkText` (world TMP labels), `Palette` (the single black / paper / amber source).
-- `Assets/Data/Trolley.asset` (Binary) and `Assets/Data/Gamble.asset` (CoordinationGamble): the two dilemmas' data. Each verb has its own scene: `Assets/Scenes/Dilemma.unity` (trolley) and `Assets/Scenes/Gamble.unity`, both in build settings.
+- `Assets/Data/Trolley.asset` (Binary) and `Assets/Data/BlueRedButton.asset` (CoordinationGamble): the two dilemmas' data. Each verb has its own scene: `Assets/Scenes/Dilemma.unity` (trolley) and `Assets/Scenes/BlueRedButton.unity`, both in build settings.
 
 Folders under `Assets/`: `Scripts/` (grouped by role: `Scripts/Dilemma/`, `Scripts/Figure/`, `Scripts/Track/`, `Scripts/Trolley/`, `Scripts/Lever/`, `Scripts/Narrator/`, `Scripts/Choices/`, `Scripts/Stats/`, `Scripts/Profile/`, `Scripts/Data/`, `Scripts/Resolution/`, `Scripts/Consequence/`, `Scripts/Common/`), `Prefabs/`, `Scenes/`, `Data/` (ScriptableObjects), `Art/` (the shared ink material), `Settings/`. Commit `.meta` files. One class per file; keep scripts small and single-purpose.
 
