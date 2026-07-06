@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace YourCall
 {
@@ -24,9 +25,10 @@ namespace YourCall
         [SerializeField] private string _statsHeading = "how others chose";
 
         [Header("Coordination gamble (ignored by other verbs)")]
-        [Tooltip("Seeded fraction of the crowd that holds the line (chooses safe).")]
-        [SerializeField, Range(0f, 1f)] private float _crowdSafeFraction = 0.43f;
-        [Tooltip("The fraction the crowd must reach for the gamble to spare them.")]
+        [Tooltip("Seeded fraction of the room that pressed blue.")]
+        [FormerlySerializedAs("_crowdSafeFraction")]
+        [SerializeField, Range(0f, 1f)] private float _roomBlueFraction = 0.43f;
+        [Tooltip("The blue fraction the room must reach for the blue gamble to spare the charge.")]
         [SerializeField, Range(0f, 1f)] private float _crowdThreshold = 0.5f;
         [Tooltip("Label for the threshold marker on the stats screen.")]
         [SerializeField] private string _thresholdLabel = "the line";
@@ -37,7 +39,7 @@ namespace YourCall
         public string NarratorPrompt => _narratorPrompt;
         public IReadOnlyList<DilemmaChoice> Choices => _choices;
         public string StatsHeading => _statsHeading;
-        public float CrowdSafeFraction => _crowdSafeFraction;
+        public float RoomBlueFraction => _roomBlueFraction;
         public float CrowdThreshold => _crowdThreshold;
         public string ThresholdLabel => _thresholdLabel;
     }

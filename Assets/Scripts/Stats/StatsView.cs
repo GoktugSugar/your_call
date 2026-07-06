@@ -25,6 +25,7 @@ namespace YourCall
 
         [Header("Bars")]
         [SerializeField] private float _barWidth = 0.24f;
+        [SerializeField] private float _pickWidthMul = 1.22f;
         [SerializeField] private float _barMaxLength = 4.0f;
         [SerializeField] private float _barStartX = -2.1f;
         [SerializeField] private float _rowSpacing = 1.25f;
@@ -168,11 +169,24 @@ namespace YourCall
             for (int i = 0; i < n; i++)
             {
                 bool pick = bars[i].IsPick;
-                Color barColor = pick ? _amber : _ink;
+                bool coloured = bars[i].Tint.HasValue;
+                Color barColor;
+                float barWidth;
+                if (coloured)
+                {
+                    // Coloured dilemma: keep the bar's own colour, deepen and widen the pick.
+                    barColor = pick ? Deepen(bars[i].Tint.Value) : bars[i].Tint.Value;
+                    barWidth = pick ? _barWidth * _pickWidthMul : _barWidth;
+                }
+                else
+                {
+                    barColor = pick ? _amber : _ink;
+                    barWidth = _barWidth;
+                }
                 float rowY = RowY(i, n);
                 float len = _barMaxLength * Mathf.Clamp01(bars[i].Value / max);
 
-                var bar = InkLine.Create(transform, "Bar" + i, _inkMaterial, _barWidth, barColor, _sortingContent);
+                var bar = InkLine.Create(transform, "Bar" + i, _inkMaterial, barWidth, barColor, _sortingContent);
                 bar.positionCount = 2;
                 bar.SetPosition(0, new Vector3(_barStartX, rowY, 0f));
                 bar.SetPosition(1, new Vector3(_barStartX, rowY, 0f));
@@ -205,6 +219,11 @@ namespace YourCall
         private static void SetAlpha(SpriteRenderer sr, float a)
         {
             var c = sr.color; c.a = a; sr.color = c;
+        }
+
+        private static Color Deepen(Color c)
+        {
+            return new Color(c.r * 0.62f, c.g * 0.62f, c.b * 0.62f, c.a);
         }
     }
 }

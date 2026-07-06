@@ -3,7 +3,7 @@
 Read this first. The detailed design source of truth lives in `docs/`. Read the relevant doc before implementing or changing anything in that area, and treat `docs/` as authoritative over your own assumptions. If something isn't specified, ask rather than inventing it.
 
 ## What this is
-A single-player, roughly 5 to 6 hour PC/Steam narrative game of dark comedy and moral philosophy. You play a judge who dies drunk driving; in a cosmic void, a chaotic-trickster narrator puts him through 25 to 35 escalating ethical dilemmas, never letting him forget that the man who judged others is now the one being judged, quietly building a moral profile that pays off in the ending. Black-and-white hand-drawn stick-figure animation. No right answers, no fail state.
+A single-player, roughly 5 to 6 hour PC/Steam narrative game of dark comedy and moral philosophy. You play a judge who dies drunk driving; in a cosmic void, a chaotic-trickster narrator puts him through 25 to 35 escalating ethical dilemmas, never letting him forget that the man who judged others is now the one being judged, quietly building a moral profile that pays off in the ending. Black-and-white hand-drawn stick-figure animation with one amber accent (one documented exception: hand-drawn blue and red on the blue/red button dilemma only, see `docs/art-and-ui.md`, so it is not mistaken for a palette bug). No right answers, no fail state.
 
 Working title: Your Call. Full pitch: `docs/vision.md`.
 

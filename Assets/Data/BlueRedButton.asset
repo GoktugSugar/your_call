@@ -16,34 +16,23 @@ MonoBehaviour:
   _verb: 2
   _weight: 2
   _narratorPrompt: A room of the newly dead, and two buttons on the wall. Here is
-    the rule, and it is the whole game. Press blue and you live. Press red and you
-    live only if more than half the room presses blue. You cannot die again, so you
-    press for one soul in your charge, not for yourself. Blue keeps that soul safe
-    no matter what the room does. Red bets that soul on the room. Whose hands do
+    the rule, and it is the whole game. If more than half the room presses blue,
+    every soul in the room lives. If fewer than half press blue, only the ones who
+    pressed red walk out. You cannot die again, so you press for one soul in your
+    charge, not for yourself. Red keeps that soul safe no matter what the room does.
+    Blue saves them only if the room comes through and goes blue. Whose hands do
     you trust, yours or theirs? Your call.
   _choices:
   - _id: blue
     _label: blue
-    _narratorReact: You pressed blue and kept your soul in your own hands. You would
-      not gamble one life on a room of strangers. Look at what they chose, and decide
-      whether that was wisdom or only habit.
-    _narratorReactStruck: 
-    _struckParty: 
-    _gambledParty: 
-    _route: 
-    _diverts: 0
-    _seedVotes: 0
-    _profileImpact:
-    - _axis: 3
-      _value: -1
-  - _id: red
-    _label: red
-    _narratorReact: You pressed red and put your soul in the room's hands, and the
-      room held. More than half of them chose blue for a stranger. You trusted them,
-      and this once they earned it.
-    _narratorReactStruck: You pressed red and bet your soul on the room. They needed
-      more than half in blue, and they came up short. The rest pressed red, exactly
-      as you did, and doomed the one soul you were meant to protect.
+    _narratorReact: You pressed blue and threw your soul in with the room, and the
+      room came through. More than half of them chose to save a stranger, and so
+      every one of them walked out together. You trusted them, and this once they
+      were worth it.
+    _narratorReactStruck: You pressed blue and bet that soul on the room, and the
+      room did not come through. Not enough of them pressed blue, so the ones who
+      did were left behind, and the soul you gambled on is gone. You trusted strangers
+      to save a stranger, and they saved themselves instead.
     _struckParty: 
     _gambledParty: charge
     _route: 
@@ -54,7 +43,22 @@ MonoBehaviour:
       _value: 1
     - _axis: 0
       _value: 1
+  - _id: red
+    _label: red
+    _narratorReact: You pressed red and kept that soul safe in your own hands, whatever
+      the room chose. You would not trust a crowd of strangers with a single life.
+      Call it wisdom or call it the habit of a man who trusts no one. Either way,
+      you never had to find out.
+    _narratorReactStruck: 
+    _struckParty: 
+    _gambledParty: 
+    _route: 
+    _diverts: 0
+    _seedVotes: 0
+    _profileImpact:
+    - _axis: 3
+      _value: -1
   _statsHeading: how the room voted
-  _crowdSafeFraction: 0.43
+  _roomBlueFraction: 0.43
   _crowdThreshold: 0.5
   _thresholdLabel: half

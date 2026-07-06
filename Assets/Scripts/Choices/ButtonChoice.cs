@@ -9,19 +9,23 @@ using UnityEngine.InputSystem;
 namespace YourCall
 {
     /// <summary>
-    /// Two clean ink buttons, told apart by label alone (never by colour, since the palette
-    /// is one amber accent). The narrator names them the blue and the red button, so the
-    /// reference is unmistakable while nothing on screen is blue or red. Amber appears only
-    /// on hover and selection. Picked by click or number key. Raises <see cref="Chosen"/>.
+    /// The blue/red button's two buttons: a black ink outline with a hand-drawn crayon fill
+    /// inside (left blue, right red). This is the one documented exception to the one-amber
+    /// palette (see docs/art-and-ui.md), contained to this dilemma. Hover and selection are
+    /// carried by the button's own colour deepening, never amber. Picked by click or number
+    /// key. Raises <see cref="Chosen"/>.
     /// </summary>
     public sealed class ButtonChoice : MonoBehaviour
     {
         [Header("Ink")]
         [SerializeField] private Material _inkMaterial;
         [SerializeField] private Color _ink = Palette.Ink;
-        [SerializeField] private Color _amber = Palette.Amber;
         [SerializeField] private float _lineWidth = 0.055f;
         [SerializeField] private int _sortingOrder = 8;
+
+        [Header("Colour (documented palette exception)")]
+        [SerializeField] private Color _leftFillColor = Palette.InkBlue;
+        [SerializeField] private Color _rightFillColor = Palette.InkRed;
 
         [Header("Layout")]
         [SerializeField] private Vector3 _leftPosition = new Vector3(-1.7f, 1.4f, 0f);
@@ -31,11 +35,21 @@ namespace YourCall
         [SerializeField] private float _cornerRadius = 0.16f;
         [SerializeField] private float _labelSize = 2.7f;
 
+        [Header("Crayon fill")]
+        [SerializeField] private float _fillMargin = 0.15f;
+        [SerializeField, Range(3, 14)] private int _fillRows = 6;
+        [SerializeField] private float _fillWidth = 0.075f;
+        [SerializeField] private float _fillJitter = 0.03f;
+        [Tooltip("Fill opacity, so the colour reads as a hand-drawn wash and the label stays legible.")]
+        [SerializeField, Range(0.4f, 1f)] private float _fillOpacity = 0.8f;
+        [SerializeField] private bool _boil = true;
+
         [Header("Feel")]
-        [SerializeField] private float _hoverWidthMul = 1.3f;
+        [SerializeField] private float _hoverWidthMul = 1.25f;
         [SerializeField] private float _hoverLerp = 0.12f;
-        [SerializeField] private float _pulsePeriod = 1.8f;
-        [SerializeField, Range(0f, 0.5f)] private float _pulseAmount = 0.12f;
+        [SerializeField] private float _pulsePeriod = 1.9f;
+        [SerializeField, Range(0f, 0.5f)] private float _pulseAmount = 0.14f;
+        [SerializeField, Range(0.3f, 1f)] private float _deepen = 0.62f;
         [SerializeField, Range(0f, 1f)] private float _dimmedAlpha = 0.4f;
         [SerializeField] private Camera _camera;
 
@@ -45,6 +59,8 @@ namespace YourCall
         {
             public GameObject Root;
             public LineRenderer Outline;
+            public LineRenderer Fill;
+            public Color FillColor;
             public BoxCollider2D Collider;
             public TextMeshPro Label;
             public float HoverT;
@@ -61,21 +77,28 @@ namespace YourCall
             if (_built) return;
             string left = dilemma.Choices.Count > 0 ? dilemma.Choices[0].Label : "blue";
             string right = dilemma.Choices.Count > 1 ? dilemma.Choices[1].Label : "red";
-            _buttons[0] = BuildButton(0, _leftPosition, left);
-            _buttons[1] = BuildButton(1, _rightPosition, right);
+            _buttons[0] = BuildButton(0, _leftPosition, left, _leftFillColor);
+            _buttons[1] = BuildButton(1, _rightPosition, right, _rightFillColor);
             _built = true;
             Apply();
         }
 
-        private Button BuildButton(int index, Vector3 pos, string label)
+        private Button BuildButton(int index, Vector3 pos, string label, Color fillColor)
         {
-            var b = new Button();
+            var b = new Button { FillColor = fillColor };
             b.Root = new GameObject("Button" + index);
             b.Root.transform.SetParent(transform, false);
             b.Root.transform.localPosition = pos;
 
+            // Crayon fill, behind the linework.
+            b.Fill = InkLine.Create(b.Root.transform, "Fill", _inkMaterial, _fillWidth, fillColor, _sortingOrder - 1);
+            InkLine.SetPoints(b.Fill, ScribbleFill(_buttonWidth * 0.5f, _buttonHeight * 0.5f, _fillMargin, _fillRows, _fillJitter, index * 97 + 13));
+            if (_boil) b.Fill.gameObject.AddComponent<LineBoil>().Capture();
+
+            // Black ink outline.
             b.Outline = InkLine.Create(b.Root.transform, "Outline", _inkMaterial, _lineWidth, _ink, _sortingOrder);
             InkLine.SetPoints(b.Outline, RoundedRect(_buttonWidth * 0.5f, _buttonHeight * 0.5f, _cornerRadius, 4));
+            if (_boil) b.Outline.gameObject.AddComponent<LineBoil>().Capture();
 
             b.Collider = b.Root.AddComponent<BoxCollider2D>();
             b.Collider.isTrigger = true;
@@ -86,6 +109,24 @@ namespace YourCall
             b.Label.transform.localPosition = Vector3.zero;
             b.Label.text = label;
             return b;
+        }
+
+        private static List<Vector3> ScribbleFill(float halfW, float halfH, float margin, int rows, float jitter, int seed)
+        {
+            float iw = Mathf.Max(0.05f, halfW - margin);
+            float ih = Mathf.Max(0.05f, halfH - margin);
+            var pts = new List<Vector3>();
+            float rowStep = (rows > 1) ? (2f * ih) / (rows - 1) : 0f;
+            for (int r = 0; r < rows; r++)
+            {
+                float y = ih - r * rowStep;
+                bool ltr = (r % 2 == 0);
+                float xa = ltr ? -iw : iw;
+                float xb = ltr ? iw : -iw;
+                pts.Add(new Vector3(xa + J(seed, r * 4) * jitter, y + J(seed, r * 4 + 1) * jitter, 0f));
+                pts.Add(new Vector3(xb + J(seed, r * 4 + 2) * jitter, y + J(seed, r * 4 + 3) * jitter, 0f));
+            }
+            return pts;
         }
 
         private static List<Vector3> RoundedRect(float halfW, float halfH, float r, int seg)
@@ -164,23 +205,47 @@ namespace YourCall
                 var b = _buttons[i];
                 if (b == null) continue;
 
-                float amberT;
-                if (_locked) amberT = (i == _lockedIndex) ? 1f : 0f;
+                float deepT;
+                if (_locked) deepT = (i == _lockedIndex) ? 1f : 0f;
                 else
                 {
-                    amberT = b.HoverT;
+                    deepT = b.HoverT;
                     if (_armed)
-                        amberT += Mathf.Max(0f, Mathf.Sin(Time.time * (Mathf.PI * 2f / _pulsePeriod))) * _pulseAmount * (1f - b.HoverT);
+                        deepT += Mathf.Max(0f, Mathf.Sin(Time.time * (Mathf.PI * 2f / _pulsePeriod))) * _pulseAmount * (1f - b.HoverT);
                 }
-                amberT = Mathf.Clamp01(amberT);
+                deepT = Mathf.Clamp01(deepT);
 
                 float alpha = (_locked && i != _lockedIndex) ? _dimmedAlpha : 1f;
-                Color col = Color.Lerp(_ink, _amber, amberT); col.a = alpha;
-                float w = _lineWidth * Mathf.Lerp(1f, _hoverWidthMul, amberT);
 
-                b.Outline.widthMultiplier = w;
-                InkLine.SetColor(b.Outline, col);
-                b.Label.color = col;
+                Color fill = Deepen(b.FillColor, deepT); fill.a = alpha * _fillOpacity;
+                InkLine.SetColor(b.Fill, fill);
+
+                Color outline = _ink; outline.a = alpha;
+                InkLine.SetColor(b.Outline, outline);
+                b.Outline.widthMultiplier = _lineWidth * Mathf.Lerp(1f, _hoverWidthMul, deepT);
+
+                Color lab = _ink; lab.a = alpha;
+                b.Label.color = lab;
+            }
+        }
+
+        private Color Deepen(Color c, float t)
+        {
+            float m = Mathf.Lerp(1f, _deepen, t);
+            return new Color(c.r * m, c.g * m, c.b * m, c.a);
+        }
+
+        private static float J(int seed, int i)
+        {
+            unchecked
+            {
+                int x = (seed * 73856093) ^ (i * 19349663);
+                x = (x ^ 61) ^ (x >> 16);
+                x += x << 3;
+                x ^= x >> 4;
+                x *= 0x27d4eb2d;
+                x ^= x >> 15;
+                return (((x & 0x7fffffff) % 1000) / 1000f) - 0.5f;
             }
         }
     }

@@ -17,7 +17,8 @@ What this does not mean: added UI chrome, decorative flourishes that compete for
 ## Colour
 - Strictly black-and-white, plus **one meaningful accent colour**.
 - The accent is used **only for attention and consequence** — the doomed figure, the lever, the player's avatar — **never decoration.** The moment it's decorative, it stops meaning anything.
-- **Open decision:** if the accent is *red*, it collides with the blue/red coordination gamble. Either lean into that overlap deliberately or pick a different spotlight colour (e.g. amber). Tracked in `open-questions.md`.
+- **Accent chosen: amber.** The old worry that a red accent would collide with the blue/red gamble is moot: the accent is amber, and blue and red appear only as the documented exception below.
+- **Documented exception (blue/red button dilemma only).** The one reframed viral dilemma uses actual hand-drawn blue and red, on its two buttons and its "how the room voted" stats bars, and nowhere else in the game. Rendered as a muted, inky crayon wash inside the black ink linework, never flat digital UI colour; hover and selection deepen the button's own colour rather than borrowing the amber. The colours live as `Palette.InkBlue` and `Palette.InkRed`. This is the single deliberate break from the one-accent rule. See `decisions.md` (2026-07-06).
 
 ## UI / HUD philosophy — clear and simple
 The interface recedes so the void and the figures dominate. Concretely:
