@@ -1,0 +1,53 @@
+# Decision Log
+
+Append a dated entry whenever a design decision is made or changed. Newest at top. Keep entries short: what was decided, and (if it changed something) what it replaced and why.
+
+Format: `YYYY-MM-DD — <area>: <decision>. (Was: <old> — <reason>.)`
+
+---
+
+## 2026-07-06 — Code organisation rules made explicit
+- Tightened the engineering conventions in `CLAUDE.md` (and `tech.md`) to prevent monolithic scripts: one script one job, no god or manager class, separated concerns (data, persistent state, presentation, input, flow), one class per file, scripts grouped by role under `Assets/Scripts/`, composition over inheritance. No design change; a coding-discipline clarification.
+
+## 2026-07-06 — Art direction refined: minimal but stylised
+- Minimalism governs the number of on-screen elements (spare, uncluttered); stylisation governs the character of each element. The game should read as minimal but never sterile or plain.
+- Style lives in four levers that add no clutter: a living hand-drawn ink line (with a subtle boil), a faint paper texture on the white ground, characterful narrator typography that inks in, and expressive ink-like motion. Detailed in `art-and-ui.md`.
+- Unchanged: minimal UI (no HUD, menus, or pop-ups), monochrome plus one amber accent. Stylisation never means more UI or more colour.
+
+## 2026-07-06 — Switched engine to Unity (no code ported)
+- **Engine switch:** moved development from Godot 4.6 to Unity (C#). Reason: personal preference for Unity. The design is engine-neutral and does not change.
+- **No code ported.** The Godot trolley prototype (and the earlier JS spike) are set aside; the Unity trolley prototype will be built fresh. This was a deliberate choice, not a limitation.
+- **Convention mapping (Godot to Unity):** scenes become prefabs and scenes; GDScript becomes C#; `.tres` Resources become ScriptableObjects; autoload becomes a persistent singleton (or runtime ScriptableObject); signals become C# events (or UnityEvents); `@export` becomes `[SerializeField]`; the Skeleton2D rig becomes a Unity 2D Animation rig; the Godot MCP becomes a Unity MCP (confirm one works in the setup).
+- **Repo:** same GitHub repo reused. Godot scaffold removed, Unity `.gitignore` added (keeps `.meta` files, ignores `Library/`), history preserved. See `tech.md` for the Unity file map.
+- **Docs updated in this switch:** `tech.md` rewritten for Unity; `CLAUDE.md` updated (engine, conventions, commands); `art-and-ui.md` and `open-questions.md` had single engine references updated. Design docs (`vision.md`, `gameplay.md`, `narrative.md`) unchanged.
+
+## 2026-07-06 — JS-first workflow rejected; native Godot trolley rebuilt
+- **Workflow:** evaluated writing dilemmas in **JavaScript first, then porting** to Godot (spike on `exp/js-port-test`). **Rejected.** Only the data, config, and phase state machine port (about a quarter of the code, the cheap part); all rendering, animation, and moment-to-moment feel must be built natively and are discarded in a JS pass. Decision: build dilemmas **directly in Godot.** Browser builds are reserved **only for later** playtesting of narrator copy and the stats screen (the content layer that does port), never for the core loop.
+- **First dilemma rebuilt natively** (`feat/trolley-v2`) as the grey-box prototype: full loop present → choose → consequence → stats → end. No fail state, minimal UI, one amber accent used only for attention (the lever) and consequence (the struck figure; the player's own pick on the stats screen). Profile recorded **silently** to the `Profile` autoload and never drawn. Seeded 87/13 display-only stats.
+- **Scene structure:** composed from instanced scenes — `Figure`, `Trolley`, `Track`, `Lever`, and `DilemmaStage` (the loop + explicit state machine) — plus a `StatsView`. Each dilemma is a `Dilemma` **Resource** (`.tres`) of `DilemmaChoice` sub-resources; shared state in the `Profile` autoload; every tunable an `@export`. See `tech.md` for the file map.
+- **Figure** is a rounded-`Line2D` silhouette with no joint dots, built as a bone-like hierarchy so it can be promoted to a Skeleton2D rig later; it folds and fades as a single unit.
+
+## 2026-07-06 — Working title, protagonist, first dilemma, engine version
+- **Working title:** *Your Call* (spoken straight to the player — the decision is the whole game). Provisional; earlier drafts considered *Track Record* and others.
+- **Protagonist:** the blank-slate player character is a **judge who died drunk driving** — a fixed backstory (he judged others; now he's judged; likely sentenced DUIs himself) over a still-blank *moral present* filled by the player's choices. Refines the earlier pure "blank slate."
+- **He killed only himself** in the crash — no bystander. (The "did he kill someone else" thread was dropped to keep focus on the dilemmas, not a backstory investigation.)
+- **First dilemma:** the clean classic **trolley problem** (five on the main track, one on a branch, a lever). Grey-box prototype content; mirrors the protagonist's own death.
+- **Engine:** Godot **4.6**. (Superseded 2026-07-06 by the switch to Unity above.)
+- **Still open:** death reveal timing (cold open vs. gradual) — see `open-questions.md`.
+
+## 2026-07-06 — Founding decisions (from initial design Q&A)
+- **Platform / scope:** PC / Steam first; ~5–6 hours; linear campaign; ~25–35 dilemmas, each a full scene (~10 min).
+- **Narrator:** recurring chaotic trickster who secretly tracks the player.
+- **Protagonist:** blank slate; only fixed fact is how he died.
+- **Ending:** reflects a moral profile (what *kind* of reasoner, not good/bad).
+- **Verbs (launch):** binary, allocation, coordination gamble, self-sacrifice.
+- **Coordination gamble reframed:** crowd decides *other souls'* fates (player can't die); resolved vs. a seeded crowd. (Was: classic self-preservation blue/red — doesn't fit a dead protagonist.)
+- **Stats:** display-only, offline-first, optional; seeded (from real survey data) → real players.
+- **Sourcing:** mix of real philosophy + original; topical *themes* abstracted one step (no named politics).
+- **Escalation:** waves (difficulty + personal implication + narrator intimacy), with breathers.
+- **Art:** B&W stick figures on reposable rigs; one meaningful accent colour.
+- **UI:** minimal — no large HUD, no big menus, no pop-ups, minimal detail. Profile is not shown as a running gauge.
+- **Audio:** text-first; VO later.
+- **No fail state.**
+- **Rejected:** selfish↔selfless profile axis (smuggles a "right answer").
+- **Tooling:** Godot 4.6; git + GitHub; Godot MCP. Stats backend later via Supabase / serverless (not Nakama). (Engine superseded by the Unity switch above.)
