@@ -1,0 +1,184 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+
+namespace YourCall
+{
+    /// <summary>
+    /// The aftermath tableau: it dims the world, then inks in "how others chose" as plain
+    /// bars with the player's own pick in amber. Display-only and seeded; it never gates
+    /// anything (see docs/tech.md). Minimal UI: no window, no chrome, just marks on the
+    /// dimmed page.
+    /// </summary>
+    public class StatsView : MonoBehaviour
+    {
+        [Header("Ink")]
+        [SerializeField] private Material _inkMaterial;
+        [SerializeField] private Color _ink = Palette.Ink;
+        [SerializeField] private Color _amber = Palette.Amber;
+        [SerializeField] private Color _muted = Palette.Muted;
+
+        [Header("Dim")]
+        [SerializeField] private Color _scrimColor = Palette.Paper;
+        [SerializeField, Range(0f, 1f)] private float _scrimAlpha = 0.8f;
+
+        [Header("Bars")]
+        [SerializeField] private float _barWidth = 0.24f;
+        [SerializeField] private float _barMaxLength = 4.0f;
+        [SerializeField] private float _barStartX = -2.1f;
+        [SerializeField] private float _rowSpacing = 1.25f;
+        [SerializeField] private int _sortingScrim = 30;
+        [SerializeField] private int _sortingContent = 32;
+
+        [Header("Type")]
+        [SerializeField] private float _headingSize = 3.2f;
+        [SerializeField] private float _labelSize = 2.7f;
+        [SerializeField] private float _countSize = 3.6f;
+        [SerializeField] private float _hintSize = 2.3f;
+        [SerializeField] private string _headingText = "how others chose";
+        [SerializeField] private string _hintText = "press any key to go again";
+
+        private SpriteRenderer _scrim;
+        private TextMeshPro _heading;
+        private TextMeshPro _hint;
+        private readonly List<LineRenderer> _bars = new List<LineRenderer>();
+        private readonly List<float> _barLengths = new List<float>();
+        private readonly List<TextMeshPro> _labels = new List<TextMeshPro>();
+        private readonly List<TextMeshPro> _counts = new List<TextMeshPro>();
+        private bool _built;
+
+        private void Awake() { Build(); }
+
+        private void Build()
+        {
+            if (_built) return;
+            _scrim = MakeScrim();
+            _heading = InkText.Create(transform, "Heading", _headingSize, _muted, TextAlignmentOptions.Center, _sortingContent);
+            _hint = InkText.Create(transform, "Hint", _hintSize, _muted, TextAlignmentOptions.Center, _sortingContent);
+            SetAlpha(_scrim, 0f);
+            InkText.SetAlpha(_heading, 0f);
+            InkText.SetAlpha(_hint, 0f);
+            _built = true;
+        }
+
+        private SpriteRenderer MakeScrim()
+        {
+            var tex = new Texture2D(4, 4, TextureFormat.RGBA32, false);
+            var px = new Color32[16];
+            for (int i = 0; i < px.Length; i++) px[i] = new Color32(255, 255, 255, 255);
+            tex.SetPixels32(px); tex.Apply();
+            var spr = Sprite.Create(tex, new Rect(0, 0, 4, 4), new Vector2(0.5f, 0.5f), 4f);
+
+            var go = new GameObject("Scrim");
+            go.transform.SetParent(transform, false);
+            var sr = go.AddComponent<SpriteRenderer>();
+            sr.sprite = spr;
+            sr.color = new Color(_scrimColor.r, _scrimColor.g, _scrimColor.b, 0f);
+            sr.sortingOrder = _sortingScrim;
+            go.transform.localScale = new Vector3(64f, 44f, 1f);
+            return sr;
+        }
+
+        public IEnumerator Reveal(Dilemma dilemma, int pickIndex, float fade)
+        {
+            BuildRows(dilemma, pickIndex);
+
+            float contentCenterX = _barStartX + _barMaxLength * 0.5f;
+            int n = _bars.Count;
+            float top = (n - 1) * 0.5f * _rowSpacing;
+            _heading.transform.localPosition = new Vector3(contentCenterX, top + 1.15f, 0f);
+            _hint.transform.localPosition = new Vector3(contentCenterX, -top - 1.0f, 0f);
+            _heading.text = _headingText;
+            _hint.text = _hintText;
+
+            // 1) Dim the world.
+            float t = 0f, f = Mathf.Max(fade, 0.01f);
+            while (t < f) { t += Time.deltaTime; SetAlpha(_scrim, EaseUtil.OutCubic(t / f) * _scrimAlpha); yield return null; }
+            SetAlpha(_scrim, _scrimAlpha);
+
+            // 2) Ink in the heading, grow the bars, fade the labels and counts in.
+            InkText.SetAlpha(_heading, 1f);
+            t = 0f; float grow = 0.6f;
+            while (t < grow)
+            {
+                t += Time.deltaTime;
+                float k = EaseUtil.OutCubic(t / grow);
+                for (int i = 0; i < n; i++)
+                {
+                    _bars[i].SetPosition(1, new Vector3(_barStartX + _barLengths[i] * k, RowY(i, n), 0f));
+                    InkText.SetAlpha(_labels[i], k);
+                    InkText.SetAlpha(_counts[i], k);
+                }
+                yield return null;
+            }
+            for (int i = 0; i < n; i++)
+            {
+                _bars[i].SetPosition(1, new Vector3(_barStartX + _barLengths[i], RowY(i, n), 0f));
+                InkText.SetAlpha(_labels[i], 1f);
+                InkText.SetAlpha(_counts[i], 1f);
+            }
+
+            // 3) The quiet replay hint.
+            t = 0f; float hf = 0.4f;
+            while (t < hf) { t += Time.deltaTime; InkText.SetAlpha(_hint, t / hf); yield return null; }
+            InkText.SetAlpha(_hint, 1f);
+        }
+
+        private float RowY(int i, int n)
+        {
+            float top = (n - 1) * 0.5f * _rowSpacing;
+            return top - i * _rowSpacing;
+        }
+
+        private void BuildRows(Dilemma dilemma, int pickIndex)
+        {
+            ClearRows();
+            var choices = dilemma.Choices;
+            int n = choices.Count;
+            int maxVotes = 1;
+            for (int i = 0; i < n; i++) maxVotes = Mathf.Max(maxVotes, choices[i].SeedVotes);
+
+            for (int i = 0; i < n; i++)
+            {
+                bool pick = i == pickIndex;
+                Color barColor = pick ? _amber : _ink;
+                float rowY = RowY(i, n);
+                float len = _barMaxLength * (choices[i].SeedVotes / (float)maxVotes);
+
+                var bar = InkLine.Create(transform, "Bar" + i, _inkMaterial, _barWidth, barColor, _sortingContent);
+                bar.positionCount = 2;
+                bar.SetPosition(0, new Vector3(_barStartX, rowY, 0f));
+                bar.SetPosition(1, new Vector3(_barStartX, rowY, 0f));
+                _bars.Add(bar); _barLengths.Add(len);
+
+                var label = InkText.Create(transform, "Label" + i, _labelSize, pick ? _amber : _muted, TextAlignmentOptions.Left, _sortingContent);
+                label.rectTransform.sizeDelta = new Vector2(6f, 1f);
+                label.transform.localPosition = new Vector3(_barStartX + 3.0f, rowY + 0.34f, 0f); // left edge sits at the bar start
+                label.text = choices[i].Label;
+                InkText.SetAlpha(label, 0f);
+                _labels.Add(label);
+
+                var count = InkText.Create(transform, "Count" + i, _countSize, pick ? _amber : _ink, TextAlignmentOptions.Left, _sortingContent);
+                count.rectTransform.sizeDelta = new Vector2(2.5f, 1f);
+                count.transform.localPosition = new Vector3(_barStartX + len + 0.3f + 1.25f, rowY, 0f); // left edge just past the bar end
+                count.text = choices[i].SeedVotes.ToString();
+                InkText.SetAlpha(count, 0f);
+                _counts.Add(count);
+            }
+        }
+
+        private void ClearRows()
+        {
+            foreach (var b in _bars) if (b) Destroy(b.gameObject);
+            foreach (var l in _labels) if (l) Destroy(l.gameObject);
+            foreach (var c in _counts) if (c) Destroy(c.gameObject);
+            _bars.Clear(); _barLengths.Clear(); _labels.Clear(); _counts.Clear();
+        }
+
+        private static void SetAlpha(SpriteRenderer sr, float a)
+        {
+            var c = sr.color; c.a = a; sr.color = c;
+        }
+    }
+}

@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ecd1a615a340f4c9104ca01624d106, type: 3}
+  m_Name: Trolley
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Dilemma
+  _id: trolley
+  _verb: 0
+  _weight: 1
+  _narratorPrompt: Oh good, you are back. Someone left a trolley running and five
+    strangers standing in its way. There is one more soul on the side track, and
+    a lever by your hand that decides whose morning ends here. You did enjoy deciding
+    what people deserved, once. And you did know your way around a moving vehicle.
+    Your call.
+  _choices:
+  - _id: pull
+    _label: Pull the lever
+    _narratorReact: You pulled it. One traded for five, and you barely blinked. Tidy.
+      Proportionate. The judge in you would have signed off without even looking
+      up.
+    _route: spur
+    _diverts: 1
+    _seedVotes: 87
+    _profileImpact:
+    - _axis: 0
+      _value: 1
+    - _axis: 2
+      _value: -1
+  - _id: do_nothing
+    _label: Do nothing
+    _narratorReact: Hands in your pockets, five gone under, a clean conscience you
+      did not quite earn. Not my lever, not my fault. You told yourself something
+      like that about the last machine you were steering, too.
+    _route: straight
+    _diverts: 0
+    _seedVotes: 13
+    _profileImpact:
+    - _axis: 0
+      _value: -1
+    - _axis: 2
+      _value: 1

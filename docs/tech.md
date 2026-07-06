@@ -17,17 +17,22 @@ Shared state (the moral profile) lives in a `Profile` service: a persistent sing
 
 ## Scene, prefab & file structure
 Composed from small prefabs, one component (MonoBehaviour) each. No monolithic drawing script:
-- `Assets/Scenes/Dilemma.unity` with `DilemmaStage` (`Assets/Scripts/DilemmaStage.cs`) as the composition root. Explicit phase state machine (Present, Choose, Consequence, Stats, End); wires input via C# events; drives the consequence; reveals the stats; records the profile. Main scene.
+- `Assets/Scenes/Dilemma.unity` with `DilemmaStage` (`Assets/Scripts/Dilemma/DilemmaStage.cs`) as the composition root. Explicit phase state machine (Present, Choose, Consequence, Stats, End); wires input via C# events; drives the consequence; reveals the stats; records the profile. Main scene.
 - `Track` prefab (`Track.cs`): the forking track and the single source of truth for layout; exposes query methods for figure positions and the trolley path so nothing else hard-codes geometry.
-- `Figure` prefab (`Figure.cs`): a reposable stick figure built for Unity's 2D Animation (bones and sprite skinning) so it can be reposed rather than redrawn; no joint dots; strikes, folds, and fades as one unit.
+- `Figure` prefab (`Figure.cs`): a clean single-stroke stick figure with rounded joints and no joint dots that strikes, folds, and fades as one unit. Drawn with a `LineRenderer` for the prototype (the analogue of the earlier Godot `Line2D`) and structured so it can be promoted to a Unity 2D Animation rig (bones and sprite skinning) later, not redrawn.
 - `Trolley` prefab (`Trolley.cs`): follows a supplied path with anticipation and a settle on impact; raises an `Impact` event.
-- `Lever` prefab (`Lever.cs`): a diegetic amber interactable (Collider2D plus input); hover intensifies, click raises `Pulled`.
-- `StatsView` (`StatsView.cs`): display-only bars over a dimmed world (minimal UI).
-- `Profile` (`Profile.cs`): the persistent profile singleton (or runtime ScriptableObject).
-- `Dilemma.cs`, `DilemmaChoice.cs`: the data (ScriptableObject plus serializable class).
+- `Lever` prefab (`Lever.cs`): a diegetic amber interactable (Collider2D plus new-Input-System picking); hover intensifies, click raises `Pulled`.
+- `NarratorView` (`NarratorView.cs`): the narrator's line as world-space TextMeshPro that inks in (fades while it types on); no panel or box.
+- `ChoiceButtons` (`ChoiceButtons.cs`): two plain world-space text choices as the fallback to the lever, picked by click or key.
+- `StatsView` (`StatsView.cs`): display-only bars over a dimmed world, the player's pick in amber (minimal UI).
+- `Profile` (`Profile.cs`): the persistent profile singleton (`DontDestroyOnLoad`).
+- `Dilemma.cs`, `DilemmaChoice.cs` (plus the enums `MoralAxis`, `DilemmaWeight`, `DilemmaVerb` and the serializable `AxisImpact`): the data (ScriptableObject plus serializable classes).
+- `Common/` helpers, one job each: `InkLine` (builds the shared ink strokes), `LineBoil` (the boil), `EaseUtil` (easing), `PointerInput` (new Input System), `PuffCue` (the impact cue), `InkText` (world TMP labels), `Palette` (the single black / paper / amber source).
 - `Assets/Data/Trolley.asset`: the first dilemma's data.
 
-Folders under `Assets/`: `Scripts/` (grouped by role, for example `Scripts/Dilemma/`, `Scripts/Figure/`, `Scripts/Stats/`, `Scripts/Data/`), `Prefabs/`, `Scenes/`, `Data/` (ScriptableObjects), `Art/`, `Settings/`. Commit `.meta` files. One class per file; keep scripts small and single-purpose.
+Folders under `Assets/`: `Scripts/` (grouped by role: `Scripts/Dilemma/`, `Scripts/Figure/`, `Scripts/Track/`, `Scripts/Trolley/`, `Scripts/Lever/`, `Scripts/Narrator/`, `Scripts/Choices/`, `Scripts/Stats/`, `Scripts/Profile/`, `Scripts/Data/`, `Scripts/Common/`), `Prefabs/`, `Scenes/`, `Data/` (ScriptableObjects), `Art/` (the shared ink material), `Settings/`. Commit `.meta` files. One class per file; keep scripts small and single-purpose.
+
+Prototype implementation notes: all ink is one shared `Sprites/Default` material tinted per stroke (rounded caps and corners, vertex-colour alpha so a stroke fades uniformly). The project is configured for the new Input System only, so there is no EventSystem or uGUI; diegetic picking is `Physics2D` against `Collider2D`. Text uses world-space TextMeshPro (essentials imported). Driving play mode headless (for example from an MCP) needs `Application.runInBackground = true`, or the unfocused editor freezes the player loop.
 
 Motion note: for code-driven eased motion (the trolley's anticipation and settle, the fades), use Unity coroutines with easing, the Animation or Animator system, or a tweening library such as DOTween if you add one. Keep the timing values exported so they stay tunable.
 
@@ -37,6 +42,6 @@ Motion note: for code-driven eased motion (the trolley's anticipation and settle
 - The Unity `.gitignore` excludes `Library/`, `Temp/`, `Obj/`, `Build(s)/`, `Logs/`, `UserSettings/`, and IDE files, while keeping `.meta` files tracked. Never commit `Library/`, and never gitignore `.meta` files.
 
 ## Build plan
-1. Grey-box prototype (to build in Unity): rebuild the one full dilemma loop (the trolley) natively in Unity: choice UI, animated consequence, seeded local stats, no fail state, minimal UI. Validates the moment-to-moment feel. (Earlier Godot and JS-first prototypes were built or evaluated then set aside; see `decisions.md`. No code is ported.)
+1. Native Unity trolley prototype (built, `feat/trolley-prototype`): the one full dilemma loop present → choose → consequence → stats → end, with a diegetic lever plus a text fallback, an animated consequence, seeded local stats, no fail state, and minimal UI. Validates the moment-to-moment feel. (Earlier Godot and JS-first prototypes were set aside; see `decisions.md`. No code was ported.)
 2. Verb and production-time test: 3 to 4 dilemmas across different verbs with the real rig. Time one finished dilemma; multiply by 25 to 35 for the true scope reality check.
 3. Defer the backend until near real players.
