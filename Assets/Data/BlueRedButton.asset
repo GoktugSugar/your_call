@@ -15,24 +15,26 @@ MonoBehaviour:
   _id: blue_red_button
   _verb: 2
   _weight: 2
-  _narratorPrompt: One soul stands in the dock, and the room behind it has already
-    pressed. Here is the rule, and it is the whole game. If more than half the room
-    pressed blue, every blue soul lives. If fewer than half, only the red souls walk
-    out. You rule which button this soul is recorded as pressing. Rule red and it
-    lives for certain, whatever the room did. Rule blue and it lives only if the
-    room came through and went blue. You judged the living for a lifetime. Now you
-    sort the dead. Your call.
+  _narratorPrompt: You spent a whole life deciding what other people deserved. It
+    would be a waste to let all that practice rot now. So. A room of the newly dead,
+    two buttons on the wall, one rule. If more than half of them pressed blue, the
+    blue souls live. If fewer than half, only the red souls walk out. Every one of
+    them has already chosen, except this one, and its button is left to you. Press
+    blue and you gamble it on the room. Press red and it lives for certain, whatever
+    the room did. You are not choosing for yourself. There is nothing of yours left
+    to lose. Your call.
   _choices:
   - _id: blue
     _label: blue
-    _narratorReact: You ruled blue, and threw the soul in the dock in with the room,
-      and the room came through. More than half of them had pressed blue, so every
-      blue soul walked out, this one among them. You trusted strangers with a stranger,
-      and this once they held.
-    _narratorReactStruck: You ruled blue, and staked the soul in the dock on the
-      room, and the room fell short. Fewer than half had pressed blue, so the blue
-      souls stayed behind, and the one you ruled for is gone. You gambled a stranger
-      on a room that did not come through.
+    _narratorReact: You pressed blue, and threw that soul in with the room, and the
+      room held. More than half of them chose blue for a stranger, so it walks out
+      among them. You trusted a roomful of the dead with a life, and this once they
+      did not let you down. Do not get used to the feeling.
+    _narratorReactStruck: You pressed blue, and gambled that soul on the room, and
+      the room came up short. Fewer than half had pressed blue, so the blue souls
+      stayed behind, and the one you chose for is gone. You bet a stranger on strangers,
+      and they folded. A whole career weighing what people deserved, and this is
+      what the practice bought.
     _struckParty: 
     _gambledParty: charge
     _route: 
@@ -45,10 +47,11 @@ MonoBehaviour:
       _value: 1
   - _id: red
     _label: red
-    _narratorReact: You ruled red, and the soul in the dock walks out, whatever the
-      room did. You would not hang one life on a room of strangers. Call it mercy,
-      or the habit of a judge who trusts no hand but his own. Either way, you never
-      had to find out what the room was worth.
+    _narratorReact: You pressed red, and that soul is safe, whatever the room did.
+      You would not put a single life in the hands of strangers. All those years
+      judging what people deserved, and you still trust no hand but your own. It
+      lives, and you will never know whether the room would have carried it. Sit
+      with that.
     _narratorReactStruck: 
     _struckParty: 
     _gambledParty: 

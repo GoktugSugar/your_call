@@ -9,7 +9,7 @@
 
 **No fail state.** The player can't lose or die. Choices only steer which ending is reached.
 
-**The judge never stakes his own life.** Because the protagonist is already dead, no dilemma puts his own survival on the line. He always rules on the fate of other souls. Any dilemma whose original form is about the chooser's own skin (like the viral blue/red button) is reframed so he decides for a soul in the dock, never for himself. Copy that says the judge himself lives or dies is a framing bug.
+**The player is tested, never presiding.** The protagonist is a dead former judge, put through these dilemmas by the guide; he holds no office in the void. Because he is dead, no dilemma stakes his own survival. Where a dilemma's original form is about the chooser's own skin (like the viral blue/red button), the stakes are reframed onto another soul, and the guide frames it as forcing this former judge to choose for someone else (needling the life he spent deciding what people deserved), never as an office he holds. He is always the one being examined, not an authority over the afterlife. Copy that makes him sound like he presides, rules, or sentences is a framing bug.
 
 ## The four verbs (launch scope)
 - **Binary choice** — e.g. the lever (kill 1 vs. 5). Outcome from the player's choice alone.

@@ -9,7 +9,7 @@ A recurring **chaotic trickster** — seemingly capricious, but secretly trackin
 ## Player character
 A **blank *moral* slate over a fixed past.** He was a **judge** who died **drunk driving** — crashed his car and killed himself. That backstory is fixed and is the narrator's ammunition; his moral *present* is blank, filled in by the player's choices (the game builds his profile from what the player does, not from a pre-written personality). Stick figures are androgynous, so the doodle still reads as a stand-in.
 
-**Why a judge:** he spent his career deciding what other people deserved, and now he's the one being judged — the auditor audited. The narrator weaponises this throughout. The DUI sharpens it: an officer of the law who broke it fatally, and who very likely sentenced people for the exact crime that killed him. His own past rulings are fair game to throw back at him, and the ending can compare the man he was on the bench to the choices he made here.
+**Why a judge:** he spent his career deciding what other people deserved, and now he's the one being judged — the auditor audited. The narrator weaponises this throughout. The DUI sharpens it: an officer of the law who broke it fatally, and who very likely sentenced people for the exact crime that killed him. His own past rulings are fair game to throw back at him, and the ending can compare the man he was on the bench to the choices he made here. Crucially, in the void he holds no office: he was a judge in life, but here he is the one being put through it, made to choose for other souls by the narrator, never an authority presiding over the afterlife.
 
 **Tone guard:** aim the comedy at his *hypocrisy*, not at the tragedy of the death itself — that keeps the "stings but doesn't punch down" line.
 
