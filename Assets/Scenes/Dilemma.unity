@@ -227,6 +227,7 @@ MonoBehaviour:
   _scrimColor: {r: 0.961, g: 0.949, b: 0.914, a: 1}
   _scrimAlpha: 0.8
   _barWidth: 0.24
+  _pickWidthMul: 1.22
   _barMaxLength: 4
   _barStartX: -2.1
   _rowSpacing: 1.25
@@ -238,6 +239,7 @@ MonoBehaviour:
   _hintSize: 2.3
   _thresholdSize: 2.2
   _hintText: press any key to go again
+  _keepoutObject: {fileID: 0}
 --- !u!4 &210867220
 Transform:
   m_ObjectHideFlags: 0
@@ -448,12 +450,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b111510728a91046847b9c8c9898568, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.NarratorView
-  _fontSize: 3.6
+  _fontSize: 3.4
   _color: {r: 0.106, g: 0.102, b: 0.09, a: 1}
   _width: 15
+  _height: 3.2
   _sortingOrder: 20
-  _fadeIn: 0.35
   _charsPerSecond: 55
+  _pageAdvanceLockout: 0.22
 --- !u!4 &933681129
 Transform:
   m_ObjectHideFlags: 0
@@ -463,7 +466,7 @@ Transform:
   m_GameObject: {fileID: 933681127}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.7, z: 0}
+  m_LocalPosition: {x: 0, y: 2.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -603,6 +606,7 @@ MonoBehaviour:
   _preStatsBeat: 0.9
   _statsFade: 0.5
   _endInputDelay: 0.5
+  _reactionHold: 1.1
 --- !u!4 &1453995853
 Transform:
   m_ObjectHideFlags: 0

@@ -4,117 +4,143 @@ using UnityEngine;
 namespace YourCall
 {
     /// <summary>
-    /// Moves the imp around the empty void with hyperactive, impish energy: quick springy
-    /// hops between random spots, never parked. It only roams the free space, rejecting any
-    /// target inside an active <see cref="ScreenKeepout"/> (the dialogue box, the current
-    /// dilemma tableau, the stats), so it never crowds content. While a line is on screen it
-    /// drifts lower, near its words, and fidgets a little less. One job: where the imp goes.
-    /// The local liveliness (bob, breath, gesture) stays on <see cref="ImpFigure"/>.
+    /// Moves the imp around the void, but only once per dialogue box: each time a fresh line
+    /// or page appears it hops, quick and springy, to a new valid spot and then settles there
+    /// to deliver, holding still apart from its idle life. It never lands on content, rejecting
+    /// any spot inside an active <see cref="ScreenKeepout"/> (the box, the current dilemma, the
+    /// stats), and if content appears over it, it hops clear. One job: where the imp goes; the
+    /// bob, breath and speak gesture stay on <see cref="ImpFigure"/>.
     /// </summary>
     public sealed class ImpRoamer : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private ImpFigure _imp;      // only roam once it has appeared
-        [SerializeField] private NarratorView _voice; // calm and drift low while it talks
+        [SerializeField] private ImpFigure _imp;      // only move once it has appeared
+        [SerializeField] private NarratorView _voice; // repositions on each new page it raises
 
         [Header("Roam area (world space)")]
-        [Tooltip("The rectangle the imp's centre may travel within (before keep-outs).")]
-        [SerializeField] private Rect _roamBounds = new Rect(-7.5f, -2.4f, 15f, 5.3f);
-        [Tooltip("Extra clearance kept around every keep-out region.")]
-        [SerializeField] private float _keepoutMargin = 0.5f;
-
-        [Header("Restlessness")]
-        [Tooltip("Pause between hops. Shorter = more hyperactive.")]
-        [SerializeField] private float _pauseMin = 0.12f;
-        [SerializeField] private float _pauseMax = 0.55f;
-        [Tooltip("Multiplies the pause while a line is on screen, so it settles a touch to talk.")]
-        [SerializeField] private float _speakingPauseScale = 1.8f;
+        [Tooltip("The rectangle the imp's centre may travel within, before keep-outs.")]
+        [SerializeField] private Rect _roamBounds = new Rect(-7.5f, -2.0f, 15f, 4.7f);
+        [Tooltip("Never land closer than this to any content; the imp is roughly this wide, so keep it clear.")]
+        [SerializeField] private float _minClearance = 0.9f;
+        [Tooltip("Among clear spots, a small pull toward ones further away, for variety.")]
+        [SerializeField] private float _travelBias = 0.15f;
 
         [Header("Hop")]
-        [Tooltip("Time for one hop. Shorter = faster, zippier.")]
-        [SerializeField] private float _hopDurationMin = 0.22f;
-        [SerializeField] private float _hopDurationMax = 0.42f;
+        [Tooltip("Time for one hop. Shorter = zippier.")]
+        [SerializeField] private float _hopDurationMin = 0.28f;
+        [SerializeField] private float _hopDurationMax = 0.5f;
         [Tooltip("Height of the little arc each hop makes.")]
-        [SerializeField] private float _hopArc = 0.7f;
-        [Tooltip("Reject targets closer than this, so hops actually travel.")]
-        [SerializeField] private float _minHopDistance = 1.4f;
-        [SerializeField] private int _pickTries = 24;
+        [SerializeField] private float _hopArc = 0.5f;
+        [Tooltip("Springiness: overshoot past the landing before settling. 0 = none.")]
+        [SerializeField, Range(0f, 2f)] private float _overshoot = 1.1f;
+        [SerializeField] private int _pickTries = 48;
 
-        [Header("Speaking drift")]
-        [Tooltip("While a line shows, keep to the lower part of the roam area (near the box). 0 = box edge only, 1 = full height.")]
-        [SerializeField, Range(0.1f, 1f)] private float _speakLowBand = 0.4f;
+        [Header("Safety")]
+        [Tooltip("How often to check that content has not appeared over the imp, and hop it clear.")]
+        [SerializeField] private float _blockedCheckInterval = 0.2f;
 
-        private void Start()
+        private Coroutine _hop;
+        private bool _hopping;
+        private float _blockTimer;
+
+        private void OnEnable() { if (_voice != null) _voice.PageChanged += OnPage; }
+        private void OnDisable() { if (_voice != null) _voice.PageChanged -= OnPage; }
+
+        private void OnPage() { Reposition(preferFar: true); }
+
+        private void Update()
         {
-            StartCoroutine(RoamLoop());
-        }
-
-        private IEnumerator RoamLoop()
-        {
-            while (true)
+            if (_hopping) return;
+            if (_imp != null && !_imp.Present) return;
+            _blockTimer += Time.deltaTime;
+            if (_blockTimer >= _blockedCheckInterval)
             {
-                while (_imp != null && !_imp.Present) yield return null;
-
-                bool speaking = _voice != null && _voice.HasLine;
-                float pause = Random.Range(_pauseMin, _pauseMax) * (speaking ? _speakingPauseScale : 1f);
-                yield return new WaitForSeconds(pause);
-
-                Vector2 target = PickTarget(_voice != null && _voice.HasLine);
-                yield return Hop(transform.position, target, Random.Range(_hopDurationMin, _hopDurationMax));
+                _blockTimer = 0f;
+                if (Blocked(transform.position)) Reposition(preferFar: false); // content landed on us
             }
         }
 
-        private Vector2 PickTarget(bool speaking)
+        private void Reposition(bool preferFar)
         {
-            // While speaking, prefer the low band near the box; but if that is all blocked
-            // (a dilemma fills the lower screen), fall back to the full height so the imp still
-            // finds the free top strip and hops clear of the content instead of freezing on it.
-            Vector2 target;
-            if (speaking)
+            if (_imp != null && !_imp.Present) return;
+            if (TryPick(preferFar, out Vector2 target)
+                && (target - (Vector2)transform.position).sqrMagnitude > 0.0001f)
             {
-                float lowTop = Mathf.Lerp(_roamBounds.yMin, _roamBounds.yMax, _speakLowBand);
-                if (TryPick(_roamBounds.yMin, lowTop, out target)) return target;
+                if (_hop != null) StopCoroutine(_hop);
+                _hop = StartCoroutine(Hop(transform.position, target, Random.Range(_hopDurationMin, _hopDurationMax)));
             }
-            if (TryPick(_roamBounds.yMin, _roamBounds.yMax, out target)) return target;
-            return transform.position; // nowhere free and far enough: stay put
         }
 
-        private bool TryPick(float yMin, float yMax, out Vector2 result)
+        private bool TryPick(bool preferFar, out Vector2 result)
         {
+            Vector2 best = transform.position;
+            float bestScore = float.NegativeInfinity;
+            bool found = false;
+
+            // Prefer the spot with the most clearance from all content, nudged toward travelling.
             for (int i = 0; i < _pickTries; i++)
             {
-                float x = Random.Range(_roamBounds.xMin, _roamBounds.xMax);
-                float y = Random.Range(yMin, yMax);
-                Vector2 p = new Vector2(x, y);
-                if (Vector2.Distance(p, transform.position) < _minHopDistance) continue;
-                if (Blocked(p)) continue;
-                result = p; return true;
+                Vector2 p = RandomInBounds();
+                float clear = Clearance(p);
+                if (clear < _minClearance) continue;
+                float travel = preferFar ? Vector2.Distance(p, transform.position) : 0f;
+                float score = clear + travel * _travelBias;
+                if (score > bestScore) { bestScore = score; best = p; found = true; }
             }
-            result = Vector2.zero; return false;
+            if (found) { result = best; return true; }
+
+            // Nothing met the clearance floor (space is tight): take the clearest spot going.
+            for (int i = 0; i < _pickTries; i++)
+            {
+                Vector2 p = RandomInBounds();
+                float clear = Clearance(p);
+                if (clear > bestScore) { bestScore = clear; best = p; found = true; }
+            }
+            result = found ? best : (Vector2)transform.position;
+            return found;
         }
 
-        private bool Blocked(Vector2 p)
+        private Vector2 RandomInBounds()
+            => new Vector2(Random.Range(_roamBounds.xMin, _roamBounds.xMax), Random.Range(_roamBounds.yMin, _roamBounds.yMax));
+
+        /// <summary>Nearest distance from a point to any active keep-out (0 inside; large with none).</summary>
+        private float Clearance(Vector2 p)
         {
             var list = ScreenKeepout.Active;
+            float min = float.MaxValue;
             for (int i = 0; i < list.Count; i++)
-                if (list[i] != null && list[i].Contains(p, _keepoutMargin)) return true;
-            return false;
+            {
+                if (list[i] == null) continue;
+                float d = DistanceToRect(p, list[i].WorldRect);
+                if (d < min) min = d;
+            }
+            return min == float.MaxValue ? 999f : min;
         }
+
+        private static float DistanceToRect(Vector2 p, Rect r)
+        {
+            float dx = Mathf.Max(r.xMin - p.x, 0f, p.x - r.xMax);
+            float dy = Mathf.Max(r.yMin - p.y, 0f, p.y - r.yMax);
+            return Mathf.Sqrt(dx * dx + dy * dy);
+        }
+
+        private bool Blocked(Vector2 p) => Clearance(p) < _minClearance;
 
         private IEnumerator Hop(Vector2 from, Vector2 to, float dur)
         {
+            _hopping = true;
             float d = Mathf.Max(dur, 0.05f), t = 0f, z = transform.position.z;
             while (t < d)
             {
                 t += Time.deltaTime;
                 float k = EaseUtil.Clamp01(t / d);
-                // Springy ease that overshoots and settles, plus a little vertical hop arc.
-                Vector2 pos = Vector2.LerpUnclamped(from, to, EaseUtil.OutBack(k));
+                Vector2 pos = Vector2.LerpUnclamped(from, to, EaseUtil.OutBack(k, _overshoot));
                 pos.y += Mathf.Sin(k * Mathf.PI) * _hopArc;
                 transform.position = new Vector3(pos.x, pos.y, z);
                 yield return null;
             }
             transform.position = new Vector3(to.x, to.y, z);
+            _hopping = false;
         }
     }
 }

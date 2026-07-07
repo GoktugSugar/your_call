@@ -40,6 +40,10 @@ namespace YourCall
         [SerializeField] private float _thresholdSize = 2.2f;
         [SerializeField] private string _hintText = "press any key to go again";
 
+        [Header("Imp keep-out (optional)")]
+        [Tooltip("Enabled only while the tableau is shown, so a roaming imp keeps clear of the stats content.")]
+        [SerializeField] private GameObject _keepoutObject;
+
         private SpriteRenderer _scrim;
         private TextMeshPro _heading;
         private TextMeshPro _hint;
@@ -90,6 +94,7 @@ namespace YourCall
 
         public IEnumerator Reveal(ResolutionReport report, float fade)
         {
+            if (_keepoutObject != null) _keepoutObject.SetActive(true);
             BuildRows(report);
 
             int n = _bars.Count;
@@ -160,6 +165,7 @@ namespace YourCall
         /// </summary>
         public IEnumerator Hide(float fade)
         {
+            if (_keepoutObject != null) _keepoutObject.SetActive(false);
             float t = 0f, f = Mathf.Max(fade, 0.01f);
             while (t < f)
             {

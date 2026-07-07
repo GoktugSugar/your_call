@@ -4,22 +4,18 @@ using UnityEngine;
 namespace YourCall
 {
     /// <summary>
-    /// The guide speaks. One or more lines ink on through the reused NarratorView, each held
-    /// long enough to read and then given way to the next; a click hurries it along. This is
-    /// the "imp dialogue" beat: the narration between dilemmas and the whole opening monologue
-    /// are just lists of these lines.
+    /// The guide speaks. One or more lines ink on through the reused NarratorView, which pages
+    /// any line too long for the box; the player advances with a click or key, and the imp
+    /// repositions on each new box. This is the "imp dialogue" beat: the narration between
+    /// dilemmas and the whole opening monologue are just lists of these lines.
     /// </summary>
     public sealed class ImpLineBeat : SequenceBeat
     {
         [SerializeField, TextArea(2, 5)] private string[] _lines;
 
         [Header("Pacing")]
-        [Tooltip("Base hold after a line finishes inking.")]
-        [SerializeField] private float _holdBase = 1.0f;
-        [Tooltip("Extra hold per character, so longer lines linger.")]
-        [SerializeField] private float _holdPerChar = 0.028f;
-        [Tooltip("A click sooner than this is ignored, so one click never skips two lines.")]
-        [SerializeField] private float _clickLockout = 0.3f;
+        [Tooltip("A click sooner than this after a line finishes is ignored, so one click never skips two boxes.")]
+        [SerializeField] private float _clickLockout = 0.25f;
         [Tooltip("Clear the guide's words when the beat ends (otherwise the last line lingers).")]
         [SerializeField] private bool _clearAtEnd = false;
 
@@ -31,12 +27,13 @@ namespace YourCall
                 {
                     string line = _lines[i];
                     if (string.IsNullOrEmpty(line)) continue;
-                    ctx.Narrator.Show(line);
+
+                    ctx.Narrator.Show(line);                        // types + pages, clicks turn its pages
                     while (ctx.Narrator.IsShowing) yield return null;
 
-                    float hold = _holdBase + line.Length * _holdPerChar;
+                    // Then a click or key advances past this box to the next line.
                     float t = 0f;
-                    while (t < hold)
+                    while (true)
                     {
                         t += Time.deltaTime;
                         if (t > _clickLockout && PointerInput.AdvancePressed) break;

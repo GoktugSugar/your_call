@@ -4,12 +4,12 @@ using UnityEngine;
 namespace YourCall
 {
     /// <summary>
-    /// A minimal hand-drawn ink frame that holds the imp's typed lines: a rough, boiling ink
-    /// rectangle with rounded, imperfect corners over a faint paper fill. Not chrome, not a
-    /// modal pop-up, no portraits or buttons; just a stylised caption area consistent with the
-    /// doodle look (the one documented softening of the "no boxes" rule, see art-and-ui.md).
-    /// It fades in with a line and out when the words clear, following the reused NarratorView.
-    /// The text is drawn by the NarratorView positioned inside it; this only draws the frame.
+    /// A clean, rounded, hand-drawn ink frame that holds the imp's typed lines: softly rounded
+    /// corners over a faint paper fill, its ink border alive with a slight, controlled wobble
+    /// (a smooth breathing of the line, not a rough scribble and not a sterile vector rectangle).
+    /// Not chrome, not a modal pop-up, no portraits or buttons; the one documented softening of
+    /// the "no boxes" rule (see art-and-ui.md). It fades in with a line and out when it clears.
+    /// The NarratorView types inside it with an inner margin; this only draws the frame.
     /// </summary>
     public sealed class DialogueBox : MonoBehaviour
     {
@@ -19,23 +19,28 @@ namespace YourCall
         [SerializeField] private NarratorView _narrator;
 
         [Header("Frame")]
-        [SerializeField] private Vector2 _size = new Vector2(16f, 1.8f);
+        [SerializeField] private Vector2 _size = new Vector2(16f, 1.55f);
         [SerializeField] private Color _borderColor = Palette.Ink;
         [Tooltip("A hair lighter than the paper ground, so the caption area reads as its own page.")]
         [SerializeField] private Color _fillColor = new Color(0.980f, 0.968f, 0.936f, 1f);
-        [SerializeField] private float _borderWidth = 0.05f;
-        [SerializeField] private float _cornerRadius = 0.2f;
-        [SerializeField, Range(2, 10)] private int _cornerSegments = 4;
+        [SerializeField] private float _borderWidth = 0.048f;
+        [Tooltip("Softer, rounder corners than a sharp rectangle.")]
+        [SerializeField] private float _cornerRadius = 0.34f;
+        [SerializeField, Range(3, 16)] private int _cornerSegments = 8;
         [SerializeField] private int _sortingFill = 17;
         [SerializeField] private int _sortingBorder = 19;
-        [Tooltip("The living boil that makes the ink look drawn; also wobbles the corners.")]
-        [SerializeField] private bool _boil = true;
+
+        [Header("Living line (controlled wobble)")]
+        [Tooltip("How far the ink line breathes. Small: a living line, not a scribble.")]
+        [SerializeField] private float _wobbleAmplitude = 0.012f;
+        [SerializeField] private float _wobbleSpeed = 1.6f;
 
         [Header("Fade")]
         [SerializeField] private float _fadeSpeed = 5f;
 
         private SpriteRenderer _fill;
         private LineRenderer _border;
+        private Vector3[] _base;
         private float _alpha;
         private bool _built;
 
@@ -45,9 +50,10 @@ namespace YourCall
         {
             if (_built) return;
             _fill = MakeFill();
+            var pts = RoundedRect(_size * 0.995f, _cornerRadius, _cornerSegments);
+            _base = pts.ToArray();
             _border = InkLine.Create(transform, "Border", _inkMaterial, _borderWidth, _borderColor, _sortingBorder);
-            InkLine.SetPoints(_border, RoundedRect(_size * 0.995f, _cornerRadius, _cornerSegments));
-            if (_boil) _border.gameObject.AddComponent<LineBoil>().Capture();
+            InkLine.SetPoints(_border, pts);
             _alpha = 0f;
             Apply();
             _built = true;
@@ -58,6 +64,22 @@ namespace YourCall
             float target = (_narrator != null && _narrator.HasLine) ? 1f : 0f;
             _alpha = Mathf.MoveTowards(_alpha, target, Time.deltaTime * _fadeSpeed);
             Apply();
+            if (_alpha > 0.001f) Wobble();
+        }
+
+        // A smooth, position-coherent breathing of the border, so the loop stays closed and it
+        // reads as a living hand-drawn line rather than a boiling scribble.
+        private void Wobble()
+        {
+            if (_border == null || _base == null) return;
+            float t = Time.time * _wobbleSpeed;
+            for (int i = 0; i < _base.Length; i++)
+            {
+                Vector3 b = _base[i];
+                float ox = Mathf.Sin(t + b.x * 1.7f + b.y * 2.3f) * _wobbleAmplitude;
+                float oy = Mathf.Cos(t * 1.15f + b.x * 2.1f - b.y * 1.3f) * _wobbleAmplitude;
+                _border.SetPosition(i, new Vector3(b.x + ox, b.y + oy, 0f));
+            }
         }
 
         private SpriteRenderer MakeFill()
@@ -70,7 +92,7 @@ namespace YourCall
 
             var go = new GameObject("Fill");
             go.transform.SetParent(transform, false);
-            go.transform.localScale = new Vector3(_size.x * 0.96f, _size.y * 0.9f, 1f);
+            go.transform.localScale = new Vector3(_size.x * 0.965f, _size.y * 0.88f, 1f);
             var sr = go.AddComponent<SpriteRenderer>();
             sr.sprite = spr;
             sr.sortingOrder = _sortingFill;
