@@ -39,7 +39,7 @@ namespace YourCall
             foreach (var pos in _track.MainFigurePositions())
             {
                 var fig = Instantiate(_figurePrefab, pos, Quaternion.identity, container);
-                if (dilemma.FiguresBranded) fig.ShowHorns();   // the imp's branded wretches
+                if (dilemma.FiguresBranded) fig.Brand();   // the imp's branded wretches, marked by a red outline
                 _main.Add(fig);
             }
             _spur = Instantiate(_figurePrefab, _track.SpurFigurePosition, Quaternion.identity, container);

@@ -49,6 +49,7 @@ MonoBehaviour:
   _lineWidth: 0.045
   _sortingOrder: 10
   _boil: 1
+  _brandColor: {r: 0.667, g: 0.282, b: 0.227, a: 1}
   _headRadius: 0.12
   _hipY: 0.42
   _shoulderY: 0.66
@@ -61,3 +62,4 @@ MonoBehaviour:
   _foldAngle: 84
   _squash: 0.82
   _anticipation: 6
+  _startHidden: 0

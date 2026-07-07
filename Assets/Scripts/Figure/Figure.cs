@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace YourCall
 {
     /// <summary>
     /// A clean single-silhouette stick figure drawn as one continuous ink stroke with
     /// rounded joints and no joint dots. Built to be reposed later on Unity 2D Animation;
-    /// for the prototype it is a LineRenderer (plus optional horn strokes), so it strikes,
-    /// folds and fades as one unit and leaves nothing behind. One component, one job.
+    /// for the prototype it is a LineRenderer whose outline can be recoloured to a brand red for the
+    /// damned wretches, so it strikes, folds and fades as one unit and leaves nothing behind. One job.
     /// </summary>
     public class Figure : MonoBehaviour
     {
@@ -18,8 +19,9 @@ namespace YourCall
         [SerializeField] private float _lineWidth = 0.045f;
         [SerializeField] private int _sortingOrder = 10;
         [SerializeField] private bool _boil = true;
-        [Tooltip("Colour of the branded wretches' devil horns. Red is a documented second colour exception; see decisions.md.")]
-        [SerializeField] private Color _hornColor = Palette.InkRed;
+        [Tooltip("Outline colour for the branded wretches (the whose-life-counts second trolley): a deliberate red that marks the damned five. Reuses the button red; see art-and-ui.md.")]
+        [FormerlySerializedAs("_hornColor")]
+        [SerializeField] private Color _brandColor = Palette.InkRed;
 
         [Header("Proportions (feet at local origin, +y up)")]
         [SerializeField] private float _headRadius = 0.12f;
@@ -46,8 +48,7 @@ namespace YourCall
         private LineBoil _boilComp;
         private Color _baseColor;
         private bool _built;
-        private bool _hornsOn;
-        private readonly List<LineRenderer> _horns = new List<LineRenderer>();
+        private bool _branded;
 
         public bool IsStruck { get; private set; }
 
@@ -68,39 +69,25 @@ namespace YourCall
             _built = true;
         }
 
-        /// <summary>Set the ink alpha directly (body and any horns), so the figure can ink in or
-        /// dissolve without folding (the player waking, or quietly stepping out of a scene). Strike
-        /// still owns the fold-and-fade on impact.</summary>
+        /// <summary>Set the ink alpha directly, so the figure can ink in or dissolve without folding
+        /// (the player waking, or quietly stepping out of a scene). Strike still owns the fold-and-fade
+        /// on impact.</summary>
         public void SetInkAlpha(float alpha)
         {
             if (!_built) Build();
             float a = Mathf.Clamp01(alpha);
             if (_lr != null) InkLine.SetAlpha(_lr, _baseColor, a);
-            for (int i = 0; i < _horns.Count; i++) InkLine.SetAlpha(_horns[i], _hornColor, a);
         }
 
-        /// <summary>Add small doodle devil horns as their own red strokes, parented to the figure so
-        /// they fold and fade with it. Red is a documented second colour exception (see
-        /// decisions.md); a per-dilemma gag on the branded wretches only.</summary>
-        public void ShowHorns()
+        /// <summary>Mark this figure as one of the damned: recolour its whole outline to the brand
+        /// colour (red), used for the branded wretches in the whose-life-counts second trolley. A
+        /// deliberate red on the black-ink base (see art-and-ui.md); the innocent figures stay black.</summary>
+        public void Brand()
         {
             if (!_built) Build();
-            if (_hornsOn) return;
-            _hornsOn = true;
-            Vector2 c = new Vector2(0f, _neckY + _headRadius);
-            float r = _headRadius, hl = r * 1.15f;
-            Vector2 baseR = c + r * AngleDir(55f);
-            AddHorn("HornR", baseR, new Vector2(baseR.x + hl * 0.34f, baseR.y + hl * 0.94f));
-            Vector2 baseL = c + r * AngleDir(125f);
-            AddHorn("HornL", baseL, new Vector2(baseL.x - hl * 0.34f, baseL.y + hl * 0.94f));
-        }
-
-        private void AddHorn(string name, Vector2 basePt, Vector2 tip)
-        {
-            var lr = InkLine.Create(transform, name, _inkMaterial, _lineWidth, _hornColor, _sortingOrder + 1);
-            InkLine.SetPoints(lr, new List<Vector3> { new Vector3(basePt.x, basePt.y, 0f), new Vector3(tip.x, tip.y, 0f) });
-            if (_boil) lr.gameObject.AddComponent<LineBoil>().Capture();
-            _horns.Add(lr);
+            _branded = true;
+            _baseColor = _brandColor;
+            if (_lr != null) InkLine.SetColor(_lr, _brandColor);
         }
 
         private List<Vector3> BuildStroke()
@@ -135,13 +122,12 @@ namespace YourCall
             return new Vector2(Mathf.Cos(a), Mathf.Sin(a));
         }
 
-        /// <summary>Fold and fade as one unit (body and horns together), then leave nothing behind.</summary>
+        /// <summary>Fold and fade as one unit, then leave nothing behind.</summary>
         public void Strike(float foldDuration)
         {
             if (IsStruck) return;
             IsStruck = true;
             if (_boilComp != null) _boilComp.enabled = false;
-            for (int i = 0; i < _horns.Count; i++) { var b = _horns[i].GetComponent<LineBoil>(); if (b != null) b.enabled = false; }
             StartCoroutine(FoldAndFade(Mathf.Max(foldDuration, 0.05f)));
         }
 
@@ -166,11 +152,9 @@ namespace YourCall
                 transform.localScale = Vector3.Lerp(s0, s1, k);
                 float fadeK = EaseUtil.Clamp01((t - dur * 0.25f) / (dur * 0.75f));
                 InkLine.SetAlpha(_lr, _baseColor, 1f - fadeK);
-                for (int i = 0; i < _horns.Count; i++) InkLine.SetAlpha(_horns[i], _hornColor, 1f - fadeK);
                 yield return null;
             }
             InkLine.SetAlpha(_lr, _baseColor, 0f);
-            for (int i = 0; i < _horns.Count; i++) InkLine.SetAlpha(_horns[i], _hornColor, 0f);
             gameObject.SetActive(false);
         }
     }
