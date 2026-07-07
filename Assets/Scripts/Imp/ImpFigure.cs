@@ -85,6 +85,9 @@ namespace YourCall
 
         // ---------- Presence ----------
 
+        /// <summary>Visible and settled (done appearing), so a roamer knows it may move it.</summary>
+        public bool Present => _built && !_appearing && _alpha > 0.5f;
+
         public void SetAlpha(float a) { _alpha = Mathf.Clamp01(a); ApplyAlpha(); }
 
         /// <summary>Scribble into being: a quick alpha in with a scale pop and a little wobble.</summary>

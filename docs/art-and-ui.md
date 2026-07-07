@@ -24,10 +24,11 @@ What this does not mean: added UI chrome, decorative flourishes that compete for
 The interface recedes so the void and the figures dominate. Concretely:
 - **No large HUD.** No persistent on-screen meters, bars, or status clusters. In particular, the moral profile is **not** shown as a running gauge during play.
 - **No big menus.** Menus are minimal and sparse — only what's essential.
-- **No pop-ups / dialog boxes.** Prefer in-world, diegetic presentation over modal windows.
+- **No pop-ups / dialog boxes as chrome.** Prefer in-world, diegetic presentation over modal windows. One deliberate, minimal exception: the narration is held in a **hand-drawn ink dialogue box** (a stylised text frame in the doodle line, faint paper fill, rough boiling ink border with imperfect corners) at the bottom of the screen. It is not a UI panel, not a modal, and carries no portraits or buttons; it is just a framed caption area in the ink aesthetic. A stylised ink frame for the narrator's words is allowed; heavy chrome and modal pop-ups still are not.
 - **Minimal on-screen detail.** Every UI element must justify its presence; when in doubt, remove it.
 - The choice presentation itself should feel like part of the scene, not a UI overlay stapled on top.
 
 ## Audio
 - **Text-first.** Ship with text; full voice acting for the narrator is a later, high-impact upgrade (VO freezes the script, so keep writing fluid by staying text-only for now).
 - Music and SFX carry mood in the meantime; keep them spare to match the visual minimalism.
+- **Current placeholders.** A single looped background track plays quietly under everything (a low default level, tunable in the Inspector). The imp has a **gibberish blip voice**: as its lines type, short pitched blips fire every couple of characters with a little random pitch each time (Animal Crossing / Undertale style), skipping spaces and newlines and stopping the moment a line finishes or is advanced. Both the track and the blips are placeholders, easy to swap later.
