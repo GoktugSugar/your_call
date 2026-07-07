@@ -6,9 +6,10 @@ namespace YourCall
 {
     /// <summary>
     /// The death, half remembered: a few quick ink flashes over black (lights bearing down, a
-    /// swerve, the hit), a jolt, then a dissolve up into the white void. Impressionistic and
-    /// cheap on purpose, fragmentary because he barely has it himself. The flashes are pale
-    /// ink on the dark wash, so nothing colour enters and the amber stays reserved.
+    /// swerve, the hit), a jolt, then a cut to black. The waking beat clears the black into the
+    /// void, so the dissolve reads as him coming to. Impressionistic and cheap on purpose,
+    /// fragmentary because he barely has it himself. The flashes are pale ink on the dark wash,
+    /// so nothing colour enters and the amber stays reserved.
     /// </summary>
     public sealed class CrashFlashBeat : SequenceBeat
     {
@@ -26,7 +27,6 @@ namespace YourCall
         [SerializeField] private float _impactDur = 0.5f;
         [SerializeField] private float _gapDur = 0.08f;
         [SerializeField] private float _holdBlack = 0.6f;
-        [SerializeField] private float _revealDuration = 1.4f;
 
         [Header("Impact")]
         [SerializeField] private float _shakeAmp = 0.35f;
@@ -48,11 +48,12 @@ namespace YourCall
             yield return new WaitForSeconds(_gapDur);
             yield return Impact();
 
+            // Cut to black and hold. The waking beat owns the clear into the void, so the
+            // dissolve reads as him coming to rather than a scene transition.
             if (ctx.Fade != null)
             {
                 ctx.Fade.Cover(_darkColor);
                 yield return new WaitForSeconds(_holdBlack);
-                yield return ctx.Fade.FadeTo(0f, _revealDuration);
             }
 
             if (_container != null) Destroy(_container.gameObject);

@@ -174,6 +174,7 @@ MonoBehaviour:
     PreStatsBeat: 0.9
     StatsFade: 0.5
     EndInputDelay: 0.5
+    ReactionHold: 1.1
   _statsHideFade: 0.6
   _deactivateStationAtEnd: 1
 --- !u!1 &43129369
@@ -506,10 +507,16 @@ MonoBehaviour:
   _sortingOrder: 14
   _boil: 1
   _startHidden: 1
-  _bobAmplitude: 0.05
-  _bobPeriod: 2.3
-  _speakBob: 0.06
-  _speakPeriod: 0.42
+  _scale: 1.55
+  _bobAmplitude: 0.06
+  _bobPeriod: 2.4
+  _swayAngle: 3.5
+  _swayPeriod: 3.1
+  _breathAmount: 0.03
+  _breathPeriod: 2.7
+  _speakBob: 0.05
+  _speakLean: 4
+  _speakPeriod: 0.5
   _popScaleFrom: 0.15
   _popWobble: 10
   _voice: {fileID: 2112542512}
@@ -522,134 +529,12 @@ Transform:
   m_GameObject: {fileID: 669036748}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.7, y: -1.3, z: 0}
-  m_LocalScale: {x: 1.05, y: 1.05, z: 1}
+  m_LocalPosition: {x: -5.4, y: -1.65, z: 0}
+  m_LocalScale: {x: 1.55, y: 1.55, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &835636266
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 835636267}
-  - component: {fileID: 835636268}
-  m_Layer: 0
-  m_Name: 5_DismissAvatar
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &835636267
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 835636266}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1207684725}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &835636268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 835636266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7919d84e2b0310443b79022f1605ecf9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::YourCall.FigureFadeBeat
-  _note: 
-  _figure: {fileID: 926748916}
-  _fadeIn: 0
-  _duration: 1
-  _preDelay: 0
-  _deactivateAtEnd: 1
---- !u!1001 &926748915
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1666028741476117448, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
-      propertyPath: _startHidden
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1907927773220615048, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
-      propertyPath: m_Name
-      value: PlayerAvatar
-      objectReference: {fileID: 0}
-    - target: {fileID: 4441501413402334798, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4441501413402334798, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4441501413402334798, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4441501413402334798, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4441501413402334798, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4441501413402334798, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4441501413402334798, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4441501413402334798, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4441501413402334798, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4441501413402334798, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
---- !u!114 &926748916 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1666028741476117448, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
-  m_PrefabInstance: {fileID: 926748915}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71d6048cf070537458bc133e9d0ae65f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Figure
 --- !u!1 &1005770901
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,13 +580,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.VoidWakeBeat
   _note: 
-  _avatar: {fileID: 926748916}
-  _preDelay: 0.4
-  _fadeIn: 1.6
-  _swayAngle: 9
-  _swayPeriod: 1.5
-  _settle: 0.7
-  _holdAfter: 0.5
+  _preDelay: 0.5
+  _wakeDuration: 2.8
+  _holdAfter: 0.35
+  _washFlicker: 0.18
+  _washFlickerCycles: 3.5
+  _settleSway: 0.35
+  _settleFreqX: 0.7
+  _settleFreqY: 0.45
 --- !u!1 &1018129562
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,6 +643,7 @@ MonoBehaviour:
     PreStatsBeat: 0.9
     StatsFade: 0.5
     EndInputDelay: 0.5
+    ReactionHold: 1.1
   _statsHideFade: 0.6
   _deactivateStationAtEnd: 1
 --- !u!1 &1197559629
@@ -906,7 +793,6 @@ Transform:
   - {fileID: 1005770902}
   - {fileID: 1323068931}
   - {fileID: 522489822}
-  - {fileID: 835636267}
   - {fileID: 8299689}
   - {fileID: 1207094129}
   - {fileID: 2030758368}
@@ -1235,7 +1121,6 @@ MonoBehaviour:
   - {fileID: 1005770903}
   - {fileID: 1323068932}
   - {fileID: 522489823}
-  - {fileID: 835636268}
   - {fileID: 8299690}
   - {fileID: 1207094130}
   - {fileID: 2030758369}
@@ -1849,6 +1734,7 @@ MonoBehaviour:
     PreStatsBeat: 0.9
     StatsFade: 0.5
     EndInputDelay: 0.5
+    ReactionHold: 1.1
   _statsHideFade: 0.6
   _deactivateStationAtEnd: 1
 --- !u!1 &2048855769
@@ -1995,7 +1881,6 @@ MonoBehaviour:
   _impactDur: 0.5
   _gapDur: 0.08
   _holdBlack: 0.6
-  _revealDuration: 1.4
   _shakeAmp: 0.35
 --- !u!1 &2112542511
 GameObject:
@@ -2103,7 +1988,6 @@ SceneRoots:
   - {fileID: 1750045011}
   - {fileID: 2048855771}
   - {fileID: 340378430}
-  - {fileID: 926748915}
   - {fileID: 2064026841}
   - {fileID: 43129370}
   - {fileID: 1329868700}

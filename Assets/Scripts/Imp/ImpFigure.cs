@@ -22,13 +22,27 @@ namespace YourCall
         [SerializeField] private bool _boil = true;
         [SerializeField] private bool _startHidden = true;
 
-        [Header("Life")]
-        [Tooltip("Idle bob height.")]
-        [SerializeField] private float _bobAmplitude = 0.05f;
-        [SerializeField] private float _bobPeriod = 2.3f;
-        [Tooltip("Extra bob while a line is inking on, so the imp reads as the one speaking.")]
-        [SerializeField] private float _speakBob = 0.06f;
-        [SerializeField] private float _speakPeriod = 0.42f;
+        [Header("Size")]
+        [Tooltip("Overall size, applied to the imp's transform. Tune to taste.")]
+        [SerializeField] private float _scale = 1.55f;
+
+        [Header("Idle life")]
+        [Tooltip("Slow vertical bob height.")]
+        [SerializeField] private float _bobAmplitude = 0.06f;
+        [SerializeField] private float _bobPeriod = 2.4f;
+        [Tooltip("Gentle rocking lean, in degrees.")]
+        [SerializeField] private float _swayAngle = 3.5f;
+        [SerializeField] private float _swayPeriod = 3.1f;
+        [Tooltip("Subtle breath: a small scale pulse.")]
+        [SerializeField] private float _breathAmount = 0.03f;
+        [SerializeField] private float _breathPeriod = 2.7f;
+
+        [Header("Speaking")]
+        [Tooltip("Extra bob while a line inks on, so the imp reads as the one speaking.")]
+        [SerializeField] private float _speakBob = 0.05f;
+        [Tooltip("Lean it throws while speaking, in degrees, like a gesture.")]
+        [SerializeField] private float _speakLean = 4f;
+        [SerializeField] private float _speakPeriod = 0.5f;
 
         [Header("Pop in")]
         [SerializeField] private float _popScaleFrom = 0.15f;
@@ -42,6 +56,7 @@ namespace YourCall
         private float _alpha;
         private float _speakT;
         private bool _speaking;
+        private bool _appearing;
         private bool _built;
 
         private void Awake() { Build(); }
@@ -62,6 +77,7 @@ namespace YourCall
             BuildLegs();
             BuildTail();
 
+            transform.localScale = new Vector3(_scale, _scale, 1f);
             _alpha = _startHidden ? 0f : 1f;
             ApplyAlpha();
             _built = true;
@@ -75,6 +91,7 @@ namespace YourCall
         public IEnumerator PopIn(float duration)
         {
             if (!_built) Build();
+            _appearing = true;
             float d = Mathf.Max(duration, 0.05f), t = 0f;
             while (t < d)
             {
@@ -89,19 +106,30 @@ namespace YourCall
             _rig.localScale = Vector3.one;
             _rig.localRotation = Quaternion.identity;
             SetAlpha(1f);
+            _appearing = false;
         }
 
         private void OnSpeaking(bool on) { _speaking = on; }
 
         private void Update()
         {
-            if (!_built || _rig == null) return;
+            if (!_built || _rig == null || _appearing || _alpha <= 0.001f) return;
             _speakT = Mathf.MoveTowards(_speakT, _speaking ? 1f : 0f, Time.deltaTime / 0.18f);
 
-            float y = Mathf.Sin(Time.time * (Mathf.PI * 2f / Mathf.Max(_bobPeriod, 0.01f))) * _bobAmplitude;
-            y += Mathf.Sin(Time.time * (Mathf.PI * 2f / Mathf.Max(_speakPeriod, 0.01f))) * _speakBob * _speakT;
-            var p = _rig.localPosition;
-            _rig.localPosition = new Vector3(p.x, y, p.z);
+            float t = Time.time;
+            float speakOsc = Mathf.Sin(t * (Mathf.PI * 2f / Mathf.Max(_speakPeriod, 0.01f)));
+            // Slow idle bob, plus a livelier nod while speaking.
+            float bob = Mathf.Sin(t * (Mathf.PI * 2f / Mathf.Max(_bobPeriod, 0.01f))) * _bobAmplitude
+                        + speakOsc * _speakBob * _speakT;
+            // Gentle idle rocking, plus a lean it throws as a gesture while speaking.
+            float lean = Mathf.Sin(t * (Mathf.PI * 2f / Mathf.Max(_swayPeriod, 0.01f))) * _swayAngle
+                         + speakOsc * _speakLean * _speakT;
+            // A subtle breath.
+            float breath = 1f + Mathf.Sin(t * (Mathf.PI * 2f / Mathf.Max(_breathPeriod, 0.01f))) * _breathAmount;
+
+            _rig.localPosition = new Vector3(0f, bob, 0f);
+            _rig.localRotation = Quaternion.Euler(0f, 0f, lean);
+            _rig.localScale = new Vector3(breath, breath, 1f);
         }
 
         // ---------- Drawing ----------

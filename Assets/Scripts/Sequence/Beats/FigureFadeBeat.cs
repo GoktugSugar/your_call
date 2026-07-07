@@ -4,10 +4,8 @@ using UnityEngine;
 namespace YourCall
 {
     /// <summary>
-    /// Quietly ink a figure in or out (no fold, no strike). The opening uses it to dissolve
-    /// the player avatar as the first test begins: the man in the void steps out of the
-    /// picture and becomes the hand on the lever. Reusable for any figure that should appear
-    /// or withdraw between beats.
+    /// Quietly ink a figure in or out (no fold, no strike): a small, general sequence tool for
+    /// any figure that should appear or withdraw between beats, without the Figure's fold.
     /// </summary>
     public sealed class FigureFadeBeat : SequenceBeat
     {

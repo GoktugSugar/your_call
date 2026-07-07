@@ -78,12 +78,16 @@ namespace YourCall
                 yield return _presenter.PlayConsequence(choice, outcome);
                 yield return new WaitForSeconds(_t.PreStatsBeat);
 
-                // Stats + the narrator's reaction over the dimmed world
+                // The imp's reaction plays over the world and resolves on its own, then clears,
+                // so it never shares the screen or a single click with the stats panel.
                 Phase = DilemmaPhase.Stats;
-                yield return _stats.Reveal(outcome.Report, _t.StatsFade);
                 _narrator.Show(outcome.NarratorReact);
+                while (_narrator.IsShowing) yield return null;
+                yield return new WaitForSeconds(_t.ReactionHold);
+                _narrator.Clear();
 
-                // End: hand back once the player advances
+                // The stats panel then presents alone and owns the input: one advance dismisses it.
+                yield return _stats.Reveal(outcome.Report, _t.StatsFade);
                 Phase = DilemmaPhase.End;
                 yield return new WaitForSeconds(_t.EndInputDelay);
                 while (!PointerInput.AdvancePressed) yield return null;

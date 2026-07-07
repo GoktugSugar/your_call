@@ -22,6 +22,8 @@ namespace YourCall
         public float StatsFade;
         [Tooltip("Input lockout after the stats appear, before an advance is accepted.")]
         public float EndInputDelay;
+        [Tooltip("Beat the imp's reaction holds after it finishes, before the stats take over.")]
+        public float ReactionHold;
 
         public static DilemmaTiming Default => new DilemmaTiming
         {
@@ -30,6 +32,7 @@ namespace YourCall
             PreStatsBeat = 0.9f,
             StatsFade = 0.5f,
             EndInputDelay = 0.5f,
+            ReactionHold = 1.1f,
         };
     }
 }

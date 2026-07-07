@@ -4,10 +4,12 @@
 1. Narrator presents a dilemma.
 2. Player chooses (one of the four verbs below).
 3. Animated consequence plays, **scaled to the dilemma's weight** — a quick 2–4s beat for light ones, a full 5–10s+ scene for heavy ones.
-4. Display-only stats: "here's how others chose."
-5. Narrator reacts; the choice feeds the moral profile (see `narrative.md`).
+4. The narrator reacts to the choice, over the world, and resolves on its own.
+5. Display-only stats then present **on their own**: "here's how others chose." One input dismisses them, and the choice feeds the moral profile (see `narrative.md`). The reaction and the stats never share the screen or a click: the line finishes and clears before the panel takes over, and while the panel is up it is the only thing listening for input.
 
 **No fail state.** The player can't lose or die. Choices only steer which ending is reached.
+
+**First person, no avatar.** The game is played from the protagonist's point of view. He is never drawn as a figure on screen; the void is his perspective, the guide (the imp) addresses the player directly, and the stick figures are always the *other* souls in a dilemma. See `narrative.md`.
 
 **The player is tested, never presiding.** The protagonist is a dead former judge, put through these dilemmas by the guide; he holds no office in the void. Because he is dead, no dilemma stakes his own survival. Where a dilemma's original form is about the chooser's own skin (like the viral blue/red button), the stakes are reframed onto another soul, and the guide frames it as forcing this former judge to choose for someone else (needling the life he spent deciding what people deserved), never as an office he holds. He is always the one being examined, not an authority over the afterlife. Copy that makes him sound like he presides, rules, or sentences is a framing bug.
 

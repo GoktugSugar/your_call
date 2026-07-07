@@ -32,6 +32,7 @@ namespace YourCall
         [SerializeField] private float _preStatsBeat = 0.9f;
         [SerializeField] private float _statsFade = 0.5f;
         [SerializeField] private float _endInputDelay = 0.5f;
+        [SerializeField] private float _reactionHold = 1.1f;
 
         private DilemmaRunner _runner;
 
@@ -59,6 +60,7 @@ namespace YourCall
             PreStatsBeat = _preStatsBeat,
             StatsFade = _statsFade,
             EndInputDelay = _endInputDelay,
+            ReactionHold = _reactionHold,
         };
 
         private IEnumerator RunStandalone()
