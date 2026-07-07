@@ -26,6 +26,7 @@ A short authored sequence introduces the imp and chains the first dilemmas with 
 5. **The taunt:** the imp dismisses that as too easy and pivots to a harder one.
 6. **Second dilemma:** the whose-life-counts trolley (see `gameplay.md`), where the clean headcount no longer settles it.
 7. **Transition** into the blue/red button dilemma as the next beat.
+8. **Transition and the last bear.** A short imp hand-off, then the **man and the last bear** (see `gameplay.md`): the guide puts a gun in the dead judge's hands and makes him fire on one of two, needling him as ever about the life he spent deciding what others deserved, only now the other life on the scale is a whole species' future rather than one more person. Reached after the blue/red button, it widens the questions to non-human life and to the generations not yet born.
 
 ## Ending
 Reflects the player's **moral profile** (below). Replay value comes from different profiles → different endings and different narrator treatment.
