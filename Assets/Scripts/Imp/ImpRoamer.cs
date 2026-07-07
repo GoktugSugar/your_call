@@ -42,6 +42,19 @@ namespace YourCall
         [Tooltip("Randomises each restless wait by this fraction, so the hopping never feels metronomic.")]
         [SerializeField, Range(0f, 0.8f)] private float _restlessJitter = 0.35f;
 
+        [Header("Teleport (menu; used instead of hopping)")]
+        [Tooltip("On: the imp moves on its own (hops for each new box, and restlessly). Off: it only " +
+                 "moves when something calls Teleport() (the menu barker does, after a bark clears).")]
+        [SerializeField] private bool _autoHop = true;
+        [Tooltip("A small ink poof at the spots it leaves and lands on when it teleports.")]
+        [SerializeField] private bool _teleportPoof = true;
+        [SerializeField] private Material _inkMaterial;
+        [SerializeField] private Color _poofColor = Palette.Muted;
+        [SerializeField] private float _poofRadius = 0.45f;
+        [SerializeField] private float _poofDuration = 0.35f;
+        [SerializeField] private int _poofStrokes = 7;
+        [SerializeField] private int _poofSorting = 15;
+
         [Header("Safety")]
         [Tooltip("How often to check that content has not appeared over the imp, and hop it clear.")]
         [SerializeField] private float _blockedCheckInterval = 0.2f;
@@ -55,12 +68,29 @@ namespace YourCall
         private void OnEnable() { if (_voice != null) _voice.PageChanged += OnPage; }
         private void OnDisable() { if (_voice != null) _voice.PageChanged -= OnPage; }
 
-        private void OnPage() { Reposition(preferFar: true); }
+        private void OnPage() { if (_autoHop) Reposition(preferFar: true); }
+
+        /// <summary>Instantly relocate to a fresh clear spot (no hop), with an optional ink poof at the
+        /// spot left and the spot landed on. The menu uses this after a bark; the opening hops instead.</summary>
+        public void Teleport()
+        {
+            if (_imp != null && !_imp.Present) return;
+            if (!TryPick(preferFar: true, out Vector2 target)) return;
+            Vector3 from = transform.position;
+            var to = new Vector3(target.x, target.y, from.z);
+            if (_teleportPoof && _inkMaterial != null)
+            {
+                InkPoof.Spawn(from, _inkMaterial, _poofColor, _poofRadius, _poofDuration, _poofStrokes, 0.045f, _poofSorting);
+                InkPoof.Spawn(to, _inkMaterial, _poofColor, _poofRadius, _poofDuration, _poofStrokes, 0.045f, _poofSorting);
+            }
+            transform.position = to;
+        }
 
         private void Update()
         {
             if (_hopping) return;
             if (_imp != null && !_imp.Present) return;
+            if (!_autoHop) return;   // the menu drives movement via Teleport(); it does not hop on its own
             _blockTimer += Time.deltaTime;
             if (_blockTimer >= _blockedCheckInterval)
             {

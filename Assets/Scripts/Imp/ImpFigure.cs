@@ -54,8 +54,17 @@ namespace YourCall
         [Tooltip("Optional: the narrator line this imp mouths, so it stirs while text inks on.")]
         [SerializeField] private NarratorView _voice;
 
+        [Header("Expressions (revertible; off keeps the single default face)")]
+        [Tooltip("Master toggle. Off: the imp keeps its single hand-drawn face, exactly as before. " +
+                 "On: the face is drawn per the current expression, and a bark can change it.")]
+        [SerializeField] private bool _useExpressions = false;
+        [Tooltip("The face shown when nothing sets another (the neutral grin).")]
+        [SerializeField] private ImpExpression _defaultExpression = ImpExpression.Grin;
+
         private Transform _rig;
         private readonly List<LineRenderer> _strokes = new List<LineRenderer>();
+        private LineRenderer _eyeL, _eyeR, _mouth;   // expression face strokes (only when _useExpressions)
+        private ImpExpression _expression;
         private float _alpha;
         private float _speakT;
         private bool _speaking;
@@ -140,11 +149,13 @@ namespace YourCall
 
         // ---------- Drawing ----------
 
-        private LineRenderer Stroke(string name, IList<Vector3> pts, float width)
+        private LineRenderer Stroke(string name, IList<Vector3> pts, float width) => Stroke(name, pts, width, _boil);
+
+        private LineRenderer Stroke(string name, IList<Vector3> pts, float width, bool boil)
         {
             var lr = InkLine.Create(_rig, name, _inkMaterial, width, _color, _sortingOrder);
             InkLine.SetPoints(lr, pts);
-            if (_boil) lr.gameObject.AddComponent<LineBoil>().Capture();
+            if (boil) lr.gameObject.AddComponent<LineBoil>().Capture();
             _strokes.Add(lr);
             return lr;
         }
@@ -189,13 +200,83 @@ namespace YourCall
 
         private void BuildFace()
         {
-            // Two slanted eyes and a wide little grin: mischief, not menace.
-            Stroke("EyeL", new List<Vector3> { new Vector3(-0.10f, 0.66f, 0f), new Vector3(-0.03f, 0.62f, 0f) }, _detailWidth);
-            Stroke("EyeR", new List<Vector3> { new Vector3(0.10f, 0.66f, 0f), new Vector3(0.03f, 0.62f, 0f) }, _detailWidth);
+            if (!_useExpressions)
+            {
+                // Original single face: two slanted eyes and a wide little grin, mischief not menace.
+                Stroke("EyeL", new List<Vector3> { new Vector3(-0.10f, 0.66f, 0f), new Vector3(-0.03f, 0.62f, 0f) }, _detailWidth);
+                Stroke("EyeR", new List<Vector3> { new Vector3(0.10f, 0.66f, 0f), new Vector3(0.03f, 0.62f, 0f) }, _detailWidth);
+                var grin = new List<Vector3>();
+                InkLine.AddArc(grin, new Vector2(0f, 0.60f), 0.09f, 210f, 330f, 10);
+                Stroke("Grin", grin, _detailWidth);
+                return;
+            }
 
-            var grin = new List<Vector3>();
-            InkLine.AddArc(grin, new Vector2(0f, 0.60f), 0.09f, 210f, 330f, 10);
-            Stroke("Grin", grin, _detailWidth);
+            // Expression-driven face: three re-pointable strokes (no boil, so redrawing per expression is clean).
+            _eyeL = Stroke("EyeL", new List<Vector3> { Vector3.zero, Vector3.zero }, _detailWidth, false);
+            _eyeR = Stroke("EyeR", new List<Vector3> { Vector3.zero, Vector3.zero }, _detailWidth, false);
+            _mouth = Stroke("Mouth", new List<Vector3> { Vector3.zero, Vector3.zero }, _detailWidth, false);
+            _expression = _defaultExpression;
+            ApplyExpression(_expression);
+        }
+
+        // ---------- Expressions (self-contained; only active when _useExpressions) ----------
+
+        /// <summary>Set the imp's face. A no-op unless expressions are switched on, so it stays revertible.</summary>
+        public void SetExpression(ImpExpression e)
+        {
+            if (!_useExpressions || !_built) return;
+            _expression = e;
+            ApplyExpression(e);
+        }
+
+        private void ApplyExpression(ImpExpression e)
+        {
+            if (_eyeL == null || _eyeR == null || _mouth == null) return;
+            List<Vector3> eyeL, eyeR, mouth;
+            FaceFor(e, out eyeL, out eyeR, out mouth);
+            InkLine.SetPoints(_eyeL, eyeL);
+            InkLine.SetPoints(_eyeR, eyeR);
+            InkLine.SetPoints(_mouth, mouth);
+        }
+
+        // Eyes-and-mouth point sets per expression, on-model with the imp's head (face centred ~(0,0.62)).
+        private static void FaceFor(ImpExpression e, out List<Vector3> eyeL, out List<Vector3> eyeR, out List<Vector3> mouth)
+        {
+            eyeL = new List<Vector3>();
+            eyeR = new List<Vector3>();
+            mouth = new List<Vector3>();
+            switch (e)
+            {
+                case ImpExpression.WideGrin:
+                    eyeL.Add(new Vector3(-0.11f, 0.67f, 0f)); eyeL.Add(new Vector3(-0.03f, 0.625f, 0f));
+                    eyeR.Add(new Vector3(0.11f, 0.67f, 0f));  eyeR.Add(new Vector3(0.03f, 0.625f, 0f));
+                    InkLine.AddArc(mouth, new Vector2(0f, 0.61f), 0.13f, 200f, 340f, 12);
+                    break;
+                case ImpExpression.Smug:
+                    eyeL.Add(new Vector3(-0.11f, 0.645f, 0f)); eyeL.Add(new Vector3(-0.03f, 0.645f, 0f));
+                    eyeR.Add(new Vector3(0.03f, 0.645f, 0f));  eyeR.Add(new Vector3(0.11f, 0.645f, 0f));
+                    mouth.Add(new Vector3(-0.08f, 0.575f, 0f));
+                    mouth.Add(new Vector3(0.02f, 0.57f, 0f));
+                    mouth.Add(new Vector3(0.085f, 0.605f, 0f));
+                    break;
+                case ImpExpression.Glare:
+                    eyeL.Add(new Vector3(-0.12f, 0.685f, 0f)); eyeL.Add(new Vector3(-0.02f, 0.625f, 0f));
+                    eyeR.Add(new Vector3(0.12f, 0.685f, 0f));  eyeR.Add(new Vector3(0.02f, 0.625f, 0f));
+                    mouth.Add(new Vector3(-0.07f, 0.55f, 0f));
+                    mouth.Add(new Vector3(0f, 0.58f, 0f));
+                    mouth.Add(new Vector3(0.07f, 0.55f, 0f));
+                    break;
+                case ImpExpression.Surprised:
+                    InkLine.AddArc(eyeL, new Vector2(-0.065f, 0.645f), 0.028f, 0f, 360f, 12);
+                    InkLine.AddArc(eyeR, new Vector2(0.065f, 0.645f), 0.028f, 0f, 360f, 12);
+                    InkLine.AddArc(mouth, new Vector2(0f, 0.555f), 0.04f, 0f, 360f, 14);
+                    break;
+                default: // Grin: the original face
+                    eyeL.Add(new Vector3(-0.10f, 0.66f, 0f)); eyeL.Add(new Vector3(-0.03f, 0.62f, 0f));
+                    eyeR.Add(new Vector3(0.10f, 0.66f, 0f));  eyeR.Add(new Vector3(0.03f, 0.62f, 0f));
+                    InkLine.AddArc(mouth, new Vector2(0f, 0.60f), 0.09f, 210f, 330f, 10);
+                    break;
+            }
         }
 
         private void BuildArms()

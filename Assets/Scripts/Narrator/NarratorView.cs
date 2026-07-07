@@ -78,6 +78,17 @@ namespace YourCall
             if (_text != null) { _text.text = string.Empty; InkText.SetAlpha(_text, 0f); }
         }
 
+        /// <summary>Override the text area, so a frame (e.g. the speech bubble) can set a wrap width
+        /// and size itself to the result. Harmless if left alone; the dialogue box uses the defaults.</summary>
+        public void SetTextArea(Vector2 size)
+        {
+            if (_text != null) _text.rectTransform.sizeDelta = size;
+        }
+
+        /// <summary>The current line's rendered size (preferred width and wrapped height), valid once
+        /// Show has laid it out. Used by the speech bubble to fit around the text.</summary>
+        public Vector2 PreferredSize => _text != null ? new Vector2(_text.preferredWidth, _text.preferredHeight) : Vector2.zero;
+
         private IEnumerator Run(string authored)
         {
             List<string> pages = BuildPages(InkMarkup.ToRichText(authored));

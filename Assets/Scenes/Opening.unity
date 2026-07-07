@@ -341,8 +341,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 34166176a8897404fbc59dfb36232f0a, type: 3}
   - {fileID: 8300000, guid: 99126068376f7ae4da2c31a87391fd96, type: 3}
   _volume: 0.5
-  _pitchMin: 0.85
-  _pitchMax: 1.3
+  _pitchMin: 0.94
+  _pitchMax: 1.14
   _charsPerBlip: 2
 --- !u!82 &227835379
 AudioSource:
@@ -1061,6 +1061,8 @@ MonoBehaviour:
   _popScaleFrom: 0.15
   _popWobble: 10
   _voice: {fileID: 2112542512}
+  _useExpressions: 0
+  _defaultExpression: 0
 --- !u!4 &669036750
 Transform:
   m_ObjectHideFlags: 0
@@ -1103,6 +1105,16 @@ MonoBehaviour:
   _hopArc: 0.35
   _overshoot: 1.1
   _pickTries: 24
+  _restlessInterval: 0
+  _restlessJitter: 0.35
+  _autoHop: 1
+  _teleportPoof: 1
+  _inkMaterial: {fileID: 0}
+  _poofColor: {r: 0.604, g: 0.588, b: 0.549, a: 1}
+  _poofRadius: 0.45
+  _poofDuration: 0.35
+  _poofStrokes: 7
+  _poofSorting: 15
   _blockedCheckInterval: 0.2
 --- !u!1001 &735540910
 PrefabInstance:
