@@ -17,11 +17,11 @@ MonoBehaviour:
   _weight: 2
   _narratorPrompt: A gun, this time. Heavier than a lever, is it not. On your left,
     a man. Ordinary, unremarkable, one life among billions. On your right, a bear.
-    Not merely a bear. She is the [amber]last[/amber] female of her kind who can
-    still carry young. If she falls, her whole species ends with her, and it ends
-    [amber]forever[/amber]. Every one of them that might ever have lived, gone in
-    a single shot. One of the two must die, and the trigger belongs to you. So which
-    is it, judge. The one man, or [amber]every[/amber] bear that will ever be.
+    Not merely a bear. She is the [amber]last[/amber] female of her kind still able
+    to breed. If she falls, her whole species ends with her, and it ends [amber]forever[/amber].
+    Every one of them that might ever have lived, gone in a single shot. One of the
+    two must die, and the trigger belongs to you. So which is it, judge. The one
+    man, or [amber]every[/amber] bear that will ever be.
   _choices:
   - _id: shoot_man
     _label: Shoot the man
