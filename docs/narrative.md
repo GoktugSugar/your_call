@@ -1,12 +1,14 @@
 # Narrative & Moral Profile
 
 ## Setting
-A cosmic void / abstract nowhere, seen from the player's **own point of view**: the void is his perspective, not a stage he is shown standing on. Bonus: near-zero background art, so all focus lands on the figures and the single accent colour.
+A cosmic void / abstract nowhere, seen from the player's **own point of view**: the void is his perspective, not a stage he is shown standing on. Bonus: near-zero background art, so all focus lands on the figures and their sparing marks of colour.
 
 ## Narrator (the imp)
-A recurring **chaotic trickster**, now **embodied on screen as a small hand-drawn imp**: a little devil in pure black ink (horns, a tail, a grin), with no colour of its own (no amber). It scribbles into being in the void and from then on delivers all of the narration; the reused inked-in narrator text is its voice, and it stirs while the words appear so each line reads as coming from it. It is a **gleeful tormentor** who enjoys the player's confusion, teases, and savours the game it is running. It seems capricious but is secretly tracking every choice; the chaos is a mask, and the ending reveals how closely it was paying attention. It is the primary vehicle for the comedy and for reflecting the player's profile back at them.
+A recurring **chaotic trickster**, now **embodied on screen as a small hand-drawn imp**: a little devil in hand-drawn ink (horns, a tail, a grin). It scribbles into being in the void and from then on delivers all of the narration; the reused inked-in narrator text is its voice, and it stirs while the words appear so each line reads as coming from it. It is a **gleeful tormentor** who enjoys the player's confusion, teases, and savours the game it is running. It seems capricious but is secretly tracking every choice; the chaos is a mask, and the ending reveals how closely it was paying attention. It is the primary vehicle for the comedy and for reflecting the player's profile back at them.
 
 The imp **explains only a little and stays cryptic.** It lets the player know he is dead and that it has a few questions, a little game, for him, but stays vague about why he is here, what is at stake, what happens after, and what the imp itself is (cagey even about a name; see `open-questions.md`). Enough that he gets the gist, no more.
+
+**Register and language.** The imp's voice is dark comedy and the game is **not PG**: it swears where the tone fits (strong language used deliberately, not gratuitously). The clearest case is the secret **shoot-the-imp** ending (see `gameplay.md`): shot by the player, the imp rounds on the camera and says, exactly, *Oh, you absolute fucking rat. You shot me. You shot the fucking referee.* Then it fades and the credits roll.
 
 ## Player character
 A **blank *moral* slate over a fixed past.** He was a **judge** who died **drunk driving** — crashed his car and killed himself. That backstory is fixed; his moral *present* is blank, filled in by the player's choices (the game builds his profile from what the player does, not from a pre-written personality). **He is never rendered as a figure:** the game is his point of view, so the void is his perspective and the imp addresses the player directly (the camera). The stick figures on screen are the *other* souls in each dilemma, androgynous stand-ins, never him.
