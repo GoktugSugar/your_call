@@ -5,8 +5,8 @@ namespace YourCall
 {
     /// <summary>
     /// The shooting apparatus for the man versus the last bear: an ordinary man (a reused
-    /// <see cref="Figure"/>) and the last breeding female of her kind (a <see cref="BearFigure"/>
-    /// with a small cub cue) stand apart in the void, and the player aims a first person
+    /// <see cref="Figure"/>) and the last breeding female of her kind (a <see cref="BearFigure"/>)
+    /// stand apart in the void, and the player aims a first person
     /// <see cref="Crosshair"/> over them. Whichever the reticle is over takes the amber
     /// <see cref="AimHighlight"/> lock; a click fires at that target and raises a choice. The
     /// struck party then folds and fades with the shared death effect (no strike lines); the
@@ -46,6 +46,7 @@ namespace YourCall
 
         private Figure _man;
         private BearFigure _bear;
+        private GunSfx _gunSfx;
         private int _manIndex = -1;
         private int _bearIndex = -1;
         private bool _armed;
@@ -74,7 +75,12 @@ namespace YourCall
                 else if (choices[i].StruckParty == _bearParty) _bearIndex = i;
             }
 
-            if (_crosshair != null) { _crosshair.Fired += OnFired; _crosshair.Arm(false); }
+            if (_crosshair != null)
+            {
+                _crosshair.Fired += OnFired;
+                _crosshair.Arm(false);
+                _gunSfx = _crosshair.GetComponent<GunSfx>();   // the gun's shot lives with the gun
+            }
             if (_aimHighlight != null) _aimHighlight.Hide();
         }
 
@@ -87,8 +93,10 @@ namespace YourCall
 
         public override void OnCommitted(DilemmaChoice choice, int index)
         {
-            // Covers the text fallback path too: lock aiming down once a choice is committed.
+            // The trigger pull: fire the shot once, immediately, on any committed choice (covers the
+            // text fallback path too), and lock aiming down.
             _picked = true;
+            if (_gunSfx != null) _gunSfx.Fire();
             if (_crosshair != null) _crosshair.Arm(false);
             if (_aimHighlight != null) _aimHighlight.Hide();
         }
@@ -135,8 +143,8 @@ namespace YourCall
 
             yield return new WaitForSeconds(_resolveBeat);
 
-            // The death is only the fold-and-fall, no strike lines: the man, or the bear and her
-            // cub cue, fold and fade as one. The extinction weight lives in the imp's line.
+            // The death is only the fold-and-fall, no strike lines: the man, or the bear, folds
+            // and fades as one. The extinction weight lives in the imp's line.
             if (outcome.Strikes(_manParty) && _man != null) _man.Strike(_foldDuration);
             if (outcome.Strikes(_bearParty) && _bear != null) _bear.Strike(_foldDuration);
 
