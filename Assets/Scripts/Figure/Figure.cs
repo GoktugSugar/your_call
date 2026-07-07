@@ -44,6 +44,7 @@ namespace YourCall
         private LineBoil _boilComp;
         private Color _baseColor;
         private bool _built;
+        private bool _hornsOn;
 
         public bool IsStruck { get; private set; }
 
@@ -73,6 +74,17 @@ namespace YourCall
             if (_lr != null) InkLine.SetAlpha(_lr, _baseColor, Mathf.Clamp01(alpha));
         }
 
+        /// <summary>Add small doodle devil horns (plain black ink, part of the one stroke, so they
+        /// fold and fade with the figure). A per-dilemma gag on the branded wretches only.</summary>
+        public void ShowHorns()
+        {
+            if (!_built) Build();
+            if (_hornsOn) return;
+            _hornsOn = true;
+            InkLine.SetPoints(_lr, BuildStroke());   // rebuild the same stroke, now with horns
+            if (_boilComp != null) _boilComp.Capture();
+        }
+
         private List<Vector3> BuildStroke()
         {
             var pts = new List<Vector3>(32);
@@ -87,7 +99,8 @@ namespace YourCall
             // One stroke: left arm -> up the neck -> around the head -> torso -> both legs -> right arm.
             pts.Add(leftHand);
             pts.Add(shoulder);
-            InkLine.AddArc(pts, headCenter, _headRadius, -90f, 270f, _headSegments); // seals at the neck
+            if (_hornsOn) AddHornedHead(pts, headCenter);
+            else InkLine.AddArc(pts, headCenter, _headRadius, -90f, 270f, _headSegments); // seals at the neck
             pts.Add(shoulder);
             pts.Add(hip);
             pts.Add(leftFoot);
@@ -97,6 +110,29 @@ namespace YourCall
             pts.Add(shoulder);
             pts.Add(rightHand);
             return pts;
+        }
+
+        // The head arc broken at the top by two small horns, each a spike out to a tip and back,
+        // so the whole figure stays one continuous stroke (and fades as one).
+        private void AddHornedHead(List<Vector3> pts, Vector2 c)
+        {
+            float r = _headRadius;
+            float hl = r * 1.15f;
+            InkLine.AddArc(pts, c, r, -90f, 55f, 8);                 // neck up the right side to the horn base
+            Vector2 baseR = c + r * AngleDir(55f);
+            pts.Add(new Vector3(baseR.x + hl * 0.34f, baseR.y + hl * 0.94f, 0f)); // right horn tip (up, a little out)
+            pts.Add(new Vector3(baseR.x, baseR.y, 0f));
+            InkLine.AddArc(pts, c, r, 55f, 125f, 4);                 // across the crown between the horns
+            Vector2 baseL = c + r * AngleDir(125f);
+            pts.Add(new Vector3(baseL.x - hl * 0.34f, baseL.y + hl * 0.94f, 0f)); // left horn tip
+            pts.Add(new Vector3(baseL.x, baseL.y, 0f));
+            InkLine.AddArc(pts, c, r, 125f, 270f, 8);                // down the left side back to the neck
+        }
+
+        private static Vector2 AngleDir(float deg)
+        {
+            float a = deg * Mathf.Deg2Rad;
+            return new Vector2(Mathf.Cos(a), Mathf.Sin(a));
         }
 
         /// <summary>Fold and fade as one unit, then leave nothing behind.</summary>

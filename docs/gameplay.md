@@ -5,7 +5,7 @@
 2. Player chooses (one of the four verbs below).
 3. Animated consequence plays, **scaled to the dilemma's weight** — a quick 2–4s beat for light ones, a full 5–10s+ scene for heavy ones.
 4. The narrator reacts to the choice, over the world, and resolves on its own.
-5. Display-only stats then present **on their own**: "here's how others chose." One input dismisses them, and the choice feeds the moral profile (see `narrative.md`). The reaction and the stats never share the screen or a click: the line finishes and clears before the panel takes over, and while the panel is up it is the only thing listening for input.
+5. A **click gate** sits between the choice and the verdict: the choice and its consequence play, the imp reacts over the world, and then the player clicks (or keys) to continue, so the choice lands before the room weighs in. Only then do the display-only stats present **on their own**: "here's how others chose." One further input dismisses them, and the choice feeds the moral profile (see `narrative.md`). The reaction and the stats never share the screen or a click: the consequence beat owns the continue click, the reaction then clears, and while the panel is up it is the only thing listening for input.
 
 **No fail state.** The player can't lose or die. Choices only steer which ending is reached.
 

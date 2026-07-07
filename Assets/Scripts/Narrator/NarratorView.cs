@@ -84,9 +84,7 @@ namespace YourCall
             for (int p = 0; p < pages.Count; p++)
             {
                 _text.text = pages[p];
-                _text.maxVisibleCharacters = 0;
-                _text.ForceMeshUpdate();
-                InkText.SetAlpha(_text, 1f);
+                InkText.SetAlpha(_text, 1f);    // opaque; the per-glyph reveal is done in vertex alpha
                 PageChanged?.Invoke();          // the imp hops to a fresh spot for this box
                 yield return TypePage();
                 if (p < pages.Count - 1) yield return WaitAdvance();
@@ -94,35 +92,60 @@ namespace YourCall
             IsShowing = false;
         }
 
-        // Always types out one character at a time; a click only finishes the page after a short
-        // lockout, so a click carried over from the previous box can never make a page instant.
+        // The whole page is laid out once so its centred position is fixed, then the glyphs are
+        // revealed one at a time by raising their vertex alpha only, never re-laying-out, so the
+        // text never shifts while typing. A click only finishes the page after a short lockout,
+        // so a click carried over from the previous box can never make a page appear instant.
         private IEnumerator TypePage()
         {
-            int total = _text.textInfo.characterCount;
+            _text.maxVisibleCharacters = int.MaxValue;
+            _text.ForceMeshUpdate();                       // final layout, all glyphs in the atlas
+            TMP_TextInfo info = _text.textInfo;
+            int total = info.characterCount;
+
+            for (int i = 0; i < total; i++) SetGlyphAlpha(info, i, 0);   // hide, keeping colour
+            _text.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
+
             Speaking?.Invoke(true);
             float cps = Mathf.Max(_charsPerSecond, 1f);
             float acc = 0f, lockT = 0f;
-            int announced = 0;
-            _text.maxVisibleCharacters = 0;
+            int revealed = 0;
 
-            while (_text.maxVisibleCharacters < total)
+            while (revealed < total)
             {
                 lockT += Time.deltaTime;
                 if (lockT > _skipLockout && PointerInput.AdvancePressed)
                 {
-                    _text.maxVisibleCharacters = total; // finish this page's reveal (blips stop with it)
+                    for (; revealed < total; revealed++) SetGlyphAlpha(info, revealed, 255); // finish (blips stop)
                     break;
                 }
                 acc += Time.deltaTime * cps;
                 int shown = Mathf.Min(total, Mathf.FloorToInt(acc));
-                _text.maxVisibleCharacters = shown;
-                for (; announced < shown; announced++)
-                    Typed?.Invoke(_text.textInfo.characterInfo[announced].character);
+                if (shown > revealed)
+                {
+                    for (; revealed < shown; revealed++)
+                    {
+                        SetGlyphAlpha(info, revealed, 255);
+                        Typed?.Invoke(info.characterInfo[revealed].character);
+                    }
+                    _text.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
+                }
                 yield return null;
             }
 
-            _text.maxVisibleCharacters = total;
+            _text.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
             Speaking?.Invoke(false);
+        }
+
+        // Raise or drop one character's four vertex alphas, preserving its RGB (so amber / blue /
+        // red emphasis is kept). Spaces carry no vertices.
+        private static void SetGlyphAlpha(TMP_TextInfo info, int i, byte a)
+        {
+            TMP_CharacterInfo ci = info.characterInfo[i];
+            if (!ci.isVisible) return;
+            Color32[] colors = info.meshInfo[ci.materialReferenceIndex].colors32;
+            int v = ci.vertexIndex;
+            colors[v + 0].a = a; colors[v + 1].a = a; colors[v + 2].a = a; colors[v + 3].a = a;
         }
 
         private IEnumerator WaitAdvance()

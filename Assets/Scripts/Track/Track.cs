@@ -4,9 +4,11 @@ using UnityEngine;
 namespace YourCall
 {
     /// <summary>
-    /// The forking track and the single source of truth for layout. Everything else
-    /// asks the Track where the figures stand and which path the trolley runs, so no
-    /// other component hard-codes geometry. Draws clean rails with light cross-ties.
+    /// The forking track and the single source of truth for layout. Everything else asks the
+    /// Track where the figures stand and which path the trolley runs, so nothing else hard-codes
+    /// geometry. The branch is a schematic right-angle switch: the main line runs straight through
+    /// the fork, and the second track steps down at a right angle then runs straight and parallel
+    /// below (---|---- over |____). Draws clean rails with light cross-ties.
     /// </summary>
     public class Track : MonoBehaviour
     {
@@ -19,18 +21,23 @@ namespace YourCall
         [SerializeField] private int _sortingOrder = 0;
 
         [Header("Geometry")]
-        [SerializeField] private float _trolleyStartX = -7.0f;
+        [SerializeField] private float _trolleyStartX = -4.3f;
         [SerializeField] private float _mainY = 0f;
-        [SerializeField] private float _forkX = -2.6f;
-        [SerializeField] private float _mainEndX = 6.8f;
-        [SerializeField] private Vector2 _spurEnd = new Vector2(5.0f, -2.6f);
-        [Tooltip("How far the switch runs level before bending down toward the spur end.")]
-        [SerializeField] private float _spurControlDX = 2.4f;
-        [SerializeField, Range(6, 32)] private int _spurSegments = 18;
+        [Tooltip("Where the branch steps off the main line (the switch, and where the lever sits).")]
+        [SerializeField] private float _forkX = -0.5f;
+        [SerializeField] private float _mainEndX = 4.8f;
+
+        [Header("Right-angle branch (parallel, below the main line)")]
+        [Tooltip("The y of the horizontal branch: the switch drops straight to here at the fork, then runs parallel.")]
+        [SerializeField] private float _branchY = -1.6f;
+        [Tooltip("Where the branch rail ends (it runs past the lone figure).")]
+        [SerializeField] private float _branchEndX = 4.8f;
+        [Tooltip("Where the lone figure stands on the branch.")]
+        [SerializeField] private float _spurFigureX = 2.6f;
 
         [Header("Figures")]
         [SerializeField] private int _mainCount = 5;
-        [SerializeField] private float _mainGroupCenterX = 4.8f;
+        [SerializeField] private float _mainGroupCenterX = 2.6f;
         [SerializeField] private float _mainSpacing = 0.56f;
 
         [Header("Cross-ties")]
@@ -41,7 +48,6 @@ namespace YourCall
         [Tooltip("How far the trolley noses into a struck group before it stops.")]
         [SerializeField] private float _impactOverlap = 0.25f;
 
-        private List<Vector3> _spur; // local spur polyline: fork -> spurEnd
         private bool _built;
 
         public int MainCount => _mainCount;
@@ -51,7 +57,6 @@ namespace YourCall
         public void Build()
         {
             if (_built) return;
-            _spur = BuildSpurPolyline();
             BuildRails();
             BuildTies();
             _built = true;
@@ -61,7 +66,7 @@ namespace YourCall
 
         public Vector3 TrolleyStart => transform.TransformPoint(new Vector3(_trolleyStartX, _mainY, 0f));
         public Vector3 LeverPosition => transform.TransformPoint(new Vector3(_forkX, _mainY, 0f));
-        public Vector3 SpurFigurePosition => transform.TransformPoint(new Vector3(_spurEnd.x, _spurEnd.y, 0f));
+        public Vector3 SpurFigurePosition => transform.TransformPoint(new Vector3(_spurFigureX, _branchY, 0f));
 
         public List<Vector3> MainFigurePositions()
         {
@@ -73,15 +78,18 @@ namespace YourCall
             return list;
         }
 
-        /// <summary>Waypoints for the trolley. A route containing "spur" diverts; otherwise straight.</summary>
+        /// <summary>Waypoints for the trolley. A route containing "spur" diverts: straight to the
+        /// switch, a right-angle corner down, then straight along the branch to the lone figure.
+        /// Otherwise it runs straight into the main group.</summary>
         public List<Vector3> GetPath(string route)
         {
-            if (_spur == null) _spur = BuildSpurPolyline();
             bool spur = !string.IsNullOrEmpty(route) && route.ToLowerInvariant().Contains("spur");
             var pts = new List<Vector3> { new Vector3(_trolleyStartX, _mainY, 0f) };
             if (spur)
             {
-                for (int i = 0; i < _spur.Count; i++) pts.Add(_spur[i]);
+                pts.Add(new Vector3(_forkX, _mainY, 0f));          // straight to the switch
+                pts.Add(new Vector3(_forkX, _branchY, 0f));        // corner: step down at a right angle
+                pts.Add(new Vector3(_spurFigureX, _branchY, 0f));  // straight along the branch to the figure
             }
             else
             {
@@ -95,21 +103,12 @@ namespace YourCall
 
         // ---------- Build ----------
 
-        private List<Vector3> BuildSpurPolyline()
+        private List<Vector3> BranchPolyline() => new List<Vector3>
         {
-            var pts = new List<Vector3>(_spurSegments + 1);
-            Vector2 a = new Vector2(_forkX, _mainY);
-            Vector2 b = new Vector2(_forkX + _spurControlDX, _mainY);
-            Vector2 c = _spurEnd;
-            for (int i = 0; i <= _spurSegments; i++)
-            {
-                float t = (float)i / _spurSegments;
-                float u = 1f - t;
-                Vector2 p = u * u * a + 2f * u * t * b + t * t * c;
-                pts.Add(new Vector3(p.x, p.y, 0f));
-            }
-            return pts;
-        }
+            new Vector3(_forkX, _mainY, 0f),
+            new Vector3(_forkX, _branchY, 0f),
+            new Vector3(_branchEndX, _branchY, 0f),
+        };
 
         private void BuildRails()
         {
@@ -121,41 +120,40 @@ namespace YourCall
             });
             main.gameObject.AddComponent<LineBoil>().Capture();
 
-            var spur = InkLine.Create(transform, "SpurRail", _inkMaterial, _railWidth, _railColor, _sortingOrder);
-            InkLine.SetPoints(spur, _spur);
-            spur.gameObject.AddComponent<LineBoil>().Capture();
+            var branch = InkLine.Create(transform, "BranchRail", _inkMaterial, _railWidth, _railColor, _sortingOrder);
+            InkLine.SetPoints(branch, BranchPolyline());
+            branch.gameObject.AddComponent<LineBoil>().Capture();
         }
 
         private void BuildTies()
         {
             var container = new GameObject("Ties");
             container.transform.SetParent(transform, false);
-
-            // Main line: vertical ties.
             int idx = 0;
-            for (float x = _trolleyStartX; x <= _mainEndX; x += _tieSpacing, idx++)
-            {
-                var lr = InkLine.Create(container.transform, "TieM" + idx, _inkMaterial, _tieWidth, _tieColor, _sortingOrder - 1, 2);
-                InkLine.SetPoints(lr, new List<Vector3>
-                {
-                    new Vector3(x, _mainY - _tieLength * 0.5f, 0f),
-                    new Vector3(x, _mainY + _tieLength * 0.5f, 0f)
-                });
-            }
 
-            // Spur: ties perpendicular to the local tangent, every other sample.
-            for (int i = 1; i < _spur.Count - 1; i += 2)
-            {
-                Vector3 center = _spur[i];
-                Vector3 tangent = (_spur[i + 1] - _spur[i - 1]).normalized;
-                Vector3 normal = new Vector3(-tangent.y, tangent.x, 0f);
-                var lr = InkLine.Create(container.transform, "TieS" + i, _inkMaterial, _tieWidth, _tieColor, _sortingOrder - 1, 2);
-                InkLine.SetPoints(lr, new List<Vector3>
-                {
-                    center - normal * (_tieLength * 0.5f),
-                    center + normal * (_tieLength * 0.5f)
-                });
-            }
+            // Main line: vertical ties along the whole run.
+            for (float x = _trolleyStartX; x <= _mainEndX; x += _tieSpacing)
+                AddTie(container.transform, idx++,
+                    new Vector3(x, _mainY - _tieLength * 0.5f, 0f),
+                    new Vector3(x, _mainY + _tieLength * 0.5f, 0f));
+
+            // Branch (horizontal part): vertical ties, starting clear of the corner.
+            for (float x = _forkX + _tieSpacing; x <= _branchEndX; x += _tieSpacing)
+                AddTie(container.transform, idx++,
+                    new Vector3(x, _branchY - _tieLength * 0.5f, 0f),
+                    new Vector3(x, _branchY + _tieLength * 0.5f, 0f));
+
+            // The vertical drop of the switch: a couple of horizontal ties.
+            for (float y = _mainY - _tieSpacing; y > _branchY + 0.01f; y -= _tieSpacing)
+                AddTie(container.transform, idx++,
+                    new Vector3(_forkX - _tieLength * 0.5f, y, 0f),
+                    new Vector3(_forkX + _tieLength * 0.5f, y, 0f));
+        }
+
+        private void AddTie(Transform parent, int idx, Vector3 a, Vector3 b)
+        {
+            var lr = InkLine.Create(parent, "Tie" + idx, _inkMaterial, _tieWidth, _tieColor, _sortingOrder - 1, 2);
+            InkLine.SetPoints(lr, new List<Vector3> { a, b });
         }
     }
 }

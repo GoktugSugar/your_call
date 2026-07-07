@@ -21,6 +21,10 @@ namespace YourCall
         [SerializeField, TextArea(2, 6)] private string _narratorPrompt;
         [SerializeField] private List<DilemmaChoice> _choices = new List<DilemmaChoice>();
 
+        [Header("Figures")]
+        [Tooltip("The main-track figures wear small doodle devil horns (the imp's branded wretches). The whose-life-counts second trolley only.")]
+        [SerializeField] private bool _figuresBranded = false;
+
         [Header("Aftermath stats")]
         [SerializeField] private string _statsHeading = "how others chose";
 
@@ -38,6 +42,7 @@ namespace YourCall
         public DilemmaWeight Weight => _weight;
         public string NarratorPrompt => _narratorPrompt;
         public IReadOnlyList<DilemmaChoice> Choices => _choices;
+        public bool FiguresBranded => _figuresBranded;
         public string StatsHeading => _statsHeading;
         public float RoomBlueFraction => _roomBlueFraction;
         public float CrowdThreshold => _crowdThreshold;

@@ -539,7 +539,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.ScreenKeepout
   _mode: 0
-  _size: {x: 16, y: 1.4}
+  _size: {x: 16.5, y: 1.5}
   _offset: {x: 0, y: 0}
   _padding: 0
 --- !u!114 &456717421
@@ -559,7 +559,7 @@ MonoBehaviour:
   _camera: {fileID: 0}
   _bottomOffset: 0.45
   _centerX: 0
-  _size: {x: 16, y: 1.4}
+  _size: {x: 16.5, y: 1.5}
   _borderColor: {r: 0.106, g: 0.102, b: 0.09, a: 1}
   _fillColor: {r: 0.98, g: 0.968, b: 0.936, a: 1}
   _borderWidth: 0.05
@@ -999,7 +999,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.RoomConsequence
   _figurePrefab: {fileID: 1666028741476117448, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
-  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
   _buttons: {fileID: 1794770168}
   _chargePosition: {x: 0, y: -0.7}
   _chargeScale: 1.1
@@ -1790,7 +1789,6 @@ MonoBehaviour:
   _trolley: {fileID: 1579499637}
   _lever: {fileID: 234534884}
   _figurePrefab: {fileID: 1666028741476117448, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
-  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
   _lightDuration: 1.7
   _mediumDuration: 2.5
   _heavyDuration: 3.6
@@ -1994,7 +1992,6 @@ MonoBehaviour:
   _trolley: {fileID: 619605367}
   _lever: {fileID: 1864427356}
   _figurePrefab: {fileID: 1666028741476117448, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
-  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
   _lightDuration: 1.7
   _mediumDuration: 2.5
   _heavyDuration: 3.6
@@ -2414,8 +2411,8 @@ MonoBehaviour:
   _fontSize: 3.9
   _color: {r: 0.106, g: 0.102, b: 0.09, a: 1}
   _alignment: 514
-  _width: 14.6
-  _height: 1.1
+  _width: 15.1
+  _height: 1.2
   _sortingOrder: 20
   _charsPerSecond: 32
   _skipLockout: 0.18

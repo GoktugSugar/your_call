@@ -17,7 +17,6 @@ namespace YourCall
         [SerializeField] private Trolley _trolley;
         [SerializeField] private Lever _lever;
         [SerializeField] private Figure _figurePrefab;
-        [SerializeField] private Material _inkMaterial;
 
         [Header("Timing")]
         [SerializeField] private float _lightDuration = 1.7f;
@@ -38,7 +37,11 @@ namespace YourCall
             container.SetParent(transform, false);
 
             foreach (var pos in _track.MainFigurePositions())
-                _main.Add(Instantiate(_figurePrefab, pos, Quaternion.identity, container));
+            {
+                var fig = Instantiate(_figurePrefab, pos, Quaternion.identity, container);
+                if (dilemma.FiguresBranded) fig.ShowHorns();   // the imp's branded wretches
+                _main.Add(fig);
+            }
             _spur = Instantiate(_figurePrefab, _track.SpurFigurePosition, Quaternion.identity, container);
 
             _trolley.transform.position = _track.TrolleyStart;
@@ -65,9 +68,9 @@ namespace YourCall
             var path = _track.GetPath(choice.Route);
             var struck = FiguresFor(outcome);
 
-            Action<Vector3> onImpact = pos =>
+            // The death is only the fold-and-fall: no strike lines or impact puff over the figure.
+            Action<Vector3> onImpact = _ =>
             {
-                SpawnPuff(pos);
                 for (int i = 0; i < struck.Count; i++) struck[i].Strike(_foldDuration);
             };
             _trolley.Impact += onImpact;
@@ -95,14 +98,6 @@ namespace YourCall
                 case DilemmaWeight.Heavy: return _heavyDuration;
                 default: return _mediumDuration;
             }
-        }
-
-        private void SpawnPuff(Vector3 pos)
-        {
-            var go = new GameObject("PuffCue");
-            var puff = go.AddComponent<PuffCue>();
-            puff.Configure(_inkMaterial);
-            puff.Play(pos);
         }
 
         private void OnDestroy()

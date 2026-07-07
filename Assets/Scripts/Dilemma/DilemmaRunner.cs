@@ -78,12 +78,22 @@ namespace YourCall
                 yield return _presenter.PlayConsequence(choice, outcome);
                 yield return new WaitForSeconds(_t.PreStatsBeat);
 
-                // The imp's reaction plays over the world and resolves on its own, then clears,
-                // so it never shares the screen or a single click with the stats panel.
+                // The choice and its consequence land first: the imp's reaction plays over the
+                // world, then the player clicks (or keys) to continue. Only then does the room's
+                // verdict appear, so the reaction and the stats never share a screen or a click.
                 Phase = DilemmaPhase.Stats;
                 _narrator.Show(outcome.NarratorReact);
                 while (_narrator.IsShowing) yield return null;
-                yield return new WaitForSeconds(_t.ReactionHold);
+
+                // Click gate: hold the reaction for at least ReactionHold (also a lockout against a
+                // carried-over click), then wait for the continue click before revealing the stats.
+                float gate = 0f;
+                while (true)
+                {
+                    gate += Time.deltaTime;
+                    if (gate > _t.ReactionHold && PointerInput.AdvancePressed) break;
+                    yield return null;
+                }
                 _narrator.Clear();
 
                 // The stats panel then presents alone and owns the input: one advance dismisses it.

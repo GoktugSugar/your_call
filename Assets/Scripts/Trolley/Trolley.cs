@@ -34,6 +34,8 @@ namespace YourCall
         [SerializeField] private float _recoil = 0.20f;
         [SerializeField] private float _settle = 0.30f;
         [SerializeField] private float _settleKick = 0.13f;
+        [Tooltip("Bank (rotate) to face the path. Off keeps the trolley level through the schematic right-angle switch.")]
+        [SerializeField] private bool _bankToPath = false;
 
         public event Action<Vector3> Impact;
 
@@ -102,6 +104,7 @@ namespace YourCall
 
         private void SetFacing(Vector3 tangent)
         {
+            if (!_bankToPath) return; // schematic switch: the trolley stays level, not nose-down
             float ang = Mathf.Atan2(tangent.y, tangent.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, ang);
         }

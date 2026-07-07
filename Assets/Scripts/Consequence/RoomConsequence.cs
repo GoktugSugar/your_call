@@ -14,7 +14,6 @@ namespace YourCall
     {
         [Header("References")]
         [SerializeField] private Figure _figurePrefab;
-        [SerializeField] private Material _inkMaterial;
         [SerializeField] private ButtonChoice _buttons;
 
         [Header("The charge (the soul in the player's care)")]
@@ -90,7 +89,7 @@ namespace YourCall
 
             if (outcome.Strikes(_chargeParty) && _charge != null)
             {
-                SpawnPuff(_charge.transform.position + Vector3.up * (0.6f * _chargeScale));
+                // The death is only the fold-and-fall: no strike lines or impact puff over the figure.
                 _charge.Strike(_foldDuration);
                 yield return new WaitForSeconds(_foldDuration + _foldSettle);
             }
@@ -99,14 +98,6 @@ namespace YourCall
                 // Spared: a held breath, then the charge stays standing.
                 yield return new WaitForSeconds(_resolveBeat);
             }
-        }
-
-        private void SpawnPuff(Vector3 pos)
-        {
-            var go = new GameObject("PuffCue");
-            var puff = go.AddComponent<PuffCue>();
-            puff.Configure(_inkMaterial);
-            puff.Play(pos);
         }
 
         private void OnDestroy()

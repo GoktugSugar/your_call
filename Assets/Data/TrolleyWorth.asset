@@ -16,22 +16,23 @@ MonoBehaviour:
   _verb: 0
   _weight: 1
   _narratorPrompt: Same lever. Same little click. But look who is standing on the
-    rails this time. Your five, there on the straight track, are rotten to the last
-    one. Liars, cheats, a couple of them far worse. Take my word for it, because my
-    word is the only evidence you will get. And the one on the branch? Spotless. Blameless.
-    The single clean soul on either rail. Five stains against one bright life. The
-    count still says pull. Something in you may not. And you cannot check one thing
-    I have told you. Your call.
+    rails this time. Your five, there on the straight track, are [amber]rotten[/amber]
+    to the last one. [amber]Liars, cheats[/amber], a couple of them far worse. Take
+    my word for it, because my word is the only evidence you will get. And the one
+    on the branch? Spotless. Blameless. The single clean soul on either rail. Five
+    [amber]stains[/amber] against one bright life. The count still says pull. Something
+    in you may not. And you cannot check one thing I have told you. Your call.
   _choices:
   - _id: pull
     _label: Pull the lever
     _narratorReact: You pulled. The clean one folds, and your five earn another morning
       they probably did not deserve. Five is five, you decided, and worth does not
-      come into it. Spoken like a man who counts heads, never the marks on them. I
-      did swear they were monsters. I could have been making it up as I went.
-    _narratorReactStruck:
+      come into it. Spoken like a man who counts heads, never the marks on them.
+      I did swear they were [amber]monsters[/amber]. I could have been making it
+      up as I went.
+    _narratorReactStruck: 
     _struckParty: spur
-    _gambledParty:
+    _gambledParty: 
     _route: spur
     _diverts: 1
     _seedVotes: 52
@@ -46,9 +47,9 @@ MonoBehaviour:
       walks free. You let worth outweigh the count, and staked five lives on my say
       so about who had earned what. Call it justice, if you still trust the judge.
       You never did learn whether I invented the whole roster.
-    _narratorReactStruck:
+    _narratorReactStruck: 
     _struckParty: main
-    _gambledParty:
+    _gambledParty: 
     _route: straight
     _diverts: 0
     _seedVotes: 48
@@ -57,6 +58,7 @@ MonoBehaviour:
       _value: -1
     - _axis: 1
       _value: 1
+  _figuresBranded: 1
   _statsHeading: how others chose
   _roomBlueFraction: 0.43
   _crowdThreshold: 0.5
