@@ -18,7 +18,7 @@ namespace YourCall
         [SerializeField] private Ending _ending;
         [Tooltip("The text choices to dismiss when the imp is shot, so nothing else resolves under the ending.")]
         [SerializeField] private ChoiceButtons _choices;
-        [SerializeField, TextArea] private string _line = "What the fuck are you doing, asshole";
+        [SerializeField, TextArea] private string _line = "Oh, you absolute fucking rat. You shot me. You shot the fucking referee.";
         [SerializeField] private float _impFadeDuration = 0.8f;
 
         private bool _triggered;
