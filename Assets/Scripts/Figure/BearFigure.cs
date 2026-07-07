@@ -25,13 +25,24 @@ namespace YourCall
         [SerializeField] private int _sortingOrder = 10;
         [SerializeField] private bool _boil = true;
 
+        [Header("Fill (a soft brown crayon wash inside the outline; contained palette exception)")]
+        [Tooltip("Fill the bear with a muted brown wash inside the black ink line, the same treatment the blue/red buttons use. Contained to the bear only; a currently experimental colour, see docs/art-and-ui.md.")]
+        [SerializeField] private bool _showFill = true;
+        [SerializeField] private Color _fillColor = Palette.InkBrown;
+        [Tooltip("Wash opacity, so the brown reads as a soft hand-drawn fill, not a flat saturated colour.")]
+        [SerializeField, Range(0.2f, 1f)] private float _fillOpacity = 0.8f;
+        [SerializeField] private float _fillMargin = 0.06f;
+        [SerializeField, Range(3, 22)] private int _fillRows = 14;
+        [SerializeField] private float _fillWidth = 0.1f;
+        [SerializeField] private float _fillJitter = 0.02f;
+
         [Header("Body (a rounded blob, wider than tall; feet at local origin)")]
         [SerializeField] private float _bodyCenterY = 0.46f;
         [SerializeField] private float _bodyRadiusX = 0.52f;
         [SerializeField] private float _bodyRadiusY = 0.42f;
 
         [Header("Head (a circle, overlapping the body slightly at the neck)")]
-        [SerializeField] private float _headCenterY = 1.15f;
+        [SerializeField] private float _headCenterY = 1.19f;
         [SerializeField] private float _headRadius = 0.34f;
 
         [Header("Ears (open arc bumps on the head outline, curving outward)")]
@@ -72,6 +83,7 @@ namespace YourCall
         [SerializeField] private bool _startHidden = false;
 
         private readonly List<LineRenderer> _strokes = new List<LineRenderer>();
+        private readonly List<LineRenderer> _fills = new List<LineRenderer>();
         private readonly List<LineBoil> _boils = new List<LineBoil>();
         private bool _built;
 
@@ -82,6 +94,13 @@ namespace YourCall
         public void Build()
         {
             if (_built) return;
+
+            // A soft brown wash behind the outline (body and head masses), inside the line.
+            if (_showFill)
+            {
+                CreateFill("BodyFill", ScribbleFillEllipse(new Vector2(0f, _bodyCenterY), _bodyRadiusX, _bodyRadiusY, _fillMargin, _fillRows, _fillJitter, 11));
+                CreateFill("HeadFill", ScribbleFillEllipse(new Vector2(0f, _headCenterY), _headRadius, _headRadius, _fillMargin, Mathf.Max(4, _fillRows - 2), _fillJitter, 29));
+            }
 
             // Body and head.
             AddEllipse("Body", new Vector2(0f, _bodyCenterY), _bodyRadiusX, _bodyRadiusY, 34);
@@ -196,6 +215,56 @@ namespace YourCall
             _strokes.Add(lr);
         }
 
+        private void CreateFill(string name, List<Vector3> pts)
+        {
+            var lr = InkLine.Create(transform, name, _inkMaterial, _fillWidth, _fillColor, _sortingOrder - 1);
+            InkLine.SetPoints(lr, pts);
+            InkLine.SetAlpha(lr, _fillColor, _fillOpacity);   // a soft wash, not a flat fill
+            if (_boil)
+            {
+                var b = lr.gameObject.AddComponent<LineBoil>();
+                b.Capture();
+                _boils.Add(b);
+            }
+            _fills.Add(lr);
+        }
+
+        // A horizontal crayon scribble clipped to an ellipse (chord half-width per row), a single
+        // continuous zigzag polyline, the same wash treatment the blue/red buttons use.
+        private static List<Vector3> ScribbleFillEllipse(Vector2 c, float rx, float ry, float margin, int rows, float jitter, int seed)
+        {
+            float irx = Mathf.Max(0.05f, rx - margin);
+            float iry = Mathf.Max(0.05f, ry - margin);
+            var pts = new List<Vector3>();
+            float rowStep = (rows > 1) ? (2f * iry) / (rows - 1) : 0f;
+            for (int r = 0; r < rows; r++)
+            {
+                float y = iry - r * rowStep;
+                float w = irx * Mathf.Sqrt(Mathf.Max(0f, 1f - (y * y) / (iry * iry)));
+                if (w < 0.04f) continue;
+                bool ltr = (r % 2 == 0);
+                float xa = ltr ? -w : w;
+                float xb = ltr ? w : -w;
+                pts.Add(new Vector3(c.x + xa + J(seed, r * 4) * jitter, c.y + y + J(seed, r * 4 + 1) * jitter, 0f));
+                pts.Add(new Vector3(c.x + xb + J(seed, r * 4 + 2) * jitter, c.y + y + J(seed, r * 4 + 3) * jitter, 0f));
+            }
+            return pts;
+        }
+
+        private static float J(int seed, int i)
+        {
+            unchecked
+            {
+                int x = (seed * 73856093) ^ (i * 19349663);
+                x = (x ^ 61) ^ (x >> 16);
+                x += x << 3;
+                x ^= x >> 4;
+                x *= 0x27d4eb2d;
+                x ^= x >> 15;
+                return (((x & 0x7fffffff) % 1000) / 1000f) - 0.5f;
+            }
+        }
+
         private static Vector2 Dir(float deg)
         {
             float a = deg * Mathf.Deg2Rad;
@@ -211,6 +280,7 @@ namespace YourCall
             if (!_built) Build();
             float a = Mathf.Clamp01(alpha);
             for (int i = 0; i < _strokes.Count; i++) InkLine.SetAlpha(_strokes[i], _color, a);
+            for (int i = 0; i < _fills.Count; i++) InkLine.SetAlpha(_fills[i], _fillColor, a * _fillOpacity);
         }
 
         /// <summary>Fold and fade as one unit, then leave nothing behind. No strike lines or impact
@@ -243,9 +313,11 @@ namespace YourCall
                 transform.localScale = Vector3.Lerp(s0, s1, k);
                 float fadeK = EaseUtil.Clamp01((t - dur * 0.25f) / (dur * 0.75f));
                 for (int i = 0; i < _strokes.Count; i++) InkLine.SetAlpha(_strokes[i], _color, 1f - fadeK);
+                for (int i = 0; i < _fills.Count; i++) InkLine.SetAlpha(_fills[i], _fillColor, (1f - fadeK) * _fillOpacity);
                 yield return null;
             }
             for (int i = 0; i < _strokes.Count; i++) InkLine.SetAlpha(_strokes[i], _color, 0f);
+            for (int i = 0; i < _fills.Count; i++) InkLine.SetAlpha(_fills[i], _fillColor, 0f);
             gameObject.SetActive(false);
         }
     }

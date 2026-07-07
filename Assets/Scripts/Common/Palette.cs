@@ -32,5 +32,10 @@ namespace YourCall
 
         /// <summary>Muted hand-drawn red. Exception colour, blue/red button only. #AA483A</summary>
         public static readonly Color InkRed = new Color(0.667f, 0.282f, 0.227f, 1f);
+
+        /// <summary>Muted, slightly desaturated hand-drawn brown. Used only as the last bear's fill wash
+        /// (a contained, currently experimental palette exception; see docs/art-and-ui.md). Nothing else
+        /// uses it; exposed on BearFigure so it can be tuned or reverted.</summary>
+        public static readonly Color InkBrown = new Color(0.5f, 0.36f, 0.24f, 1f);
     }
 }

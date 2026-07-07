@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -23,19 +24,25 @@ namespace YourCall
         [SerializeField] private AimHighlight _aimHighlight;
 
         [Header("The man (an ordinary life)")]
-        [SerializeField] private Vector2 _manFeet = new Vector2(-2.3f, -0.5f);
-        [SerializeField] private float _manScale = 1.2f;
+        [SerializeField] private Vector2 _manFeet = new Vector2(-2.6f, -0.5f);
+        [SerializeField] private float _manScale = 1.45f;
         [Tooltip("World centre and full size of the man's aim box (attention lock and hit test).")]
-        [SerializeField] private Vector2 _manBoxCenter = new Vector2(-2.3f, 0.1f);
-        [SerializeField] private Vector2 _manBoxSize = new Vector2(1.55f, 1.6f);
+        [SerializeField] private Vector2 _manBoxCenter = new Vector2(-2.6f, 0.2f);
+        [SerializeField] private Vector2 _manBoxSize = new Vector2(1.8f, 1.95f);
         [SerializeField] private string _manParty = "man";
 
         [Header("The bear (the last of her kind)")]
-        [SerializeField] private Vector2 _bearFeet = new Vector2(2.2f, -0.5f);
-        [SerializeField] private float _bearScale = 1.2f;
-        [SerializeField] private Vector2 _bearBoxCenter = new Vector2(2.3f, 0.45f);
-        [SerializeField] private Vector2 _bearBoxSize = new Vector2(2.5f, 2.3f);
+        [SerializeField] private Vector2 _bearFeet = new Vector2(2.5f, -0.5f);
+        [SerializeField] private float _bearScale = 1.45f;
+        [SerializeField] private Vector2 _bearBoxCenter = new Vector2(2.5f, 0.7f);
+        [SerializeField] private Vector2 _bearBoxSize = new Vector2(2.9f, 2.6f);
         [SerializeField] private string _bearParty = "bear";
+
+        [Header("The imp (a secret third target)")]
+        [Tooltip("Optional: the imp, aimable as a hidden third target. Firing on it raises ImpShot for an ending to take over (see ShootImpEnding); leave empty to disable. Its aim box follows the imp's live position.")]
+        [SerializeField] private ImpFigure _imp;
+        [SerializeField] private Vector2 _impBoxOffset = new Vector2(0f, 0.55f);
+        [SerializeField] private Vector2 _impBoxSize = new Vector2(1.5f, 1.9f);
 
         [Header("Timing")]
         [SerializeField] private float _resolveBeat = 0.35f;
@@ -52,7 +59,10 @@ namespace YourCall
         private bool _armed;
         private bool _picked;
 
-        private enum Target { None, Man, Bear }
+        /// <summary>Raised when the player fires on the imp (the secret third target), so an ending can take over.</summary>
+        public event Action ImpShot;
+
+        private enum Target { None, Man, Bear, Imp }
 
         public override void BuildScene(Dilemma dilemma)
         {
@@ -113,6 +123,7 @@ namespace YourCall
             {
                 if (t == Target.Man) _aimHighlight.Show(_manBoxCenter, _manBoxSize);
                 else if (t == Target.Bear) _aimHighlight.Show(_bearBoxCenter, _bearBoxSize);
+                else if (t == Target.Imp) _aimHighlight.Show(ImpCenter(), _impBoxSize);
                 else _aimHighlight.Hide();
             }
         }
@@ -123,6 +134,14 @@ namespace YourCall
             Target t = TargetAt(aimPoint);
             if (t == Target.Man && _manIndex >= 0) { _picked = true; RaiseChosen(_manIndex); }
             else if (t == Target.Bear && _bearIndex >= 0) { _picked = true; RaiseChosen(_bearIndex); }
+            else if (t == Target.Imp)
+            {
+                // The secret target: bang, lock the aim down, and hand off to whatever ending listens.
+                _picked = true;
+                if (_gunSfx != null) _gunSfx.Fire();
+                ArmChoice(false);
+                ImpShot?.Invoke();
+            }
             // A shot into the empty void hits nothing and does not choose.
         }
 
@@ -130,8 +149,11 @@ namespace YourCall
         {
             if (InBox(p, _manBoxCenter, _manBoxSize)) return Target.Man;
             if (InBox(p, _bearBoxCenter, _bearBoxSize)) return Target.Bear;
+            if (_imp != null && InBox(p, ImpCenter(), _impBoxSize)) return Target.Imp;
             return Target.None;
         }
+
+        private Vector2 ImpCenter() => (Vector2)_imp.transform.position + _impBoxOffset;
 
         private static bool InBox(Vector2 p, Vector2 center, Vector2 size)
             => Mathf.Abs(p.x - center.x) <= size.x * 0.5f && Mathf.Abs(p.y - center.y) <= size.y * 0.5f;

@@ -49,10 +49,17 @@ MonoBehaviour:
   _lineWidth: 0.05
   _sortingOrder: 10
   _boil: 1
+  _showFill: 1
+  _fillColor: {r: 0.5, g: 0.36, b: 0.24, a: 1}
+  _fillOpacity: 0.8
+  _fillMargin: 0.06
+  _fillRows: 14
+  _fillWidth: 0.1
+  _fillJitter: 0.02
   _bodyCenterY: 0.46
   _bodyRadiusX: 0.52
   _bodyRadiusY: 0.42
-  _headCenterY: 1.15
+  _headCenterY: 1.19
   _headRadius: 0.34
   _earOffsetDeg: 30
   _earSpreadDeg: 20
