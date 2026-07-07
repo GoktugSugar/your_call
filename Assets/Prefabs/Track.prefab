@@ -50,15 +50,15 @@ MonoBehaviour:
   _tieColor: {r: 0.604, g: 0.588, b: 0.549, a: 1}
   _tieWidth: 0.035
   _sortingOrder: 0
-  _trolleyStartX: -7
+  _trolleyStartX: -4.3
   _mainY: 0
-  _forkX: -2.6
-  _mainEndX: 6.8
-  _spurEnd: {x: 5, y: -2.6}
-  _spurControlDX: 2.4
+  _forkX: -0.5
+  _mainEndX: 4.8
+  _spurEnd: {x: 2.3, y: -2.2}
+  _spurControlDX: 1.7
   _spurSegments: 18
   _mainCount: 5
-  _mainGroupCenterX: 4.8
+  _mainGroupCenterX: 2.6
   _mainSpacing: 0.56
   _tieSpacing: 0.7
   _tieLength: 0.34

@@ -17,9 +17,17 @@ namespace YourCall
         [SerializeField] private Material _inkMaterial;
         [Tooltip("The frame appears while this narrator has a line up, and leaves when it clears.")]
         [SerializeField] private NarratorView _narrator;
+        [Tooltip("Camera used to find the screen's bottom edge. Empty uses Camera.main.")]
+        [SerializeField] private Camera _camera;
+
+        [Header("Placement")]
+        [Tooltip("Float this far above the screen's bottom edge, so the box never hugs the edge.")]
+        [SerializeField] private float _bottomOffset = 0.5f;
+        [Tooltip("Horizontal centre of the box (and its text).")]
+        [SerializeField] private float _centerX = 0f;
 
         [Header("Frame")]
-        [SerializeField] private Vector2 _size = new Vector2(16f, 1.55f);
+        [SerializeField] private Vector2 _size = new Vector2(16f, 1.3f);
         [SerializeField] private Color _borderColor = Palette.Ink;
         [Tooltip("A hair lighter than the paper ground, so the caption area reads as its own page.")]
         [SerializeField] private Color _fillColor = new Color(0.980f, 0.968f, 0.936f, 1f);
@@ -45,6 +53,22 @@ namespace YourCall
         private bool _built;
 
         private void Awake() { Build(); }
+
+        private void Start() { PlaceAboveBottom(); }
+
+        // Lift the box (and the narrator's text with it) clear of the bottom edge, measured from
+        // the camera so it floats correctly whatever the view. Runs in Start, after the narrator
+        // has built its text in Awake, so moving the narrator carries the text along.
+        private void PlaceAboveBottom()
+        {
+            Camera cam = _camera != null ? _camera : Camera.main;
+            if (cam == null || !cam.orthographic) return;
+            float bottom = cam.transform.position.y - cam.orthographicSize;
+            float y = bottom + _bottomOffset + _size.y * 0.5f;
+            transform.position = new Vector3(_centerX, y, transform.position.z);
+            if (_narrator != null)
+                _narrator.transform.position = new Vector3(_centerX, y, _narrator.transform.position.z);
+        }
 
         public void Build()
         {

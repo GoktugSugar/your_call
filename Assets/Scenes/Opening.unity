@@ -539,7 +539,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.ScreenKeepout
   _mode: 0
-  _size: {x: 16, y: 1.55}
+  _size: {x: 16, y: 1.3}
   _offset: {x: 0, y: 0}
   _padding: 0
 --- !u!114 &456717421
@@ -556,7 +556,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.DialogueBox
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
   _narrator: {fileID: 2112542512}
-  _size: {x: 16, y: 1.55}
+  _camera: {fileID: 0}
+  _bottomOffset: 0.4
+  _centerX: 0
+  _size: {x: 16, y: 1.3}
   _borderColor: {r: 0.106, g: 0.102, b: 0.09, a: 1}
   _fillColor: {r: 0.98, g: 0.968, b: 0.936, a: 1}
   _borderWidth: 0.05
@@ -2407,12 +2410,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b111510728a91046847b9c8c9898568, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.NarratorView
+  _font: {fileID: 0}
   _fontSize: 2.8
   _color: {r: 0.106, g: 0.102, b: 0.09, a: 1}
-  _width: 15
-  _height: 1.15
+  _alignment: 514
+  _width: 14.6
+  _height: 1
   _sortingOrder: 20
-  _charsPerSecond: 45
+  _charsPerSecond: 32
+  _skipLockout: 0.18
   _pageAdvanceLockout: 0.22
 --- !u!4 &2112542513
 Transform:

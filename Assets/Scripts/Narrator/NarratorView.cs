@@ -1,42 +1,52 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 
 namespace YourCall
 {
     /// <summary>
-    /// The narrator's line in world space, inside the DialogueBox. It inks the words on a
-    /// character at a time, and pages long narration so nothing ever overflows the box: each
-    /// page fills the frame, is typed out, and waits for a click or key to advance. It draws
-    /// no chrome of its own. Authored emphasis tags ([amber]/[red]/[blue]) are turned into the
-    /// palette's colours by <see cref="InkMarkup"/> before rendering. It raises small events
-    /// (Speaking, Typed, PageChanged) so the imp, its blip voice, and the box can react.
+    /// The narrator's line in world space, inside the DialogueBox. It inks the words on one
+    /// character at a time, reliably, every page, and pages long narration by whole sentences:
+    /// a page holds as many complete sentences as fit the box, and a sentence is never split
+    /// across two boxes. A click or key turns the page (and finishes the current page's typing).
+    /// Authored emphasis tags become palette colours via <see cref="InkMarkup"/> before render,
+    /// so <see cref="Typed"/> reports the real glyphs and the blip voice stays in sync. Draws no
+    /// chrome; the DialogueBox frames it and can drive its position.
     /// </summary>
     public class NarratorView : MonoBehaviour
     {
+        [Header("Type")]
+        [Tooltip("The dialogue handwriting font (Caveat). Left empty falls back to the default TMP font.")]
+        [SerializeField] private TMP_FontAsset _font;
         [SerializeField] private float _fontSize = 2.8f;
         [SerializeField] private Color _color = Palette.Ink;
-        [Tooltip("Text area inside the box (leave an inner margin versus the box size).")]
+        [Tooltip("Centred by default: horizontal centre, vertical middle, inside the box.")]
+        [SerializeField] private TextAlignmentOptions _alignment = TextAlignmentOptions.Center;
+        [Tooltip("Text area size: leaves an inner margin versus the box.")]
         [SerializeField] private float _width = 14.6f;
-        [SerializeField] private float _height = 1.15f;
+        [SerializeField] private float _height = 1.1f;
         [SerializeField] private int _sortingOrder = 20;
-        [SerializeField] private float _charsPerSecond = 45f;
-        [Tooltip("A click sooner than this after a page finishes is ignored, so one click never skips a page.")]
-        [SerializeField] private float _pageAdvanceLockout = 0.22f;
+        [SerializeField] private float _charsPerSecond = 32f;
+        [Tooltip("A click sooner than this into a page is ignored, so a leftover click never makes a page appear instant.")]
+        [SerializeField] private float _skipLockout = 0.18f;
+        [Tooltip("A click sooner than this after a page finishes is ignored, so one click never turns two pages.")]
+        [SerializeField] private float _pageAdvanceLockout = 0.2f;
 
         private TextMeshPro _text;
         private Coroutine _routine;
 
-        /// <summary>True while narration is still being delivered (typing or awaiting a page turn).</summary>
+        /// <summary>True while narration is being delivered (typing or awaiting a page turn).</summary>
         public bool IsShowing { get; private set; }
 
-        /// <summary>True while a line is actively inking on, so a speaker (the imp) can stir.</summary>
+        /// <summary>True while a page is actively inking on, so the imp stirs and its voice talks.</summary>
         public event System.Action<bool> Speaking;
 
-        /// <summary>Raised per visible glyph as it inks on (skips rich-text tags), so a blip voice can talk.</summary>
+        /// <summary>Raised per visible glyph as it inks on (skips tags), so the blip voice tracks typing exactly.</summary>
         public event System.Action<char> Typed;
 
-        /// <summary>Raised each time a fresh page (or line) is shown, so the imp repositions once per box.</summary>
+        /// <summary>Raised each time a fresh box (page) is shown, so the imp repositions once per box.</summary>
         public event System.Action PageChanged;
 
         /// <summary>True from Show until Clear (a box is on screen, even after it finishes typing).</summary>
@@ -44,9 +54,10 @@ namespace YourCall
 
         private void Awake()
         {
-            _text = InkText.Create(transform, "Line", _fontSize, _color, TextAlignmentOptions.Top, _sortingOrder);
+            _text = InkText.Create(transform, "Line", _fontSize, _color, _alignment, _sortingOrder);
+            if (_font != null) _text.font = _font;
             _text.rectTransform.sizeDelta = new Vector2(_width, _height);
-            _text.overflowMode = TextOverflowModes.Page;
+            _text.overflowMode = TextOverflowModes.Overflow; // each page is built to fit, so no clipping
             InkText.SetAlpha(_text, 0f);
         }
 
@@ -69,56 +80,48 @@ namespace YourCall
 
         private IEnumerator Run(string authored)
         {
-            _text.text = InkMarkup.ToRichText(authored);
-            _text.maxVisibleCharacters = 0;
-            _text.pageToDisplay = 1;
-            InkText.SetAlpha(_text, 1f);
-            _text.ForceMeshUpdate();
-
-            int pageCount = Mathf.Max(1, _text.textInfo.pageCount);
-            for (int page = 1; page <= pageCount; page++)
+            List<string> pages = BuildPages(InkMarkup.ToRichText(authored));
+            for (int p = 0; p < pages.Count; p++)
             {
-                _text.pageToDisplay = page;
+                _text.text = pages[p];
+                _text.maxVisibleCharacters = 0;
+                _text.ForceMeshUpdate();
+                InkText.SetAlpha(_text, 1f);
                 PageChanged?.Invoke();          // the imp hops to a fresh spot for this box
-                yield return TypePage(page);
-                if (page < pageCount)
-                    yield return WaitAdvance();  // click or key turns the page
+                yield return TypePage();
+                if (p < pages.Count - 1) yield return WaitAdvance();
             }
-
             IsShowing = false;
         }
 
-        private IEnumerator TypePage(int page)
+        // Always types out one character at a time; a click only finishes the page after a short
+        // lockout, so a click carried over from the previous box can never make a page instant.
+        private IEnumerator TypePage()
         {
-            var info = _text.textInfo;
-            int idx = Mathf.Clamp(page - 1, 0, Mathf.Max(0, info.pageCount - 1));
-            int first = info.pageInfo[idx].firstCharacterIndex;
-            int last = info.pageInfo[idx].lastCharacterIndex;
-            first = Mathf.Clamp(first, 0, Mathf.Max(0, info.characterCount - 1));
-            last = Mathf.Clamp(last, first, Mathf.Max(first, info.characterCount - 1));
-
+            int total = _text.textInfo.characterCount;
             Speaking?.Invoke(true);
             float cps = Mathf.Max(_charsPerSecond, 1f);
-            float acc = first;
-            int announced = first;
-            _text.maxVisibleCharacters = first;
+            float acc = 0f, lockT = 0f;
+            int announced = 0;
+            _text.maxVisibleCharacters = 0;
 
-            while (_text.maxVisibleCharacters <= last)
+            while (_text.maxVisibleCharacters < total)
             {
-                if (PointerInput.AdvancePressed)                 // click to finish this page now
+                lockT += Time.deltaTime;
+                if (lockT > _skipLockout && PointerInput.AdvancePressed)
                 {
-                    _text.maxVisibleCharacters = last + 1;
+                    _text.maxVisibleCharacters = total; // finish this page's reveal (blips stop with it)
                     break;
                 }
                 acc += Time.deltaTime * cps;
-                int shown = Mathf.Min(last, Mathf.FloorToInt(acc));
-                _text.maxVisibleCharacters = shown + 1;
-                for (; announced <= shown; announced++)
-                    if (announced < info.characterCount) Typed?.Invoke(info.characterInfo[announced].character);
+                int shown = Mathf.Min(total, Mathf.FloorToInt(acc));
+                _text.maxVisibleCharacters = shown;
+                for (; announced < shown; announced++)
+                    Typed?.Invoke(_text.textInfo.characterInfo[announced].character);
                 yield return null;
             }
 
-            _text.maxVisibleCharacters = last + 1;
+            _text.maxVisibleCharacters = total;
             Speaking?.Invoke(false);
         }
 
@@ -131,6 +134,47 @@ namespace YourCall
                 if (t > _pageAdvanceLockout && PointerInput.AdvancePressed) yield break;
                 yield return null;
             }
+        }
+
+        // ---------- Sentence-boundary paging ----------
+
+        private static readonly Regex _sentenceSplit = new Regex(@"(?<=[.!?])\s+", RegexOptions.Compiled);
+
+        // Pack whole sentences into pages that fit the box; a sentence is never split.
+        private List<string> BuildPages(string rich)
+        {
+            var pages = new List<string>();
+            var sentences = SplitSentences(rich);
+            string cur = string.Empty;
+            for (int i = 0; i < sentences.Count; i++)
+            {
+                string s = sentences[i];
+                string candidate = cur.Length == 0 ? s : cur + " " + s;
+                if (cur.Length == 0 || Fits(candidate)) cur = candidate; // a sentence too long to fit still gets its own page
+                else { pages.Add(cur); cur = s; }
+            }
+            if (cur.Length > 0) pages.Add(cur);
+            if (pages.Count == 0) pages.Add(rich);
+            return pages;
+        }
+
+        private static List<string> SplitSentences(string rich)
+        {
+            var parts = _sentenceSplit.Split(rich);
+            var list = new List<string>(parts.Length);
+            for (int i = 0; i < parts.Length; i++)
+            {
+                string p = parts[i].Trim();
+                if (p.Length > 0) list.Add(p);
+            }
+            return list;
+        }
+
+        private bool Fits(string candidate)
+        {
+            _text.text = candidate;
+            _text.ForceMeshUpdate();
+            return _text.preferredHeight <= _text.rectTransform.rect.height + 0.02f;
         }
     }
 }
