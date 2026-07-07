@@ -27,8 +27,8 @@ namespace YourCall
         [SerializeField] private float _tickLength = 0.17f;
         [SerializeField] private float _centerDotRadius = 0.022f;
 
-        [Header("Barrel (subtle POV cue, tunable)")]
-        [SerializeField] private bool _showBarrel = true;
+        [Header("Barrel (subtle POV cue, tunable; off by default)")]
+        [SerializeField] private bool _showBarrel = false;
         [SerializeField] private Vector2 _barrelPosition = new Vector2(0f, -4.55f);
         [SerializeField] private float _barrelHalfWidth = 0.34f;
         [SerializeField] private float _barrelHeight = 0.95f;

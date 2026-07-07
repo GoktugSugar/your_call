@@ -31,7 +31,7 @@ namespace YourCall
         [SerializeField] private float _bodyRadiusY = 0.42f;
 
         [Header("Head (a circle, overlapping the body slightly at the neck)")]
-        [SerializeField] private float _headCenterY = 1.10f;
+        [SerializeField] private float _headCenterY = 1.15f;
         [SerializeField] private float _headRadius = 0.34f;
 
         [Header("Ears (open arc bumps on the head outline, curving outward)")]

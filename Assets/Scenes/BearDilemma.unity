@@ -382,15 +382,15 @@ MonoBehaviour:
   _bearPrefab: {fileID: 7630124836549793025, guid: 4db19659061a54e43bdc0b936fe95eb1, type: 3}
   _crosshair: {fileID: 753392898}
   _aimHighlight: {fileID: 1403715064}
-  _manFeet: {x: -2.3, y: -1.2}
-  _manScale: 1.05
-  _manBoxCenter: {x: -2.3, y: -0.6}
-  _manBoxSize: {x: 1.35, y: 1.6}
+  _manFeet: {x: -2.3, y: -0.5}
+  _manScale: 1.2
+  _manBoxCenter: {x: -2.3, y: 0.1}
+  _manBoxSize: {x: 1.55, y: 1.6}
   _manParty: man
-  _bearFeet: {x: 2.2, y: -1.2}
-  _bearScale: 1.05
-  _bearBoxCenter: {x: 2.35, y: -0.35}
-  _bearBoxSize: {x: 2.4, y: 2}
+  _bearFeet: {x: 2.2, y: -0.5}
+  _bearScale: 1.2
+  _bearBoxCenter: {x: 2.3, y: 0.45}
+  _bearBoxSize: {x: 2.5, y: 2.3}
   _bearParty: bear
   _resolveBeat: 0.35
   _foldDuration: 0.7

@@ -55,7 +55,7 @@ MonoBehaviour:
   _tickGap: 0.06
   _tickLength: 0.17
   _centerDotRadius: 0.022
-  _showBarrel: 1
+  _showBarrel: 0
   _barrelPosition: {x: 0, y: -4.55}
   _barrelHalfWidth: 0.34
   _barrelHeight: 0.95

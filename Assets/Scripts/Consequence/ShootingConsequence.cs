@@ -23,18 +23,18 @@ namespace YourCall
         [SerializeField] private AimHighlight _aimHighlight;
 
         [Header("The man (an ordinary life)")]
-        [SerializeField] private Vector2 _manFeet = new Vector2(-2.3f, -1.2f);
-        [SerializeField] private float _manScale = 1.05f;
+        [SerializeField] private Vector2 _manFeet = new Vector2(-2.3f, -0.5f);
+        [SerializeField] private float _manScale = 1.2f;
         [Tooltip("World centre and full size of the man's aim box (attention lock and hit test).")]
-        [SerializeField] private Vector2 _manBoxCenter = new Vector2(-2.3f, -0.6f);
-        [SerializeField] private Vector2 _manBoxSize = new Vector2(1.35f, 1.6f);
+        [SerializeField] private Vector2 _manBoxCenter = new Vector2(-2.3f, 0.1f);
+        [SerializeField] private Vector2 _manBoxSize = new Vector2(1.55f, 1.6f);
         [SerializeField] private string _manParty = "man";
 
         [Header("The bear (the last of her kind)")]
-        [SerializeField] private Vector2 _bearFeet = new Vector2(2.2f, -1.2f);
-        [SerializeField] private float _bearScale = 1.05f;
-        [SerializeField] private Vector2 _bearBoxCenter = new Vector2(2.35f, -0.35f);
-        [SerializeField] private Vector2 _bearBoxSize = new Vector2(2.4f, 2f);
+        [SerializeField] private Vector2 _bearFeet = new Vector2(2.2f, -0.5f);
+        [SerializeField] private float _bearScale = 1.2f;
+        [SerializeField] private Vector2 _bearBoxCenter = new Vector2(2.3f, 0.45f);
+        [SerializeField] private Vector2 _bearBoxSize = new Vector2(2.5f, 2.3f);
         [SerializeField] private string _bearParty = "bear";
 
         [Header("Timing")]

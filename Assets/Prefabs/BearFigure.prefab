@@ -52,7 +52,7 @@ MonoBehaviour:
   _bodyCenterY: 0.46
   _bodyRadiusX: 0.52
   _bodyRadiusY: 0.42
-  _headCenterY: 1.1
+  _headCenterY: 1.15
   _headRadius: 0.34
   _earOffsetDeg: 30
   _earSpreadDeg: 20
