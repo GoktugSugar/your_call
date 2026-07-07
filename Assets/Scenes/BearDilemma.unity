@@ -296,6 +296,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4c5e225237a474bba9c17100934918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.Crosshair
+--- !u!1 &762173233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 762173235}
+  - component: {fileID: 762173234}
+  m_Layer: 0
+  m_Name: ShootImpEnding
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &762173234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762173233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b70997efa8c168b4abe4309d229dd4a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.ShootImpEnding
+  _shooting: {fileID: 882311174}
+  _imp: {fileID: 2012755073}
+  _narrator: {fileID: 933681128}
+  _ending: {fileID: 1328324620}
+  _choices: {fileID: 816950998}
+  _line: What the fuck are you doing, asshole
+  _impFadeDuration: 0.8
+--- !u!4 &762173235
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762173233}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &816950997
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,16 +433,19 @@ MonoBehaviour:
   _bearPrefab: {fileID: 7630124836549793025, guid: 4db19659061a54e43bdc0b936fe95eb1, type: 3}
   _crosshair: {fileID: 753392898}
   _aimHighlight: {fileID: 1403715064}
-  _manFeet: {x: -2.3, y: -0.5}
-  _manScale: 1.2
-  _manBoxCenter: {x: -2.3, y: 0.1}
-  _manBoxSize: {x: 1.55, y: 1.6}
+  _manFeet: {x: -2.6, y: -0.5}
+  _manScale: 1.45
+  _manBoxCenter: {x: -2.6, y: 0.2}
+  _manBoxSize: {x: 1.8, y: 1.95}
   _manParty: man
-  _bearFeet: {x: 2.2, y: -0.5}
-  _bearScale: 1.2
-  _bearBoxCenter: {x: 2.3, y: 0.45}
-  _bearBoxSize: {x: 2.5, y: 2.3}
+  _bearFeet: {x: 2.5, y: -0.5}
+  _bearScale: 1.45
+  _bearBoxCenter: {x: 2.5, y: 0.7}
+  _bearBoxSize: {x: 2.9, y: 2.6}
   _bearParty: bear
+  _imp: {fileID: 2012755073}
+  _impBoxOffset: {x: 0, y: 0.55}
+  _impBoxSize: {x: 1.5, y: 1.9}
   _resolveBeat: 0.35
   _foldDuration: 0.7
   _foldSettle: 0.4
@@ -557,6 +611,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1328324619
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1328324621}
+  - component: {fileID: 1328324620}
+  m_Layer: 0
+  m_Name: Ending
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1328324620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1328324619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df19072fd3c2b6246a1c083f5976fb99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Ending
+  _credits: {fileID: 8315194170850095381}
+  _lineHold: 1
+--- !u!4 &1328324621
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1328324619}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1403715063
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -683,6 +783,138 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2012755072
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2012755074}
+  - component: {fileID: 2012755073}
+  m_Layer: 0
+  m_Name: Imp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2012755073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012755072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec21dd8d024e47547aae13a23a4b9d03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.ImpFigure
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _color: {r: 0.82, g: 0.52, b: 0.1, a: 1}
+  _lineWidth: 0.05
+  _detailWidth: 0.04
+  _sortingOrder: 14
+  _boil: 1
+  _startHidden: 0
+  _scale: 1.55
+  _bobAmplitude: 0.06
+  _bobPeriod: 2.4
+  _swayAngle: 3.5
+  _swayPeriod: 3.1
+  _breathAmount: 0.03
+  _breathPeriod: 2.7
+  _speakBob: 0.05
+  _speakLean: 4
+  _speakPeriod: 0.5
+  _popScaleFrom: 0.15
+  _popWobble: 10
+  _voice: {fileID: 0}
+--- !u!4 &2012755074
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012755072}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &8315194170850095380
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5826066507001049126, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_Name
+      value: CreditsRoll
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+--- !u!114 &8315194170850095381 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2948387600080096221, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+  m_PrefabInstance: {fileID: 8315194170850095380}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e3f19536f3ad134080a2550bede881e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.CreditsRoll
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -696,3 +928,7 @@ SceneRoots:
   - {fileID: 753392897}
   - {fileID: 1403715063}
   - {fileID: 882311175}
+  - {fileID: 2012755074}
+  - {fileID: 8315194170850095380}
+  - {fileID: 1328324621}
+  - {fileID: 762173235}
