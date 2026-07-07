@@ -437,12 +437,13 @@ MonoBehaviour:
   _borderWidth: 0.05
   _cornerRadius: 0.35
   _cornerSegments: 6
+  _handDrawnJitter: 0.035
   _sortingFill: 17
   _sortingBorder: 19
   _wobbleAmplitude: 0.012
   _wobbleSpeed: 1.7
   _maxTextWidth: 3.4
-  _padding: {x: 0.5, y: 0.4}
+  _padding: 0.32
   _minSize: {x: 1.8, y: 1.1}
   _gapAbove: 1.7
   _gapBelow: 0.5
@@ -451,6 +452,8 @@ MonoBehaviour:
   _tailTargetY: 0.9
   _tailWidth: 0.16
   _tailLength: 0.4
+  _tailBow: 0.06
+  _tailJitter: 0.025
   _fadeSpeed: 6
 --- !u!4 &1080919755
 Transform:
@@ -762,7 +765,6 @@ MonoBehaviour:
   _controller: {fileID: 1228188322}
   _settings: {fileID: 503732712}
   _imp: {fileID: 1269116347}
-  _impPopDuration: 0.6
   _settingsKeepout: {fileID: 267009561}
   _newGameScene: Opening
   _title: Your Call

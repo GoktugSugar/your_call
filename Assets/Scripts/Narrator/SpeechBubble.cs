@@ -5,11 +5,14 @@ namespace YourCall
 {
     /// <summary>
     /// A hand-drawn ink speech bubble that pops up next to a figure (the menu imp) and frames the
-    /// reused NarratorView's typed line, with a small tail pointing back at the figure. A rounded,
-    /// slightly wobbly ink outline over a faint paper fill, in the doodle style and the Caveat hand.
-    /// It sizes itself to the text and places itself clear of the screen edges and the menu's central
-    /// content, flipping above or below the figure as room allows. Reusable; the main menu uses it in
-    /// place of the bottom dialogue box. One job: frame a short line in a bubble by the imp.
+    /// reused NarratorView's typed line, with a small tail pointing back at the figure. Drawn in the
+    /// same ink language as the dialogue box: a rounded outline roughened with a little baked
+    /// irregularity (so it reads as an inked line, not a crisp geometric rectangle) and kept alive by
+    /// a slight controlled wobble, over a faint paper fill, in the Caveat hand. It sizes itself
+    /// snugly to the actual text (a short line gets a small bubble, a longer line a larger one, with
+    /// a small consistent padding), and places itself clear of the screen edges and the menu's
+    /// central content, flipping above or below the figure as room allows. Reusable; the main menu
+    /// uses it in place of the bottom dialogue box. One job: frame a short line in a bubble by the imp.
     /// </summary>
     public sealed class SpeechBubble : MonoBehaviour
     {
@@ -20,24 +23,28 @@ namespace YourCall
         [SerializeField] private Transform _target;
         [SerializeField] private Camera _camera;
 
-        [Header("Frame")]
+        [Header("Frame (hand-drawn ink, like the dialogue box)")]
         [SerializeField] private Color _borderColor = Palette.Ink;
         [SerializeField] private Color _fillColor = new Color(0.980f, 0.968f, 0.936f, 1f);
         [SerializeField] private float _borderWidth = 0.05f;
-        [SerializeField] private float _cornerRadius = 0.35f;
-        [SerializeField, Range(3, 16)] private int _cornerSegments = 6;
+        [SerializeField] private float _cornerRadius = 0.28f;
+        [SerializeField, Range(3, 16)] private int _cornerSegments = 4;
+        [Tooltip("A little irregularity baked into the outline so it is not a crisp geometric box.")]
+        [SerializeField] private float _handDrawnJitter = 0.035f;
         [SerializeField] private int _sortingFill = 17;
         [SerializeField] private int _sortingBorder = 19;
 
         [Header("Living line (controlled wobble)")]
-        [SerializeField] private float _wobbleAmplitude = 0.012f;
+        [SerializeField] private float _wobbleAmplitude = 0.02f;
         [SerializeField] private float _wobbleSpeed = 1.7f;
 
-        [Header("Size / fit")]
-        [Tooltip("The text wraps at this width; the bubble grows taller for a longer bark.")]
+        [Header("Size / fit (snug to the text)")]
+        [Tooltip("The text wraps at this width; a longer bark grows the bubble taller, a short one stays small.")]
         [SerializeField] private float _maxTextWidth = 3.4f;
-        [SerializeField] private Vector2 _padding = new Vector2(0.5f, 0.4f);
-        [SerializeField] private Vector2 _minSize = new Vector2(1.8f, 1.1f);
+        [Tooltip("Small consistent padding on every side, between the text and the outline.")]
+        [SerializeField] private float _padding = 0.32f;
+        [Tooltip("Floor so a one-word bark still gets a sensible bubble.")]
+        [SerializeField] private Vector2 _minSize = new Vector2(0.9f, 0.6f);
 
         [Header("Placement")]
         [Tooltip("When above the imp, the bubble bottom sits this far above its origin (clears the horns).")]
@@ -51,9 +58,12 @@ namespace YourCall
         [Tooltip("The tail points at this height above the imp origin (roughly its body), not its feet.")]
         [SerializeField] private float _tailTargetY = 0.9f;
 
-        [Header("Tail")]
+        [Header("Tail (hand-drawn beak)")]
         [SerializeField] private float _tailWidth = 0.16f;
-        [SerializeField] private float _tailLength = 0.4f;
+        [SerializeField] private float _tailLength = 0.42f;
+        [Tooltip("Bow the tail's sides out so it reads as an inked beak, not a clean triangle.")]
+        [SerializeField] private float _tailBow = 0.06f;
+        [SerializeField] private float _tailJitter = 0.025f;
 
         [Header("Fade")]
         [SerializeField] private float _fadeSpeed = 6f;
@@ -92,15 +102,15 @@ namespace YourCall
             if (!_built) Build();
             if (_camera == null) _camera = Camera.main;
 
-            // Lay the text out at a fixed wrap width and read its size.
-            _narrator.SetTextArea(new Vector2(_maxTextWidth, 6f));
+            // Measure the text wrapped at the max width (a pure measure), then lay it out and fit the
+            // bubble snugly around it.
+            Vector2 inner = _narrator.MeasureWrapped(text, _maxTextWidth);
+            _narrator.SetTextArea(new Vector2(_maxTextWidth, inner.y + 1f));
             _narrator.Show(text);
-            Vector2 pref = _narrator.PreferredSize;
-            float innerW = Mathf.Min(Mathf.Max(pref.x, 0.5f), _maxTextWidth);
-            float innerH = Mathf.Max(pref.y, 0.4f);
+
             _size = new Vector2(
-                Mathf.Max(innerW + _padding.x * 2f, _minSize.x),
-                Mathf.Max(innerH + _padding.y * 2f, _minSize.y));
+                Mathf.Max(inner.x + _padding * 2f, _minSize.x),
+                Mathf.Max(inner.y + _padding * 2f, _minSize.y));
 
             Vector3 anchor = _target != null ? _target.position : transform.position;
             Vector3 pos = ComputePosition(anchor, _size);
@@ -155,26 +165,45 @@ namespace YourCall
 
         private void RebuildFrame(Vector2 size, Vector2 tailLocal)
         {
-            var pts = RoundedRect(size * 0.995f, _cornerRadius, _cornerSegments);
+            // A rounded rect roughened with a smooth baked offset, so the outline reads as a drawn ink
+            // line rather than a crisp geometric box; the wobble then keeps it alive.
+            var pts = RoundedRect(size, _cornerRadius, _cornerSegments);
+            float seed = Random.Range(0f, 100f);
+            for (int i = 0; i < pts.Count - 1; i++)
+            {
+                float a = seed + i * 0.6f;
+                pts[i] += new Vector3(Mathf.Sin(a) * _handDrawnJitter, Mathf.Cos(a * 1.3f) * _handDrawnJitter, 0f);
+            }
+            pts[pts.Count - 1] = pts[0];   // keep the loop closed
             _borderBase = pts.ToArray();
             InkLine.SetPoints(_border, pts);
 
-            _fill.transform.localScale = new Vector3(size.x * 0.96f, size.y * 0.92f, 1f);
+            _fill.transform.localScale = new Vector3(size.x * 0.94f, size.y * 0.9f, 1f);
 
-            // Tail: a little beak on the edge nearest the imp, pointing at it.
-            float halfW = size.x * 0.5f, halfH = size.y * 0.5f;
-            bool above = tailLocal.y <= 0f;   // the imp is below the bubble
-            float baseY = above ? -halfH : halfH;
-            float tipY = above ? baseY - _tailLength : baseY + _tailLength;
-            float baseX = Mathf.Clamp(tailLocal.x, -halfW + 0.3f, halfW - 0.3f);
-            float tipX = Mathf.Clamp(tailLocal.x, baseX - 0.3f, baseX + 0.3f);
-            InkLine.SetPoints(_tail, new List<Vector3>
-            {
-                new Vector3(baseX - _tailWidth, baseY, 0f),
-                new Vector3(tipX, tipY, 0f),
-                new Vector3(baseX + _tailWidth, baseY, 0f),
-            });
+            BuildTail(size, tailLocal);
         }
+
+        // A little inked beak on the edge nearest the imp: two bowed, slightly jittered sides to a tip,
+        // so it reads as drawn rather than a clean triangle.
+        private void BuildTail(Vector2 size, Vector2 tailLocal)
+        {
+            float halfW = size.x * 0.5f, halfH = size.y * 0.5f;
+            bool above = tailLocal.y <= 0f;          // the imp is below the bubble
+            float dir = above ? -1f : 1f;            // tail drops (above) or rises (below)
+            float baseY = above ? -halfH : halfH;
+            float baseX = Mathf.Clamp(tailLocal.x, -halfW + 0.35f, halfW - 0.35f);
+            float tipX = Mathf.Clamp(tailLocal.x, baseX - 0.4f, baseX + 0.4f);
+            float tipY = baseY + dir * _tailLength;
+
+            Vector3 bl = new Vector3(baseX - _tailWidth, baseY, 0f);
+            Vector3 br = new Vector3(baseX + _tailWidth, baseY, 0f);
+            Vector3 tip = new Vector3(tipX + Rand(_tailJitter), tipY + Rand(_tailJitter), 0f);
+            Vector3 mL = Vector3.Lerp(bl, tip, 0.5f) + new Vector3(-_tailBow + Rand(_tailJitter), Rand(_tailJitter), 0f);
+            Vector3 mR = Vector3.Lerp(br, tip, 0.5f) + new Vector3(_tailBow + Rand(_tailJitter), Rand(_tailJitter), 0f);
+            InkLine.SetPoints(_tail, new List<Vector3> { bl, mL, tip, mR, br });
+        }
+
+        private static float Rand(float amp) => Random.Range(-amp, amp);
 
         private void Update()
         {

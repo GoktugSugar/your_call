@@ -85,9 +85,16 @@ namespace YourCall
             if (_text != null) _text.rectTransform.sizeDelta = size;
         }
 
-        /// <summary>The current line's rendered size (preferred width and wrapped height), valid once
-        /// Show has laid it out. Used by the speech bubble to fit around the text.</summary>
-        public Vector2 PreferredSize => _text != null ? new Vector2(_text.preferredWidth, _text.preferredHeight) : Vector2.zero;
+        /// <summary>Measure the snug size a line would render at, wrapped to <paramref name="maxWidth"/>:
+        /// the width of its longest line (never more than maxWidth) and its wrapped height. A pure
+        /// calculation that does not touch the live text or the typewriter, so the speech bubble can
+        /// size itself tightly to the actual text (a short line gets a small bubble).</summary>
+        public Vector2 MeasureWrapped(string authored, float maxWidth)
+        {
+            if (_text == null) return Vector2.zero;
+            Vector2 v = _text.GetPreferredValues(InkMarkup.ToRichText(authored), maxWidth, 0f);
+            return new Vector2(Mathf.Clamp(v.x, 0.2f, maxWidth), Mathf.Max(v.y, 0.2f));
+        }
 
         private IEnumerator Run(string authored)
         {

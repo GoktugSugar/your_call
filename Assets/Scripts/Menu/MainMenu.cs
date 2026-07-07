@@ -21,9 +21,8 @@ namespace YourCall
         [SerializeField] private TMP_FontAsset _font;
         [SerializeField] private MainMenuController _controller;
         [SerializeField] private SettingsPanel _settings;
-        [Tooltip("Optional: the imp roaming the menu. Left empty simply omits it.")]
+        [Tooltip("Optional: the imp on the menu. Left empty simply omits it.")]
         [SerializeField] private ImpFigure _imp;
-        [SerializeField] private float _impPopDuration = 0.6f;
         [Tooltip("Optional: a keep-out region over the settings panel, switched on only while the " +
                  "panel is open so the roaming imp gives it room. Left empty simply skips it.")]
         [SerializeField] private GameObject _settingsKeepout;
@@ -55,7 +54,8 @@ namespace YourCall
             if (_controller != null) _controller.Activated += OnActivated;
             if (_settings != null) _settings.Closed += OnSettingsClosed;
 
-            if (_imp != null) StartCoroutine(_imp.PopIn(_impPopDuration));
+            // No pop-in entrance on the menu: the imp is simply present with its idle life.
+            if (_imp != null) _imp.SetAlpha(1f);
         }
 
         private void OnDestroy()
