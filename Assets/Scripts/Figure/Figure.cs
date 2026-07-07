@@ -7,8 +7,8 @@ namespace YourCall
     /// <summary>
     /// A clean single-silhouette stick figure drawn as one continuous ink stroke with
     /// rounded joints and no joint dots. Built to be reposed later on Unity 2D Animation;
-    /// for the prototype it is one LineRenderer, so it strikes, folds and fades as one
-    /// unit with one alpha and leaves nothing behind. One component, one job.
+    /// for the prototype it is a LineRenderer (plus optional horn strokes), so it strikes,
+    /// folds and fades as one unit and leaves nothing behind. One component, one job.
     /// </summary>
     public class Figure : MonoBehaviour
     {
@@ -18,6 +18,8 @@ namespace YourCall
         [SerializeField] private float _lineWidth = 0.045f;
         [SerializeField] private int _sortingOrder = 10;
         [SerializeField] private bool _boil = true;
+        [Tooltip("Colour of the branded wretches' devil horns. Red is a documented second colour exception; see decisions.md.")]
+        [SerializeField] private Color _hornColor = Palette.InkRed;
 
         [Header("Proportions (feet at local origin, +y up)")]
         [SerializeField] private float _headRadius = 0.12f;
@@ -45,6 +47,7 @@ namespace YourCall
         private Color _baseColor;
         private bool _built;
         private bool _hornsOn;
+        private readonly List<LineRenderer> _horns = new List<LineRenderer>();
 
         public bool IsStruck { get; private set; }
 
@@ -61,28 +64,43 @@ namespace YourCall
                 _boilComp = _lr.gameObject.AddComponent<LineBoil>();
                 _boilComp.Capture();
             }
-            if (_startHidden) InkLine.SetAlpha(_lr, _baseColor, 0f);
+            if (_startHidden) SetInkAlpha(0f);
             _built = true;
         }
 
-        /// <summary>Set the ink alpha directly, so the figure can ink in or dissolve without
-        /// folding (the player waking, or quietly stepping out of a scene). Strike still owns
-        /// the fold-and-fade on impact.</summary>
+        /// <summary>Set the ink alpha directly (body and any horns), so the figure can ink in or
+        /// dissolve without folding (the player waking, or quietly stepping out of a scene). Strike
+        /// still owns the fold-and-fade on impact.</summary>
         public void SetInkAlpha(float alpha)
         {
             if (!_built) Build();
-            if (_lr != null) InkLine.SetAlpha(_lr, _baseColor, Mathf.Clamp01(alpha));
+            float a = Mathf.Clamp01(alpha);
+            if (_lr != null) InkLine.SetAlpha(_lr, _baseColor, a);
+            for (int i = 0; i < _horns.Count; i++) InkLine.SetAlpha(_horns[i], _hornColor, a);
         }
 
-        /// <summary>Add small doodle devil horns (plain black ink, part of the one stroke, so they
-        /// fold and fade with the figure). A per-dilemma gag on the branded wretches only.</summary>
+        /// <summary>Add small doodle devil horns as their own red strokes, parented to the figure so
+        /// they fold and fade with it. Red is a documented second colour exception (see
+        /// decisions.md); a per-dilemma gag on the branded wretches only.</summary>
         public void ShowHorns()
         {
             if (!_built) Build();
             if (_hornsOn) return;
             _hornsOn = true;
-            InkLine.SetPoints(_lr, BuildStroke());   // rebuild the same stroke, now with horns
-            if (_boilComp != null) _boilComp.Capture();
+            Vector2 c = new Vector2(0f, _neckY + _headRadius);
+            float r = _headRadius, hl = r * 1.15f;
+            Vector2 baseR = c + r * AngleDir(55f);
+            AddHorn("HornR", baseR, new Vector2(baseR.x + hl * 0.34f, baseR.y + hl * 0.94f));
+            Vector2 baseL = c + r * AngleDir(125f);
+            AddHorn("HornL", baseL, new Vector2(baseL.x - hl * 0.34f, baseL.y + hl * 0.94f));
+        }
+
+        private void AddHorn(string name, Vector2 basePt, Vector2 tip)
+        {
+            var lr = InkLine.Create(transform, name, _inkMaterial, _lineWidth, _hornColor, _sortingOrder + 1);
+            InkLine.SetPoints(lr, new List<Vector3> { new Vector3(basePt.x, basePt.y, 0f), new Vector3(tip.x, tip.y, 0f) });
+            if (_boil) lr.gameObject.AddComponent<LineBoil>().Capture();
+            _horns.Add(lr);
         }
 
         private List<Vector3> BuildStroke()
@@ -99,8 +117,7 @@ namespace YourCall
             // One stroke: left arm -> up the neck -> around the head -> torso -> both legs -> right arm.
             pts.Add(leftHand);
             pts.Add(shoulder);
-            if (_hornsOn) AddHornedHead(pts, headCenter);
-            else InkLine.AddArc(pts, headCenter, _headRadius, -90f, 270f, _headSegments); // seals at the neck
+            InkLine.AddArc(pts, headCenter, _headRadius, -90f, 270f, _headSegments); // seals at the neck
             pts.Add(shoulder);
             pts.Add(hip);
             pts.Add(leftFoot);
@@ -112,35 +129,19 @@ namespace YourCall
             return pts;
         }
 
-        // The head arc broken at the top by two small horns, each a spike out to a tip and back,
-        // so the whole figure stays one continuous stroke (and fades as one).
-        private void AddHornedHead(List<Vector3> pts, Vector2 c)
-        {
-            float r = _headRadius;
-            float hl = r * 1.15f;
-            InkLine.AddArc(pts, c, r, -90f, 55f, 8);                 // neck up the right side to the horn base
-            Vector2 baseR = c + r * AngleDir(55f);
-            pts.Add(new Vector3(baseR.x + hl * 0.34f, baseR.y + hl * 0.94f, 0f)); // right horn tip (up, a little out)
-            pts.Add(new Vector3(baseR.x, baseR.y, 0f));
-            InkLine.AddArc(pts, c, r, 55f, 125f, 4);                 // across the crown between the horns
-            Vector2 baseL = c + r * AngleDir(125f);
-            pts.Add(new Vector3(baseL.x - hl * 0.34f, baseL.y + hl * 0.94f, 0f)); // left horn tip
-            pts.Add(new Vector3(baseL.x, baseL.y, 0f));
-            InkLine.AddArc(pts, c, r, 125f, 270f, 8);                // down the left side back to the neck
-        }
-
         private static Vector2 AngleDir(float deg)
         {
             float a = deg * Mathf.Deg2Rad;
             return new Vector2(Mathf.Cos(a), Mathf.Sin(a));
         }
 
-        /// <summary>Fold and fade as one unit, then leave nothing behind.</summary>
+        /// <summary>Fold and fade as one unit (body and horns together), then leave nothing behind.</summary>
         public void Strike(float foldDuration)
         {
             if (IsStruck) return;
             IsStruck = true;
             if (_boilComp != null) _boilComp.enabled = false;
+            for (int i = 0; i < _horns.Count; i++) { var b = _horns[i].GetComponent<LineBoil>(); if (b != null) b.enabled = false; }
             StartCoroutine(FoldAndFade(Mathf.Max(foldDuration, 0.05f)));
         }
 
@@ -165,9 +166,11 @@ namespace YourCall
                 transform.localScale = Vector3.Lerp(s0, s1, k);
                 float fadeK = EaseUtil.Clamp01((t - dur * 0.25f) / (dur * 0.75f));
                 InkLine.SetAlpha(_lr, _baseColor, 1f - fadeK);
+                for (int i = 0; i < _horns.Count; i++) InkLine.SetAlpha(_horns[i], _hornColor, 1f - fadeK);
                 yield return null;
             }
             InkLine.SetAlpha(_lr, _baseColor, 0f);
+            for (int i = 0; i < _horns.Count; i++) InkLine.SetAlpha(_horns[i], _hornColor, 0f);
             gameObject.SetActive(false);
         }
     }
