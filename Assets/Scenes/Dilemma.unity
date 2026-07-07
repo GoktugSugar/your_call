@@ -450,12 +450,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b111510728a91046847b9c8c9898568, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.NarratorView
-  _fontSize: 3.4
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _fontSize: 3.6
   _color: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _alignment: 258
   _width: 15
   _height: 3.2
   _sortingOrder: 20
   _charsPerSecond: 55
+  _skipLockout: 0.18
   _pageAdvanceLockout: 0.22
 --- !u!4 &933681129
 Transform:
