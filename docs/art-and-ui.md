@@ -5,6 +5,8 @@ Black-and-white, hand-drawn **stick figures** — a doodle aesthetic. Characters
 
 The setting is a cosmic void — mostly empty space — so backgrounds are minimal and the figures carry every scene.
 
+Non-human figures follow the same rule: clean, minimal ink doodles, not detailed drawings. The bear in the man-versus-bear dilemma is front facing and sitting, built from a rounded body, a head circle, two ears drawn as **open bumps on the head outline** (not full circles laid over it, which read as creepy), a small muzzle, and a **deliberately minimal face** (two dot eyes, a small nose, a tiny smile). The sparse face is what keeps her friendly rather than unsettling. She carries no cub or offspring cue on screen; the weight of her being the last of her kind rests entirely on the imp's words (see `gameplay.md`).
+
 ## Minimal, not sterile (stylisation)
 Minimal governs how many elements are on screen (few, uncluttered). Stylisation governs the character of the elements you keep. The hand-drawn ink aesthetic is the style, so the game should read as spare but never plain or sterile. Character comes from four levers, none of which add clutter:
 - A living ink line. Variable-weight, slightly rough, hand-drawn strokes, not clean geometric vector. A subtle boil (cycling two or three near-identical line frames) makes everything feel drawn and alive for almost no cost.
