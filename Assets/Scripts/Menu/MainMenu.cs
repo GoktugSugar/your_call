@@ -21,9 +21,12 @@ namespace YourCall
         [SerializeField] private TMP_FontAsset _font;
         [SerializeField] private MainMenuController _controller;
         [SerializeField] private SettingsPanel _settings;
-        [Tooltip("Optional: the imp idling on the menu. Left empty simply omits it.")]
+        [Tooltip("Optional: the imp roaming the menu. Left empty simply omits it.")]
         [SerializeField] private ImpFigure _imp;
         [SerializeField] private float _impPopDuration = 0.6f;
+        [Tooltip("Optional: a keep-out region over the settings panel, switched on only while the " +
+                 "panel is open so the roaming imp gives it room. Left empty simply skips it.")]
+        [SerializeField] private GameObject _settingsKeepout;
 
         [Header("New Game")]
         [Tooltip("The scene New Game loads: the authored opening sequence.")]
@@ -117,12 +120,14 @@ namespace YourCall
             if (_settings == null) return;
             if (_controller != null) _controller.SetInteractable(false);
             SetMenuShown(false);
+            if (_settingsKeepout != null) _settingsKeepout.SetActive(true);
             _settings.Open();
         }
 
         private void OnSettingsClosed()
         {
             SetMenuShown(true);
+            if (_settingsKeepout != null) _settingsKeepout.SetActive(false);
             if (_controller != null) _controller.SetInteractable(true);
         }
     }

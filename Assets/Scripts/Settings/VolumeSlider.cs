@@ -20,13 +20,14 @@ namespace YourCall
         [SerializeField] private float _labelSize = 2.1f;
         [SerializeField] private Color _idleColor = Palette.Ink;
         [SerializeField] private Color _selectedColor = Palette.Amber;
-        [SerializeField] private float _labelWidth = 3.2f;
-        [SerializeField] private float _labelCenterX = -1.9f;
+        [Tooltip("The label sits centred just above the track, so the whole control reads centred.")]
+        [SerializeField] private float _labelWidth = 4.4f;
+        [SerializeField] private float _labelYOffset = 0.5f;
         [SerializeField] private int _sortingOrder = 32;
 
-        [Header("Track")]
-        [SerializeField] private float _trackMinX = -0.2f;
-        [SerializeField] private float _trackMaxX = 3f;
+        [Header("Track (centred on the control's origin)")]
+        [SerializeField] private float _trackMinX = -2f;
+        [SerializeField] private float _trackMaxX = 2f;
         [SerializeField] private Color _trackColor = Palette.Muted;
         [SerializeField] private Color _fillColor = Palette.Ink;
         [SerializeField] private float _trackWidth = 0.05f;
@@ -64,10 +65,10 @@ namespace YourCall
         {
             if (!_built)
             {
-                _label = InkText.Create(transform, "Label", _labelSize, _idleColor, TextAlignmentOptions.Right, _sortingOrder);
+                _label = InkText.Create(transform, "Label", _labelSize, _idleColor, TextAlignmentOptions.Center, _sortingOrder);
                 if (font != null) _label.font = font;
                 _label.rectTransform.sizeDelta = new Vector2(_labelWidth, _labelSize * 1.4f);
-                _label.rectTransform.localPosition = new Vector3(_labelCenterX, 0f, 0f);
+                _label.rectTransform.localPosition = new Vector3(0f, _labelYOffset, 0f);
 
                 _track = InkLine.Create(transform, "Track", inkMaterial, _trackWidth, _trackColor, _sortingOrder - 2);
                 InkLine.SetPoints(_track, new List<Vector3> { new Vector3(_trackMinX, 0f, 0f), new Vector3(_trackMaxX, 0f, 0f) });

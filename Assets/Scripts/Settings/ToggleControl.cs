@@ -18,12 +18,13 @@ namespace YourCall
         [SerializeField] private float _labelSize = 2.1f;
         [SerializeField] private Color _idleColor = Palette.Ink;
         [SerializeField] private Color _selectedColor = Palette.Amber;
-        [SerializeField] private float _labelWidth = 3.2f;
-        [SerializeField] private float _labelCenterX = -1.9f;
+        [Tooltip("The label sits centred just above the box, matching the sliders, so it reads centred.")]
+        [SerializeField] private float _labelWidth = 4.4f;
+        [SerializeField] private float _labelYOffset = 0.5f;
         [SerializeField] private int _sortingOrder = 32;
 
-        [Header("Box")]
-        [SerializeField] private float _boxCenterX = 0.6f;
+        [Header("Box (centred on the control's origin)")]
+        [SerializeField] private float _boxCenterX = 0f;
         [SerializeField] private float _boxSize = 0.62f;
         [SerializeField] private Color _boxColor = Palette.Ink;
         [SerializeField] private Color _tickColor = Palette.Amber;
@@ -58,10 +59,10 @@ namespace YourCall
         {
             if (!_built)
             {
-                _label = InkText.Create(transform, "Label", _labelSize, _idleColor, TextAlignmentOptions.Right, _sortingOrder);
+                _label = InkText.Create(transform, "Label", _labelSize, _idleColor, TextAlignmentOptions.Center, _sortingOrder);
                 if (font != null) _label.font = font;
                 _label.rectTransform.sizeDelta = new Vector2(_labelWidth, _labelSize * 1.4f);
-                _label.rectTransform.localPosition = new Vector3(_labelCenterX, 0f, 0f);
+                _label.rectTransform.localPosition = new Vector3(0f, _labelYOffset, 0f);
 
                 float h = _boxSize * 0.5f;
                 _box = InkLine.Create(transform, "Box", inkMaterial, _boxWidth, _boxColor, _sortingOrder - 1);

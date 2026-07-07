@@ -51,14 +51,17 @@ namespace YourCall
         [SerializeField] private string _headingText = "Settings";
         [SerializeField] private float _headingSize = 3.2f;
         [SerializeField] private Color _headingColor = Palette.Ink;
-        [SerializeField] private float _headingY = 2.15f;
+        [SerializeField] private float _headingY = 2.45f;
 
         [Header("Rows")]
-        [SerializeField] private float _rowStartY = 0.85f;
-        [SerializeField] private float _rowSpacing = 1.0f;
-        [SerializeField] private float _closeGap = 0.55f;
-        [Tooltip("Nudge the labelled rows so their content reads centred in the frame.")]
-        [SerializeField] private float _contentOffsetX = 0.3f;
+        [Tooltip("Rows are stacked (a centred label above each centred control), so they need a little " +
+                 "more vertical room than a single line.")]
+        [SerializeField] private float _rowStartY = 1.15f;
+        [SerializeField] private float _rowSpacing = 1.15f;
+        [SerializeField] private float _closeGap = 0.4f;
+        [Tooltip("Nudge the rows horizontally. The controls are laid out symmetric about their own " +
+                 "origin, so 0 keeps them centred in the frame.")]
+        [SerializeField] private float _contentOffsetX = 0f;
 
         [Header("Fade")]
         [SerializeField] private float _fadeDuration = 0.22f;

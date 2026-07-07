@@ -35,6 +35,13 @@ namespace YourCall
         [SerializeField, Range(0f, 2f)] private float _overshoot = 1.1f;
         [SerializeField] private int _pickTries = 48;
 
+        [Header("Restless idle (menu)")]
+        [Tooltip("0 = only hop when a new box appears (the opening). Above 0 = also hop on this cadence " +
+                 "with no line at all, for a restless idle that never settles (the main menu).")]
+        [SerializeField] private float _restlessInterval = 0f;
+        [Tooltip("Randomises each restless wait by this fraction, so the hopping never feels metronomic.")]
+        [SerializeField, Range(0f, 0.8f)] private float _restlessJitter = 0.35f;
+
         [Header("Safety")]
         [Tooltip("How often to check that content has not appeared over the imp, and hop it clear.")]
         [SerializeField] private float _blockedCheckInterval = 0.2f;
@@ -42,6 +49,8 @@ namespace YourCall
         private Coroutine _hop;
         private bool _hopping;
         private float _blockTimer;
+        private float _restlessTimer;
+        private float _restlessNext;
 
         private void OnEnable() { if (_voice != null) _voice.PageChanged += OnPage; }
         private void OnDisable() { if (_voice != null) _voice.PageChanged -= OnPage; }
@@ -58,11 +67,24 @@ namespace YourCall
                 _blockTimer = 0f;
                 if (Blocked(transform.position)) Reposition(preferFar: false); // content landed on us
             }
+
+            // A restless idle with no line to prompt it: keep the menu imp hopping about the page.
+            if (_restlessInterval > 0f)
+            {
+                if (_restlessNext <= 0f) _restlessNext = NextRestless();
+                _restlessTimer += Time.deltaTime;
+                if (_restlessTimer >= _restlessNext) Reposition(preferFar: true);
+            }
         }
+
+        private float NextRestless() => _restlessInterval * (1f + Random.Range(-_restlessJitter, _restlessJitter));
 
         private void Reposition(bool preferFar)
         {
             if (_imp != null && !_imp.Present) return;
+            // Any reposition (a new box, a restless tick, a nudge off content) restarts the restless wait.
+            _restlessTimer = 0f;
+            _restlessNext = NextRestless();
             if (TryPick(preferFar, out Vector2 target)
                 && (target - (Vector2)transform.position).sqrMagnitude > 0.0001f)
             {
