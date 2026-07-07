@@ -64,7 +64,7 @@ namespace YourCall
             var clip = _clips[Random.Range(0, _clips.Length)];
             if (clip == null) return;
             _source.pitch = Random.Range(_pitchMin, _pitchMax);
-            _source.PlayOneShot(clip, _volume);
+            _source.PlayOneShot(clip, _volume * GameSettings.SfxScalar);
         }
     }
 }

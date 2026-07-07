@@ -29,7 +29,7 @@ namespace YourCall
         public void Fire()
         {
             if (_source == null || _clip == null) return;
-            _source.PlayOneShot(_clip, _volume);
+            _source.PlayOneShot(_clip, _volume * GameSettings.SfxScalar);
         }
     }
 }

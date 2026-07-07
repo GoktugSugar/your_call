@@ -34,6 +34,30 @@ namespace YourCall
             }
         }
 
+        /// <summary>The primary button held down this frame. Used for dragging (e.g. a settings slider).</summary>
+        public static bool Held
+        {
+            get
+            {
+#if ENABLE_INPUT_SYSTEM
+                if (Mouse.current != null) return Mouse.current.leftButton.isPressed;
+#endif
+                return false;
+            }
+        }
+
+        /// <summary>The primary button released this frame. Used to end a drag.</summary>
+        public static bool Released
+        {
+            get
+            {
+#if ENABLE_INPUT_SYSTEM
+                if (Mouse.current != null) return Mouse.current.leftButton.wasReleasedThisFrame;
+#endif
+                return false;
+            }
+        }
+
         /// <summary>Any mouse click or key press this frame. Used to advance / replay.</summary>
         public static bool AdvancePressed
         {
