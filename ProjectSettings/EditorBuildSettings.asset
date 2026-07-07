@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BlueRedButton.unity
     guid: 9d9b39343a8bb3f4e8f81b4efc57fafe
+  - enabled: 1
+    path: Assets/Scenes/BearDilemma.unity
+    guid: a28b84bb7dab0bb43a2f46fe864d7292
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

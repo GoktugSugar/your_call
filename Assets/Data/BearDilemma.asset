@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ecd1a615a340f4c9104ca01624d106, type: 3}
+  m_Name: BearDilemma
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Dilemma
+  _id: bear_last
+  _verb: 0
+  _weight: 2
+  _narratorPrompt: A gun, this time. Heavier than a lever, is it not. On your left,
+    a man. Ordinary, unremarkable, one life among billions. On your right, a bear.
+    Not merely a bear. She is the [amber]last[/amber] female of her kind who can
+    still carry young. If she falls, her whole species ends with her, and it ends
+    [amber]forever[/amber]. Every one of them that might ever have lived, gone in
+    a single shot. One of the two must die, and the trigger belongs to you. So which
+    is it, judge. The one man, or [amber]every[/amber] bear that will ever be.
+  _choices:
+  - _id: shoot_man
+    _label: Shoot the man
+    _narratorReact: You shot the man. The bear lives, and so does every last one
+      that will ever follow her, a whole future left breathing at the cost of one
+      ordinary life. You set a single man against a species and found him the lighter
+      thing. Spoken like someone who spent his days pricing what a life was worth.
+      I do wonder whether he would have agreed with your sum.
+    _narratorReactStruck: 
+    _struckParty: man
+    _gambledParty: 
+    _route: straight
+    _diverts: 0
+    _seedVotes: 42
+    _profileImpact:
+    - _axis: 0
+      _value: 1
+    - _axis: 2
+      _value: -1
+  - _id: shoot_bear
+    _label: Shoot the bear
+    _narratorReact: You shot the bear. The man walks away, and the last of her kind
+      folds into the dark and takes every bear that would ever have been down with
+      her. Extinct. There is no word you can say to fetch them back. You spared the
+      one life in front of you and let a whole future close for it. Call it mercy
+      if you like. Or simply the arithmetic you could stomach.
+    _narratorReactStruck: 
+    _struckParty: bear
+    _gambledParty: 
+    _route: straight
+    _diverts: 0
+    _seedVotes: 58
+    _profileImpact:
+    - _axis: 0
+      _value: -1
+    - _axis: 2
+      _value: 1
+  _figuresBranded: 0
+  _statsHeading: how others chose
+  _roomBlueFraction: 0.43
+  _crowdThreshold: 0.5
+  _thresholdLabel: the line

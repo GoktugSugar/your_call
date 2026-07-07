@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2727001910265905440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8631868314317123613}
+  - component: {fileID: 7630124836549793025}
+  m_Layer: 0
+  m_Name: BearFigure
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8631868314317123613
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2727001910265905440}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7630124836549793025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2727001910265905440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 251be2edf837ca64aafcab7ee002e321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.BearFigure
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _color: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _lineWidth: 0.05
+  _sortingOrder: 10
+  _boil: 1
+  _bodyRadius: 0.5
+  _headRadius: 0.36
+  _headCenterY: 1.12
+  _earRadius: 0.13
+  _earAngle: 34
+  _muzzleRadius: 0.16
+  _muzzleCenterY: 0.96
+  _noseRadius: 0.06
+  _eyeRadius: 0.033
+  _eyeSpread: 0.14
+  _eyeY: 1.2
+  _legSpread: 0.24
+  _legLength: 0.18
+  _showArms: 1
+  _armSpread: 0.52
+  _armDrop: 0.34
+  _showCub: 1
+  _cubOffset: {x: 0.66, y: 0}
+  _cubScale: 0.48
+  _fallDirection: -1
+  _foldAngle: 82
+  _squash: 0.84
+  _anticipation: 6
+  _startHidden: 0
