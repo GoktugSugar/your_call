@@ -15,6 +15,9 @@ namespace YourCall
     {
         [Header("Ink")]
         [SerializeField] private Material _inkMaterial;
+        [Tooltip("The imp's single ink colour, driving every stroke. Palette.Ink (near-black) normally; " +
+                 "temporarily set to amber for the imp-colour test. Reverting that experiment is just this " +
+                 "one field back to black.")]
         [SerializeField] private Color _color = Palette.Ink;
         [SerializeField] private float _lineWidth = 0.05f;
         [SerializeField] private float _detailWidth = 0.04f;

@@ -920,7 +920,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.ImpFigure
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
-  _color: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _color: {r: 0.91, g: 0.584, b: 0.118, a: 1}
   _lineWidth: 0.05
   _detailWidth: 0.04
   _sortingOrder: 14
