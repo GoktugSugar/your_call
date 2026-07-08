@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ecd1a615a340f4c9104ca01624d106, type: 3}
+  m_Name: Begging
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Dilemma
+  _id: begging
+  _verb: 0
+  _weight: 1
+  _narratorPrompt: One on the branch, right in front of you, close enough to count the tears, screaming to be spared. You can read every word of it hanging in the air over him. On the straight track, three more, backs turned, silent, no idea you exist or that any of this is happening to them. Three you cannot hear, or one you cannot shut up. The lever waits. Funny, what volume does to a person's worth. Your call.
+  _choices:
+  - _id: pull
+    _label: Pull the lever
+    _narratorReact: Pulled. The one who begged goes quiet the only way left to him, and three strangers who never made a sound walk on, oblivious. You did the arithmetic and looked past the face. Three beats one, even when the one is staring you dead in the eye. Cold. I almost admire it. Almost.
+    _narratorReactStruck:
+    _struckParty: spur
+    _gambledParty:
+    _route: spur
+    _diverts: 1
+    _seedVotes: 66
+    _endsGame: 0
+    _profileImpact:
+    - _axis: 0
+      _value: 1
+  - _id: do_nothing
+    _label: Do nothing
+    _narratorReact: You left it. The three quiet ones go under, and the one who screamed loudest keeps his voice, now spending it on thanks. A face and a plea outbid three silent strangers, and you call that a decision. It looked more like being nagged into one. The loud ones always did get to you.
+    _narratorReactStruck:
+    _struckParty: main
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 34
+    _endsGame: 0
+    _profileImpact:
+    - _axis: 0
+      _value: -1
+  _mainFigureCount: 3
+  _spurFigureCount: 1
+  _figuresBranded: 0
+  _mainFigurePrefab: {fileID: 0}
+  _spurFigurePrefab: {fileID: 0}
+  _spurPlea: Please. Please, not me. I am begging you.
+  _statsHeading: how others chose
+  _roomBlueFraction: 0.43
+  _crowdThreshold: 0.5
+  _thresholdLabel: the line

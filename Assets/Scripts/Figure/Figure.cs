@@ -6,10 +6,14 @@ using UnityEngine.Serialization;
 namespace YourCall
 {
     /// <summary>
-    /// A clean single-silhouette stick figure drawn as one continuous ink stroke with
-    /// rounded joints and no joint dots. Built to be reposed later on Unity 2D Animation;
-    /// for the prototype it is a LineRenderer whose outline can be recoloured to a brand red for the
-    /// damned wretches, so it strikes, folds and fades as one unit and leaves nothing behind. One job.
+    /// A clean single-silhouette stick figure drawn as ink strokes with rounded joints and no
+    /// joint dots. Built to be reposed later on Unity 2D Animation; for the prototype it is a set
+    /// of LineRenderers whose outline can be recoloured to a brand red for the damned wretches. It
+    /// strikes, folds and fades as one unit and leaves nothing behind. One job.
+    ///
+    /// The shape is a <see cref="BuildShape"/> seam so on-model relatives (a baby, a pregnant
+    /// woman) can subclass and redraw only their strokes, inheriting the ink, brand, fold and fade
+    /// unchanged. The default shape is the single stick stroke, exactly as before.
     /// </summary>
     public class Figure : MonoBehaviour
     {
@@ -44,13 +48,24 @@ namespace YourCall
         [Tooltip("Build fully faded out, so it can ink in later (the player waking in the void).")]
         [SerializeField] private bool _startHidden = false;
 
-        private LineRenderer _lr;
-        private LineBoil _boilComp;
+        private readonly List<LineRenderer> _strokes = new List<LineRenderer>();
+        private readonly List<LineBoil> _boils = new List<LineBoil>();
         private Color _baseColor;
         private bool _built;
         private bool _branded;
 
         public bool IsStruck { get; private set; }
+
+        // Exposed to subclasses that draw their own shape.
+        protected float LineWidth => _lineWidth;
+        protected float HeadRadius => _headRadius;
+        protected int HeadSegments => _headSegments;
+        protected float HipY => _hipY;
+        protected float ShoulderY => _shoulderY;
+        protected float NeckY => _neckY;
+        protected float ArmSpan => _armSpan;
+        protected float ArmDrop => _armDrop;
+        protected float LegSpan => _legSpan;
 
         private void Awake() { Build(); }
 
@@ -58,39 +73,37 @@ namespace YourCall
         {
             if (_built) return;
             _baseColor = _color;
-            _lr = InkLine.Create(transform, "Ink", _inkMaterial, _lineWidth, _color, _sortingOrder);
-            InkLine.SetPoints(_lr, BuildStroke());
-            if (_boil)
-            {
-                _boilComp = _lr.gameObject.AddComponent<LineBoil>();
-                _boilComp.Capture();
-            }
+            BuildShape();
             if (_startHidden) SetInkAlpha(0f);
             _built = true;
         }
 
-        /// <summary>Set the ink alpha directly, so the figure can ink in or dissolve without folding
-        /// (the player waking, or quietly stepping out of a scene). Strike still owns the fold-and-fade
-        /// on impact.</summary>
-        public void SetInkAlpha(float alpha)
+        /// <summary>Add one ink stroke to the figure (registered so it inks, brands, folds and fades as
+        /// one). Subclasses build their shape by calling this. A width of 0 or less uses the figure's line
+        /// width.</summary>
+        protected LineRenderer AddStroke(string name, List<Vector3> points, float width = 0f)
         {
-            if (!_built) Build();
-            float a = Mathf.Clamp01(alpha);
-            if (_lr != null) InkLine.SetAlpha(_lr, _baseColor, a);
+            float w = width > 0f ? width : _lineWidth;
+            var lr = InkLine.Create(transform, name, _inkMaterial, w, _color, _sortingOrder);
+            InkLine.SetPoints(lr, points);
+            if (_boil)
+            {
+                var b = lr.gameObject.AddComponent<LineBoil>();
+                b.Capture();
+                _boils.Add(b);
+            }
+            _strokes.Add(lr);
+            return lr;
         }
 
-        /// <summary>Mark this figure as one of the damned: recolour its whole outline to the brand
-        /// colour (red), used for the branded wretches in the whose-life-counts second trolley. A
-        /// deliberate red on the black-ink base (see art-and-ui.md); the innocent figures stay black.</summary>
-        public void Brand()
+        /// <summary>Draw the figure's ink. Default: the single stick stroke. Override to repose it into an
+        /// on-model relative (a baby, a pregnant woman), reusing <see cref="AddStroke"/>.</summary>
+        protected virtual void BuildShape()
         {
-            if (!_built) Build();
-            _branded = true;
-            _baseColor = _brandColor;
-            if (_lr != null) InkLine.SetColor(_lr, _brandColor);
+            AddStroke("Ink", BuildStickStroke());
         }
 
-        private List<Vector3> BuildStroke()
+        private List<Vector3> BuildStickStroke()
         {
             var pts = new List<Vector3>(32);
             var leftHand = new Vector3(-_armSpan, _shoulderY - _armDrop, 0f);
@@ -116,10 +129,27 @@ namespace YourCall
             return pts;
         }
 
-        private static Vector2 AngleDir(float deg)
+        /// <summary>Set the ink alpha directly, so the figure can ink in or dissolve without folding
+        /// (the player waking, or quietly stepping out of a scene). Strike still owns the fold-and-fade
+        /// on impact.</summary>
+        public void SetInkAlpha(float alpha)
         {
-            float a = deg * Mathf.Deg2Rad;
-            return new Vector2(Mathf.Cos(a), Mathf.Sin(a));
+            if (!_built) Build();
+            float a = Mathf.Clamp01(alpha);
+            for (int i = 0; i < _strokes.Count; i++)
+                if (_strokes[i] != null) InkLine.SetAlpha(_strokes[i], _baseColor, a);
+        }
+
+        /// <summary>Mark this figure as one of the damned: recolour its whole outline to the brand
+        /// colour (red), used for the branded wretches in the whose-life-counts second trolley. A
+        /// deliberate red on the black-ink base (see art-and-ui.md); the innocent figures stay black.</summary>
+        public void Brand()
+        {
+            if (!_built) Build();
+            _branded = true;
+            _baseColor = _brandColor;
+            for (int i = 0; i < _strokes.Count; i++)
+                if (_strokes[i] != null) InkLine.SetColor(_strokes[i], _brandColor);
         }
 
         /// <summary>Fold and fade as one unit, then leave nothing behind.</summary>
@@ -127,7 +157,7 @@ namespace YourCall
         {
             if (IsStruck) return;
             IsStruck = true;
-            if (_boilComp != null) _boilComp.enabled = false;
+            for (int i = 0; i < _boils.Count; i++) if (_boils[i] != null) _boils[i].enabled = false;
             StartCoroutine(FoldAndFade(Mathf.Max(foldDuration, 0.05f)));
         }
 
@@ -151,10 +181,12 @@ namespace YourCall
                 transform.localRotation = Quaternion.Slerp(back, target, k);
                 transform.localScale = Vector3.Lerp(s0, s1, k);
                 float fadeK = EaseUtil.Clamp01((t - dur * 0.25f) / (dur * 0.75f));
-                InkLine.SetAlpha(_lr, _baseColor, 1f - fadeK);
+                for (int i = 0; i < _strokes.Count; i++)
+                    if (_strokes[i] != null) InkLine.SetAlpha(_strokes[i], _baseColor, 1f - fadeK);
                 yield return null;
             }
-            InkLine.SetAlpha(_lr, _baseColor, 0f);
+            for (int i = 0; i < _strokes.Count; i++)
+                if (_strokes[i] != null) InkLine.SetAlpha(_strokes[i], _baseColor, 0f);
             gameObject.SetActive(false);
         }
     }

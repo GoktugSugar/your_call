@@ -15,23 +15,18 @@ MonoBehaviour:
   _id: trolley
   _verb: 0
   _weight: 1
-  _narratorPrompt: Oh good, you are back. Someone left a trolley running and five
-    strangers standing in its way. There is one more soul on the side track, and
-    a lever by your hand that decides whose morning ends here. You did enjoy deciding
-    what people deserved, once. And you did know your way around a moving vehicle.
-    Your call.
+  _narratorPrompt: The classic, to break you in gently. Five strangers on the straight track, too slow and too doomed to get clear. One more soul on the branch, and a lever under your hand that decides whose morning stops here. You did so love deciding what people deserved, up on your nice high bench. And you did know your way around a moving vehicle. Your call.
   _choices:
   - _id: pull
     _label: Pull the lever
-    _narratorReact: You pulled it. One traded for five, and you barely blinked. Tidy.
-      Proportionate. The judge in you would have signed off without even looking
-      up.
-    _narratorReactStruck: 
+    _narratorReact: You pulled. One life swapped for five, and you barely blinked, quick as a man signing an order he stopped actually reading years ago. Tidy. Proportionate. So very sensible. I would not go looking for a gold star, though. They only get harder from here, and I only get ruder.
+    _narratorReactStruck:
     _struckParty: spur
-    _gambledParty: 
+    _gambledParty:
     _route: spur
     _diverts: 1
     _seedVotes: 87
+    _endsGame: 0
     _profileImpact:
     - _axis: 0
       _value: 1
@@ -39,21 +34,26 @@ MonoBehaviour:
       _value: -1
   - _id: do_nothing
     _label: Do nothing
-    _narratorReact: Hands in your pockets, five gone under, a clean conscience you
-      did not quite earn. Not my lever, not my fault. You told yourself something
-      like that about the last machine you were steering, too.
-    _narratorReactStruck: 
+    _narratorReact: Hands in your pockets, five folded, and a clean conscience you have not remotely earned. Not my lever, not my fault, you tell yourself, the way you told yourself about the last machine you had the wheel of. Doing nothing is still a choice. It is only the one you get to pretend you never made.
+    _narratorReactStruck:
     _struckParty: main
-    _gambledParty: 
+    _gambledParty:
     _route: straight
     _diverts: 0
     _seedVotes: 13
+    _endsGame: 0
     _profileImpact:
     - _axis: 0
       _value: -1
     - _axis: 2
       _value: 1
+  _mainFigureCount: 5
+  _spurFigureCount: 1
+  _figuresBranded: 0
+  _mainFigurePrefab: {fileID: 0}
+  _spurFigurePrefab: {fileID: 0}
+  _spurPlea:
   _statsHeading: how others chose
-  _crowdSafeFraction: 0.43
+  _roomBlueFraction: 0.43
   _crowdThreshold: 0.5
   _thresholdLabel: the line

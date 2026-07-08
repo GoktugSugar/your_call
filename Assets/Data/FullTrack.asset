@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ecd1a615a340f4c9104ca01624d106, type: 3}
+  m_Name: FullTrack
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Dilemma
+  _id: full_track
+  _verb: 4
+  _weight: 2
+  _narratorPrompt: Last one, and I have taken away your favourite toy. No empty rail. Three tracks, all occupied, and the cart is already rolling, so doing nothing is only a slower way of choosing. On the first track, a child. On the second, a woman heavy with one more life she has not met yet. On the third, three grown strangers, three whole people. Innocence, or the most lives, or the two who have barely lived at all. Every switch is a killing. Point it somewhere. Your call.
+  _choices:
+  - _id: child
+    _label: The child
+    _narratorReact: You sent it at the child. The smallest, the newest, the one with the most mornings still owed to it, and you spent every one of them to keep a woman and three strangers. The most life saved, you will say. The most life ended, someone else will say. You are both right, which is exactly why I asked.
+    _narratorReactStruck:
+    _struckParty: top
+    _gambledParty:
+    _route: up
+    _diverts: 0
+    _seedVotes: 12
+    _endsGame: 0
+    _profileImpact:
+    - _axis: 0
+      _value: 1
+  - _id: woman
+    _label: The woman
+    _narratorReact: You sent it at the woman, and the one she was carrying goes with her, two folded for the price of a single flinch. You spared a child and three strangers and told yourself that was the larger number. Perhaps it was. You will simply never meet the person you rounded down to nothing to get there.
+    _narratorReactStruck:
+    _struckParty: mid
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 27
+    _endsGame: 0
+    _profileImpact:
+    - _axis: 0
+      _value: 1
+    - _axis: 2
+      _value: -1
+  - _id: three
+    _label: The three
+    _narratorReact: You sent it at the three. The biggest heap of bodies on the board, chosen so one child and one unborn stranger could carry on. You picked innocence over arithmetic and called three deaths the gentle option. It might even be. I simply enjoy that you had to become a small massacre to protect the sweetest two here.
+    _narratorReactStruck:
+    _struckParty: bottom
+    _gambledParty:
+    _route: down
+    _diverts: 0
+    _seedVotes: 61
+    _endsGame: 0
+    _profileImpact:
+    - _axis: 0
+      _value: -1
+  _mainFigureCount: 3
+  _spurFigureCount: 1
+  _figuresBranded: 0
+  _mainFigurePrefab: {fileID: 0}
+  _spurFigurePrefab: {fileID: 0}
+  _spurPlea:
+  _statsHeading: how others chose
+  _roomBlueFraction: 0.43
+  _crowdThreshold: 0.5
+  _thresholdLabel: the line

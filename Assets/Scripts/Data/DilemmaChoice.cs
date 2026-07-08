@@ -37,6 +37,13 @@ namespace YourCall
         [Tooltip("Display-only seeded tally for the aftermath screen (reflective verbs).")]
         [SerializeField] private int _seedVotes;
 
+        [Header("Ending (a choice-triggered ending, like shooting the imp)")]
+        [Tooltip("If set, taking this choice ends the run: after the consequence plays, the loop hands off " +
+                 "to an ending (the imp's break line, then the credits) instead of the normal reaction and " +
+                 "stats. The baby opener's kill-the-baby choice uses this. Ignored unless the beat wires an " +
+                 "ending handler, so it is safe to leave off everywhere else.")]
+        [SerializeField] private bool _endsGame;
+
         [SerializeField] private List<AxisImpact> _profileImpact = new List<AxisImpact>();
 
         public string Id => _id;
@@ -48,6 +55,7 @@ namespace YourCall
         public string Route => _route;
         public bool Diverts => _diverts;
         public int SeedVotes => _seedVotes;
+        public bool EndsGame => _endsGame;
         public IReadOnlyList<AxisImpact> ProfileImpact => _profileImpact;
     }
 }

@@ -21,9 +21,19 @@ namespace YourCall
         [SerializeField, TextArea(2, 6)] private string _narratorPrompt;
         [SerializeField] private List<DilemmaChoice> _choices = new List<DilemmaChoice>();
 
-        [Header("Figures")]
-        [Tooltip("The main-track figures wear small doodle devil horns (the imp's branded wretches). The whose-life-counts second trolley only.")]
+        [Header("Figures (trolley beats)")]
+        [Tooltip("How many figures stand on the main (straight) track. Lets one shared trolley station serve many dilemmas.")]
+        [SerializeField] private int _mainFigureCount = 5;
+        [Tooltip("How many figures stand on the branch (spur) track.")]
+        [SerializeField] private int _spurFigureCount = 1;
+        [Tooltip("The main-track figures are branded with a red outline (the imp's damned wretches). The Marked Ones trolley only.")]
         [SerializeField] private bool _figuresBranded = false;
+        [Tooltip("Optional: a different figure prefab for the main track (for example the baby). Empty uses the station's default figure.")]
+        [SerializeField] private Figure _mainFigurePrefab;
+        [Tooltip("Optional: a different figure prefab for the branch track. Empty uses the station's default figure.")]
+        [SerializeField] private Figure _spurFigurePrefab;
+        [Tooltip("Optional: a short plea floated in ink over the lone branch figure (the Begging trolley). Empty shows none.")]
+        [SerializeField, TextArea] private string _spurPlea;
 
         [Header("Aftermath stats")]
         [SerializeField] private string _statsHeading = "how others chose";
@@ -42,7 +52,12 @@ namespace YourCall
         public DilemmaWeight Weight => _weight;
         public string NarratorPrompt => _narratorPrompt;
         public IReadOnlyList<DilemmaChoice> Choices => _choices;
+        public int MainFigureCount => _mainFigureCount;
+        public int SpurFigureCount => _spurFigureCount;
         public bool FiguresBranded => _figuresBranded;
+        public Figure MainFigurePrefab => _mainFigurePrefab;
+        public Figure SpurFigurePrefab => _spurFigurePrefab;
+        public string SpurPlea => _spurPlea;
         public string StatsHeading => _statsHeading;
         public float RoomBlueFraction => _roomBlueFraction;
         public float CrowdThreshold => _crowdThreshold;

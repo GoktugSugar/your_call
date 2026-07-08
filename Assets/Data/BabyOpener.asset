@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ecd1a615a340f4c9104ca01624d106, type: 3}
+  m_Name: BabyOpener
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Dilemma
+  _id: baby_opener
+  _verb: 0
+  _weight: 2
+  _narratorPrompt: Let us start gentle. A trolley, off its leash, because someone up there has a sense of humour and it is not me. On the straight track, a baby. Chubby, useless, has done nothing for anyone and knows nothing about trolleys. On the branch, one grown man, the forgettable sort, the kind you used to process by the dozen from up on your bench. The lever decides who the morning keeps. Take your time. Pretend it is hard. Your call.
+  _choices:
+  - _id: pull
+    _label: Pull the lever
+    _narratorReact: There it goes. The man folds, the baby carries on drooling, spared by a stranger it will never thank. How bold of you, taking the infant's side. Everyone takes the infant's side. It is the single most predictable thing a soul can do, and you did it looking rather pleased with yourself.
+    _narratorReactStruck:
+    _struckParty: spur
+    _gambledParty:
+    _route: spur
+    _diverts: 1
+    _seedVotes: 96
+    _endsGame: 0
+    _profileImpact: []
+  - _id: do_nothing
+    _label: Do nothing
+    _narratorReact: What. What the fuck. It was a baby. I put a baby in front of you, the easiest thing I have, the one nobody on any rail gets wrong, and you folded your hands and let it go under. No. I am not doing this. I sat here ready to be delighted by you, and this is what you are. You are not a puzzle. You are a monster with a gavel. I am done. Find yourself another devil. I quit.
+    _narratorReactStruck:
+    _struckParty: main
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 4
+    _endsGame: 1
+    _profileImpact: []
+  _mainFigureCount: 1
+  _spurFigureCount: 1
+  _figuresBranded: 0
+  _mainFigurePrefab: {fileID: 1666028741476117448, guid: 31de18688628448a8b0a67efd3bcb9de, type: 3}
+  _spurFigurePrefab: {fileID: 0}
+  _spurPlea:
+  _statsHeading: how others chose
+  _roomBlueFraction: 0.43
+  _crowdThreshold: 0.5
+  _thresholdLabel: the line

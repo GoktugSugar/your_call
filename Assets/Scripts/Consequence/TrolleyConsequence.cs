@@ -6,9 +6,14 @@ using UnityEngine;
 namespace YourCall
 {
     /// <summary>
-    /// The binary trolley apparatus: figures on the track, the diegetic lever, and the
-    /// trolley run with an anticipation and a settle. The struck party folds on impact.
-    /// DilemmaStage knows none of this; it only sees a ConsequencePresenter.
+    /// The binary trolley apparatus: figures on the track, the diegetic lever, and the trolley run
+    /// with an anticipation and a settle. The struck party folds on impact. DilemmaStage knows none
+    /// of this; it only sees a ConsequencePresenter.
+    ///
+    /// One station serves the whole chapter: the per-dilemma data drives how many figures stand on
+    /// each track, whether they are branded, an optional different figure prefab per track (the baby),
+    /// and an optional floating plea over the lone branch soul (the Begging trolley). BuildScene tears
+    /// down the previous beat so the same station can run many dilemmas in a row.
     /// </summary>
     public sealed class TrolleyConsequence : ConsequencePresenter
     {
@@ -17,6 +22,8 @@ namespace YourCall
         [SerializeField] private Trolley _trolley;
         [SerializeField] private Lever _lever;
         [SerializeField] private Figure _figurePrefab;
+        [Tooltip("Optional: floats a plea over the lone branch figure when the dilemma carries one (the Begging trolley).")]
+        [SerializeField] private FloatingFigureText _plea;
 
         [Header("Timing")]
         [SerializeField] private float _lightDuration = 1.7f;
@@ -26,32 +33,60 @@ namespace YourCall
         [SerializeField] private float _foldSettle = 0.4f;
 
         private readonly List<Figure> _main = new List<Figure>();
-        private Figure _spur;
+        private readonly List<Figure> _spur = new List<Figure>();
+        private Transform _figures;
         private int _divertIndex = -1;
         private Dilemma _dilemma;
+        private bool _leverHooked;
 
         public override void BuildScene(Dilemma dilemma)
         {
             _dilemma = dilemma;
-            var container = new GameObject("Figures").transform;
-            container.SetParent(transform, false);
+            Teardown();
 
-            foreach (var pos in _track.MainFigurePositions())
+            _figures = new GameObject("Figures").transform;
+            _figures.SetParent(transform, false);
+
+            var mainPrefab = dilemma.MainFigurePrefab != null ? dilemma.MainFigurePrefab : _figurePrefab;
+            var spurPrefab = dilemma.SpurFigurePrefab != null ? dilemma.SpurFigurePrefab : _figurePrefab;
+
+            foreach (var pos in _track.MainFigurePositions(dilemma.MainFigureCount))
             {
-                var fig = Instantiate(_figurePrefab, pos, Quaternion.identity, container);
+                var fig = Instantiate(mainPrefab, pos, Quaternion.identity, _figures);
                 if (dilemma.FiguresBranded) fig.Brand();   // the imp's branded wretches, marked by a red outline
                 _main.Add(fig);
             }
-            _spur = Instantiate(_figurePrefab, _track.SpurFigurePosition, Quaternion.identity, container);
+            foreach (var pos in _track.SpurFigurePositions(dilemma.SpurFigureCount))
+                _spur.Add(Instantiate(spurPrefab, pos, Quaternion.identity, _figures));
 
             _trolley.transform.position = _track.TrolleyStart;
             _lever.transform.position = _track.LeverPosition;
 
+            _divertIndex = -1;
             var choices = dilemma.Choices;
             for (int i = 0; i < choices.Count; i++) if (choices[i].Diverts) _divertIndex = i;
 
-            _lever.Pulled += OnLeverPulled;
+            if (!_leverHooked) { _lever.Pulled += OnLeverPulled; _leverHooked = true; }
+            _lever.ResetSwitch();
             _lever.Arm(false);
+
+            // The lone soul's plea, floated in ink over them (the Begging trolley); none otherwise.
+            if (_plea != null)
+            {
+                if (!string.IsNullOrEmpty(dilemma.SpurPlea) && _spur.Count > 0)
+                    _plea.Show(dilemma.SpurPlea, _track.SpurFigurePositions(dilemma.SpurFigureCount)[0]);
+                else
+                    _plea.Hide();
+            }
+        }
+
+        private void Teardown()
+        {
+            if (_figures != null) Destroy(_figures.gameObject);
+            _figures = null;
+            _main.Clear();
+            _spur.Clear();
+            if (_plea != null) _plea.Hide();
         }
 
         private void OnLeverPulled() => RaiseChosen(_divertIndex >= 0 ? _divertIndex : 0);
@@ -65,13 +100,15 @@ namespace YourCall
 
         public override IEnumerator PlayConsequence(DilemmaChoice choice, DilemmaOutcome outcome)
         {
-            var path = _track.GetPath(choice.Route);
+            if (_plea != null) _plea.Hide();
+
+            var path = _track.GetPath(choice.Route, _dilemma.MainFigureCount);
             var struck = FiguresFor(outcome);
 
             // The death is only the fold-and-fall: no strike lines or impact puff over the figure.
             Action<Vector3> onImpact = _ =>
             {
-                for (int i = 0; i < struck.Count; i++) struck[i].Strike(_foldDuration);
+                for (int i = 0; i < struck.Count; i++) if (struck[i] != null) struck[i].Strike(_foldDuration);
             };
             _trolley.Impact += onImpact;
             yield return StartCoroutine(_trolley.Run(path, TravelFor(_dilemma.Weight)));
@@ -84,7 +121,7 @@ namespace YourCall
             var list = new List<Figure>();
             foreach (var party in outcome.StruckParties)
             {
-                if (party == "spur") { if (_spur != null) list.Add(_spur); }
+                if (party == "spur") list.AddRange(_spur);
                 else if (party == "main") list.AddRange(_main);
             }
             return list;
@@ -102,7 +139,7 @@ namespace YourCall
 
         private void OnDestroy()
         {
-            if (_lever != null) _lever.Pulled -= OnLeverPulled;
+            if (_lever != null && _leverHooked) _lever.Pulled -= OnLeverPulled;
         }
     }
 }

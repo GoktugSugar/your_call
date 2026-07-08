@@ -85,6 +85,19 @@ namespace YourCall
 
         public void Arm(bool on) { _armed = on; }
 
+        /// <summary>Reset the switch to its resting state so one shared station can run many dilemmas in a
+        /// row: not thrown, not pulled, disarmed, handle back at rest. Any in-flight throw is stopped.</summary>
+        public void ResetSwitch()
+        {
+            StopAllCoroutines();
+            _thrown = false;
+            _pulled = false;
+            _armed = false;
+            _hoverT = 0f;
+            _angle = _restAngle;
+            if (_built) ApplyHandle();
+        }
+
         /// <summary>Animate the throw without raising the event (for a text-chosen divert).</summary>
         public void Throw()
         {

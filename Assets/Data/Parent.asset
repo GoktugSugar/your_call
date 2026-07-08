@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ecd1a615a340f4c9104ca01624d106, type: 3}
+  m_Name: Parent
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Dilemma
+  _id: parent
+  _verb: 0
+  _weight: 1
+  _narratorPrompt: On the branch, one person with two small children at home, waiting up, listening for the door. On the straight track, two grown strangers, nobody depending on either of them, nobody who comes apart if they stop. The lever picks. Two whole lives, or the one life a household is built around. The count says one thing. A quiet house at bedtime says another. Your call.
+  _choices:
+  - _id: pull
+    _label: Pull the lever
+    _narratorReact: Pulled. The parent folds, and two strangers nobody was waiting up for keep going. Two is more than one, you ruled, and the children can learn what a doorway feels like when it stops opening. All very rational. I am sure the little ones will treasure the arithmetic.
+    _narratorReactStruck:
+    _struckParty: spur
+    _gambledParty:
+    _route: spur
+    _diverts: 1
+    _seedVotes: 55
+    _endsGame: 0
+    _profileImpact:
+    - _axis: 0
+      _value: 1
+  - _id: do_nothing
+    _label: Do nothing
+    _narratorReact: You left it. Two strangers go under so one household keeps its evenings. You let a headcount lose to a bedtime story. Perhaps that is tender of you. Perhaps you simply pictured the crying and flinched. Either way, two people you will never once imagine paid for the one you could.
+    _narratorReactStruck:
+    _struckParty: main
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 45
+    _endsGame: 0
+    _profileImpact:
+    - _axis: 0
+      _value: -1
+  _mainFigureCount: 2
+  _spurFigureCount: 1
+  _figuresBranded: 0
+  _mainFigurePrefab: {fileID: 0}
+  _spurFigurePrefab: {fileID: 0}
+  _spurPlea:
+  _statsHeading: how others chose
+  _roomBlueFraction: 0.43
+  _crowdThreshold: 0.5
+  _thresholdLabel: the line

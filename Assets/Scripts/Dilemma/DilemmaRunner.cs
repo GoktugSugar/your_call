@@ -20,12 +20,14 @@ namespace YourCall
         private readonly Profile _profile;
         private readonly ChoiceButtons _choices;   // null: no text fallback (diegetic only)
         private readonly DilemmaTiming _t;
+        private readonly System.Func<DilemmaChoice, IEnumerator> _onEndsGame; // null: no ending choices
 
         private VerbResolver _resolver;
         private int _chosenIndex = -1;
 
         public DilemmaRunner(Dilemma dilemma, ConsequencePresenter presenter, NarratorView narrator,
-            StatsView stats, Profile profile, ChoiceButtons choices, DilemmaTiming timing)
+            StatsView stats, Profile profile, ChoiceButtons choices, DilemmaTiming timing,
+            System.Func<DilemmaChoice, IEnumerator> onEndsGame = null)
         {
             _dilemma = dilemma;
             _presenter = presenter;
@@ -34,6 +36,7 @@ namespace YourCall
             _profile = profile;
             _choices = choices;
             _t = timing;
+            _onEndsGame = onEndsGame;
         }
 
         public DilemmaPhase Phase { get; private set; }
@@ -76,6 +79,16 @@ namespace YourCall
                 _narrator.Clear();
                 var outcome = _resolver.Resolve(new DilemmaContext(_dilemma, _chosenIndex));
                 yield return _presenter.PlayConsequence(choice, outcome);
+
+                // A choice-triggered ending (the baby opener's kill choice): the consequence has landed;
+                // hand off to the ending instead of the normal reaction and stats. The ending owns the
+                // rest (the imp's break, then the credits, which reload the scene).
+                if (choice.EndsGame && _onEndsGame != null)
+                {
+                    yield return _onEndsGame(choice);
+                    yield break;
+                }
+
                 yield return new WaitForSeconds(_t.PreStatsBeat);
 
                 // The choice and its consequence land first: the imp's reaction plays over the

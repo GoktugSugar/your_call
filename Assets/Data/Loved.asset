@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ecd1a615a340f4c9104ca01624d106, type: 3}
+  m_Name: Loved
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Dilemma
+  _id: loved
+  _verb: 0
+  _weight: 2
+  _narratorPrompt: Back to the very first lever. Five strangers on the straight track, one soul on the branch, the arithmetic exactly as it stood. Only this time I have gone to the trouble of putting someone you loved on that branch. Someone real. You know the face. Five over one, the sum has not shifted a single digit. Everything else has. Yes, I chose them. Yes, I did it on purpose. Your call.
+  _choices:
+  - _id: pull
+    _label: Pull the lever
+    _narratorReact: You pulled. You aimed it at the one you loved so five strangers could go home to theirs. The same sum you cleared without a blink on the first track, and this time your hand shook the whole way. Principled, if we are being kind. If we are being honest, you have just proven the maths only ever counted while it cost you nothing.
+    _narratorReactStruck:
+    _struckParty: spur
+    _gambledParty:
+    _route: spur
+    _diverts: 1
+    _seedVotes: 52
+    _endsGame: 0
+    _profileImpact:
+    - _axis: 0
+      _value: 1
+  - _id: do_nothing
+    _label: Do nothing
+    _narratorReact: You left it. Five strangers go under so the one face you know keeps breathing. On this identical rail an hour ago you pulled without a thought. Turns out five is a great many or nothing at all, depending entirely on who is standing on the short track. The judge who weighed the world evenly, undone by one familiar chin.
+    _narratorReactStruck:
+    _struckParty: main
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 48
+    _endsGame: 0
+    _profileImpact:
+    - _axis: 0
+      _value: -1
+  _mainFigureCount: 5
+  _spurFigureCount: 1
+  _figuresBranded: 0
+  _mainFigurePrefab: {fileID: 0}
+  _spurFigurePrefab: {fileID: 0}
+  _spurPlea:
+  _statsHeading: how others chose
+  _roomBlueFraction: 0.43
+  _crowdThreshold: 0.5
+  _thresholdLabel: the line

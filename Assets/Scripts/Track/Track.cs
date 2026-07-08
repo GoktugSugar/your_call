@@ -68,20 +68,41 @@ namespace YourCall
         public Vector3 LeverPosition => transform.TransformPoint(new Vector3(_forkX, _mainY, 0f));
         public Vector3 SpurFigurePosition => transform.TransformPoint(new Vector3(_spurFigureX, _branchY, 0f));
 
-        public List<Vector3> MainFigurePositions()
+        public List<Vector3> MainFigurePositions() => MainFigurePositions(_mainCount);
+
+        /// <summary>Positions for <paramref name="count"/> figures grouped on the main track, so one shared
+        /// station can serve dilemmas with different headcounts. Empty when count is zero.</summary>
+        public List<Vector3> MainFigurePositions(int count)
         {
-            var list = new List<Vector3>(_mainCount);
-            float total = (_mainCount - 1) * _mainSpacing;
+            var list = new List<Vector3>(Mathf.Max(0, count));
+            if (count <= 0) return list;
+            float total = (count - 1) * _mainSpacing;
             float startX = _mainGroupCenterX - total * 0.5f;
-            for (int i = 0; i < _mainCount; i++)
+            for (int i = 0; i < count; i++)
                 list.Add(transform.TransformPoint(new Vector3(startX + i * _mainSpacing, _mainY, 0f)));
             return list;
         }
 
+        /// <summary>Positions for <paramref name="count"/> figures grouped on the branch track. One figure
+        /// sits at the spur position; several spread around it.</summary>
+        public List<Vector3> SpurFigurePositions(int count)
+        {
+            var list = new List<Vector3>(Mathf.Max(0, count));
+            if (count <= 0) return list;
+            float total = (count - 1) * _mainSpacing;
+            float startX = _spurFigureX - total * 0.5f;
+            for (int i = 0; i < count; i++)
+                list.Add(transform.TransformPoint(new Vector3(startX + i * _mainSpacing, _branchY, 0f)));
+            return list;
+        }
+
+        public List<Vector3> GetPath(string route) => GetPath(route, _mainCount);
+
         /// <summary>Waypoints for the trolley. A route containing "spur" diverts: straight to the
         /// switch, a right-angle corner down, then straight along the branch to the lone figure.
-        /// Otherwise it runs straight into the main group.</summary>
-        public List<Vector3> GetPath(string route)
+        /// Otherwise it runs straight into the main group of <paramref name="mainCount"/> (or, when that
+        /// group is empty, on down the main line, for the dark-track beat that runs off into nothing).</summary>
+        public List<Vector3> GetPath(string route, int mainCount)
         {
             bool spur = !string.IsNullOrEmpty(route) && route.ToLowerInvariant().Contains("spur");
             var pts = new List<Vector3> { new Vector3(_trolleyStartX, _mainY, 0f) };
@@ -91,9 +112,13 @@ namespace YourCall
                 pts.Add(new Vector3(_forkX, _branchY, 0f));        // corner: step down at a right angle
                 pts.Add(new Vector3(_spurFigureX, _branchY, 0f));  // straight along the branch to the figure
             }
+            else if (mainCount <= 0)
+            {
+                pts.Add(new Vector3(_mainEndX - 0.3f, _mainY, 0f)); // no one there: run on down the line
+            }
             else
             {
-                float total = (_mainCount - 1) * _mainSpacing;
+                float total = (mainCount - 1) * _mainSpacing;
                 float leftX = _mainGroupCenterX - total * 0.5f;
                 pts.Add(new Vector3(leftX + _impactOverlap, _mainY, 0f));
             }

@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ecd1a615a340f4c9104ca01624d106, type: 3}
+  m_Name: Sleeping
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Dilemma
+  _id: sleeping
+  _verb: 0
+  _weight: 1
+  _narratorPrompt: Two on the straight track, fast asleep, dead to the world and about to be dead to a good deal more. They will never hear it coming, never feel the moment, just stop mid dream. On the branch, one wide awake, watching the cart roll in, doing the sums, feeling every inch of it arrive. Two quiet exits, or one long scream. The lever is yours. Does the terror count for anything, do you think. Your call.
+  _choices:
+  - _id: pull
+    _label: Pull the lever
+    _narratorReact: Pulled. You aimed it at the one who could see it coming and spared the two who never would. Two strangers sleep on, none the wiser, traded for a front row seat to somebody's worst second. Whether that was mercy or just squeamishness I could not tell you, and I suspect neither could you.
+    _narratorReactStruck:
+    _struckParty: spur
+    _gambledParty:
+    _route: spur
+    _diverts: 1
+    _seedVotes: 46
+    _endsGame: 0
+    _profileImpact:
+    - _axis: 0
+      _value: 1
+  - _id: do_nothing
+    _label: Do nothing
+    _narratorReact: Hands in pockets. The two sleepers go under mid dream, and the one who begged the universe with his eyes gets to keep them open. Perhaps you decided a death you never feel is barely a death at all. Perhaps you just liked being watched while you chose. You always did prefer an audience to a conscience.
+    _narratorReactStruck:
+    _struckParty: main
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 54
+    _endsGame: 0
+    _profileImpact:
+    - _axis: 0
+      _value: -1
+  _mainFigureCount: 2
+  _spurFigureCount: 1
+  _figuresBranded: 0
+  _mainFigurePrefab: {fileID: 0}
+  _spurFigurePrefab: {fileID: 0}
+  _spurPlea:
+  _statsHeading: how others chose
+  _roomBlueFraction: 0.43
+  _crowdThreshold: 0.5
+  _thresholdLabel: the line

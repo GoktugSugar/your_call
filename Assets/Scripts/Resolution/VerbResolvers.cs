@@ -11,6 +11,7 @@ namespace YourCall
             switch (verb)
             {
                 case DilemmaVerb.Binary: return new BinaryResolver();
+                case DilemmaVerb.MultipleChoice: return new MultipleChoiceResolver();
                 case DilemmaVerb.CoordinationGamble: return new CoordinationGambleResolver();
                 case DilemmaVerb.Allocation: return new AllocationResolver();
                 case DilemmaVerb.SelfSacrifice: return new SelfSacrificeResolver();

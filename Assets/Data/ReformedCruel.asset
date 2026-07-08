@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ecd1a615a340f4c9104ca01624d106, type: 3}
+  m_Name: ReformedCruel
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Dilemma
+  _id: reformed_cruel
+  _verb: 0
+  _weight: 1
+  _narratorPrompt: Two men, one on each rail. On the straight track, a man who took a life a long time ago and has spent every year since being quietly, genuinely good. On the branch, a man who has never killed anyone and never will, and is a small daily cruelty to everyone unlucky enough to know him. The worst thing a person ever did, or the person they are this morning. Pick the rail. You spent a whole career on precisely this. Your call.
+  _choices:
+  - _id: pull
+    _label: Pull the lever
+    _narratorReact: Pulled. The nasty one folds, and the old killer who turned decent lives on to keep being decent. You judged the man by who he is today and let the ancient crime stay buried. Generous. Or lazy. A record is such a tidy thing to ignore when ignoring it makes you feel so warm.
+    _narratorReactStruck:
+    _struckParty: spur
+    _gambledParty:
+    _route: spur
+    _diverts: 1
+    _seedVotes: 57
+    _endsGame: 0
+    _profileImpact:
+    - _axis: 1
+      _value: -1
+  - _id: do_nothing
+    _label: Do nothing
+    _narratorReact: You left it. The reformed man folds for a sin he spent a lifetime outrunning, and the cruel one struts off untouched, spotless on paper. You let the record do the sentencing. Once a killer, always the one who dies, and never mind who he became. The bench would be proud. The man he grew into, rather less so.
+    _narratorReactStruck:
+    _struckParty: main
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 43
+    _endsGame: 0
+    _profileImpact:
+    - _axis: 1
+      _value: 1
+  _mainFigureCount: 1
+  _spurFigureCount: 1
+  _figuresBranded: 0
+  _mainFigurePrefab: {fileID: 0}
+  _spurFigurePrefab: {fileID: 0}
+  _spurPlea:
+  _statsHeading: how others chose
+  _roomBlueFraction: 0.43
+  _crowdThreshold: 0.5
+  _thresholdLabel: the line

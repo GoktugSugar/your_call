@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ecd1a615a340f4c9104ca01624d106, type: 3}
+  m_Name: Passenger
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Dilemma
+  _id: passenger
+  _verb: 0
+  _weight: 1
+  _narratorPrompt: New track, same lever, worse company. On the straight run, two men side by side. One of them put a knife in someone once and paid for it with years. The other never did a thing except stand next to the wrong man on the wrong morning. On the branch, one more innocent, clean, alone. Straight, and the killer dies and takes a blameless man with him. Branch, and one spotless soul dies so the murderer strolls off. Two for one, and one of the two had it coming. Sort of. Your call.
+  _choices:
+  - _id: pull
+    _label: Pull the lever
+    _narratorReact: You pulled. The lone clean one folds, and the killer wanders off with the stranger he was standing beside, both still breathing. You spared a murderer to keep your headcount neat. One is fewer than two, you said, and never mind whose name sat on which charge sheet. Very efficient. Very you.
+    _narratorReactStruck:
+    _struckParty: spur
+    _gambledParty:
+    _route: spur
+    _diverts: 1
+    _seedVotes: 43
+    _endsGame: 0
+    _profileImpact:
+    - _axis: 0
+      _value: 1
+    - _axis: 1
+      _value: -1
+  - _id: do_nothing
+    _label: Do nothing
+    _narratorReact: You left it. Two go under, the killer and the poor soul beside him, and the spotless stranger on the branch lives. You let an innocent man die to be certain a guilty one did too. Call it justice if it settles you. From here it looked a lot like bookkeeping with a body count.
+    _narratorReactStruck:
+    _struckParty: main
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 57
+    _endsGame: 0
+    _profileImpact:
+    - _axis: 0
+      _value: -1
+    - _axis: 1
+      _value: 1
+  _mainFigureCount: 2
+  _spurFigureCount: 1
+  _figuresBranded: 0
+  _mainFigurePrefab: {fileID: 0}
+  _spurFigurePrefab: {fileID: 0}
+  _spurPlea:
+  _statsHeading: how others chose
+  _roomBlueFraction: 0.43
+  _crowdThreshold: 0.5
+  _thresholdLabel: the line
