@@ -37,17 +37,36 @@ namespace YourCall
         [Tooltip("Dev only: log each beat as it starts. Never shown to the player.")]
         [SerializeField] private bool _logBeats = false;
 
+        /// <summary>The ordered beats, exposed read-only so the dev chapter/beat picker can list them
+        /// (see Scripts/Dev/DevChapterPicker.cs). Not used by normal play.</summary>
+        public IReadOnlyList<SequenceBeat> Beats => _beats;
+
+        /// <summary>
+        /// A one-shot start index for the next sequence load: the dev chapter/beat picker sets this
+        /// before loading a chapter scene so the sequence can be entered partway (jump to a beat).
+        /// Consumed and reset to 0 on <see cref="Start"/>, so a normal boot always starts from the top.
+        /// Inert when 0; nothing in normal play sets it.
+        /// </summary>
+        public static int PendingStartBeat = 0;
+
         private void Start()
         {
             if (_camera == null) _camera = Camera.main;
             _profile = _profile != null ? _profile : Profile.Ensure();
-            StartCoroutine(RunAll());
+            int start = _beats.Count > 0 ? Mathf.Clamp(PendingStartBeat, 0, _beats.Count - 1) : 0;
+            PendingStartBeat = 0;   // one-shot: consumed here so the next normal load starts at the top
+            StartCoroutine(RunAll(start));
         }
 
-        private IEnumerator RunAll()
+        private IEnumerator RunAll(int startIndex)
         {
             var ctx = new SequenceContext(_narrator, _imp, _stats, _choices, _profile, _camera, _fade);
-            for (int i = 0; i < _beats.Count; i++)
+
+            // Entering partway (the dev picker jumped to a mid-chapter beat): the skipped intro beats
+            // never ran, so make sure the screen is clear and the imp is present before the beat plays.
+            if (startIndex > 0) PrepareMidEntry(ctx);
+
+            for (int i = startIndex; i < _beats.Count; i++)
             {
                 var beat = _beats[i];
                 if (beat == null) continue;
@@ -60,6 +79,19 @@ namespace YourCall
             // Optional chapter hand-off: the trolley chapter can flow into the buttons chapter.
             if (!string.IsNullOrEmpty(_nextScene))
                 SceneManager.LoadScene(_nextScene);
+        }
+
+        // A minimal baseline for a mid-chapter dev entry: the crash/wake/imp-appear intro beats were
+        // skipped, so clear the opening black wash and make sure the imp is on screen. Beats build their
+        // own apparatus (stations, figures), so nothing else needs faking.
+        private void PrepareMidEntry(SequenceContext ctx)
+        {
+            if (ctx.Fade != null) ctx.Fade.SetAlpha(0f);
+            if (ctx.Imp != null)
+            {
+                if (!ctx.Imp.gameObject.activeSelf) ctx.Imp.gameObject.SetActive(true);
+                ctx.Imp.SetAlpha(1f);
+            }
         }
     }
 }
