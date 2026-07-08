@@ -37,5 +37,10 @@ namespace YourCall
         /// (a contained, currently experimental palette exception; see docs/art-and-ui.md). Nothing else
         /// uses it; exposed on BearFigure so it can be tuned or reverted.</summary>
         public static readonly Color InkBrown = new Color(0.5f, 0.36f, 0.24f, 1f);
+
+        /// <summary>Muted hand-drawn pink. Marks the player's partner (the loved one) in the personal
+        /// dilemma, and the little heart over them: deliberate colour for meaning (pink = love), on the
+        /// ink base, the same crayon-line treatment as the red and blue figures. See docs/art-and-ui.md.</summary>
+        public static readonly Color InkPink = new Color(0.851f, 0.451f, 0.573f, 1f);
     }
 }

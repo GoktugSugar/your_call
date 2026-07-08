@@ -8,12 +8,13 @@ namespace YourCall
     /// applied the same way every time so it reads as a system: [amber] stresses the stakes and
     /// the emphasis (the counts, the weight of the choice); [red] marks death and the guilty
     /// (killing, the murderer, the wretched, the villain), and also colours a word that names the
-    /// red button; [blue] names the blue button. A few meaningful words per line, not everything.
+    /// red button; [pink] marks the player's partner and love (the loved one in Someone You Loved);
+    /// [blue] names the blue button. A few meaningful words per line, not everything.
     /// Emphasis is authored per line in the copy, never hardcoded here. Any other bracket is left untouched.
     /// </summary>
     public static class InkMarkup
     {
-        private static string _amber, _red, _blue;
+        private static string _amber, _red, _blue, _pink;
 
         public static string ToRichText(string authored)
         {
@@ -23,11 +24,13 @@ namespace YourCall
                 _amber = ColorUtility.ToHtmlStringRGB(Palette.Amber);
                 _red = ColorUtility.ToHtmlStringRGB(Palette.InkRed);
                 _blue = ColorUtility.ToHtmlStringRGB(Palette.InkBlue);
+                _pink = ColorUtility.ToHtmlStringRGB(Palette.InkPink);
             }
             string s = authored;
             s = Wrap(s, "amber", _amber);
             s = Wrap(s, "red", _red);
             s = Wrap(s, "blue", _blue);
+            s = Wrap(s, "pink", _pink);
             return s;
         }
 

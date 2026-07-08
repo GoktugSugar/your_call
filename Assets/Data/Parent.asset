@@ -48,7 +48,7 @@ MonoBehaviour:
   _figuresBranded: 0
   _mainFigurePrefab: {fileID: 0}
   _spurFigurePrefab: {fileID: 0}
-  _spurPlea:
+  _spurPlea: Please. My children are waiting up for me.
   _statsHeading: how others chose
   _roomBlueFraction: 0.43
   _crowdThreshold: 0.5

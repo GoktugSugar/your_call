@@ -143,13 +143,18 @@ namespace YourCall
         /// <summary>Mark this figure as one of the damned: recolour its whole outline to the brand
         /// colour (red), used for the branded wretches in the whose-life-counts second trolley. A
         /// deliberate red on the black-ink base (see art-and-ui.md); the innocent figures stay black.</summary>
-        public void Brand()
+        public void Brand() => Brand(_brandColor);
+
+        /// <summary>Recolour the whole outline to a deliberate colour (red for the guilty, pink for the
+        /// player's partner), on the black-ink base. The colour becomes the base, so it inks, folds and
+        /// fades in that colour. Ordinary figures are left black.</summary>
+        public void Brand(Color color)
         {
             if (!_built) Build();
             _branded = true;
-            _baseColor = _brandColor;
+            _baseColor = color;
             for (int i = 0; i < _strokes.Count; i++)
-                if (_strokes[i] != null) InkLine.SetColor(_strokes[i], _brandColor);
+                if (_strokes[i] != null) InkLine.SetColor(_strokes[i], color);
         }
 
         /// <summary>Fold and fade as one unit, then leave nothing behind.</summary>

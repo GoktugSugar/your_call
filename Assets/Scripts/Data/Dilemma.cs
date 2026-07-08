@@ -36,6 +36,10 @@ namespace YourCall
         [SerializeField] private bool _mainAsleep = false;
         [Tooltip("The branch-track figures are asleep: they show small drifting z marks.")]
         [SerializeField] private bool _spurAsleep = false;
+        [Tooltip("The main-track figures are the player's partner: pink outline and a little heart. Unused so far.")]
+        [SerializeField] private bool _mainPartner = false;
+        [Tooltip("The branch-track figures are the player's partner (the loved one): pink outline and a little heart. Someone You Loved.")]
+        [SerializeField] private bool _spurPartner = false;
         [Tooltip("Optional: a different figure prefab for the main track (for example the baby). Empty uses the station's default figure.")]
         [SerializeField] private Figure _mainFigurePrefab;
         [Tooltip("Optional: a different figure prefab for the branch track. Empty uses the station's default figure.")]
@@ -67,6 +71,8 @@ namespace YourCall
         public IReadOnlyList<int> BrandedSpurIndices => _brandedSpurIndices;
         public bool MainAsleep => _mainAsleep;
         public bool SpurAsleep => _spurAsleep;
+        public bool MainPartner => _mainPartner;
+        public bool SpurPartner => _spurPartner;
         public Figure MainFigurePrefab => _mainFigurePrefab;
         public Figure SpurFigurePrefab => _spurFigurePrefab;
         public string SpurPlea => _spurPlea;

@@ -51,6 +51,8 @@ namespace YourCall
         [SerializeField] private float _topY = 2.0f;
         [SerializeField] private float _midY = 0f;
         [SerializeField] private float _bottomY = -2.0f;
+        [Tooltip("Lifts the three tracks, their figures and the trolley up the screen (not the option row), matching the binary trolley's lift.")]
+        [SerializeField] private float _verticalOffset = 0.8f;
         [SerializeField] private float _groupCenterX = 2.3f;
         [SerializeField] private float _figureSpacing = 0.56f;
         [SerializeField] private float _impactOverlap = 0.25f;
@@ -97,13 +99,13 @@ namespace YourCall
 
             _figures = new GameObject("Figures").transform;
             _figures.SetParent(transform, false);
-            _groups["top"] = SpawnGroup(_topPrefab, _topCount, _topY, _topScale);
-            _groups["mid"] = SpawnGroup(_midPrefab, _midCount, _midY, _midScale);
-            _groups["bottom"] = SpawnGroup(_bottomPrefab, _bottomCount, _bottomY, _bottomScale);
+            _groups["top"] = SpawnGroup(_topPrefab, _topCount, _topY + _verticalOffset, _topScale);
+            _groups["mid"] = SpawnGroup(_midPrefab, _midCount, _midY + _verticalOffset, _midScale);
+            _groups["bottom"] = SpawnGroup(_bottomPrefab, _bottomCount, _bottomY + _verticalOffset, _bottomScale);
 
             BuildOptions(dilemma);
 
-            _trolley.transform.position = transform.TransformPoint(new Vector3(_entryX, _midY, 0f));
+            _trolley.transform.position = transform.TransformPoint(new Vector3(_entryX, _midY + _verticalOffset, 0f));
         }
 
         private void Teardown()
@@ -225,13 +227,14 @@ namespace YourCall
         private List<Vector3> PathFor(string route)
         {
             float y = TrackY(route);
+            float midY = _midY + _verticalOffset;
             int count = CountFor(route);
             float total = (count - 1) * _figureSpacing;
             float impactX = _groupCenterX - total * 0.5f + _impactOverlap;
-            var local = new List<Vector3> { new Vector3(_entryX, _midY, 0f) };
-            if (!Mathf.Approximately(y, _midY))
+            var local = new List<Vector3> { new Vector3(_entryX, midY, 0f) };
+            if (!Mathf.Approximately(y, midY))
             {
-                local.Add(new Vector3(_forkX, _midY, 0f));
+                local.Add(new Vector3(_forkX, midY, 0f));
                 local.Add(new Vector3(_forkX, y, 0f));
             }
             local.Add(new Vector3(impactX, y, 0f));
@@ -242,9 +245,8 @@ namespace YourCall
 
         private float TrackY(string route)
         {
-            if (route == "up") return _topY;
-            if (route == "down") return _bottomY;
-            return _midY;
+            float y = route == "up" ? _topY : route == "down" ? _bottomY : _midY;
+            return y + _verticalOffset;
         }
 
         private int CountFor(string route)
@@ -280,17 +282,19 @@ namespace YourCall
             _rails.SetParent(transform, false);
 
             // Entry line into the fork, then each track runs on to the right.
-            Rail("Entry", new Vector3(_entryX - 0.8f, _midY, 0f), new Vector3(_forkX, _midY, 0f));
-            Branch("Top", _topY);
-            Branch("Mid", _midY);
-            Branch("Bottom", _bottomY);
+            float midY = _midY + _verticalOffset;
+            Rail("Entry", new Vector3(_entryX - 0.8f, midY, 0f), new Vector3(_forkX, midY, 0f));
+            Branch("Top", _topY + _verticalOffset);
+            Branch("Mid", midY);
+            Branch("Bottom", _bottomY + _verticalOffset);
         }
 
         private void Branch(string name, float y)
         {
             // The switch drops (or rises) from the fork to this track, then runs straight to the end.
-            if (!Mathf.Approximately(y, _midY))
-                Rail(name + "Step", new Vector3(_forkX, _midY, 0f), new Vector3(_forkX, y, 0f));
+            float midY = _midY + _verticalOffset;
+            if (!Mathf.Approximately(y, midY))
+                Rail(name + "Step", new Vector3(_forkX, midY, 0f), new Vector3(_forkX, y, 0f));
             Rail(name + "Rail", new Vector3(_forkX, y, 0f), new Vector3(_rightEndX, y, 0f));
             for (float x = _forkX + _tieSpacing; x <= _rightEndX; x += _tieSpacing)
                 Tie(new Vector3(x, y - _tieLength * 0.5f, 0f), new Vector3(x, y + _tieLength * 0.5f, 0f));

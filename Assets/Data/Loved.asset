@@ -15,11 +15,11 @@ MonoBehaviour:
   _id: loved
   _verb: 0
   _weight: 2
-  _narratorPrompt: Back to the very first lever. [amber]Five[/amber] strangers on the straight track, [amber]one[/amber] soul on the branch, the arithmetic exactly as it stood. Only this time I have gone to the trouble of putting someone you loved on that branch. Someone real. You know the face. [amber]Five over one[/amber], the sum has not shifted a single digit. Everything else has. Yes, I chose them. Yes, I did it on purpose. Your call.
+  _narratorPrompt: Back to the very first lever. [amber]Five[/amber] strangers on the straight track. And on the branch, alone, [pink]the one you loved most[/pink] in all of it. Your partner. The person you would have grown old beside, if only you had kept off the wine and out of the car. [amber]Five over one[/amber], the sum unchanged since the first track. Everything else about it is not. Yes, I chose who stands there. Yes, on purpose. Your call.
   _choices:
   - _id: pull
     _label: Pull the lever
-    _narratorReact: You pulled. You aimed it at the [amber]one[/amber] you loved so [amber]five[/amber] strangers could go home to theirs. The same sum you cleared without a blink on the first track, and this time your hand shook the whole way. Principled, if we are being kind. If we are being honest, you have just proven the maths only ever counted while it cost you nothing.
+    _narratorReact: You pulled. You actually pulled. You took [pink]the one you loved most[/pink] and fed them to the wheels to spare five faces you had never seen and will never think of again. Oh, this one I am keeping. This is the reaction I will replay on the slow nights. The devoted partner, trading their beloved for a tidy little sum and a warm glow of arithmetic. I am not saying it was wrong. There is no wrong here, remember. I am only saying I have never enjoyed a pull quite this much.
     _narratorReactStruck:
     _struckParty: spur
     _gambledParty:
@@ -32,7 +32,7 @@ MonoBehaviour:
       _value: 1
   - _id: do_nothing
     _label: Do nothing
-    _narratorReact: You left it. [amber]Five[/amber] strangers go under so the one face you know keeps breathing. On this identical rail an hour ago you pulled without a thought. Turns out [amber]five[/amber] is a great many or nothing at all, depending entirely on who is standing on the short track. The judge who weighed the world evenly, undone by one familiar chin.
+    _narratorReact: You left it. Five strangers go under the wheels so [pink]the one you love[/pink] keeps breathing. On this exact rail, an hour ago, you pulled for strangers without a flicker. Turns out your precious arithmetic only ever balanced while the one on the short track was nobody to you. Predictable. Warm, even. And no comfort at all to the five.
     _narratorReactStruck:
     _struckParty: main
     _gambledParty:
@@ -46,6 +46,7 @@ MonoBehaviour:
   _mainFigureCount: 5
   _spurFigureCount: 1
   _figuresBranded: 0
+  _spurPartner: 1
   _mainFigurePrefab: {fileID: 0}
   _spurFigurePrefab: {fileID: 0}
   _spurPlea:

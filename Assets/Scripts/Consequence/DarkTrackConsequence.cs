@@ -136,11 +136,13 @@ namespace YourCall
             _shroudRoot.SetParent(transform, false);
 
             float halfW = _shroudSize.x * 0.5f, halfH = _shroudSize.y * 0.5f;
+            // Follow the track's vertical lift so the darkness stays over the raised main line.
+            float centerY = _shroudCenter.y + (_track != null ? _track.VerticalOffset : 0f);
             float rowStep = _shroudRows > 1 ? _shroudSize.y / (_shroudRows - 1) : 0f;
             var pts = new List<Vector3>(_shroudRows * 2);
             for (int r = 0; r < _shroudRows; r++)
             {
-                float y = _shroudCenter.y + halfH - r * rowStep;
+                float y = centerY + halfH - r * rowStep;
                 bool ltr = (r % 2 == 0);
                 float xa = _shroudCenter.x + (ltr ? -halfW : halfW);
                 float xb = _shroudCenter.x + (ltr ? halfW : -halfW);

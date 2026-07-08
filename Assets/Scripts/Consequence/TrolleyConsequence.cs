@@ -28,6 +28,10 @@ namespace YourCall
         [SerializeField] private SleepZ _sleepZPrefab;
         [Tooltip("Where the z marks sit relative to a sleeping figure (top-right of the head).")]
         [SerializeField] private Vector2 _sleepZOffset = new Vector2(0.14f, 0.9f);
+        [Tooltip("Optional: the heart prefab instanced over the player's partner (Someone You Loved).")]
+        [SerializeField] private HeartFloat _heartPrefab;
+        [Tooltip("Where the heart sits relative to the partner figure (above the head).")]
+        [SerializeField] private Vector2 _heartOffset = new Vector2(0f, 1.15f);
 
         [Header("Timing")]
         [SerializeField] private float _lightDuration = 1.7f;
@@ -58,8 +62,9 @@ namespace YourCall
             for (int i = 0; i < mainPositions.Count; i++)
             {
                 var fig = Instantiate(mainPrefab, mainPositions[i], Quaternion.identity, _figures);
+                if (dilemma.MainPartner) { fig.Brand(Palette.InkPink); AttachHeart(fig); }   // the loved one: pink and a heart
                 // Red marks the guilty: all of them (Marked Ones), or specific ones (the murderer in The Passenger).
-                if (dilemma.FiguresBranded || In(dilemma.BrandedMainIndices, i)) fig.Brand();
+                else if (dilemma.FiguresBranded || In(dilemma.BrandedMainIndices, i)) fig.Brand();
                 if (dilemma.MainAsleep) AttachSleepZ(fig);
                 _main.Add(fig);
             }
@@ -67,7 +72,8 @@ namespace YourCall
             for (int i = 0; i < spurPositions.Count; i++)
             {
                 var fig = Instantiate(spurPrefab, spurPositions[i], Quaternion.identity, _figures);
-                if (In(dilemma.BrandedSpurIndices, i)) fig.Brand();   // the cruel man in The Reformed and the Cruel
+                if (dilemma.SpurPartner) { fig.Brand(Palette.InkPink); AttachHeart(fig); }   // the loved one on the branch (Someone You Loved)
+                else if (In(dilemma.BrandedSpurIndices, i)) fig.Brand();   // the cruel man in The Reformed and the Cruel
                 if (dilemma.SpurAsleep) AttachSleepZ(fig);
                 _spur.Add(fig);
             }
@@ -145,6 +151,13 @@ namespace YourCall
             if (_sleepZPrefab == null) return;
             var z = Instantiate(_sleepZPrefab, fig.transform);
             z.transform.localPosition = new Vector3(_sleepZOffset.x, _sleepZOffset.y, 0f);
+        }
+
+        private void AttachHeart(Figure fig)
+        {
+            if (_heartPrefab == null) return;
+            var h = Instantiate(_heartPrefab, fig.transform);
+            h.transform.localPosition = new Vector3(_heartOffset.x, _heartOffset.y, 0f);
         }
 
         private static bool In(IReadOnlyList<int> indices, int i)

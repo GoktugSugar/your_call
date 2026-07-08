@@ -2484,6 +2484,7 @@ MonoBehaviour:
   _topY: 2
   _midY: 0
   _bottomY: -2
+  _verticalOffset: 0.8
   _groupCenterX: 2.3
   _figureSpacing: 0.56
   _impactOverlap: 0.25
@@ -3053,6 +3054,8 @@ MonoBehaviour:
   _plea: {fileID: 1515680712}
   _sleepZPrefab: {fileID: 7420193855012340009, guid: 2b17fd1206ad463db06b6e92426c01ca, type: 3}
   _sleepZOffset: {x: 0.14, y: 0.9}
+  _heartPrefab: {fileID: 7420193855012341009, guid: fc8238ae8ddf4d74aaf7302534749619, type: 3}
+  _heartOffset: {x: 0, y: 1.15}
   _lightDuration: 1.7
   _mediumDuration: 2.5
   _heavyDuration: 3.6
