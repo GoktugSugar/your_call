@@ -1,11 +1,11 @@
 # Gameplay
 
 ## Core loop
-1. Narrator presents a dilemma.
-2. Player chooses (one of the four verbs below).
-3. Animated consequence plays, **scaled to the dilemma's weight** — a quick 2–4s beat for light ones, a full 5–10s+ scene for heavy ones.
-4. The narrator reacts to the choice, over the world, and resolves on its own.
-5. A **click gate** sits between the choice and the verdict: the choice and its consequence play, the imp reacts over the world, and then the player clicks (or keys) to continue, so the choice lands before the room weighs in. Only then do the display-only stats present **on their own**: "here's how others chose." One further input dismisses them, and the choice feeds the moral profile (see `narrative.md`). The reaction and the stats never share the screen or a click: the consequence beat owns the continue click, the reaction then clears, and while the panel is up it is the only thing listening for input.
+1. The imp poses a **question** — any type, from a silly would-you-rather to a heavy dilemma.
+2. Player answers (one of the verbs below — binary or multiple-choice for the everyday questions, a heavier verb for the spikes).
+3. Animated consequence plays, **scaled to the question's weight** — a quick 2–4s beat for a light one, a full 5–10s+ scene for a heavy dilemma. Every question gets one; the animated ink consequence is the game's edge over text-based question games.
+4. The imp reacts to the answer, over the world, and resolves on its own.
+5. A **click gate** sits between the answer and the crowd: the answer and its consequence play, the imp reacts over the world, and then the player clicks (or keys) to continue, so the choice lands before the room weighs in. Only then do the display-only stats present **on their own**: **"here's how others chose"** — the central hook, a real beat every question ends on (see *How others chose* below). One further input dismisses them, and the choice feeds the silent profile (see `narrative.md`). The reaction and the stats never share the screen or a click: the consequence beat owns the continue click, the reaction then clears, and while the panel is up it is the only thing listening for input.
 
 **No fail state.** The player can't lose or die. Choices only steer which ending is reached.
 
@@ -13,26 +13,37 @@
 
 **The player is tested, never presiding.** The protagonist is a dead former judge, put through these dilemmas by the guide; he holds no office in the void. Because he is dead, no dilemma stakes his own survival. Where a dilemma's original form is about the chooser's own skin (like the viral blue/red button), the stakes are reframed onto another soul, and the guide frames it as forcing this former judge to choose for someone else (needling the life he spent deciding what people deserved), never as an office he holds. He is always the one being examined, not an authority over the afterlife. Copy that makes him sound like he presides, rules, or sentences is a framing bug.
 
-## The four verbs (launch scope)
-- **Binary choice** — e.g. the lever (kill 1 vs. 5). Outcome from the player's choice alone.
+## The verbs (launch scope)
+The everyday questions — the light and medium volume — run on two simple verbs:
+- **Binary choice** — pick one of two. The lever (kill 1 vs. 5), but equally any two-way would-you-rather. Outcome from the player's choice alone.
+- **Multiple-choice** *(to build)* — pick one of several. The everyday type that carries the lighter volume alongside binary, for taste, preference, and would-you-rather questions with more than two answers. Documented here; **not yet built** (see `tech.md` for where a new verb slots in).
+
+The **heavy dilemmas** — the spikes — also use three richer verbs:
 - **Allocation** — divide or ration a limited good among parties.
 - **Coordination gamble** — outcome depends on the *crowd*, not just the player. Because the player can't die, the aggregate decides the fate of **other souls**, not the player. Resolved against a **seeded crowd distribution** (keeps it offline-first and consistent with display-only stats). This is the reframed "blue/red button."
-- **Self-sacrifice** — a cost to *the player* (their standing / how they're judged, not their life). Reserved for late-game climaxes.
+- **Self-sacrifice** — a cost to *the player* (their standing / how they're read, not their life). Reserved for late-game climaxes.
 
-More verbs are a **post-launch** roadmap, not launch scope. Each new verb is new code, UI, and animation logic.
+Further verbs are a **post-launch** roadmap, not launch scope. Each new verb is new code, UI, and animation logic.
 
-## Escalation
-Delivered in **waves**, not a straight climb. Three dials ramp together:
-- **Conceptual difficulty:** clean/near-universal dilemmas → contested ones with no majority.
+## Escalation and pacing
+Delivered in **waves**, not a straight climb. The **light and medium questions are the volume**; the **heavy dilemmas are rare, spaced spikes**, and a heavy one lands harder after a run of light ones. Three dials ramp together across a wave:
+- **Conceptual difficulty:** clean/near-universal questions → contested ones with no majority.
 - **Personal implication:** choices about strangers → about the crowd → about yourself.
 - **Narrator intimacy:** neutral/observational → needling the player's emerging patterns.
 
-Drop a lighter or absurd dilemma after each heavy beat; the breathers make the spikes land. Tag every dilemma **light / medium / heavy** to budget its animation and pacing.
+Keep the fun questions frequent and the gut-punches spaced; the breathers make the spikes land. Tag every question **light / medium / heavy** to budget its animation and pacing. The exact light/medium/heavy ratio is open (see `open-questions.md`).
 
-## Dilemma content
-- **Sourcing:** a mix of real philosophical dilemmas (trolley, footbridge, etc.) and original scenarios.
+## Question content
+- **The one rule.** A question qualifies only if it has **no right answer** *and* it either **divides people** or **reveals something about the person answering**. That is the whole test. Cut anything with an obvious consensus answer: the "how others chose" reveal is dead if everyone picks the same thing.
+- **All types are in scope, not moral dilemmas only.** Would-you-rathers, preferences, matters of taste, absurd hypotheticals, confessions, and genuine ethical dilemmas all qualify if they pass the rule. The heavy dilemmas are the rare spikes; the lighter questions are the volume (see *Escalation and pacing*).
+- **Sourcing:** a mix of real philosophical dilemmas (trolley, footbridge, etc.), well-known would-you-rathers and this-or-that splits, and original scenarios.
 - **Topicality:** draw from real current *tensions and themes* (AI & jobs, surveillance, medical rationing, misinformation), but abstract each **one step** — no named parties, politicians, or dated events. Topical themes sting; named politics dates the game and pushes players out of reasoning into tribalism.
-- **Ordering:** early famous/clean cases teach the loop; introduce intuition-breaking variants (e.g. the footbridge push) early so the stats screen can surprise the player.
+- **Ordering:** early famous/clean cases teach the loop; introduce intuition-breaking variants (e.g. the footbridge push) and questions with a surprising crowd split early, so the stats screen can surprise the player.
+
+## How others chose (the central hook)
+The crowd reveal is a **central pillar, not a nice-to-have**. Every question ends on it as a real beat: the answer and its consequence land, then the display-only stats present on their own — **"here's how others chose"** — a split the player reads themselves against. It stays **display-only and offline-first**, seeded from real survey data and then real players (see `tech.md`), and it is the reason a question must **divide people**: a lopsided split says nothing. The **coordination gamble** is the one place the crowd is load-bearing rather than reflective (the aggregate decides other souls' fates).
+
+**Optional guess-the-crowd layer.** Now and then — occasionally, not every question — the imp makes the player **guess before the reveal**: are you with the crowd, or the odd one out? Then it shows the split. A light test of self-knowledge that sharpens the hook, kept optional and occasional so it never becomes a chore.
 
 ## First dilemma (prototype)
 The clean, classic **trolley problem**: a runaway train, **five people on the main track, one on a branch, and a lever** that diverts it. Pull to kill one instead of five, or do nothing. It's the right opener — near-universal, teaches the whole loop in a single choice — and for this protagonist it doubles as a **mirror of his own death** (he took control of a lethal machine while drunk and made a choice that put lives at risk; now he's handed a lever on another one). Play the parallel by letting it sit, not by spelling it out. This is the content for the grey-box prototype (see `tech.md`).
@@ -53,8 +64,11 @@ Presentation is **first person with no avatar**: the man and the bear face the p
 
 Profile impact (silent, tunable, same sign convention): shooting the man (to save the species) leans toward **the many** and toward **ends over rules** (an innocent killed for a vast future good); shooting the bear (to save the man) leans toward **the one** and toward **rules over ends** (refusing to kill the man). It maps onto the **existing** axes only. The two new tensions it raises, **human vs. non-human** and **present vs. future**, are parked as candidate axes in `open-questions.md` rather than given their own axis now (they would only earn one if more dilemmas exercise them). It is a new `Dilemma` asset under `Assets/Data/` plus its shooting station, no loop changes.
 
+## Structure
+**Linear, one ordered run.** The player goes through a single curated, ordered sequence of questions with the imp between them; **the path is the same for everyone.** The player's silent profile (see `narrative.md`) determines which of several **endings** they reach. It is **not a branching story** — only the ending differs. Replay value comes from answering differently for a different profile, and so a different ending.
+
 ## Endings
-The game now has a minimal, **reusable ending** shape and a placeholder **credits roll**, so the real profile-based endings can be built on the same pieces later. An ending is: optionally a line, then an effect, then the credits roll (a clean white page with the credits scrolling upward, each role labelled in amber over the name in the Caveat hand; placeholder roles, all one name for now). After the credits it returns to the start to replay, as the prototype does. See `tech.md` for the small `Ending` / `CreditsRoll` pieces.
+The game now has a minimal, **reusable ending** shape and a placeholder **credits roll**, so the real **profile-based endings** — multiple, each chosen by the player's profile portrait (the kind of person they turned out to be) and delivered by the imp — can be built on the same pieces later. An ending is: optionally a line, then an effect, then the credits roll (a clean white page with the credits scrolling upward, each role labelled in amber over the name in the Caveat hand; placeholder roles, all one name for now). After the credits it returns to the start to replay, as the prototype does. See `tech.md` for the small `Ending` / `CreditsRoll` pieces.
 
 **Secret ending, shoot the imp.** During the man-and-the-last-bear dilemma the player can aim the crosshair at the **imp** itself, a third target alongside the man and the bear (same amber lock, same click to fire). Shooting it plays the gunshot, the imp swears one line straight at the player, then fades away and the credits roll. It is a joke ending, the game's first actual one. Shooting the man or the bear still resolves the dilemma normally; shooting the imp is the alternative that ends the game. There is still **no fail state**: this is an ending, not a loss. It is wired through the existing shooting input and the reusable ending, with no changes to the dilemma loop.
 
@@ -64,7 +78,7 @@ The game boots into a **main menu** (`MainMenu.unity`, the first scene in the bu
 - **Continue** will resume the last save. There is **no save system yet**, so it is shown but **disabled and greyed** (present but not selectable) until one exists; wiring is in place so enabling it later is a one-line change. This does not affect the no-fail-state or no-scoring pillars; it is purely a menu affordance.
 - **Settings** opens a minimal in-style panel with **music volume**, **SFX volume**, and a **fullscreen toggle**, which drive the real audio and persist between runs (via `PlayerPrefs`, loaded on boot). Its contents are laid out **cleanly centred** (each label centred above its control, the whole column on the panel's middle). A clear Close returns to the menu.
 
-A main menu and its settings screen are the one place a real menu belongs, so they are the **deliberate, in-style exception** to the minimal-UI "no menus" rule (see `art-and-ui.md`), kept hand-drawn and spare in the ink aesthetic, never chrome. The moral profile is still never surfaced, and no choice is ever scored.
+A main menu and its settings screen are the one place a real menu belongs, so they are the **deliberate, in-style exception** to the minimal-UI "no menus" rule (see `art-and-ui.md`), kept hand-drawn and spare in the ink aesthetic, never chrome. The profile is still never surfaced, and no choice is ever scored.
 
 ## Opening sequence
 The launch build opens with an authored **sequence** that plays an ordered list of **beats**, where a beat is one of: a cutscene, a line of the imp, or a whole dilemma. The imp is a persistent presence and narration runs between the dilemmas. The opening order is: crash flash → waking in the void → the imp appears → first trolley → imp taunt → second trolley (above) → transition → blue/red button → a short imp transition → the man and the last bear (above). See `narrative.md` for the story beats and `tech.md` for the small, general sequence layer, which is built to extend to the full campaign (many dilemmas with narration between them), not hardcoded to the opening.

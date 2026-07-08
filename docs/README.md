@@ -4,8 +4,8 @@ These files are the authoritative design for the game. They exist so anyone (hum
 
 ## Files
 - `vision.md` — logline, concept, pillars, scope, tone, positioning.
-- `gameplay.md` — core loop, the four verbs, no-fail design, escalation, dilemma content & sourcing.
-- `narrative.md` — setting, narrator, protagonist, ending, and the moral-profile system.
+- `gameplay.md` — core loop, the verbs (incl. multiple-choice), no-fail design, escalation, the no-right-answer question rule & sourcing, the how-others-chose hook, structure & endings.
+- `narrative.md` — setting, narrator (the imp), protagonist, endings, and the silent who-you-are profile.
 - `art-and-ui.md` — visual style, colour rules, UI/HUD philosophy, audio.
 - `tech.md` — engine, stats system & backend, data model, git workflow, build plan.
 - `decisions.md` — dated log of design decisions and any changes to them.
