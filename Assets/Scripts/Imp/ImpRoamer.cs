@@ -25,6 +25,16 @@ namespace YourCall
         [Tooltip("Among clear spots, a small pull toward ones further away, for variety.")]
         [SerializeField] private float _travelBias = 0.15f;
 
+        [Header("Centre keep-out (stay in the wings)")]
+        [Tooltip("On: treat the centre of the stage as always off-limits, so the imp keeps to the side " +
+                 "wings and margins even when no dilemma art occupies the centre. The centre is where the " +
+                 "action and the player's eye belong, so the imp should never drift into it. Off: only " +
+                 "avoid live content (the old behaviour, which let the imp wander the empty middle).")]
+        [SerializeField] private bool _avoidCentre = true;
+        [Tooltip("World-space centre region the imp always avoids, like a permanent keep-out over the " +
+                 "stage. Sized to leave the side wings free; widen it to push the imp further out.")]
+        [SerializeField] private Rect _centreKeepout = new Rect(-4.75f, -2.5f, 9.5f, 5.5f);
+
         [Header("Hop")]
         [Tooltip("Time for one hop. Shorter = zippier.")]
         [SerializeField] private float _hopDurationMin = 0.28f;
@@ -160,7 +170,9 @@ namespace YourCall
         private Vector2 RandomInBounds()
             => new Vector2(Random.Range(_roamBounds.xMin, _roamBounds.xMax), Random.Range(_roamBounds.yMin, _roamBounds.yMax));
 
-        /// <summary>Nearest distance from a point to any active keep-out (0 inside; large with none).</summary>
+        /// <summary>Nearest distance from a point to any active keep-out (0 inside; large with none).
+        /// The persistent centre keep-out is always considered when <see cref="_avoidCentre"/> is on, so
+        /// the imp keeps to the wings even when no dilemma art occupies the centre.</summary>
         private float Clearance(Vector2 p)
         {
             var list = ScreenKeepout.Active;
@@ -170,6 +182,11 @@ namespace YourCall
                 if (list[i] == null) continue;
                 float d = DistanceToRect(p, list[i].WorldRect);
                 if (d < min) min = d;
+            }
+            if (_avoidCentre)
+            {
+                float dc = DistanceToRect(p, _centreKeepout);
+                if (dc < min) min = dc;
             }
             return min == float.MaxValue ? 999f : min;
         }

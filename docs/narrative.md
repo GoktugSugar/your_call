@@ -20,15 +20,19 @@ A **blank slate over a fixed past.** He was a **judge** who died **drunk driving
 **How he died is shown early, not withheld.** The game opens on a quick, fragmentary ink flash of the crash and he wakes foggy and half remembering (see *The opening* below). It is established lightly up front rather than saved as a reveal, which is what lets it stay a passing gag instead of a suspense thread.
 
 ## The opening
-A short authored sequence introduces the imp and chains the first questions with narration between them (the reusable beat structure is in `gameplay.md` and `tech.md`). The built opening front-loads **heavy dilemmas** to teach the loop and set the stakes; the fuller run threads the lighter, faster questions (the volume) between spikes like these. In order:
+A short authored sequence introduces the imp and chains the first questions with narration between them (the reusable beat structure is in `gameplay.md` and `tech.md`). It **eases the player in**: it opens light and playful to teach the game and set its real tone (mostly light, with heavy dilemmas as spaced spikes) before the first gut-punch, and it drops a light breather in before the heaviest beat, so the opening demonstrates the wave pacing rather than four heavy hits in a row. In order:
 1. **The crash.** A brief, impressionistic ink flash of the death — lights bearing down, a swerve, the hit — over black, fragmentary because he barely has it himself, then a cut to black.
 2. **Waking.** He comes to. There is no body to show, so it plays as point of view: the black clears unevenly and the view drifts and steadies, as if his eyes are focusing, then the imp resolves into being. Brief, carried by motion rather than a figure.
-3. **The imp.** It scribbles into being and takes over the narration: he is dead, it has a game for him, and it stays cryptic about the rest. It lands the DUI gag once and drops it.
-4. **First dilemma:** the clean classic trolley (five over one), which teaches the loop.
-5. **The taunt:** the imp dismisses that as too easy and pivots to a harder one.
-6. **Second dilemma:** the whose-life-counts trolley (see `gameplay.md`), where the clean headcount no longer settles it.
-7. **Transition** into the blue/red button dilemma as the next beat.
-8. **Transition and the last bear.** A short imp hand-off, then the **man and the last bear** (see `gameplay.md`): the guide puts a gun in the dead judge's hands and makes him fire on one of two, needling him as ever about the life he spent deciding what others deserved, only now the other life on the scale is a whole species' future rather than one more person. Reached after the blue/red button, it widens the questions to non-human life and to the generations not yet born.
+3. **The imp, and the frame.** It scribbles into being and takes over the narration: he is dead, and it has a game for him. It sets the frame plainly, that it will ask him all sorts of things, silly and serious, with no right answers, to work out who he is and not to weigh his soul, lands the DUI gag once and drops it, and stays cryptic about the rest (what it is, why he is here, what waits at the end).
+4. **Warm up (light):** a fun, low-stakes would-you-rather (fly, or move through the world unseen) with nothing on the line, so the loop and the "how others chose" reveal are taught on a laugh before anything heavy lands.
+5. **The turn:** the imp notes how painless that was, then puts something with weight in front of him.
+6. **First heavy dilemma:** the clean classic trolley (five over one), the first real spike.
+7. **The taunt:** the imp dismisses that as too easy and pivots to a harder one.
+8. **Second dilemma:** the whose-life-counts trolley (see `gameplay.md`), where the clean headcount no longer settles it.
+9. **Transition** into the blue/red button dilemma as the next beat.
+10. **Breather (light):** after the button, the imp clears the air with a deliberately absurd would-you-rather (fight one duck the size of a horse, or a hundred horses the size of ducks), a laugh and a crowd split before the darkest beat, the imp giving the idiotic the same grave ceremony as the profound.
+11. **The last bear.** A short imp hand-off, then the **man and the last bear** (see `gameplay.md`): the guide puts a gun in the dead judge's hands and makes him fire on one of two, needling him as ever about the life he spent sizing up everyone else, only now the other life on the scale is a whole species' future rather than one more person. It widens the questions to non-human life and to the generations not yet born.
+12. **The closer.** A short sign-off: he has told the imp more than he thinks, and the imp is always here. The screen dissolves to black.
 
 ## Ending
 Reflects the player's **profile** portrait (below): the game has **multiple endings**, and the kind of person the player turned out to be selects which one the imp delivers. The secret **shoot-the-imp** ending (see `gameplay.md`) is one of them. Replay value comes from answering differently for a different profile → a different ending and different narrator treatment. It is **not** a branching story: the path of questions is the same for everyone, only the ending differs.

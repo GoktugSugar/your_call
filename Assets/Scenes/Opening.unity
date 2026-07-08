@@ -752,19 +752,76 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.ImpLineBeat
   _note: 
   _lines:
-  - Oh, you are awake. Do not thank me, and do not bother checking your pulse. There
-    is not one.
-  - You are [amber]dead[/amber]. That part is finished, settled, filed. What you
-    are now is a guest. My guest.
-  - And you reek of a good night. A judge, no less, arriving like this. I would laugh,
-    but you will want me paying attention. There. Laughed anyway. Moving on.
-  - Here is the whole of it. I have a few questions. A little game. What I am, why
-    you are here, what waits at the end of it, none of that is yours to know. You
-    choose. I keep score.
-  - You spent a lifetime handing down what everyone else deserved. Turnabout is such
-    a pretty word, is it not.
+  - Oh, you are awake. Do not thank me, and do not check for a pulse. There is nothing
+    there to find.
+  - You are [amber]dead[/amber]. That part is done. Settled, filed, over. What you
+    are now is a guest. Mine.
+  - And you came in reeking of a good night. A judge, of all people, arriving like
+    that. I would laugh, only you will want me paying attention. There. Laughed anyway.
+  - Here is the shape of it, and it is the only map you get. I ask, you answer. Silly
+    things, serious things, and everything in the cracks between. What I am, why
+    you are here, what waits at the end, none of that is yours to know.
+  - There are no right answers, so do not go digging for them. I am not weighing
+    your soul either. Duller than that, and worse. I am simply working out who you
+    are. You spent a whole life sizing up everyone else. Turnabout is such a pretty
+    word, is it not.
   _clickLockout: 0.3
   _clearAtEnd: 0
+--- !u!1 &541523903
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 541523905}
+  - component: {fileID: 541523904}
+  m_Layer: 0
+  m_Name: LightConsequence
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &541523904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541523903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d9aa72ce3422f94290c32cc39f04bd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.LightChoiceConsequence
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _color: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _anchor: {x: 0, y: 0.6}
+  _radius: 0.7
+  _strokes: 9
+  _strokeWidth: 0.05
+  _sortingOrder: 14
+  _lightDuration: 0.7
+  _mediumDuration: 1
+  _heavyDuration: 1.4
+  _settle: 0.15
+--- !u!4 &541523905
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541523903}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &544622731
 GameObject:
   m_ObjectHideFlags: 0
@@ -1049,6 +1106,7 @@ MonoBehaviour:
   _boil: 1
   _startHidden: 1
   _scale: 1.55
+  _headRaise: 0.025
   _bobAmplitude: 0.06
   _bobPeriod: 2.4
   _swayAngle: 3.5
@@ -1100,6 +1158,13 @@ MonoBehaviour:
     height: 4.7
   _minClearance: 0.9
   _travelBias: 0.15
+  _avoidCentre: 1
+  _centreKeepout:
+    serializedVersion: 2
+    x: -4.75
+    y: -2.5
+    width: 9.5
+    height: 5.5
   _hopDurationMin: 0.22
   _hopDurationMax: 0.42
   _hopArc: 0.35
@@ -1423,6 +1488,64 @@ MonoBehaviour:
   _foldDuration: 0.7
   _foldSettle: 0.4
   _camera: {fileID: 0}
+--- !u!1 &1124687095
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1124687096}
+  - component: {fileID: 1124687097}
+  m_Layer: 0
+  m_Name: 5_Warmup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1124687096
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1124687095}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1124687097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1124687095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b99cd49cd677241871f25f7016f4fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.DilemmaBeat
+  _note: 
+  _dilemma: {fileID: 11400000, guid: 4bb88b1897b91c44b9b9f02c99820b94, type: 2}
+  _station: {fileID: 0}
+  _presenter: {fileID: 541523904}
+  _showTextFallback: 1
+  _timing:
+    PresentHold: 0.7
+    PostChoiceBeat: 0.45
+    PreStatsBeat: 0.9
+    StatsFade: 0.5
+    EndInputDelay: 0.5
+    ReactionHold: 1.1
+  _statsHideFade: 0.6
+  _deactivateStationAtEnd: 1
 --- !u!1 &1197559629
 GameObject:
   m_ObjectHideFlags: 0
@@ -1575,6 +1698,10 @@ Transform:
   - {fileID: 1415402359}
   - {fileID: 1938386648}
   - {fileID: 767622625}
+  - {fileID: 1124687096}
+  - {fileID: 1420159708}
+  - {fileID: 2130300761}
+  - {fileID: 1811009478}
   m_Father: {fileID: 1626293926}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1323068930
@@ -1798,6 +1925,64 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1207684725}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1420159707
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1420159708}
+  - component: {fileID: 1420159709}
+  m_Layer: 0
+  m_Name: 9b_Breather
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1420159708
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420159707}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1420159709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420159707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b99cd49cd677241871f25f7016f4fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.DilemmaBeat
+  _note: 
+  _dilemma: {fileID: 11400000, guid: 63d2d1a26217e4c43a8d3b7bc3f278ce, type: 2}
+  _station: {fileID: 0}
+  _presenter: {fileID: 541523904}
+  _showTextFallback: 1
+  _timing:
+    PresentHold: 0.7
+    PostChoiceBeat: 0.45
+    PreStatsBeat: 0.9
+    StatsFade: 0.5
+    EndInputDelay: 0.5
+    ReactionHold: 1.1
+  _statsHideFade: 0.6
+  _deactivateStationAtEnd: 1
 --- !u!1001 &1579499635
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1912,12 +2097,16 @@ MonoBehaviour:
   - {fileID: 1005770903}
   - {fileID: 1323068932}
   - {fileID: 522489823}
+  - {fileID: 1124687097}
+  - {fileID: 2130300762}
   - {fileID: 8299690}
   - {fileID: 1207094130}
   - {fileID: 2030758369}
   - {fileID: 1665816950}
   - {fileID: 1018129564}
   - {fileID: 1938386649}
+  - {fileID: 1420159709}
+  - {fileID: 1811009479}
   - {fileID: 767622626}
   - {fileID: 1415402358}
   _fadeToBlackAtEnd: 1
@@ -2265,6 +2454,57 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1811009477
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1811009478}
+  - component: {fileID: 1811009479}
+  m_Layer: 0
+  m_Name: 9c_ToBear
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1811009478
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811009477}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1811009479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811009477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ea45832cf80cb949b54bcc01f3dc5e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.ImpLineBeat
+  _note: 
+  _lines:
+  - Better. Some colour back in you. I do enjoy watching you relax. It never lasts.
+  - Because this next one I am placing directly in your hands. No lever, no crowd
+    to hide behind. Look who I brought.
+  _clickLockout: 0.25
+  _clearAtEnd: 0
 --- !u!1 &1823648760
 GameObject:
   m_ObjectHideFlags: 0
@@ -2514,10 +2754,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.ImpLineBeat
   _note: 
   _lines:
-  - Still breathing, in a manner of speaking. The room chose, you chose, and nobody
-    down here is any the wiser.
-  - Enough of buttons and crowds. This next one I am placing directly in your hands.
-    Look who I brought.
+  - Still standing, after a fashion. The room chose, you chose, and one soul is better
+    or worse for it. You will never know which. Delicious, is it not.
+  - You have gone a little grey around the edges. Let us clear our heads with something
+    gloriously, wonderfully stupid.
   _clickLockout: 0.3
   _clearAtEnd: 0
 --- !u!1 &1965248628
@@ -2993,6 +3233,57 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2130300760
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2130300761}
+  - component: {fileID: 2130300762}
+  m_Layer: 0
+  m_Name: 5b_ToTrolley
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2130300761
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130300760}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2130300762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130300760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ea45832cf80cb949b54bcc01f3dc5e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.ImpLineBeat
+  _note: 
+  _lines:
+  - See. Painless. You even enjoyed that a little, I could tell.
+  - So let us put something in front of you that bites back. Rails, a lever, and
+    people who cannot step off the tracks. Hold on to that easy grin for me.
+  _clickLockout: 0.25
+  _clearAtEnd: 0
 --- !u!1 &2130798477
 GameObject:
   m_ObjectHideFlags: 0
@@ -3057,3 +3348,4 @@ SceneRoots:
   - {fileID: 2092181234}
   - {fileID: 227835380}
   - {fileID: 544622733}
+  - {fileID: 541523905}

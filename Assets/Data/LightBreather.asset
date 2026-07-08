@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ecd1a615a340f4c9104ca01624d106, type: 3}
+  m_Name: LightBreather
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Dilemma
+  _id: breather_beasts
+  _verb: 0
+  _weight: 0
+  _narratorPrompt: A breather. This one is pure nonsense and I adore it, so answer quickly. You must fight, bare handed, either one duck grown to the size of a horse, or a hundred horses shrunk to the size of ducks. Which do you take on.
+  _choices:
+  - _id: giant_duck
+    _label: The giant duck
+    _narratorReact: One enormous duck. You want a single foe you can look in the eye, even a preposterous one. There is something almost principled in that. Almost.
+    _narratorReactStruck:
+    _struckParty:
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 38
+    _profileImpact: []
+  - _id: tiny_horses
+    _label: The tiny horses
+    _narratorReact: A hundred little horses. You would rather be swarmed by the many than face the one. A crowd fighter. Even here, playing the odds. That tells me a little.
+    _narratorReactStruck:
+    _struckParty:
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 62
+    _profileImpact: []
+  _figuresBranded: 0
+  _statsHeading: how others chose
+  _crowdSafeFraction: 0.43
+  _crowdThreshold: 0.5
+  _thresholdLabel: the line
