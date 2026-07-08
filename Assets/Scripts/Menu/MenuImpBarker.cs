@@ -8,8 +8,9 @@ namespace YourCall
     /// The menu imp's cadence: it sits at its spot and every so often (a tunable pause, not often)
     /// says one short bark as plain ink text floating over it (no bubble), in its gleeful tormentor
     /// voice. The line types out with the blip voice, holds a moment, then the text clears, and ONLY
-    /// THEN does the imp relocate to a fresh spot (an instant move, no animation). So the loop is:
-    /// pause, speak in place, text clears, relocate, pause. A bark can carry a facial expression so a
+    /// THEN does the imp hop to a fresh spot (the springy roaming motion the campaign imp uses, via
+    /// the roamer). So the loop is: pause, speak in place, text clears, hop, pause. A bark can carry a
+    /// facial expression so a
     /// smug line shows a smug face (neutral otherwise, and only if the imp has expressions switched
     /// on). It only drives the floating text and the imp, never input, so the player can navigate and
     /// select at any time. One job: run the menu imp's speak-then-relocate loop. Keep each bark a
@@ -82,7 +83,7 @@ namespace YourCall
                 while (_bark.IsVisible) yield return null;         // wait for the text to clear
                 if (_imp != null) _imp.SetExpression(_restExpression);
 
-                if (_roamer != null) _roamer.Teleport();           // ONLY now does it move, instantly
+                if (_roamer != null) _roamer.HopToNewSpot();       // ONLY now does it move, a springy campaign hop
                 yield return new WaitForSeconds(UnityEngine.Random.Range(_pauseMin, _pauseMax));
             }
         }

@@ -70,8 +70,13 @@ namespace YourCall
 
         private void OnPage() { if (_autoHop) Reposition(preferFar: true); }
 
+        /// <summary>Hop to a fresh clear spot with the springy roaming motion (the same eased hop the
+        /// campaign imp uses). The menu barker calls this between barks, so the menu imp travels across
+        /// the page like the campaign imp rather than jumping instantly.</summary>
+        public void HopToNewSpot() => Reposition(preferFar: true);
+
         /// <summary>Instantly relocate to a fresh clear spot (no hop), with an optional ink poof at the
-        /// spot left and the spot landed on. The menu uses this after a bark; the opening hops instead.</summary>
+        /// spot left and the spot landed on. Currently unused (the menu hops via HopToNewSpot instead).</summary>
         public void Teleport()
         {
             if (_imp != null && !_imp.Present) return;
