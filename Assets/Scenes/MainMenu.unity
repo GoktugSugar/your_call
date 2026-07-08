@@ -119,6 +119,58 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &81099371
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 81099373}
+  - component: {fileID: 81099372}
+  m_Layer: 0
+  m_Name: FloatingBark
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &81099372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81099371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e09200c3731cd64d94429fa59498b35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.FloatingBarkText
+  _narrator: {fileID: 1979492263}
+  _target: {fileID: 1269116348}
+  _camera: {fileID: 948277638}
+  _maxTextWidth: 3.6
+  _gapAbove: 1.8
+  _gapBelow: 0.5
+  _screenMargin: 0.35
+  _centerClearHalfWidth: 3.6
+--- !u!4 &81099373
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81099371}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &267009561
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,7 +248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cfb5595e96c51f488bab90c80ebf5be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.MenuImpBarker
-  _bubble: {fileID: 1080919754}
+  _bark: {fileID: 81099372}
   _imp: {fileID: 1269116347}
   _roamer: {fileID: 1269116349}
   _barks:
@@ -399,77 +451,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1080919753
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1080919755}
-  - component: {fileID: 1080919754}
-  m_Layer: 0
-  m_Name: SpeechBubble
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1080919754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1080919753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4febd3111805dc4ea869424b5627db0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::YourCall.SpeechBubble
-  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
-  _narrator: {fileID: 1979492263}
-  _target: {fileID: 1269116348}
-  _camera: {fileID: 948277638}
-  _borderColor: {r: 0.106, g: 0.102, b: 0.09, a: 1}
-  _fillColor: {r: 0.98, g: 0.968, b: 0.936, a: 1}
-  _borderWidth: 0.05
-  _cornerRadius: 0.35
-  _cornerSegments: 6
-  _handDrawnJitter: 0.035
-  _sortingFill: 17
-  _sortingBorder: 19
-  _wobbleAmplitude: 0.012
-  _wobbleSpeed: 1.7
-  _maxTextWidth: 3.4
-  _padding: 0.32
-  _minSize: {x: 1.8, y: 1.1}
-  _gapAbove: 1.7
-  _gapBelow: 0.5
-  _screenMargin: 0.3
-  _centerClearHalfWidth: 3.2
-  _tailTargetY: 0.9
-  _tailWidth: 0.16
-  _tailLength: 0.4
-  _tailBow: 0.06
-  _tailJitter: 0.025
-  _fadeSpeed: 6
---- !u!4 &1080919755
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1080919753}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1226921178
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,6 +596,7 @@ MonoBehaviour:
   _boil: 1
   _startHidden: 1
   _scale: 1.55
+  _headRaise: 0.025
   _bobAmplitude: 0.06
   _bobPeriod: 2.4
   _swayAngle: 3.5
@@ -674,7 +656,7 @@ MonoBehaviour:
   _restlessInterval: 0
   _restlessJitter: 0.35
   _autoHop: 0
-  _teleportPoof: 1
+  _teleportPoof: 0
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
   _poofColor: {r: 0.604, g: 0.588, b: 0.549, a: 1}
   _poofRadius: 0.45
@@ -1162,4 +1144,4 @@ SceneRoots:
   - {fileID: 406614329}
   - {fileID: 1226921180}
   - {fileID: 267009563}
-  - {fileID: 1080919755}
+  - {fileID: 81099373}

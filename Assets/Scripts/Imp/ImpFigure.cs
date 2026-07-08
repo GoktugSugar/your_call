@@ -29,6 +29,11 @@ namespace YourCall
         [Tooltip("Overall size, applied to the imp's transform. Tune to taste.")]
         [SerializeField] private float _scale = 1.55f;
 
+        [Header("Head")]
+        [Tooltip("Nudge the head, horns, and face up by this, reducing the head/body overlap to a clean " +
+                 "minimal join (still connected). Small and tunable.")]
+        [SerializeField] private float _headRaise = 0.025f;
+
         [Header("Idle life")]
         [Tooltip("Slow vertical bob height.")]
         [SerializeField] private float _bobAmplitude = 0.06f;
@@ -181,20 +186,20 @@ namespace YourCall
         private void BuildHeadAndHorns()
         {
             var head = new List<Vector3>();
-            InkLine.AddArc(head, new Vector2(0f, 0.62f), 0.19f, 0f, 360f, 22);
+            InkLine.AddArc(head, new Vector2(0f, 0.62f + _headRaise), 0.19f, 0f, 360f, 22);
             Stroke("Head", head, _lineWidth);
 
             Stroke("HornL", new List<Vector3>
             {
-                new Vector3(-0.11f, 0.76f, 0f),
-                new Vector3(-0.17f, 0.87f, 0f),
-                new Vector3(-0.23f, 1.0f, 0f),
+                new Vector3(-0.11f, 0.76f + _headRaise, 0f),
+                new Vector3(-0.17f, 0.87f + _headRaise, 0f),
+                new Vector3(-0.23f, 1.0f + _headRaise, 0f),
             }, _detailWidth);
             Stroke("HornR", new List<Vector3>
             {
-                new Vector3(0.11f, 0.76f, 0f),
-                new Vector3(0.17f, 0.87f, 0f),
-                new Vector3(0.23f, 1.0f, 0f),
+                new Vector3(0.11f, 0.76f + _headRaise, 0f),
+                new Vector3(0.17f, 0.87f + _headRaise, 0f),
+                new Vector3(0.23f, 1.0f + _headRaise, 0f),
             }, _detailWidth);
         }
 
@@ -203,10 +208,10 @@ namespace YourCall
             if (!_useExpressions)
             {
                 // Original single face: two slanted eyes and a wide little grin, mischief not menace.
-                Stroke("EyeL", new List<Vector3> { new Vector3(-0.10f, 0.66f, 0f), new Vector3(-0.03f, 0.62f, 0f) }, _detailWidth);
-                Stroke("EyeR", new List<Vector3> { new Vector3(0.10f, 0.66f, 0f), new Vector3(0.03f, 0.62f, 0f) }, _detailWidth);
+                Stroke("EyeL", new List<Vector3> { new Vector3(-0.10f, 0.66f + _headRaise, 0f), new Vector3(-0.03f, 0.62f + _headRaise, 0f) }, _detailWidth);
+                Stroke("EyeR", new List<Vector3> { new Vector3(0.10f, 0.66f + _headRaise, 0f), new Vector3(0.03f, 0.62f + _headRaise, 0f) }, _detailWidth);
                 var grin = new List<Vector3>();
-                InkLine.AddArc(grin, new Vector2(0f, 0.60f), 0.09f, 210f, 330f, 10);
+                InkLine.AddArc(grin, new Vector2(0f, 0.60f + _headRaise), 0.09f, 210f, 330f, 10);
                 Stroke("Grin", grin, _detailWidth);
                 return;
             }
@@ -234,9 +239,15 @@ namespace YourCall
             if (_eyeL == null || _eyeR == null || _mouth == null) return;
             List<Vector3> eyeL, eyeR, mouth;
             FaceFor(e, out eyeL, out eyeR, out mouth);
+            OffsetY(eyeL, _headRaise); OffsetY(eyeR, _headRaise); OffsetY(mouth, _headRaise);
             InkLine.SetPoints(_eyeL, eyeL);
             InkLine.SetPoints(_eyeR, eyeR);
             InkLine.SetPoints(_mouth, mouth);
+        }
+
+        private static void OffsetY(List<Vector3> pts, float dy)
+        {
+            for (int i = 0; i < pts.Count; i++) pts[i] = new Vector3(pts[i].x, pts[i].y + dy, pts[i].z);
         }
 
         // Eyes-and-mouth point sets per expression, on-model with the imp's head (face centred ~(0,0.62)).
@@ -255,9 +266,10 @@ namespace YourCall
                 case ImpExpression.Smug:
                     eyeL.Add(new Vector3(-0.11f, 0.645f, 0f)); eyeL.Add(new Vector3(-0.03f, 0.645f, 0f));
                     eyeR.Add(new Vector3(0.03f, 0.645f, 0f));  eyeR.Add(new Vector3(0.11f, 0.645f, 0f));
-                    mouth.Add(new Vector3(-0.08f, 0.575f, 0f));
-                    mouth.Add(new Vector3(0.02f, 0.57f, 0f));
-                    mouth.Add(new Vector3(0.085f, 0.605f, 0f));
+                    // Mouth dropped so there is a proper gap below the eyes, matching the other faces.
+                    mouth.Add(new Vector3(-0.08f, 0.535f, 0f));
+                    mouth.Add(new Vector3(0.02f, 0.53f, 0f));
+                    mouth.Add(new Vector3(0.085f, 0.565f, 0f));
                     break;
                 case ImpExpression.Glare:
                     eyeL.Add(new Vector3(-0.12f, 0.685f, 0f)); eyeL.Add(new Vector3(-0.02f, 0.625f, 0f));
