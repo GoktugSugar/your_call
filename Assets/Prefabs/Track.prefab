@@ -54,9 +54,9 @@ MonoBehaviour:
   _mainY: 0
   _forkX: -0.5
   _mainEndX: 4.8
-  _spurEnd: {x: 2.3, y: -2.2}
-  _spurControlDX: 1.7
-  _spurSegments: 18
+  _branchY: -2
+  _branchEndX: 4.8
+  _spurFigureX: 2.6
   _mainCount: 5
   _mainGroupCenterX: 2.6
   _mainSpacing: 0.56

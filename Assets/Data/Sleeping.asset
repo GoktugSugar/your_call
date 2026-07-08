@@ -15,11 +15,11 @@ MonoBehaviour:
   _id: sleeping
   _verb: 0
   _weight: 1
-  _narratorPrompt: Two on the straight track, fast asleep, dead to the world and about to be dead to a good deal more. They will never hear it coming, never feel the moment, just stop mid dream. On the branch, one wide awake, watching the cart roll in, doing the sums, feeling every inch of it arrive. Two quiet exits, or one long scream. The lever is yours. Does the terror count for anything, do you think. Your call.
+  _narratorPrompt: '[amber]Two[/amber] on the straight track, fast asleep, dead to the world and about to be [red]dead[/red] to a good deal more. They will never hear it coming, never feel the moment, just stop mid dream. On the branch, [amber]one[/amber] wide awake, watching the cart roll in, doing the sums, feeling every inch of it arrive. Two quiet [red]exits[/red], or one long scream. The lever is yours. Does the terror count for anything, do you think. Your call.'
   _choices:
   - _id: pull
     _label: Pull the lever
-    _narratorReact: Pulled. You aimed it at the one who could see it coming and spared the two who never would. Two strangers sleep on, none the wiser, traded for a front row seat to somebody's worst second. Whether that was mercy or just squeamishness I could not tell you, and I suspect neither could you.
+    _narratorReact: Pulled. You aimed it at the [amber]one[/amber] who could see it coming and spared the [amber]two[/amber] who never would. Two strangers sleep on, none the wiser, traded for a front row seat to somebody's worst second. Whether that was mercy or just squeamishness I could not tell you, and I suspect neither could you.
     _narratorReactStruck:
     _struckParty: spur
     _gambledParty:
@@ -32,7 +32,7 @@ MonoBehaviour:
       _value: 1
   - _id: do_nothing
     _label: Do nothing
-    _narratorReact: Hands in pockets. The two sleepers go under mid dream, and the one who begged the universe with his eyes gets to keep them open. Perhaps you decided a death you never feel is barely a death at all. Perhaps you just liked being watched while you chose. You always did prefer an audience to a conscience.
+    _narratorReact: Hands in pockets. The [amber]two[/amber] sleepers go under mid dream, and the one who begged the universe with his eyes gets to keep them open. Perhaps you decided a [red]death[/red] you never feel is barely a death at all. Perhaps you just liked being watched while you chose. You always did prefer an audience to a conscience.
     _narratorReactStruck:
     _struckParty: main
     _gambledParty:
@@ -46,6 +46,7 @@ MonoBehaviour:
   _mainFigureCount: 2
   _spurFigureCount: 1
   _figuresBranded: 0
+  _mainAsleep: 1
   _mainFigurePrefab: {fileID: 0}
   _spurFigurePrefab: {fileID: 0}
   _spurPlea:

@@ -4,10 +4,12 @@ namespace YourCall
 {
     /// <summary>
     /// Turns the writer's simple emphasis tags into TextMeshPro colour tags, using the one
-    /// palette so nothing new is invented. The rules (see docs/art-and-ui.md): [amber]word[/amber]
-    /// stresses a word in the accent; [red]word[/red] and [blue]word[/blue] colour a word that
-    /// names one of the button dilemma's coloured buttons, echoing it. Emphasis is authored per
-    /// line in the copy, never hardcoded here. Any other bracket is left untouched.
+    /// palette so nothing new is invented. The colour-to-meaning mapping (see docs/art-and-ui.md),
+    /// applied the same way every time so it reads as a system: [amber] stresses the stakes and
+    /// the emphasis (the counts, the weight of the choice); [red] marks death and the guilty
+    /// (killing, the murderer, the wretched, the villain), and also colours a word that names the
+    /// red button; [blue] names the blue button. A few meaningful words per line, not everything.
+    /// Emphasis is authored per line in the copy, never hardcoded here. Any other bracket is left untouched.
     /// </summary>
     public static class InkMarkup
     {

@@ -15,11 +15,11 @@ MonoBehaviour:
   _id: dark_track
   _verb: 0
   _weight: 1
-  _narratorPrompt: Three on the branch, right there in the light, easy to count. On the main line, the track runs off into the dark, and I swear to you there is a crowd tied up out there in the black. How many. That would be telling. Could be one, could be a whole coachload. Divert, and you kill three you can see, for certain. Leave it, and you gamble against a number I refuse to give you. Trust me, or trust your eyes. Your call.
+  _narratorPrompt: Three on the branch, right there in the light, easy to count. On the main line, the track runs off into the dark, and I swear to you there is a crowd tied up out there in the black. How many. That would be telling. Could be one, could be a whole coachload. Divert, and you [red]kill[/red] [amber]three[/amber] you can see, for certain. Leave it, and you gamble against a number I refuse to give you. Trust me, or trust your eyes. Your call.
   _choices:
   - _id: pull
     _label: Pull the lever
-    _narratorReact: You pulled. Three folded, quick and certain, done. And now the main line, with the dark thinned away to nothing. Look at it. Empty rail, all the way down. Not one soul was ever out there. You killed three real people to swerve a crowd I invented on the spot. Oh, that is delicious.
+    _narratorReact: You pulled. [amber]Three[/amber] folded, quick and certain, done. And now the main line, with the dark thinned away to nothing. Look at it. Empty rail, all the way down. Not one soul was ever out there. You [red]killed[/red] three real people to swerve a crowd I invented on the spot. Oh, that is delicious.
     _narratorReactStruck:
     _struckParty: spur
     _gambledParty:

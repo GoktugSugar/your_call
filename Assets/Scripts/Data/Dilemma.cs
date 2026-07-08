@@ -26,8 +26,16 @@ namespace YourCall
         [SerializeField] private int _mainFigureCount = 5;
         [Tooltip("How many figures stand on the branch (spur) track.")]
         [SerializeField] private int _spurFigureCount = 1;
-        [Tooltip("The main-track figures are branded with a red outline (the imp's damned wretches). The Marked Ones trolley only.")]
+        [Tooltip("The main-track figures are branded with a red (guilty) outline (all of them). The Marked Ones trolley.")]
         [SerializeField] private bool _figuresBranded = false;
+        [Tooltip("Indices of specific main-track figures drawn with a red (guilty) outline, on top of Figures Branded. The murderer in The Passenger.")]
+        [SerializeField] private List<int> _brandedMainIndices = new List<int>();
+        [Tooltip("Indices of specific branch-track figures drawn with a red (guilty) outline. The cruel man in The Reformed and the Cruel.")]
+        [SerializeField] private List<int> _brandedSpurIndices = new List<int>();
+        [Tooltip("The main-track figures are asleep: they show small drifting z marks. The Sleeping.")]
+        [SerializeField] private bool _mainAsleep = false;
+        [Tooltip("The branch-track figures are asleep: they show small drifting z marks.")]
+        [SerializeField] private bool _spurAsleep = false;
         [Tooltip("Optional: a different figure prefab for the main track (for example the baby). Empty uses the station's default figure.")]
         [SerializeField] private Figure _mainFigurePrefab;
         [Tooltip("Optional: a different figure prefab for the branch track. Empty uses the station's default figure.")]
@@ -55,6 +63,10 @@ namespace YourCall
         public int MainFigureCount => _mainFigureCount;
         public int SpurFigureCount => _spurFigureCount;
         public bool FiguresBranded => _figuresBranded;
+        public IReadOnlyList<int> BrandedMainIndices => _brandedMainIndices;
+        public IReadOnlyList<int> BrandedSpurIndices => _brandedSpurIndices;
+        public bool MainAsleep => _mainAsleep;
+        public bool SpurAsleep => _spurAsleep;
         public Figure MainFigurePrefab => _mainFigurePrefab;
         public Figure SpurFigurePrefab => _spurFigurePrefab;
         public string SpurPlea => _spurPlea;

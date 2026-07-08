@@ -400,8 +400,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.ImpLineBeat
   _note: 16_BreatherSetup
   _lines:
-  - Breathe. I am not a monster, whatever the last few had you thinking. Have a silly
-    one, on the house.
+  - Breathe. I am not a [red]monster[/red], whatever the last few had you thinking.
+    Have a silly one, on the house.
   _clickLockout: 0.25
   _clearAtEnd: 0
 --- !u!1 &227835377
@@ -917,9 +917,9 @@ MonoBehaviour:
   _lines:
   - Oh, you are awake. Do not thank me, and do not ask where here is, because I will
     not tell you and you would not much enjoy the answer.
-  - You are dead. That part is not up for appeal. You steered a car into the next
-    world with a skinful of wine in you, Your Honour, and now you are on the wrong
-    side of the bench for once.
+  - You are [red]dead[/red]. That part is not up for appeal. You steered a car into
+    the next world with a skinful of wine in you, Your Honour, and now you are on
+    the wrong side of the bench for once.
   - I have a little game. A long line of questions, and not one of them has a right
     answer, whatever your gut starts screaming. I am not here to weigh your soul.
     I am far nosier than that. I am working out who you actually are.
@@ -1921,8 +1921,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.ImpLineBeat
   _note: 08_Taunt
   _lines:
-  - That one? That one is a warmup they print in textbooks. Five over one, a child
-    could clear it, and several have.
+  - That one? That one is a warmup they print in textbooks. [amber]Five over one[/amber],
+    a child could clear it, and several have.
   - Let me put a thumb on the scale, and see if your tidy little arithmetic survives
     meeting an actual person.
   _clickLockout: 0.25
@@ -2481,20 +2481,21 @@ MonoBehaviour:
   _entryX: -4.6
   _forkX: -2.2
   _rightEndX: 4.7
-  _topY: 1.5
+  _topY: 2
   _midY: 0
-  _bottomY: -1.5
+  _bottomY: -2
   _groupCenterX: 2.3
   _figureSpacing: 0.56
   _impactOverlap: 0.25
   _tieSpacing: 0.7
   _tieLength: 0.34
   _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
-  _pickX: 5
+  _optionsRowY: -2.5
+  _optionsSpan: 6.6
   _pickFontSize: 3
   _pickColor: {r: 0.106, g: 0.102, b: 0.09, a: 1}
-  _pickHot: {r: 0.91, g: 0.584, b: 0.118, a: 1}
   _pickRestAlpha: 0.9
+  _hoverScale: 1.07
   _pickSorting: 20
   _pickPadding: {x: 0.5, y: 0.35}
   _travelDuration: 3.4
@@ -3050,6 +3051,8 @@ MonoBehaviour:
   _lever: {fileID: 1864427356}
   _figurePrefab: {fileID: 1666028741476117448, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
   _plea: {fileID: 1515680712}
+  _sleepZPrefab: {fileID: 7420193855012340009, guid: 2b17fd1206ad463db06b6e92426c01ca, type: 3}
+  _sleepZOffset: {x: 0.14, y: 0.9}
   _lightDuration: 1.7
   _mediumDuration: 2.5
   _heavyDuration: 3.6

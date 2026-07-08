@@ -15,11 +15,11 @@ MonoBehaviour:
   _id: passenger
   _verb: 0
   _weight: 1
-  _narratorPrompt: New track, same lever, worse company. On the straight run, two men side by side. One of them put a knife in someone once and paid for it with years. The other never did a thing except stand next to the wrong man on the wrong morning. On the branch, one more innocent, clean, alone. Straight, and the killer dies and takes a blameless man with him. Branch, and one spotless soul dies so the murderer strolls off. Two for one, and one of the two had it coming. Sort of. Your call.
+  _narratorPrompt: New track, same lever, worse company. On the straight run, two men side by side. One of them put a knife in someone once and paid for it with years. The other never did a thing except stand next to the wrong man on the wrong morning. On the branch, one more innocent, clean, alone. Straight, and the [red]killer[/red] dies and takes a blameless man with him. Branch, and one spotless soul dies so the [red]murderer[/red] strolls off. [amber]Two[/amber] for [amber]one[/amber], and one of the two had it coming. Sort of. Your call.
   _choices:
   - _id: pull
     _label: Pull the lever
-    _narratorReact: You pulled. The lone clean one folds, and the killer wanders off with the stranger he was standing beside, both still breathing. You spared a murderer to keep your headcount neat. One is fewer than two, you said, and never mind whose name sat on which charge sheet. Very efficient. Very you.
+    _narratorReact: You pulled. The lone clean one folds, and the [red]killer[/red] wanders off with the stranger he was standing beside, both still breathing. You spared a [red]murderer[/red] to keep your headcount neat. [amber]One[/amber] is fewer than [amber]two[/amber], you said, and never mind whose name sat on which charge sheet. Very efficient. Very you.
     _narratorReactStruck:
     _struckParty: spur
     _gambledParty:
@@ -34,7 +34,7 @@ MonoBehaviour:
       _value: -1
   - _id: do_nothing
     _label: Do nothing
-    _narratorReact: You left it. Two go under, the killer and the poor soul beside him, and the spotless stranger on the branch lives. You let an innocent man die to be certain a guilty one did too. Call it justice if it settles you. From here it looked a lot like bookkeeping with a body count.
+    _narratorReact: You left it. [amber]Two[/amber] go under, the [red]killer[/red] and the poor soul beside him, and the spotless stranger on the branch lives. You let an innocent man die to be certain a [red]guilty[/red] one did too. Call it justice if it settles you. From here it looked a lot like bookkeeping with a body count.
     _narratorReactStruck:
     _struckParty: main
     _gambledParty:
@@ -50,6 +50,8 @@ MonoBehaviour:
   _mainFigureCount: 2
   _spurFigureCount: 1
   _figuresBranded: 0
+  _brandedMainIndices:
+  - 0
   _mainFigurePrefab: {fileID: 0}
   _spurFigurePrefab: {fileID: 0}
   _spurPlea:

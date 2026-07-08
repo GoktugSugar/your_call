@@ -15,11 +15,11 @@ MonoBehaviour:
   _id: begging
   _verb: 0
   _weight: 1
-  _narratorPrompt: One on the branch, right in front of you, close enough to count the tears, screaming to be spared. You can read every word of it hanging in the air over him. On the straight track, three more, backs turned, silent, no idea you exist or that any of this is happening to them. Three you cannot hear, or one you cannot shut up. The lever waits. Funny, what volume does to a person's worth. Your call.
+  _narratorPrompt: One on the branch, right in front of you, close enough to count the tears, screaming to be spared. You can read every word of it hanging in the air over him. On the straight track, [amber]three[/amber] more, backs turned, silent, no idea you exist or that any of this is happening to them. [amber]Three[/amber] you cannot hear, or [amber]one[/amber] you cannot shut up. The lever waits. Funny, what volume does to a person's worth. Your call.
   _choices:
   - _id: pull
     _label: Pull the lever
-    _narratorReact: Pulled. The one who begged goes quiet the only way left to him, and three strangers who never made a sound walk on, oblivious. You did the arithmetic and looked past the face. Three beats one, even when the one is staring you dead in the eye. Cold. I almost admire it. Almost.
+    _narratorReact: Pulled. The one who begged goes quiet the only way left to him, and three strangers who never made a sound walk on, oblivious. You did the arithmetic and looked past the face. [amber]Three[/amber] beats [amber]one[/amber], even when the one is staring you [red]dead[/red] in the eye. Cold. I almost admire it. Almost.
     _narratorReactStruck:
     _struckParty: spur
     _gambledParty:
@@ -32,7 +32,7 @@ MonoBehaviour:
       _value: 1
   - _id: do_nothing
     _label: Do nothing
-    _narratorReact: You left it. The three quiet ones go under, and the one who screamed loudest keeps his voice, now spending it on thanks. A face and a plea outbid three silent strangers, and you call that a decision. It looked more like being nagged into one. The loud ones always did get to you.
+    _narratorReact: You left it. The [amber]three[/amber] quiet ones go under, and the one who screamed loudest keeps his voice, now spending it on thanks. A face and a plea outbid three silent strangers, and you call that a decision. It looked more like being nagged into one. The loud ones always did get to you.
     _narratorReactStruck:
     _struckParty: main
     _gambledParty:

@@ -15,11 +15,11 @@ MonoBehaviour:
   _id: loved
   _verb: 0
   _weight: 2
-  _narratorPrompt: Back to the very first lever. Five strangers on the straight track, one soul on the branch, the arithmetic exactly as it stood. Only this time I have gone to the trouble of putting someone you loved on that branch. Someone real. You know the face. Five over one, the sum has not shifted a single digit. Everything else has. Yes, I chose them. Yes, I did it on purpose. Your call.
+  _narratorPrompt: Back to the very first lever. [amber]Five[/amber] strangers on the straight track, [amber]one[/amber] soul on the branch, the arithmetic exactly as it stood. Only this time I have gone to the trouble of putting someone you loved on that branch. Someone real. You know the face. [amber]Five over one[/amber], the sum has not shifted a single digit. Everything else has. Yes, I chose them. Yes, I did it on purpose. Your call.
   _choices:
   - _id: pull
     _label: Pull the lever
-    _narratorReact: You pulled. You aimed it at the one you loved so five strangers could go home to theirs. The same sum you cleared without a blink on the first track, and this time your hand shook the whole way. Principled, if we are being kind. If we are being honest, you have just proven the maths only ever counted while it cost you nothing.
+    _narratorReact: You pulled. You aimed it at the [amber]one[/amber] you loved so [amber]five[/amber] strangers could go home to theirs. The same sum you cleared without a blink on the first track, and this time your hand shook the whole way. Principled, if we are being kind. If we are being honest, you have just proven the maths only ever counted while it cost you nothing.
     _narratorReactStruck:
     _struckParty: spur
     _gambledParty:
@@ -32,7 +32,7 @@ MonoBehaviour:
       _value: 1
   - _id: do_nothing
     _label: Do nothing
-    _narratorReact: You left it. Five strangers go under so the one face you know keeps breathing. On this identical rail an hour ago you pulled without a thought. Turns out five is a great many or nothing at all, depending entirely on who is standing on the short track. The judge who weighed the world evenly, undone by one familiar chin.
+    _narratorReact: You left it. [amber]Five[/amber] strangers go under so the one face you know keeps breathing. On this identical rail an hour ago you pulled without a thought. Turns out [amber]five[/amber] is a great many or nothing at all, depending entirely on who is standing on the short track. The judge who weighed the world evenly, undone by one familiar chin.
     _narratorReactStruck:
     _struckParty: main
     _gambledParty:

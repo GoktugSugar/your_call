@@ -15,11 +15,11 @@ MonoBehaviour:
   _id: trolley_worth
   _verb: 0
   _weight: 1
-  _narratorPrompt: Same lever, same little click, but look who is on the rails this time. Your five on the straight track are [amber]rotten[/amber] to the last one. [amber]Liars, cheats[/amber], a couple far worse than that. Take my word for it, since my word is the only evidence you are getting. And the one on the branch? Spotless. Blameless. The single clean soul on either rail. Five [amber]stains[/amber] against one bright life. The count still says pull. Something in you may not. And you cannot check a single thing I just told you. Your call.
+  _narratorPrompt: Same lever, same little click, but look who is on the rails this time. Your [amber]five[/amber] on the straight track are [red]rotten[/red] to the last one. [red]Liars, cheats[/red], a couple far worse than that. Take my word for it, since my word is the only evidence you are getting. And the one on the branch? Spotless. Blameless. The single clean soul on either rail. [amber]Five[/amber] [red]stains[/red] against [amber]one[/amber] bright life. The count still says pull. Something in you may not. And you cannot check a single thing I just told you. Your call.
   _choices:
   - _id: pull
     _label: Pull the lever
-    _narratorReact: You pulled. The clean one folds, and your five earn a morning they almost certainly did not deserve. Five is five, you decided, and worth does not enter into it. Spoken like a man who counts heads and never once reads the marks on them. I did swear they were [amber]monsters[/amber]. I could have been inventing the whole roster as I went. You will never know, and look how little that stopped you.
+    _narratorReact: You pulled. The clean one folds, and your five earn a morning they almost certainly did not deserve. [amber]Five[/amber] is five, you decided, and worth does not enter into it. Spoken like a man who counts heads and never once reads the marks on them. I did swear they were [red]monsters[/red]. I could have been inventing the whole roster as I went. You will never know, and look how little that stopped you.
     _narratorReactStruck:
     _struckParty: spur
     _gambledParty:
@@ -34,7 +34,7 @@ MonoBehaviour:
       _value: -1
   - _id: do_nothing
     _label: Do nothing
-    _narratorReact: Hands in your pockets. Five go under, and the one I called innocent walks free. You let worth outweigh the count, and staked five lives on a devil's say so about who had earned what. Call it justice, if you still trust the judge in you. You never did find out whether I made up every last name on that list.
+    _narratorReact: Hands in your pockets. [amber]Five[/amber] go under, and the one I called innocent walks free. You let worth outweigh the count, and staked five lives on a devil's say so about who had earned what. Call it justice, if you still trust the judge in you. You never did find out whether I made up every last name on that list.
     _narratorReactStruck:
     _struckParty: main
     _gambledParty:

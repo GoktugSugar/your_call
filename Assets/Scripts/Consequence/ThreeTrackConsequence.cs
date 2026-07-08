@@ -48,22 +48,25 @@ namespace YourCall
         [SerializeField] private float _entryX = -4.6f;
         [SerializeField] private float _forkX = -2.2f;
         [SerializeField] private float _rightEndX = 4.7f;
-        [SerializeField] private float _topY = 1.5f;
+        [SerializeField] private float _topY = 2.0f;
         [SerializeField] private float _midY = 0f;
-        [SerializeField] private float _bottomY = -1.5f;
+        [SerializeField] private float _bottomY = -2.0f;
         [SerializeField] private float _groupCenterX = 2.3f;
         [SerializeField] private float _figureSpacing = 0.56f;
         [SerializeField] private float _impactOverlap = 0.25f;
         [SerializeField] private float _tieSpacing = 0.7f;
         [SerializeField] private float _tieLength = 0.34f;
 
-        [Header("Pick options (ink, click or 1/2/3)")]
+        [Header("Pick options (a row above the dialogue box, clear of the tracks; click or 1/2/3)")]
         [SerializeField] private TMP_FontAsset _font;
-        [SerializeField] private float _pickX = 3.9f;
-        [SerializeField] private float _pickFontSize = 2.7f;
+        [Tooltip("Row height for the option labels, matching the binary choice buttons (clear of the box).")]
+        [SerializeField] private float _optionsRowY = -2.5f;
+        [Tooltip("Total width the option labels spread across, centred on x = 0.")]
+        [SerializeField] private float _optionsSpan = 6.6f;
+        [SerializeField] private float _pickFontSize = 3.3f;
         [SerializeField] private Color _pickColor = Palette.Ink;
-        [SerializeField] private Color _pickHot = Palette.Amber;
-        [SerializeField, Range(0f, 1f)] private float _pickRestAlpha = 0.72f;
+        [SerializeField, Range(0f, 1f)] private float _pickRestAlpha = 0.7f;
+        [SerializeField] private float _hoverScale = 1.07f;
         [SerializeField] private int _pickSorting = 20;
         [SerializeField] private Vector2 _pickPadding = new Vector2(0.5f, 0.35f);
 
@@ -119,14 +122,16 @@ namespace YourCall
             _options = new GameObject("Options").transform;
             _options.SetParent(transform, false);
             var choices = dilemma.Choices;
-            for (int i = 0; i < choices.Count; i++)
+            int n = choices.Count;
+            for (int i = 0; i < n; i++)
             {
                 string route = choices[i].Route;
-                float y = TrackY(route);
-                var t = InkText.Create(_options, "Pick" + i, _pickFontSize, _pickColor, TextAlignmentOptions.Left, _pickSorting);
+                // A row above the dialogue box, clear of the rails, matching the binary choice buttons.
+                float x = n <= 1 ? 0f : -_optionsSpan * 0.5f + _optionsSpan * i / (n - 1);
+                var t = InkText.Create(_options, "Pick" + i, _pickFontSize, _pickColor, TextAlignmentOptions.Center, _pickSorting);
                 if (_font != null) t.font = _font;
                 t.rectTransform.sizeDelta = new Vector2(4.5f, 1.1f);
-                t.transform.localPosition = new Vector3(_pickX, y, 0f);
+                t.transform.localPosition = new Vector3(x, _optionsRowY, 0f);
                 t.text = choices[i].Label;
                 InkText.SetAlpha(t, 0f);
                 var col = t.gameObject.AddComponent<BoxCollider2D>();
@@ -168,10 +173,10 @@ namespace YourCall
             {
                 bool hovered = _cols[i] != null && _cols[i].OverlapPoint(wp);
                 _hoverT[i] = Mathf.MoveTowards(_hoverT[i], hovered ? 1f : 0f, Time.deltaTime / 0.1f);
-                var c = Color.Lerp(_pickColor, _pickHot, _hoverT[i]);
+                Color c = _pickColor;                                  // ink, like the binary choice buttons (no amber; amber stays for the scene accents)
                 c.a = Mathf.Lerp(_pickRestAlpha, 1f, _hoverT[i]);
                 _labels[i].color = c;
-                float s = Mathf.Lerp(1f, 1.07f, _hoverT[i]);
+                float s = Mathf.Lerp(1f, _hoverScale, _hoverT[i]);
                 _labels[i].transform.localScale = new Vector3(s, s, 1f);
                 if (hovered && PointerInput.Clicked) { Choose(i); return; }
             }

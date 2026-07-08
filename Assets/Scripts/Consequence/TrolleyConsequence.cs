@@ -24,6 +24,10 @@ namespace YourCall
         [SerializeField] private Figure _figurePrefab;
         [Tooltip("Optional: floats a plea over the lone branch figure when the dilemma carries one (the Begging trolley).")]
         [SerializeField] private FloatingFigureText _plea;
+        [Tooltip("Optional: the z-mark prefab instanced onto sleeping figures (The Sleeping).")]
+        [SerializeField] private SleepZ _sleepZPrefab;
+        [Tooltip("Where the z marks sit relative to a sleeping figure (top-right of the head).")]
+        [SerializeField] private Vector2 _sleepZOffset = new Vector2(0.14f, 0.9f);
 
         [Header("Timing")]
         [SerializeField] private float _lightDuration = 1.7f;
@@ -50,14 +54,23 @@ namespace YourCall
             var mainPrefab = dilemma.MainFigurePrefab != null ? dilemma.MainFigurePrefab : _figurePrefab;
             var spurPrefab = dilemma.SpurFigurePrefab != null ? dilemma.SpurFigurePrefab : _figurePrefab;
 
-            foreach (var pos in _track.MainFigurePositions(dilemma.MainFigureCount))
+            var mainPositions = _track.MainFigurePositions(dilemma.MainFigureCount);
+            for (int i = 0; i < mainPositions.Count; i++)
             {
-                var fig = Instantiate(mainPrefab, pos, Quaternion.identity, _figures);
-                if (dilemma.FiguresBranded) fig.Brand();   // the imp's branded wretches, marked by a red outline
+                var fig = Instantiate(mainPrefab, mainPositions[i], Quaternion.identity, _figures);
+                // Red marks the guilty: all of them (Marked Ones), or specific ones (the murderer in The Passenger).
+                if (dilemma.FiguresBranded || In(dilemma.BrandedMainIndices, i)) fig.Brand();
+                if (dilemma.MainAsleep) AttachSleepZ(fig);
                 _main.Add(fig);
             }
-            foreach (var pos in _track.SpurFigurePositions(dilemma.SpurFigureCount))
-                _spur.Add(Instantiate(spurPrefab, pos, Quaternion.identity, _figures));
+            var spurPositions = _track.SpurFigurePositions(dilemma.SpurFigureCount);
+            for (int i = 0; i < spurPositions.Count; i++)
+            {
+                var fig = Instantiate(spurPrefab, spurPositions[i], Quaternion.identity, _figures);
+                if (In(dilemma.BrandedSpurIndices, i)) fig.Brand();   // the cruel man in The Reformed and the Cruel
+                if (dilemma.SpurAsleep) AttachSleepZ(fig);
+                _spur.Add(fig);
+            }
 
             _trolley.transform.position = _track.TrolleyStart;
             _lever.transform.position = _track.LeverPosition;
@@ -125,6 +138,20 @@ namespace YourCall
                 else if (party == "main") list.AddRange(_main);
             }
             return list;
+        }
+
+        private void AttachSleepZ(Figure fig)
+        {
+            if (_sleepZPrefab == null) return;
+            var z = Instantiate(_sleepZPrefab, fig.transform);
+            z.transform.localPosition = new Vector3(_sleepZOffset.x, _sleepZOffset.y, 0f);
+        }
+
+        private static bool In(IReadOnlyList<int> indices, int i)
+        {
+            if (indices == null) return false;
+            for (int k = 0; k < indices.Count; k++) if (indices[k] == i) return true;
+            return false;
         }
 
         private float TravelFor(DilemmaWeight weight)

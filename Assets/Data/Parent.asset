@@ -15,11 +15,11 @@ MonoBehaviour:
   _id: parent
   _verb: 0
   _weight: 1
-  _narratorPrompt: On the branch, one person with two small children at home, waiting up, listening for the door. On the straight track, two grown strangers, nobody depending on either of them, nobody who comes apart if they stop. The lever picks. Two whole lives, or the one life a household is built around. The count says one thing. A quiet house at bedtime says another. Your call.
+  _narratorPrompt: On the branch, one person with two small children at home, waiting up, listening for the door. On the straight track, [amber]two[/amber] grown strangers, nobody depending on either of them, nobody who comes apart if they stop. The lever picks. [amber]Two[/amber] whole lives, or the [amber]one[/amber] life a household is built around. The count says one thing. A quiet house at bedtime says another. Your call.
   _choices:
   - _id: pull
     _label: Pull the lever
-    _narratorReact: Pulled. The parent folds, and two strangers nobody was waiting up for keep going. Two is more than one, you ruled, and the children can learn what a doorway feels like when it stops opening. All very rational. I am sure the little ones will treasure the arithmetic.
+    _narratorReact: Pulled. The parent [red]folds[/red], and two strangers nobody was waiting up for keep going. [amber]Two[/amber] is more than [amber]one[/amber], you ruled, and the children can learn what a doorway feels like when it stops opening. All very rational. I am sure the little ones will treasure the arithmetic.
     _narratorReactStruck:
     _struckParty: spur
     _gambledParty:
@@ -32,7 +32,7 @@ MonoBehaviour:
       _value: 1
   - _id: do_nothing
     _label: Do nothing
-    _narratorReact: You left it. Two strangers go under so one household keeps its evenings. You let a headcount lose to a bedtime story. Perhaps that is tender of you. Perhaps you simply pictured the crying and flinched. Either way, two people you will never once imagine paid for the one you could.
+    _narratorReact: You left it. [amber]Two[/amber] strangers go under so one household keeps its evenings. You let a headcount lose to a bedtime story. Perhaps that is tender of you. Perhaps you simply pictured the crying and flinched. Either way, two people you will never once imagine paid for the [amber]one[/amber] you could.
     _narratorReactStruck:
     _struckParty: main
     _gambledParty:
