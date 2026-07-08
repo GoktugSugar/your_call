@@ -15,40 +15,41 @@ MonoBehaviour:
   _id: parent
   _verb: 0
   _weight: 1
-  _narratorPrompt: On the branch, one person with two small children at home, waiting up, listening for the door. On the straight track, [amber]two[/amber] grown strangers, nobody depending on either of them, nobody who comes apart if they stop. The lever picks. [amber]Two[/amber] whole lives, or the [amber]one[/amber] life a household is built around. The count says one thing. A quiet house at bedtime says another. Your call.
+  _narratorPrompt: Straight ahead, one person with two small children at home, waiting up, listening for the door. Over on the branch, [amber]two[/amber] old ones, well into their last few years, with nobody left who waits up for either. Leave the lever and the parent goes under. Pull, and the cart swings at the two elderly instead. [amber]Two[/amber] lives nearly spent, or the [amber]one[/amber] a whole household is built around. The count says one thing. A quiet house at bedtime says another. Your call.
   _choices:
   - _id: pull
     _label: Pull the lever
-    _narratorReact: Pulled. The parent [red]folds[/red], and two strangers nobody was waiting up for keep going. [amber]Two[/amber] is more than [amber]one[/amber], you ruled, and the children can learn what a doorway feels like when it stops opening. All very rational. I am sure the little ones will treasure the arithmetic.
+    _narratorReact: Pulled. The two old ones [red]fold[/red], and the parent goes home to tuck in the children who will never know how close it ran. [amber]Two[/amber] lives for [amber]one[/amber], and you spent the pair with the fewest years left to keep the one with a household hanging off it. Sensible, I suppose. The old take up so much room and give back so little. I did not say that. You did, with your hand on the lever.
     _narratorReactStruck:
     _struckParty: spur
     _gambledParty:
     _route: spur
     _diverts: 1
-    _seedVotes: 55
+    _seedVotes: 53
     _endsGame: 0
     _profileImpact:
     - _axis: 0
-      _value: 1
+      _value: -1
   - _id: do_nothing
     _label: Do nothing
-    _narratorReact: You left it. [amber]Two[/amber] strangers go under so one household keeps its evenings. You let a headcount lose to a bedtime story. Perhaps that is tender of you. Perhaps you simply pictured the crying and flinched. Either way, two people you will never once imagine paid for the [amber]one[/amber] you could.
+    _narratorReact: You left it. The parent [red]folds[/red] under the wheels, and two old strangers get a little more of the evening. Somewhere a couple of children are still listening for a door that has stopped opening. [amber]Two[/amber] long lives over the [amber]one[/amber] that still had a family hung on it. The arithmetic is on your side. The bedtime is not.
     _narratorReactStruck:
     _struckParty: main
     _gambledParty:
     _route: straight
     _diverts: 0
-    _seedVotes: 45
+    _seedVotes: 47
     _endsGame: 0
     _profileImpact:
     - _axis: 0
-      _value: -1
-  _mainFigureCount: 2
-  _spurFigureCount: 1
+      _value: 1
+  _mainFigureCount: 1
+  _spurFigureCount: 2
   _figuresBranded: 0
   _mainFigurePrefab: {fileID: 0}
-  _spurFigurePrefab: {fileID: 0}
-  _spurPlea: Please. My children are waiting up for me.
+  _spurFigurePrefab: {fileID: 1666028741476117448, guid: 7834943787fa4952ae4d79d5fa8acb39, type: 3}
+  _spurPlea:
+  _mainPlea: Please. My children are waiting up for me.
   _statsHeading: how others chose
   _roomBlueFraction: 0.43
   _crowdThreshold: 0.5

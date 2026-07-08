@@ -15,7 +15,7 @@ MonoBehaviour:
   _id: warmup_flight
   _verb: 0
   _weight: 0
-  _narratorPrompt: Let us warm up. Nothing on the line, nobody dies, you have my word, for whatever that is worth down here. One gift, yours to keep forever. Would you rather be able to fly, or to move through the world completely unseen. Do not overthink it. I will know if you lie.
+  _narratorPrompt: Let us warm up. Nothing on the line, nobody dies, you have my word, for whatever that is worth down here. One gift, yours to keep forever. Would you rather be able to fly wherever you please, or to be strong enough to lift anything that ever stood in your way. Do not overthink it. I will know if you lie.
   _choices:
   - _id: fly
     _label: Fly
@@ -25,20 +25,22 @@ MonoBehaviour:
     _gambledParty:
     _route: straight
     _diverts: 0
-    _seedVotes: 55
+    _seedVotes: 57
+    _endsGame: 0
     _profileImpact: []
-  - _id: invisible
-    _label: Go unseen
-    _narratorReact: Unseen. You would rather slip out of the room than command it. Curious, from a man who spent his days being looked up at. We will find out what else you would rather hide.
+  - _id: strength
+    _label: Super strength
+    _narratorReact: Strength. You would rather force the world than float above it. A man who spent his days with the power to make people do as they were told, now reaching for the kind you can feel in your hands. We will find out what you would most like to break.
     _narratorReactStruck:
     _struckParty:
     _gambledParty:
     _route: straight
     _diverts: 0
-    _seedVotes: 45
+    _seedVotes: 43
+    _endsGame: 0
     _profileImpact: []
   _figuresBranded: 0
   _statsHeading: how others chose
-  _crowdSafeFraction: 0.43
+  _roomBlueFraction: 0.43
   _crowdThreshold: 0.5
   _thresholdLabel: the line

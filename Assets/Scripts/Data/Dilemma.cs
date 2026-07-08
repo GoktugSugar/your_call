@@ -46,6 +46,8 @@ namespace YourCall
         [SerializeField] private Figure _spurFigurePrefab;
         [Tooltip("Optional: a short plea floated in ink over the lone branch figure (the Begging trolley). Empty shows none.")]
         [SerializeField, TextArea] private string _spurPlea;
+        [Tooltip("Optional: a short plea floated in ink over the lone main-track figure (the Parent, once the parent sits on the default track). Empty shows none.")]
+        [SerializeField, TextArea] private string _mainPlea;
 
         [Header("Aftermath stats")]
         [SerializeField] private string _statsHeading = "how others chose";
@@ -76,6 +78,7 @@ namespace YourCall
         public Figure MainFigurePrefab => _mainFigurePrefab;
         public Figure SpurFigurePrefab => _spurFigurePrefab;
         public string SpurPlea => _spurPlea;
+        public string MainPlea => _mainPlea;
         public string StatsHeading => _statsHeading;
         public float RoomBlueFraction => _roomBlueFraction;
         public float CrowdThreshold => _crowdThreshold;

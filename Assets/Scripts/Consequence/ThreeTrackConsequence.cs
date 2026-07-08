@@ -27,7 +27,7 @@ namespace YourCall
 
         [Header("Tracks: top / middle / bottom")]
         [SerializeField] private Figure _topPrefab;
-        [SerializeField] private int _topCount = 1;
+        [SerializeField] private int _topCount = 2;
         [SerializeField] private float _topScale = 0.62f;
         [SerializeField] private Figure _midPrefab;
         [SerializeField] private int _midCount = 1;

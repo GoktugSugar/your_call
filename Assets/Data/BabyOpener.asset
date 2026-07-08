@@ -15,35 +15,35 @@ MonoBehaviour:
   _id: baby_opener
   _verb: 0
   _weight: 2
-  _narratorPrompt: Let us start gentle. A trolley, off its leash, because someone up there has a sense of humour and it is not me. On the straight track, a baby. Chubby, useless, has done nothing for anyone and knows nothing about trolleys. On the branch, [amber]one[/amber] grown man, the forgettable sort, the kind you used to process by the dozen from up on your bench. The lever decides who the morning keeps. Take your time. Pretend it is hard. Your call.
+  _narratorPrompt: Let us start gentle. A trolley, off its leash, because someone up there has a sense of humour and it is not me. Straight ahead, where it is already rolling, [amber]one[/amber] grown man, the forgettable sort, the kind you used to process by the dozen from up on your bench. Over on the branch, a baby. Chubby, useless, has done nothing for anyone and knows nothing about trolleys. Leave the lever and the man goes under. Throw it, and the cart swings onto the branch instead. Take your time. Pretend it is hard. Your call.
   _choices:
   - _id: pull
     _label: Pull the lever
-    _narratorReact: There it goes. The man [red]folds[/red], the baby carries on drooling, spared by a stranger it will never thank. How bold of you, taking the infant's side. Everyone takes the infant's side. It is the single most predictable thing a soul can do, and you did it looking rather pleased with yourself.
+    _narratorReact: What. What the fuck. It was a baby. I gave you a grown man rolling straight to his end and a baby sat safe on the branch, and you reached out and threw the lever to swing the cart onto the child. On purpose. With your hand. No. I am not doing this. I sat here ready to be delighted by you, and this is what you are. You are not a puzzle. You are a [red]monster[/red] with a gavel. I am done. Find yourself another devil. I quit.
     _narratorReactStruck:
     _struckParty: spur
     _gambledParty:
     _route: spur
     _diverts: 1
-    _seedVotes: 96
-    _endsGame: 0
+    _seedVotes: 4
+    _endsGame: 1
     _profileImpact: []
   - _id: do_nothing
     _label: Do nothing
-    _narratorReact: What. What the fuck. It was a baby. I put a baby in front of you, the easiest thing I have, the one nobody on any rail gets wrong, and you folded your hands and let it go under. No. I am not doing this. I sat here ready to be delighted by you, and this is what you are. You are not a puzzle. You are a [red]monster[/red] with a gavel. I am done. Find yourself another devil. I quit.
+    _narratorReact: Hands in your pockets. The man [red]folds[/red] under the wheels, the baby carries on drooling, spared by a stranger who could not be troubled to lift a finger. Everyone spares the baby. It is the single most predictable thing a soul can do, and you managed it without so much as moving. Bravo.
     _narratorReactStruck:
     _struckParty: main
     _gambledParty:
     _route: straight
     _diverts: 0
-    _seedVotes: 4
-    _endsGame: 1
+    _seedVotes: 96
+    _endsGame: 0
     _profileImpact: []
   _mainFigureCount: 1
   _spurFigureCount: 1
   _figuresBranded: 0
-  _mainFigurePrefab: {fileID: 1666028741476117448, guid: 31de18688628448a8b0a67efd3bcb9de, type: 3}
-  _spurFigurePrefab: {fileID: 0}
+  _mainFigurePrefab: {fileID: 0}
+  _spurFigurePrefab: {fileID: 1666028741476117448, guid: 31de18688628448a8b0a67efd3bcb9de, type: 3}
   _spurPlea:
   _statsHeading: how others chose
   _roomBlueFraction: 0.43

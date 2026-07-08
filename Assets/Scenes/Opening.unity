@@ -2464,7 +2464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.ThreeTrackConsequence
   _trolley: {fileID: 696127456}
   _topPrefab: {fileID: 1666028741476117448, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
-  _topCount: 1
+  _topCount: 2
   _topScale: 0.62
   _midPrefab: {fileID: 1666028741476117448, guid: dd6309a157e6476bbcc4b7eb25e94fa4, type: 3}
   _midCount: 1

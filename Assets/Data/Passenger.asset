@@ -15,31 +15,16 @@ MonoBehaviour:
   _id: passenger
   _verb: 0
   _weight: 1
-  _narratorPrompt: New track, same lever, worse company. On the straight run, two men side by side. One of them put a knife in someone once and paid for it with years. The other never did a thing except stand next to the wrong man on the wrong morning. On the branch, one more innocent, clean, alone. Straight, and the [red]killer[/red] dies and takes a blameless man with him. Branch, and one spotless soul dies so the [red]murderer[/red] strolls off. [amber]Two[/amber] for [amber]one[/amber], and one of the two had it coming. Sort of. Your call.
+  _narratorPrompt: New track, same lever, worse company. Straight ahead, one man alone, clean, guilty of nothing but standing on a rail this morning. Over on the branch, two roped together: a man who put a [red]knife[/red] in someone once and paid with years, and a stranger whose only sin was standing beside him. Leave it, and the lone innocent goes under. Pull, and the cart takes the pair, the [red]killer[/red] and the blameless man chained to him. [amber]Two[/amber] for [amber]one[/amber], and one of the two had it coming. Sort of. Your call.
   _choices:
   - _id: pull
     _label: Pull the lever
-    _narratorReact: You pulled. The lone clean one folds, and the [red]killer[/red] wanders off with the stranger he was standing beside, both still breathing. You spared a [red]murderer[/red] to keep your headcount neat. [amber]One[/amber] is fewer than [amber]two[/amber], you said, and never mind whose name sat on which charge sheet. Very efficient. Very you.
+    _narratorReact: You pulled. [amber]Two[/amber] go under, the [red]killer[/red] and the poor soul roped to him, and the lone innocent on the straight walks off untouched. You spent an extra clean life to be sure the [red]guilty[/red] one did not slip away. Justice, you will call it. It cost a blameless man to buy, but the books balance and the [red]murderer[/red] does not see another morning. Tidy.
     _narratorReactStruck:
     _struckParty: spur
     _gambledParty:
     _route: spur
     _diverts: 1
-    _seedVotes: 43
-    _endsGame: 0
-    _profileImpact:
-    - _axis: 0
-      _value: 1
-    - _axis: 1
-      _value: -1
-  - _id: do_nothing
-    _label: Do nothing
-    _narratorReact: You left it. [amber]Two[/amber] go under, the [red]killer[/red] and the poor soul beside him, and the spotless stranger on the branch lives. You let an innocent man die to be certain a [red]guilty[/red] one did too. Call it justice if it settles you. From here it looked a lot like bookkeeping with a body count.
-    _narratorReactStruck:
-    _struckParty: main
-    _gambledParty:
-    _route: straight
-    _diverts: 0
     _seedVotes: 57
     _endsGame: 0
     _profileImpact:
@@ -47,10 +32,25 @@ MonoBehaviour:
       _value: -1
     - _axis: 1
       _value: 1
-  _mainFigureCount: 2
-  _spurFigureCount: 1
+  - _id: do_nothing
+    _label: Do nothing
+    _narratorReact: You left it. The lone clean one [red]folds[/red], and the [red]killer[/red] strolls off with the stranger roped to him, both still breathing. You let one innocent go under so a [red]murderer[/red] could keep his morning, because [amber]one[/amber] was a smaller number than [amber]two[/amber] and the maths never asks who has a body behind them. Efficient. Very you.
+    _narratorReactStruck:
+    _struckParty: main
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 43
+    _endsGame: 0
+    _profileImpact:
+    - _axis: 0
+      _value: 1
+    - _axis: 1
+      _value: -1
+  _mainFigureCount: 1
+  _spurFigureCount: 2
   _figuresBranded: 0
-  _brandedMainIndices:
+  _brandedSpurIndices:
   - 0
   _mainFigurePrefab: {fileID: 0}
   _spurFigurePrefab: {fileID: 0}

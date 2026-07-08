@@ -89,11 +89,14 @@ namespace YourCall
             _lever.ResetSwitch();
             _lever.Arm(false);
 
-            // The lone soul's plea, floated in ink over them (the Begging trolley); none otherwise.
+            // A soul's plea, floated in ink over them: the lone branch soul (the Begging trolley) or the
+            // lone main soul (the Parent, whose parent sits on the default track); none otherwise.
             if (_plea != null)
             {
                 if (!string.IsNullOrEmpty(dilemma.SpurPlea) && _spur.Count > 0)
                     _plea.Show(dilemma.SpurPlea, _track.SpurFigurePositions(dilemma.SpurFigureCount)[0]);
+                else if (!string.IsNullOrEmpty(dilemma.MainPlea) && _main.Count > 0)
+                    _plea.Show(dilemma.MainPlea, _track.MainFigurePositions(dilemma.MainFigureCount)[0]);
                 else
                     _plea.Hide();
             }
