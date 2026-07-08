@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace YourCall
 {
@@ -29,6 +30,9 @@ namespace YourCall
         [Tooltip("Dissolve to black once the last beat finishes.")]
         [SerializeField] private bool _fadeToBlackAtEnd = true;
         [SerializeField] private float _endFade = 1.6f;
+        [Tooltip("Optional next chapter to load once this sequence ends (for example the trolley chapter " +
+                 "flowing into the buttons chapter). Empty holds on the final beat, as before.")]
+        [SerializeField] private string _nextScene = "";
 
         [Tooltip("Dev only: log each beat as it starts. Never shown to the player.")]
         [SerializeField] private bool _logBeats = false;
@@ -52,6 +56,10 @@ namespace YourCall
             }
             if (_fadeToBlackAtEnd && _fade != null)
                 yield return StartCoroutine(_fade.FadeTo(1f, _endFade));
+
+            // Optional chapter hand-off: the trolley chapter can flow into the buttons chapter.
+            if (!string.IsNullOrEmpty(_nextScene))
+                SceneManager.LoadScene(_nextScene);
         }
     }
 }
