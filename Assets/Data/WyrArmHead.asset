@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ecd1a615a340f4c9104ca01624d106, type: 3}
+  m_Name: WyrArmHead
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Dilemma
+  _id: wyr_arm_head
+  _verb: 0
+  _weight: 0
+  _narratorPrompt: 'One free upgrade to the body, permanent, no refunds. Would you
+    rather grow a fully working [amber]third arm[/amber], or a second, fully awake
+    [amber]head[/amber] that thinks its own thoughts and shares your neck. Choose your
+    new self.'
+  _choices:
+  - _id: third_arm
+    _label: A third arm
+    _narratorReact: The third arm. Practical. You want to do more, hold more, reach
+      further, and you would bolt an extra limb on without a second thought. A doer.
+      Terrifying at dinner parties, but a doer.
+    _narratorReactStruck:
+    _struckParty:
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 69
+    _endsGame: 0
+    _profileImpact: []
+  - _id: second_head
+    _label: A second head
+    _narratorReact: The second head. Bold. You would rather never be alone with your
+      thoughts again, even if the company is another you with opinions. Some people
+      cannot bear the quiet in their own skull. Now you never would.
+    _narratorReactStruck:
+    _struckParty:
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 31
+    _endsGame: 0
+    _profileImpact: []
+  _figuresBranded: 0
+  _statsHeading: how others chose
+  _roomBlueFraction: 0.43
+  _crowdThreshold: 0.5
+  _thresholdLabel: the line
+  _optionADoodle: 11
+  _optionBDoodle: 12

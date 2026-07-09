@@ -1397,6 +1397,8 @@ Transform:
   - {fileID: 1578260627}
   - {fileID: 1639526227}
   - {fileID: 717569919}
+  - {fileID: 1846237673}
+  - {fileID: 1618351471}
   m_Father: {fileID: 1626293926}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1208405947
@@ -2140,6 +2142,76 @@ MonoBehaviour:
   _voiceFade: 0.3
   _statsFade: 0.5
   _statsHideFade: 0.6
+--- !u!1 &1618351470
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1618351471}
+  - component: {fileID: 1618351472}
+  m_Layer: 0
+  m_Name: W_ArmHead_WYR
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1618351471
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1618351470}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1618351472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1618351470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa1dc2dcf3f2f7b45bee8ac9ba59b270, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.WouldYouRatherBeat
+  _note: 
+  _dilemma: {fileID: 11400000, guid: b5100a1b6c49bb84eb4d41f9a7486a08, type: 2}
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _sideX: 2.7
+  _doodleY: 0.7
+  _doodleScale: 1.05
+  _labelY: -0.75
+  _labelSize: 2.8
+  _sorting: 14
+  _pickHalfExtents: {x: 1.35, y: 1.7}
+  _showOr: 1
+  _orY: 0.45
+  _doodleFadeIn: 0.35
+  _doodleFadeOut: 0.35
+  _hoverScale: 1.08
+  _restLabelAlpha: 0.8
+  _flourishColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _flourishRadius: 0.7
+  _flourishStrokes: 9
+  _flourishWidth: 0.05
+  _flourishDuration: 0.6
+  _advanceLockout: 0.3
+  _reactHold: 0.4
+  _statsFade: 0.5
+  _statsHideFade: 0.6
 --- !u!1 &1626293924
 GameObject:
   m_ObjectHideFlags: 0
@@ -2186,9 +2258,11 @@ MonoBehaviour:
   - {fileID: 1841324290}
   - {fileID: 753976752}
   - {fileID: 1208405949}
+  - {fileID: 1846237674}
   - {fileID: 1539104737}
   - {fileID: 1168867547}
   - {fileID: 1577463769}
+  - {fileID: 1618351472}
   - {fileID: 717569920}
   - {fileID: 1578260628}
   - {fileID: 1966462613}
@@ -2657,6 +2731,76 @@ MonoBehaviour:
   _advanceLockout: 0.3
   _preBreakHold: 0.6
   _impFade: 0.9
+--- !u!1 &1846237672
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1846237673}
+  - component: {fileID: 1846237674}
+  m_Layer: 0
+  m_Name: W_ColdHot_WYR
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1846237673
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846237672}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1846237674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846237672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa1dc2dcf3f2f7b45bee8ac9ba59b270, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.WouldYouRatherBeat
+  _note: 
+  _dilemma: {fileID: 11400000, guid: d728b15366d658d439d7e20a928a0381, type: 2}
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _sideX: 2.7
+  _doodleY: 0.7
+  _doodleScale: 1.05
+  _labelY: -0.75
+  _labelSize: 2.8
+  _sorting: 14
+  _pickHalfExtents: {x: 1.35, y: 1.7}
+  _showOr: 1
+  _orY: 0.45
+  _doodleFadeIn: 0.35
+  _doodleFadeOut: 0.35
+  _hoverScale: 1.08
+  _restLabelAlpha: 0.8
+  _flourishColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _flourishRadius: 0.7
+  _flourishStrokes: 9
+  _flourishWidth: 0.05
+  _flourishDuration: 0.6
+  _advanceLockout: 0.3
+  _reactHold: 0.4
+  _statsFade: 0.5
+  _statsHideFade: 0.6
 --- !u!1 &1966462612
 GameObject:
   m_ObjectHideFlags: 0

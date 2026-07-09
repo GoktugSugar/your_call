@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ecd1a615a340f4c9104ca01624d106, type: 3}
+  m_Name: WyrShitIcecream
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Dilemma
+  _id: wyr_shit_icecream
+  _verb: 0
+  _weight: 0
+  _narratorPrompt: 'Here is one I ask everyone, and nobody answers cleanly. Would
+    you rather eat a [amber]shit[/amber] that tastes exactly like ice cream, or an
+    [amber]ice cream[/amber] that tastes exactly like shit. Same swirl either way.
+    Choose.'
+  _choices:
+  - _id: tasty_shit
+    _label: The delicious shit
+    _narratorReact: The shit that tastes of ice cream. You will happily swallow something
+      vile so long as the experience is sweet. I suspect that explains a great deal
+      about how you lived. Down the hatch.
+    _narratorReactStruck:
+    _struckParty:
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 56
+    _endsGame: 0
+    _profileImpact: []
+  - _id: foul_icecream
+    _label: The vile ice cream
+    _narratorReact: The ice cream that tastes of shit. You would rather the thing
+      be lovely and the moment be misery. A purist. You want the label to be right
+      even as it ruins your day. Fascinating little soul.
+    _narratorReactStruck:
+    _struckParty:
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 44
+    _endsGame: 0
+    _profileImpact: []
+  _figuresBranded: 0
+  _statsHeading: how others chose
+  _roomBlueFraction: 0.43
+  _crowdThreshold: 0.5
+  _thresholdLabel: the line
+  _optionADoodle: 1
+  _optionBDoodle: 2

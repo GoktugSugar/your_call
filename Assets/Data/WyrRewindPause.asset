@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ecd1a615a340f4c9104ca01624d106, type: 3}
+  m_Name: WyrRewindPause
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Dilemma
+  _id: wyr_rewind_pause
+  _verb: 0
+  _weight: 0
+  _narratorPrompt: 'A little control panel for your one and only life. You get exactly
+    one button, forever. Would you rather have a [amber]rewind[/amber] button, to go
+    back and live a moment again, or a [amber]pause[/amber] button, to stop the whole
+    world and stand in the quiet as long as you like. Pick your button.'
+  _choices:
+  - _id: rewind
+    _label: The rewind button
+    _narratorReact: Rewind. Of course. You want the do over, the second attempt, the
+      ruling overturned. A man who spent his life passing verdicts would give anything
+      to appeal his own. It does not work like that, but I admire the reach.
+    _narratorReactStruck:
+    _struckParty:
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 61
+    _endsGame: 0
+    _profileImpact: []
+  - _id: pause
+    _label: The pause button
+    _narratorReact: Pause. You would not change a thing, you just want a moment to
+      breathe before it all keeps happening to you. Tired, then. Not sorry, just tired.
+      I can work with tired.
+    _narratorReactStruck:
+    _struckParty:
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 39
+    _endsGame: 0
+    _profileImpact: []
+  _figuresBranded: 0
+  _statsHeading: how others chose
+  _roomBlueFraction: 0.43
+  _crowdThreshold: 0.5
+  _thresholdLabel: the line
+  _optionADoodle: 7
+  _optionBDoodle: 8

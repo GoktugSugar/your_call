@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ecd1a615a340f4c9104ca01624d106, type: 3}
+  m_Name: WyrColdHot
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Dilemma
+  _id: wyr_cold_hot
+  _verb: 0
+  _weight: 0
+  _narratorPrompt: 'For the rest of forever, your body settles on one wrong temperature
+    and stays there. Would you rather be [amber]always a little too cold[/amber], the
+    kind no jumper quite fixes, or [amber]always a little too hot[/amber], the kind
+    no open window quite cools. One or the other. Pick.'
+  _choices:
+  - _id: cold
+    _label: Always too cold
+    _narratorReact: Too cold, always. You would rather shiver and keep your wits than
+      sweat and lose them. A cold man, choosing the cold. There is a joke in there
+      and I will not insult you by making it.
+    _narratorReactStruck:
+    _struckParty:
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 48
+    _endsGame: 0
+    _profileImpact: []
+  - _id: hot
+    _label: Always too hot
+    _narratorReact: Too hot, always. You would take the sticky misery over the clean
+      chill. Something in you would rather be uncomfortable and warm than comfortable
+      and cool. Noted, and slightly judged, but only slightly.
+    _narratorReactStruck:
+    _struckParty:
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 52
+    _endsGame: 0
+    _profileImpact: []
+  _figuresBranded: 0
+  _statsHeading: how others chose
+  _roomBlueFraction: 0.43
+  _crowdThreshold: 0.5
+  _thresholdLabel: the line
+  _optionADoodle: 9
+  _optionBDoodle: 10

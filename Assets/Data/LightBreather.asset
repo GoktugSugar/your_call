@@ -42,3 +42,5 @@ MonoBehaviour:
   _crowdSafeFraction: 0.43
   _crowdThreshold: 0.5
   _thresholdLabel: the line
+  _optionADoodle: 5
+  _optionBDoodle: 6

@@ -44,3 +44,5 @@ MonoBehaviour:
   _roomBlueFraction: 0.43
   _crowdThreshold: 0.5
   _thresholdLabel: the line
+  _optionADoodle: 3
+  _optionBDoodle: 4

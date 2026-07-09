@@ -65,6 +65,12 @@ namespace YourCall
                  "reliable run to run: that share is resolved as a coin toss each play, so the gamble is a real gamble. See CoordinationGambleResolver.")]
         [SerializeField, Range(0f, 1f)] private float _crowdRandomFraction = 0f;
 
+        [Header("Would-you-rather doodles (the illustrated light breather; ignored by other verbs)")]
+        [Tooltip("Small ink doodle illustrating option A (the first choice). None draws nothing. See InkDoodle / WouldYouRatherBeat.")]
+        [SerializeField] private DoodleKind _optionADoodle = DoodleKind.None;
+        [Tooltip("Small ink doodle illustrating option B (the second choice).")]
+        [SerializeField] private DoodleKind _optionBDoodle = DoodleKind.None;
+
         public string Id => _id;
         public DilemmaVerb Verb => _verb;
         public DilemmaWeight Weight => _weight;
@@ -88,5 +94,7 @@ namespace YourCall
         public float CrowdThreshold => _crowdThreshold;
         public string ThresholdLabel => _thresholdLabel;
         public float CrowdRandomFraction => _crowdRandomFraction;
+        public DoodleKind OptionADoodle => _optionADoodle;
+        public DoodleKind OptionBDoodle => _optionBDoodle;
     }
 }
