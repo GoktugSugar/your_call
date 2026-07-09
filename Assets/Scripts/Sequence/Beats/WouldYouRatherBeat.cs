@@ -143,9 +143,9 @@ namespace YourCall
         private void BuildOptions()
         {
             _doodleA = InkDoodle.Create(transform, "DoodleA", new Vector3(-_sideX, _doodleY, 0f), _doodleScale,
-                _dilemma.OptionADoodle, _inkMaterial, Palette.Ink, _flourishWidth, _sorting);
+                _dilemma.OptionADoodle, _inkMaterial, OutlineColor(_dilemma.OptionAOutline, _dilemma.OptionADoodle), _flourishWidth, _sorting);
             _doodleB = InkDoodle.Create(transform, "DoodleB", new Vector3(_sideX, _doodleY, 0f), _doodleScale,
-                _dilemma.OptionBDoodle, _inkMaterial, Palette.Ink, _flourishWidth, _sorting);
+                _dilemma.OptionBDoodle, _inkMaterial, OutlineColor(_dilemma.OptionBOutline, _dilemma.OptionBDoodle), _flourishWidth, _sorting);
 
             _labelA = MakeLabel("LabelA", new Vector3(-_sideX, _labelY, 0f), _dilemma.Choices[0].Label);
             _labelB = MakeLabel("LabelB", new Vector3(_sideX, _labelY, 0f), _dilemma.Choices[1].Label);
@@ -168,6 +168,11 @@ namespace YourCall
             InkText.SetAlpha(t, 0f);
             return t;
         }
+
+        // The doodle's outline colour: the per-question override if one is set (alpha > 0), else the
+        // doodle's own matched colour. A coloured ink line, not a fill (see docs/art-and-ui.md).
+        private static Color OutlineColor(Color over, DoodleKind kind)
+            => over.a > 0f ? over : InkDoodle.DefaultColorFor(kind);
 
         private int HoverSide()
         {

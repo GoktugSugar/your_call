@@ -103,7 +103,7 @@ namespace YourCall
             _button.Arm(true);
             ctx.Choices.Present(_pressLabel, _leaveLabel);
             try { while (_picked < 0) yield return null; }
-            finally { ctx.Choices.Chosen -= OnPicked; _button.Pressed -= OnButtonPressed; _button.Arm(false); }
+            finally { ctx.Choices.Chosen -= OnPicked; ctx.Choices.Dismiss(); _button.Pressed -= OnButtonPressed; _button.Arm(false); }
             bool pressed = _picked == 0;
 
             // Nothing overtly mechanical: the imp mocks either way, cryptic, never confirming.

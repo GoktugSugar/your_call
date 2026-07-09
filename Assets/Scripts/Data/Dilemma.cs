@@ -70,6 +70,10 @@ namespace YourCall
         [SerializeField] private DoodleKind _optionADoodle = DoodleKind.None;
         [Tooltip("Small ink doodle illustrating option B (the second choice).")]
         [SerializeField] private DoodleKind _optionBDoodle = DoodleKind.None;
+        [Tooltip("Optional outline colour for option A's doodle. Alpha 0 (default) uses the doodle's own matched colour (InkDoodle.DefaultColorFor). Set a colour to override per question.")]
+        [SerializeField] private Color _optionAOutline = new Color(0f, 0f, 0f, 0f);
+        [Tooltip("Optional outline colour for option B's doodle. Alpha 0 (default) uses the doodle's own matched colour.")]
+        [SerializeField] private Color _optionBOutline = new Color(0f, 0f, 0f, 0f);
 
         public string Id => _id;
         public DilemmaVerb Verb => _verb;
@@ -96,5 +100,7 @@ namespace YourCall
         public float CrowdRandomFraction => _crowdRandomFraction;
         public DoodleKind OptionADoodle => _optionADoodle;
         public DoodleKind OptionBDoodle => _optionBDoodle;
+        public Color OptionAOutline => _optionAOutline;
+        public Color OptionBOutline => _optionBOutline;
     }
 }

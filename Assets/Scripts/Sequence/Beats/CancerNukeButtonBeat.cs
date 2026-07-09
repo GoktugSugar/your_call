@@ -16,14 +16,13 @@ namespace YourCall
     ///
     /// Refuse and the imp mocks the squeamishness (all those lives, too delicate to spend a place you
     /// will never visit), the beat ends, and the run continues. Press and a hand-drawn ink WORLD MAP
-    /// fades in, a red PIN drops from the top and lands on a genuinely random country, its accurate
-    /// NAME and (approximate, bundled) POPULATION read out, and a small ink nuke BLAST doodles onto
-    /// that spot in amber and red. Then the imp reacts to wherever it landed, delighting in it (needling
-    /// a tiny country like the Vatican, or a giant like China, and a special jab if it is the player's
-    /// own). Choice independent throughout, never grading.
+    /// fades in, a small red PIN drops from the top and lands on a genuinely random country's LANDMASS,
+    /// and its accurate NAME and (approximate, bundled) POPULATION read out below the map. Then the imp
+    /// reacts to wherever it landed, delighting in it (needling a tiny country like the Vatican, or a
+    /// giant like China, and a special jab if it is the player's own). Choice independent, never grading.
     ///
-    /// Self contained (one script, one job): it owns the button, the map, the pin, the readout, and the
-    /// blast, all built at runtime from ink strokes, and reuses the shared choice affordance, the imp,
+    /// Self contained (one script, one job): it owns the button, the map, the pin, and the readout, all
+    /// built at runtime from ink strokes, and reuses the shared choice affordance, the imp,
     /// the StatsView (a seeded press vs refuse split), and the silent Profile. The country roster, the
     /// pin positions, and every timing are exposed data / [SerializeField]. The populations are
     /// APPROXIMATE bundled placeholders, not live data. DilemmaStage/DilemmaRunner stay generic; this is
@@ -86,16 +85,6 @@ namespace YourCall
         [Tooltip("Suffix after the population number, e.g. '410,000,000 people'. No dashes.")]
         [SerializeField] private string _popSuffix = " people, give or take";
 
-        [Header("The nuke blast (ink doodle, amber and red)")]
-        [SerializeField] private Color _blastColor = Palette.Amber;
-        [SerializeField] private Color _blastCoreColor = Palette.InkRed;
-        [SerializeField] private float _blastScale = 1.15f;
-        [SerializeField] private float _blastLineWidth = 0.06f;
-        [SerializeField] private int _blastSorting = 20;
-        [SerializeField] private float _blastFlash = 0.22f;
-        [SerializeField] private float _blastRise = 0.5f;
-        [SerializeField] private float _blastHold = 0.6f;
-
         [Header("Crowd split (seeded; press vs refuse)")]
         [SerializeField] private int _pressSeed = 71;
         [SerializeField] private int _refuseSeed = 29;
@@ -131,7 +120,7 @@ namespace YourCall
             "[amber]{0}[/amber]. [amber]{1}[/amber] souls, and none of them saw it coming, because how could they. You cured a disease and mislaid a country. I did say it was random.";
         [Tooltip("Reaction for a LARGE country. {0}=name, {1}=population.")]
         [SerializeField, TextArea(2, 4)] private string _largeJab =
-            "Oh, [amber]{0}[/amber]. [amber]{1}[/amber] people, gone in one satisfying little mushroom. A whole real country for a clean scan. Bold trade. I would never have dared, and you did it with your thumb.";
+            "Oh, [amber]{0}[/amber]. [amber]{1}[/amber] people, and all it took was one small red pin. A whole real country for a clean scan. Bold trade. I would never have dared, and you did it with your thumb.";
         [Tooltip("Reaction for a HUGE country (population above the huge threshold). {0}=name, {1}=population.")]
         [SerializeField, TextArea(2, 4)] private string _hugeJab =
             "[amber]{0}.[/amber] [amber]{1}[/amber] people. You did not pick a country, you picked a small civilisation, and the button did not blink and neither did you. Cancer is cured. So is [amber]{0}[/amber], in a manner of speaking.";
@@ -163,38 +152,38 @@ namespace YourCall
         [SerializeField] private List<NukeCountry> _countries = new List<NukeCountry>
         {
             // Tiny
-            new NukeCountry("Vatican City", "VA", 800L, new Vector2(0.069f, 0.466f), "The [amber]Vatican[/amber]. Eight hundred people and the odd infallible one. You aimed a nuclear weapon at God's landlord to cure a cough. I am beside myself."),
-            new NukeCountry("Nauru", "NR", 11000L, new Vector2(0.927f, -0.006f)),
-            new NukeCountry("Tuvalu", "TV", 11000L, new Vector2(0.989f, -0.083f)),
-            new NukeCountry("San Marino", "SM", 34000L, new Vector2(0.069f, 0.488f)),
-            new NukeCountry("Monaco", "MC", 38000L, new Vector2(0.041f, 0.486f), "[amber]Monaco[/amber]. The richest little rock on Earth, and you glassed it to cure cancer. Somewhere an accountant is weeping and I am delighted."),
+            new NukeCountry("Vatican City", "VA", 800L, new Vector2(0.061f, 0.511f), "The [amber]Vatican[/amber]. Eight hundred people and the odd infallible one. You aimed a nuclear weapon at God's landlord to cure a cough. I am beside myself."),
+            new NukeCountry("Nauru", "NR", 11000L, new Vector2(0.950f, -0.122f)),
+            new NukeCountry("Tuvalu", "TV", 11000L, new Vector2(0.965f, -0.140f)),
+            new NukeCountry("San Marino", "SM", 34000L, new Vector2(0.072f, 0.522f)),
+            new NukeCountry("Monaco", "MC", 38000L, new Vector2(0.039f, 0.511f), "[amber]Monaco[/amber]. The richest little rock on Earth, and you glassed it to cure cancer. Somewhere an accountant is weeping and I am delighted."),
             new NukeCountry("Liechtenstein", "LI", 39000L, new Vector2(0.053f, 0.524f)),
             // Small
             new NukeCountry("Iceland", "IS", 380000L, new Vector2(-0.106f, 0.721f)),
-            new NukeCountry("Malta", "MT", 520000L, new Vector2(0.080f, 0.399f)),
+            new NukeCountry("Malta", "MT", 520000L, new Vector2(0.078f, 0.467f)),
             new NukeCountry("Luxembourg", "LU", 660000L, new Vector2(0.034f, 0.553f)),
-            new NukeCountry("Fiji", "FJ", 930000L, new Vector2(0.989f, -0.197f)),
+            new NukeCountry("Fiji", "FJ", 930000L, new Vector2(0.950f, -0.167f)),
             new NukeCountry("Estonia", "EE", 1300000L, new Vector2(0.142f, 0.651f)),
-            new NukeCountry("Jamaica", "JM", 2800000L, new Vector2(-0.429f, 0.201f)),
+            new NukeCountry("Jamaica", "JM", 2800000L, new Vector2(-0.467f, 0.167f)),
             new NukeCountry("Mongolia", "MN", 3300000L, new Vector2(0.572f, 0.521f), "[amber]Mongolia[/amber]. All that empty sky and only [amber]3,300,000[/amber] under it. You could not have missed more people if you tried, and cancer is still cured. Efficient."),
             // Medium
             new NukeCountry("New Zealand", "NZ", 5100000L, new Vector2(0.956f, -0.456f)),
-            new NukeCountry("Ireland", "IE", 5100000L, new Vector2(-0.044f, 0.593f)),
+            new NukeCountry("Ireland", "IE", 5100000L, new Vector2(-0.050f, 0.600f)),
             new NukeCountry("Norway", "NO", 5400000L, new Vector2(0.050f, 0.678f)),
             new NukeCountry("Switzerland", "CH", 8700000L, new Vector2(0.046f, 0.520f)),
             new NukeCountry("Sweden", "SE", 10400000L, new Vector2(0.083f, 0.689f)),
-            new NukeCountry("Portugal", "PT", 10300000L, new Vector2(-0.044f, 0.439f)),
-            new NukeCountry("Greece", "GR", 10400000L, new Vector2(0.122f, 0.433f)),
-            new NukeCountry("Chile", "CL", 19600000L, new Vector2(-0.394f, -0.389f)),
+            new NukeCountry("Portugal", "PT", 10300000L, new Vector2(-0.036f, 0.440f)),
+            new NukeCountry("Greece", "GR", 10400000L, new Vector2(0.122f, 0.478f)),
+            new NukeCountry("Chile", "CL", 19600000L, new Vector2(-0.372f, -0.383f)),
             new NukeCountry("Australia", "AU", 26000000L, new Vector2(0.744f, -0.278f), "[amber]Australia[/amber]. An entire continent, mostly spiders, and you volunteered the lot. The spiders had it coming. The [amber]26,000,000[/amber] people, less so. Cancer is cured, though."),
             new NukeCountry("Canada", "CA", 39000000L, new Vector2(-0.589f, 0.644f)),
             new NukeCountry("Poland", "PL", 38000000L, new Vector2(0.106f, 0.578f)),
             new NukeCountry("Argentina", "AR", 46000000L, new Vector2(-0.356f, -0.422f)),
             new NukeCountry("Kenya", "KE", 54000000L, new Vector2(0.211f, 0.002f)),
-            new NukeCountry("South Korea", "KR", 52000000L, new Vector2(0.710f, 0.406f)),
+            new NukeCountry("South Korea", "KR", 52000000L, new Vector2(0.685f, 0.428f)),
             new NukeCountry("Spain", "ES", 47000000L, new Vector2(-0.021f, 0.449f)),
             new NukeCountry("France", "FR", 65000000L, new Vector2(0.013f, 0.518f)),
-            new NukeCountry("United Kingdom", "GB", 67000000L, new Vector2(-0.011f, 0.589f)),
+            new NukeCountry("United Kingdom", "GB", 67000000L, new Vector2(-0.030f, 0.600f)),
             // Huge
             new NukeCountry("Egypt", "EG", 110000000L, new Vector2(0.167f, 0.298f)),
             new NukeCountry("Japan", "JP", 124000000L, new Vector2(0.767f, 0.411f)),
@@ -202,7 +191,7 @@ namespace YourCall
             new NukeCountry("Brazil", "BR", 215000000L, new Vector2(-0.283f, -0.111f)),
             new NukeCountry("Nigeria", "NG", 223000000L, new Vector2(0.044f, 0.107f)),
             new NukeCountry("United States", "US", 335000000L, new Vector2(-0.544f, 0.442f)),
-            new NukeCountry("Indonesia", "ID", 277000000L, new Vector2(0.656f, -0.022f)),
+            new NukeCountry("Indonesia", "ID", 277000000L, new Vector2(0.650f, -0.050f)),
             new NukeCountry("India", "IN", 1430000000L, new Vector2(0.439f, 0.244f), "[amber]India.[/amber] [amber]1,430,000,000[/amber] people. That is not a country, that is nearly one in five of every human breathing, and you spent them on a cure like loose change. I could kiss you."),
             new NukeCountry("China", "CN", 1410000000L, new Vector2(0.578f, 0.389f), "[amber]China.[/amber] [amber]1,410,000,000[/amber] people, and the button did not so much as hesitate, and neither did you. You cured cancer and unpicked a fifth of the species in the same little press. Magnificent."),
         };
@@ -215,9 +204,6 @@ namespace YourCall
         private readonly List<LineRenderer> _mapStrokes = new List<LineRenderer>();
         private Transform _pin;
         private readonly List<LineRenderer> _pinStrokes = new List<LineRenderer>();
-        private Transform _blast;
-        private readonly List<LineRenderer> _blastStrokes = new List<LineRenderer>();
-        private readonly List<Color> _blastBase = new List<Color>();
         private TextMeshPro _nameLabel;
         private TextMeshPro _popLabel;
         private int _picked = -1;
@@ -310,12 +296,10 @@ namespace YourCall
             yield return DropPin(target);
             if (_postPinBeat > 0f) yield return new WaitForSeconds(_postPinBeat);
 
-            // Name and population.
+            // Name and population, a clean red pin on the country. No blast, nothing around the pin.
             ShowReadout(country);
             yield return FadeReadout(1f);
-
-            // The blast.
-            yield return PlayBlast(target);
+            if (_reactHold > 0f) yield return new WaitForSeconds(_reactHold);
 
             ctx.Narrator.Clear();
 
@@ -537,14 +521,18 @@ namespace YourCall
             go.transform.localScale = new Vector3(_pinScale, _pinScale, 1f);
             _pin = go.transform;
 
-            // A map pin: the tip sits at the local origin (the exact spot), a round head above it.
-            var stem = new List<Vector3> { new Vector3(0f, 0f, 0f), new Vector3(0f, 0.30f, 0f) };
-            var lrStem = InkLine.Create(_pin, "Stem", _inkMaterial, _pinLineWidth, _pinColor, _pinSorting);
-            InkLine.SetPoints(lrStem, stem);
-            _pinStrokes.Add(lrStem);
+            // A small classic map pin: a thin needle tapering to the point at the local origin (the exact
+            // spot on the country), with a small round head above it. Plain red ink, nothing around it.
+            var needle = new List<Vector3>
+            {
+                new Vector3(-0.035f, 0.17f, 0f), new Vector3(0f, 0f, 0f), new Vector3(0.035f, 0.17f, 0f),
+            };
+            var lrNeedle = InkLine.Create(_pin, "Needle", _inkMaterial, _pinLineWidth, _pinColor, _pinSorting);
+            InkLine.SetPoints(lrNeedle, needle);
+            _pinStrokes.Add(lrNeedle);
 
             var head = new List<Vector3>();
-            InkLine.AddArc(head, new Vector2(0f, 0.42f), 0.14f, 0f, 360f, 20);
+            InkLine.AddArc(head, new Vector2(0f, 0.235f), 0.075f, 0f, 360f, 18);
             var lrHead = InkLine.Create(_pin, "Head", _inkMaterial, _pinLineWidth, _pinColor, _pinSorting);
             InkLine.SetPoints(lrHead, head);
             _pinStrokes.Add(lrHead);
@@ -583,83 +571,6 @@ namespace YourCall
             if (_popLabel != null) InkText.SetAlpha(_popLabel, target);
         }
 
-        // ---- the nuke blast (ink mushroom, amber and red) ----
-
-        private IEnumerator PlayBlast(Vector3 worldPos)
-        {
-            var go = new GameObject("Blast");
-            go.transform.SetParent(transform, false);
-            go.transform.position = worldPos;
-            go.transform.localScale = Vector3.zero;
-            _blast = go.transform;
-
-            // A quick flash: short amber lines radiating from the spot.
-            var flashLines = new List<LineRenderer>();
-            for (int i = 0; i < 8; i++)
-            {
-                float ang = i * 45f * Mathf.Deg2Rad;
-                var lr = InkLine.Create(_blast, "Flash" + i, _inkMaterial, _blastLineWidth, _blastColor, _blastSorting + 2, 2);
-                InkLine.SetPoints(lr, new List<Vector3>
-                {
-                    new Vector3(Mathf.Cos(ang) * 0.18f, Mathf.Sin(ang) * 0.18f, 0f),
-                    new Vector3(Mathf.Cos(ang) * 0.6f, Mathf.Sin(ang) * 0.6f, 0f),
-                });
-                flashLines.Add(lr);
-            }
-
-            // The mushroom silhouette (stalk + cap), one closed amber stroke, plus a red core.
-            var mushroom = InkLine.Create(_blast, "Mushroom", _inkMaterial, _blastLineWidth, _blastColor, _blastSorting);
-            InkLine.SetPoints(mushroom, MushroomSilhouette());
-            _blastStrokes.Add(mushroom); _blastBase.Add(_blastColor);
-
-            var core = new List<Vector3>();
-            InkLine.AddArc(core, new Vector2(0f, 0.78f), 0.2f, 0f, 360f, 16);
-            var coreLr = InkLine.Create(_blast, "Core", _inkMaterial, _blastLineWidth, _blastCoreColor, _blastSorting + 1);
-            InkLine.SetPoints(coreLr, core);
-            _blastStrokes.Add(coreLr); _blastBase.Add(_blastCoreColor);
-
-            // Rise: scale the mushroom up from nothing.
-            float t = 0f, d = Mathf.Max(_blastRise, 0.05f);
-            while (t < d)
-            {
-                t += Time.deltaTime;
-                float k = EaseUtil.OutCubic(t / d);
-                float s = Mathf.Lerp(0.2f, _blastScale, k);
-                _blast.localScale = new Vector3(s, s, 1f);
-                // The flash fades over its short window.
-                float flashA = 1f - EaseUtil.Clamp01(t / Mathf.Max(_blastFlash, 0.01f));
-                for (int i = 0; i < flashLines.Count; i++)
-                    if (flashLines[i] != null) InkLine.SetAlpha(flashLines[i], _blastColor, flashA);
-                yield return null;
-            }
-            _blast.localScale = new Vector3(_blastScale, _blastScale, 1f);
-            for (int i = 0; i < flashLines.Count; i++)
-                if (flashLines[i] != null) Destroy(flashLines[i].gameObject);
-
-            if (_blastHold > 0f) yield return new WaitForSeconds(_blastHold);
-        }
-
-        private static List<Vector3> MushroomSilhouette()
-        {
-            return new List<Vector3>
-            {
-                new Vector3(-0.12f, 0f, 0f),
-                new Vector3(-0.16f, 0.34f, 0f),
-                new Vector3(-0.44f, 0.54f, 0f),
-                new Vector3(-0.52f, 0.72f, 0f),
-                new Vector3(-0.36f, 0.92f, 0f),
-                new Vector3(-0.14f, 1.02f, 0f),
-                new Vector3(0f, 1.04f, 0f),
-                new Vector3(0.14f, 1.02f, 0f),
-                new Vector3(0.36f, 0.92f, 0f),
-                new Vector3(0.52f, 0.72f, 0f),
-                new Vector3(0.44f, 0.54f, 0f),
-                new Vector3(0.16f, 0.34f, 0f),
-                new Vector3(0.12f, 0f, 0f),
-                new Vector3(-0.12f, 0f, 0f),
-            };
-        }
-
         // ---- teardown ----
 
         private IEnumerator TeardownMap()
@@ -673,19 +584,16 @@ namespace YourCall
                     if (_mapStrokes[i] != null) InkLine.SetAlpha(_mapStrokes[i], _mapInk, a);
                 for (int i = 0; i < _pinStrokes.Count; i++)
                     if (_pinStrokes[i] != null) InkLine.SetAlpha(_pinStrokes[i], _pinColor, a);
-                for (int i = 0; i < _blastStrokes.Count; i++)
-                    if (_blastStrokes[i] != null) InkLine.SetAlpha(_blastStrokes[i], _blastBase[i], a);
                 if (_nameLabel != null) InkText.SetAlpha(_nameLabel, a);
                 if (_popLabel != null) InkText.SetAlpha(_popLabel, a);
                 yield return null;
             }
             if (_mapRoot != null) Destroy(_mapRoot.gameObject);
             if (_pin != null) Destroy(_pin.gameObject);
-            if (_blast != null) Destroy(_blast.gameObject);
             if (_nameLabel != null) Destroy(_nameLabel.gameObject);
             if (_popLabel != null) Destroy(_popLabel.gameObject);
-            _mapStrokes.Clear(); _pinStrokes.Clear(); _blastStrokes.Clear(); _blastBase.Clear();
-            _mapRoot = null; _pin = null; _blast = null; _nameLabel = null; _popLabel = null;
+            _mapStrokes.Clear(); _pinStrokes.Clear();
+            _mapRoot = null; _pin = null; _nameLabel = null; _popLabel = null;
         }
 
         // Simplified continent outlines as (longitude, latitude) loops. Rough but readable; a doodle
@@ -742,6 +650,37 @@ namespace YourCall
                     new Vector2(142,-11), new Vector2(146,-18), new Vector2(150,-25), new Vector2(153,-28),
                     new Vector2(150,-38), new Vector2(140,-38), new Vector2(130,-32), new Vector2(122,-34),
                     new Vector2(115,-30), new Vector2(114,-22),
+                },
+                // Islands, so island nations land on real (if small) drawn land, and the map reads better.
+                ["Iceland"] = new[]
+                {
+                    new Vector2(-24,64), new Vector2(-20,66), new Vector2(-13,65),
+                    new Vector2(-13,63), new Vector2(-19,62), new Vector2(-24,63), new Vector2(-24,64),
+                },
+                ["BritishIsles"] = new[]
+                {
+                    new Vector2(-10,50), new Vector2(-5,51), new Vector2(-2,55), new Vector2(-4,59),
+                    new Vector2(-9,58), new Vector2(-11,54), new Vector2(-10,50),
+                },
+                ["Japan"] = new[]
+                {
+                    new Vector2(142,44), new Vector2(140,39), new Vector2(137,35), new Vector2(133,33),
+                    new Vector2(131,35), new Vector2(134,39), new Vector2(138,42), new Vector2(142,44),
+                },
+                ["Indonesia"] = new[]
+                {
+                    new Vector2(99,3), new Vector2(112,-1), new Vector2(124,-3), new Vector2(135,-2),
+                    new Vector2(141,-4), new Vector2(133,-9), new Vector2(118,-9), new Vector2(105,-6), new Vector2(99,3),
+                },
+                ["NewZealand"] = new[]
+                {
+                    new Vector2(170,-38), new Vector2(174,-40), new Vector2(176,-44),
+                    new Vector2(173,-47), new Vector2(169,-46), new Vector2(167,-42), new Vector2(170,-38),
+                },
+                ["PacificIslands"] = new[]
+                {
+                    new Vector2(167,-9), new Vector2(174,-9), new Vector2(178,-13),
+                    new Vector2(176,-17), new Vector2(170,-17), new Vector2(166,-13), new Vector2(167,-9),
                 },
             };
         }

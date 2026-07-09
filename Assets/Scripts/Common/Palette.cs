@@ -47,7 +47,23 @@ namespace YourCall
         /// <summary>Warm hand-drawn gold. Marks "the best life any human has lived": the golden crowned
         /// figure in Chapter 2's better-offer button (gold = the best life / perfect happiness), on the
         /// ink base. Distinct from the amber accent (more yellow, luminous). Exposed on CrownedFigure so
-        /// it can be tuned. See docs/art-and-ui.md.</summary>
+        /// it can be tuned. See docs/art-and-ui.md. Also the gold money button's treatment.</summary>
         public static readonly Color InkGold = new Color(0.859f, 0.706f, 0.278f, 1f);
+
+        // Muted hand-drawn colours for the would-you-rather doodle outlines: colour matched to the thing a
+        // doodle depicts (a coloured ink line, not a fill; see docs/art-and-ui.md). Deliberate colour on
+        // the ink base, kept muted so it reads as coloured ink, not flat digital colour.
+
+        /// <summary>Muted hand-drawn green. A doodle outline colour (a duck, greenery). #4E8C55</summary>
+        public static readonly Color InkGreen = new Color(0.306f, 0.549f, 0.333f, 1f);
+
+        /// <summary>Muted warm hand-drawn orange. A doodle outline colour (the sun, heat). #CC7A33</summary>
+        public static readonly Color InkOrange = new Color(0.800f, 0.478f, 0.200f, 1f);
+
+        /// <summary>Muted icy hand-drawn blue. A doodle outline colour (a snowflake, cold). #5E9BC4</summary>
+        public static readonly Color InkSky = new Color(0.369f, 0.608f, 0.769f, 1f);
+
+        /// <summary>Muted hand-drawn purple. A doodle outline colour (the odd body doodles). #8A5FA6</summary>
+        public static readonly Color InkPurple = new Color(0.541f, 0.373f, 0.651f, 1f);
     }
 }

@@ -62,12 +62,18 @@ namespace YourCall
         [SerializeField] private Material _inkMaterial;
 
         [Header("The button (pressable ink; press it to accept the offer)")]
-        [Tooltip("Beside the offer, clear of the readout and the folding stranger. Pressing it accepts (the same as the Press it text option).")]
+        [Tooltip("The money button centres here (the everyone-gets-money button); the death button keeps to the side, clear of the folding stranger.")]
         [SerializeField] private Vector2 _buttonPosition = new Vector2(2.7f, 0.4f);
         [SerializeField] private float _buttonRadius = 0.7f;
         [SerializeField] private float _buttonLineWidth = 0.055f;
         [SerializeField] private int _buttonSorting = 15;
         [SerializeField] private float _buttonFadeIn = 0.4f;
+        [Tooltip("Resting outline colour of the button. Gold for the everyone-gets-money button; plain ink otherwise.")]
+        [SerializeField] private Color _buttonColor = Palette.Ink;
+        [Tooltip("Hover colour of the button.")]
+        [SerializeField] private Color _buttonHotColor = Palette.Amber;
+        [Tooltip("Draw a hand-drawn dollar sign on the button, so it reads at a glance as the money button.")]
+        [SerializeField] private bool _showMoneyGlyph = false;
 
         [Header("The stranger (halving only)")]
         [SerializeField] private Vector2 _strangerPosition = new Vector2(0f, -0.7f);
@@ -207,7 +213,8 @@ namespace YourCall
             // The button to press: the physical affordance for accepting the offer (the text choices stay
             // as the secondary fallback). It persists across the tiers, armed only during each choice.
             _button = InkButton.Create(transform, "OfferButton", new Vector3(_buttonPosition.x, _buttonPosition.y, 0f),
-                _inkMaterial, _font, _buttonRadius, _buttonLineWidth, string.Empty, 2.6f, _buttonSorting, innerRing: true);
+                _inkMaterial, _font, _buttonRadius, _buttonLineWidth, string.Empty, 2.6f, _buttonSorting, true, _buttonColor, _buttonHotColor);
+            if (_showMoneyGlyph) DrawDollarSign();
             yield return _button.FadeIn(_buttonFadeIn);
 
             int floor = Mathf.Max(1, _rageThreshold);
@@ -498,6 +505,25 @@ namespace YourCall
         private void TeardownButton()
         {
             if (_button != null) { Destroy(_button.gameObject); _button = null; }
+        }
+
+        // A hand-drawn dollar sign on the money button (an S with a bar through it), in the button's gold,
+        // so the everyone-gets-money button reads at a glance and squashes with the button on press.
+        private void DrawDollarSign()
+        {
+            if (_button == null) return;
+            float r = _buttonRadius, w = _buttonLineWidth * 1.15f;
+            var sPts = new[]
+            {
+                new Vector2(0.26f, 0.30f), new Vector2(0.06f, 0.42f), new Vector2(-0.18f, 0.36f),
+                new Vector2(-0.24f, 0.18f), new Vector2(-0.02f, 0.05f), new Vector2(0.16f, -0.04f),
+                new Vector2(0.24f, -0.20f), new Vector2(0.10f, -0.37f), new Vector2(-0.12f, -0.40f),
+                new Vector2(-0.28f, -0.30f),
+            };
+            var s = new List<Vector3>(sPts.Length);
+            for (int i = 0; i < sPts.Length; i++) s.Add(new Vector3(sPts[i].x * r * 1.15f, sPts[i].y * r * 1.15f, 0f));
+            _button.AddDetail(s, _buttonColor, w);
+            _button.AddDetail(new List<Vector3> { new Vector3(0f, 0.52f * r, 0f), new Vector3(0f, -0.52f * r, 0f) }, _buttonColor, w);
         }
     }
 }

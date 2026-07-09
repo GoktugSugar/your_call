@@ -52,6 +52,29 @@ namespace YourCall
             SetAlpha(0f);
         }
 
+        /// <summary>The sensible outline colour for a doodle, matched to the thing it depicts (a coloured
+        /// ink line, not a fill; see docs/art-and-ui.md). This is the doodle's colour data; a would-you-rather
+        /// can override it per option (see Dilemma.OptionAOutline). None / unknown stays plain ink.</summary>
+        public static Color DefaultColorFor(DoodleKind kind)
+        {
+            switch (kind)
+            {
+                case DoodleKind.TurdSwirl: return Palette.InkBrown;   // poop, brown
+                case DoodleKind.ConeSwirl: return Palette.InkPink;    // ice cream, pink
+                case DoodleKind.WingedFigure: return Palette.InkBlue; // flight, sky
+                case DoodleKind.FlexingFigure: return Palette.InkRed; // strength, power
+                case DoodleKind.GiantDuck: return Palette.InkGreen;   // a duck, green
+                case DoodleKind.TinyHorses: return Palette.InkBrown;  // horses, brown
+                case DoodleKind.RewindButton: return Palette.InkBlue; // rewind, cool
+                case DoodleKind.PauseButton: return Palette.InkOrange;// pause, warm hold
+                case DoodleKind.Snowflake: return Palette.InkSky;     // cold, ice blue
+                case DoodleKind.Sun: return Palette.InkOrange;        // hot, warm
+                case DoodleKind.ThirdArmFigure: return Palette.InkGreen;  // an odd body, quirky
+                case DoodleKind.TwoHeadFigure: return Palette.InkPurple;  // an odd body, quirky
+                default: return Palette.Ink;
+            }
+        }
+
         private void DrawKind(DoodleKind kind)
         {
             switch (kind)

@@ -75,6 +75,18 @@ namespace YourCall
             _targetVis = 0f;
         }
 
+        /// <summary>Instantly hide the choices with no fade and clear their state, so nothing lingers.
+        /// Called on beat enter by the sequence (see SequencePlayer) so choice options from one beat are
+        /// never visible during the next.</summary>
+        public void HideNow()
+        {
+            _armed = false;
+            _targetVis = 0f;
+            _visT = 0f;
+            for (int i = 0; i < _hoverT.Length; i++) _hoverT[i] = 0f;
+            if (_built) Apply();
+        }
+
         private void SizeCollider(int i)
         {
             _labels[i].ForceMeshUpdate();

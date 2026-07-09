@@ -136,7 +136,7 @@ namespace YourCall
             _button.Arm(true);
             ctx.Choices.Present(_takeLabel, _keepLabel);
             try { while (_picked < 0) yield return null; }
-            finally { ctx.Choices.Chosen -= OnPicked; _button.Pressed -= OnButtonPressed; _button.Arm(false); }
+            finally { ctx.Choices.Chosen -= OnPicked; ctx.Choices.Dismiss(); _button.Pressed -= OnButtonPressed; _button.Arm(false); }
             bool took = _picked == 0;
 
             // The button has done its job; fade it away before the consequence plays out.

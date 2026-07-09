@@ -43,6 +43,8 @@ namespace YourCall
         private LineRenderer _outline;
         private LineRenderer _inner;
         private TextMeshPro _labelTMP;
+        private readonly List<LineRenderer> _details = new List<LineRenderer>();
+        private readonly List<Color> _detailColors = new List<Color>();
         private Camera _cam;
         private bool _built;
         private bool _armed;
@@ -55,7 +57,7 @@ namespace YourCall
         /// font, so it matches the rest of the chapter.</summary>
         public static InkButton Create(Transform parent, string name, Vector3 localPos, Material inkMaterial,
             TMP_FontAsset font = null, float radius = 0.8f, float lineWidth = 0.055f, string label = "",
-            float labelSize = 2.6f, int sorting = 14, bool innerRing = true)
+            float labelSize = 2.6f, int sorting = 14, bool innerRing = true, Color? restColor = null, Color? hotColor = null)
         {
             var go = new GameObject(name);
             go.transform.SetParent(parent, false);
@@ -69,6 +71,8 @@ namespace YourCall
             b._labelSize = labelSize;
             b._sorting = sorting;
             b._innerRing = innerRing;
+            b._ink = restColor ?? Palette.Ink;    // a plain ink button by default; a beat can pass e.g. gold
+            b._hot = hotColor ?? Palette.Amber;
             b.Build();
             return b;
         }
@@ -105,6 +109,20 @@ namespace YourCall
 
             _built = true;
             SetAlpha(0f);
+        }
+
+        /// <summary>Add an extra ink detail stroke onto the button (for example a hand-drawn money glyph),
+        /// drawn under the same rig so it squashes on press and fades with the button. It keeps its own
+        /// colour (it is not tinted by the hover), so a gold dollar sign stays gold.</summary>
+        public LineRenderer AddDetail(List<Vector3> points, Color color, float width)
+        {
+            if (!_built) Build();
+            var lr = InkLine.Create(_rig, "Detail", _inkMaterial, width, color, _sorting + 2);
+            InkLine.SetPoints(lr, points);
+            _details.Add(lr);
+            _detailColors.Add(color);
+            ApplyVisual();
+            return lr;
         }
 
         /// <summary>Enable or disable click handling. Armed only during the choice window, so a press never
@@ -158,6 +176,8 @@ namespace YourCall
             if (_outline != null) { InkLine.SetAlpha(_outline, c, _alpha); _outline.widthMultiplier = w; }
             if (_inner != null) InkLine.SetAlpha(_inner, c, _alpha * 0.9f);
             if (_labelTMP != null) { var lc = c; lc.a = _alpha; _labelTMP.color = lc; }
+            for (int i = 0; i < _details.Count; i++)
+                if (_details[i] != null) InkLine.SetAlpha(_details[i], _detailColors[i], _alpha);
         }
 
         public void SetAlpha(float a)

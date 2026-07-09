@@ -70,6 +70,7 @@ namespace YourCall
             {
                 var beat = _beats[i];
                 if (beat == null) continue;
+                ResetSharedUiForBeat(ctx);   // first step of entering a beat: clear anything left from the last one
                 if (_logBeats) Debug.Log("[Sequence] beat " + i + ": " + beat.Note);
                 yield return StartCoroutine(beat.Play(ctx));
             }
@@ -79,6 +80,16 @@ namespace YourCall
             // Optional chapter hand-off: the trolley chapter can flow into the buttons chapter.
             if (!string.IsNullOrEmpty(_nextScene))
                 SceneManager.LoadScene(_nextScene);
+        }
+
+        // Fired as the very first step of entering every beat: instantly tear down any choice affordances
+        // and narration left over from the previous beat, so nothing (option labels, leftover text) from
+        // the prior beat is ever visible during this one. A general lifecycle guarantee, so it fixes every
+        // beat, including the ones that pick via a diegetic button and used to leave the shared choices up.
+        private void ResetSharedUiForBeat(SequenceContext ctx)
+        {
+            if (ctx.Choices != null) ctx.Choices.HideNow();
+            if (ctx.Narrator != null) ctx.Narrator.Clear();
         }
 
         // A minimal baseline for a mid-chapter dev entry: the crash/wake/imp-appear intro beats were

@@ -704,14 +704,6 @@ MonoBehaviour:
   _readoutSorting: 24
   _readoutFade: 0.35
   _popSuffix: ' people, give or take'
-  _blastColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
-  _blastCoreColor: {r: 0.667, g: 0.282, b: 0.227, a: 1}
-  _blastScale: 1.15
-  _blastLineWidth: 0.06
-  _blastSorting: 20
-  _blastFlash: 0.22
-  _blastRise: 0.5
-  _blastHold: 0.6
   _pressSeed: 71
   _refuseSeed: 29
   _statsHeading: how others chose
@@ -740,9 +732,9 @@ MonoBehaviour:
   _smallJab: '[amber]{0}[/amber]. [amber]{1}[/amber] souls, and none of them saw
     it coming, because how could they. You cured a disease and mislaid a country.
     I did say it was random.'
-  _largeJab: Oh, [amber]{0}[/amber]. [amber]{1}[/amber] people, gone in one satisfying
-    little mushroom. A whole real country for a clean scan. Bold trade. I would never
-    have dared, and you did it with your thumb.
+  _largeJab: Oh, [amber]{0}[/amber]. [amber]{1}[/amber] people, and all it took was
+    one small red pin. A whole real country for a clean scan. Bold trade. I would
+    never have dared, and you did it with your thumb.
   _hugeJab: '[amber]{0}.[/amber] [amber]{1}[/amber] people. You did not pick a country,
     you picked a small civilisation, and the button did not blink and neither did
     you. Cancer is cured. So is [amber]{0}[/amber], in a manner of speaking.'
@@ -766,29 +758,29 @@ MonoBehaviour:
   - Name: Vatican City
     Iso: VA
     Population: 800
-    Pin: {x: 0.069, y: 0.466}
+    Pin: {x: 0.061, y: 0.511}
     Quip: The [amber]Vatican[/amber]. Eight hundred people and the odd infallible
       one. You aimed a nuclear weapon at God's landlord to cure a cough. I am beside
       myself.
   - Name: Nauru
     Iso: NR
     Population: 11000
-    Pin: {x: 0.927, y: -0.006}
+    Pin: {x: 0.95, y: -0.122}
     Quip: 
   - Name: Tuvalu
     Iso: TV
     Population: 11000
-    Pin: {x: 0.989, y: -0.083}
+    Pin: {x: 0.965, y: -0.14}
     Quip: 
   - Name: San Marino
     Iso: SM
     Population: 34000
-    Pin: {x: 0.069, y: 0.488}
+    Pin: {x: 0.072, y: 0.522}
     Quip: 
   - Name: Monaco
     Iso: MC
     Population: 38000
-    Pin: {x: 0.041, y: 0.486}
+    Pin: {x: 0.039, y: 0.511}
     Quip: '[amber]Monaco[/amber]. The richest little rock on Earth, and you glassed
       it to cure cancer. Somewhere an accountant is weeping and I am delighted.'
   - Name: Liechtenstein
@@ -804,7 +796,7 @@ MonoBehaviour:
   - Name: Malta
     Iso: MT
     Population: 520000
-    Pin: {x: 0.08, y: 0.399}
+    Pin: {x: 0.078, y: 0.467}
     Quip: 
   - Name: Luxembourg
     Iso: LU
@@ -814,7 +806,7 @@ MonoBehaviour:
   - Name: Fiji
     Iso: FJ
     Population: 930000
-    Pin: {x: 0.989, y: -0.197}
+    Pin: {x: 0.95, y: -0.167}
     Quip: 
   - Name: Estonia
     Iso: EE
@@ -824,7 +816,7 @@ MonoBehaviour:
   - Name: Jamaica
     Iso: JM
     Population: 2800000
-    Pin: {x: -0.429, y: 0.201}
+    Pin: {x: -0.467, y: 0.167}
     Quip: 
   - Name: Mongolia
     Iso: MN
@@ -841,7 +833,7 @@ MonoBehaviour:
   - Name: Ireland
     Iso: IE
     Population: 5100000
-    Pin: {x: -0.044, y: 0.593}
+    Pin: {x: -0.05, y: 0.6}
     Quip: 
   - Name: Norway
     Iso: NO
@@ -861,17 +853,17 @@ MonoBehaviour:
   - Name: Portugal
     Iso: PT
     Population: 10300000
-    Pin: {x: -0.044, y: 0.439}
+    Pin: {x: -0.036, y: 0.44}
     Quip: 
   - Name: Greece
     Iso: GR
     Population: 10400000
-    Pin: {x: 0.122, y: 0.433}
+    Pin: {x: 0.122, y: 0.478}
     Quip: 
   - Name: Chile
     Iso: CL
     Population: 19600000
-    Pin: {x: -0.394, y: -0.389}
+    Pin: {x: -0.372, y: -0.383}
     Quip: 
   - Name: Australia
     Iso: AU
@@ -903,7 +895,7 @@ MonoBehaviour:
   - Name: South Korea
     Iso: KR
     Population: 52000000
-    Pin: {x: 0.71, y: 0.406}
+    Pin: {x: 0.685, y: 0.428}
     Quip: 
   - Name: Spain
     Iso: ES
@@ -918,7 +910,7 @@ MonoBehaviour:
   - Name: United Kingdom
     Iso: GB
     Population: 67000000
-    Pin: {x: -0.011, y: 0.589}
+    Pin: {x: -0.03, y: 0.6}
     Quip: 
   - Name: Egypt
     Iso: EG
@@ -953,7 +945,7 @@ MonoBehaviour:
   - Name: Indonesia
     Iso: ID
     Population: 277000000
-    Pin: {x: 0.656, y: -0.022}
+    Pin: {x: 0.65, y: -0.05}
     Quip: 
   - Name: India
     Iso: IN
@@ -1019,6 +1011,342 @@ MonoBehaviour:
     You have my word, for whatever that is worth down here.
   _clickLockout: 0.25
   _clearAtEnd: 0
+--- !u!1 &774020050
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 774020052}
+  - component: {fileID: 774020051}
+  m_Layer: 0
+  m_Name: freshNuke
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &774020051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774020050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7804a228a1ea0e840be03a542331f9d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.CancerNukeButtonBeat
+  _note: 
+  _inkMaterial: {fileID: 0}
+  _font: {fileID: 0}
+  _buttonPosition: {x: 0, y: 0.2}
+  _buttonRadius: 0.85
+  _lineWidth: 0.06
+  _buttonInk: {r: 0.667, g: 0.282, b: 0.227, a: 1}
+  _buttonHot: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _buttonLabel: 
+  _buttonLabelSize: 2.6
+  _buttonSorting: 14
+  _buttonFadeIn: 0.4
+  _buttonFadeOut: 0.35
+  _mapAnchor: {x: 0, y: 1}
+  _mapHalfWidth: 4.6
+  _mapHalfHeight: 1.85
+  _mapLineWidth: 0.05
+  _mapInk: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _mapSorting: 12
+  _mapFrame: 1
+  _mapFadeIn: 0.7
+  _pinColor: {r: 0.667, g: 0.282, b: 0.227, a: 1}
+  _pinScale: 1
+  _pinLineWidth: 0.055
+  _pinSorting: 22
+  _pinDropDuration: 0.6
+  _pinSettle: 0.18
+  _readoutAnchor: {x: 0, y: -2.05}
+  _nameSize: 3.4
+  _popSize: 2.7
+  _nameColor: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _popColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _readoutSorting: 24
+  _readoutFade: 0.35
+  _popSuffix: ' people, give or take'
+  _pressSeed: 71
+  _refuseSeed: 29
+  _statsHeading: how others chose
+  _pressStatLabel: pressed it
+  _refuseStatLabel: would not
+  _endsNudge: 0.15
+  _offerLines:
+  - Here. A red button, and a genuinely good deal for once. Press it and [red]cancer[/red]
+    is cured. All of it. Forever, for everyone, every kind, gone for good. No more
+    wards, no more waiting rooms, no more of those little bald children you all find
+    so upsetting.
+  - The price is small. Trivial, really. [amber]One country.[/amber] Somewhere on
+    this Earth, chosen at [amber]random[/amber], and I [red]wipe it off the map.[/red]
+    Everyone in it. Could be anywhere. Press it and save the countless, or keep your
+    soft little hands clean. Your call.
+  _refuseReact: You will not press it. Every [red]cancer[/red] there will ever be,
+    wiped off the board forever, and you would not spend one country you could not
+    even find on a map. All those wards, still full, because you could not stomach
+    a gamble on strangers with the wrong postcode. Too squeamish. What a judge you
+    were.
+  _pinDropLine: Round and round it goes. Do try to look excited. This is the fun
+    part.
+  _tinyJab: Ha! [amber]{0}[/amber]. All [amber]{1}[/amber] of them. Off an entire
+    planet to aim at, the dice found a rounding error. Somewhere a cancer ward is
+    cheering and a very small country is a crater. Perfect.
+  _smallJab: '[amber]{0}[/amber]. [amber]{1}[/amber] souls, and none of them saw
+    it coming, because how could they. You cured a disease and mislaid a country.
+    I did say it was random.'
+  _largeJab: Oh, [amber]{0}[/amber]. [amber]{1}[/amber] people, and all it took was
+    one small red pin. A whole real country for a clean scan. Bold trade. I would
+    never have dared, and you did it with your thumb.
+  _hugeJab: '[amber]{0}.[/amber] [amber]{1}[/amber] people. You did not pick a country,
+    you picked a small civilisation, and the button did not blink and neither did
+    you. Cancer is cured. So is [amber]{0}[/amber], in a manner of speaking.'
+  _selfCountryJab: Oh. Oh, this is delicious. [amber]{0}[/amber]. That is yours,
+    is it not. Home. [amber]{1}[/amber] of your very own, and your thumb did not
+    so much as twitch. Whatever they say about you at the end, they cannot say you
+    played favourites.
+  _tinyBelow: 100000
+  _smallBelow: 5000000
+  _hugeAtLeast: 100000000
+  _pressLabel: Press it
+  _refuseLabel: Refuse
+  _advanceLockout: 0.3
+  _preMapBeat: 0.3
+  _postPinBeat: 0.35
+  _reactHold: 0.4
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+  _teardownFade: 0.5
+  _countries:
+  - Name: Vatican City
+    Iso: VA
+    Population: 800
+    Pin: {x: 0.061, y: 0.511}
+    Quip: The [amber]Vatican[/amber]. Eight hundred people and the odd infallible
+      one. You aimed a nuclear weapon at God's landlord to cure a cough. I am beside
+      myself.
+  - Name: Nauru
+    Iso: NR
+    Population: 11000
+    Pin: {x: 0.95, y: -0.122}
+    Quip: 
+  - Name: Tuvalu
+    Iso: TV
+    Population: 11000
+    Pin: {x: 0.965, y: -0.14}
+    Quip: 
+  - Name: San Marino
+    Iso: SM
+    Population: 34000
+    Pin: {x: 0.072, y: 0.522}
+    Quip: 
+  - Name: Monaco
+    Iso: MC
+    Population: 38000
+    Pin: {x: 0.039, y: 0.511}
+    Quip: '[amber]Monaco[/amber]. The richest little rock on Earth, and you glassed
+      it to cure cancer. Somewhere an accountant is weeping and I am delighted.'
+  - Name: Liechtenstein
+    Iso: LI
+    Population: 39000
+    Pin: {x: 0.053, y: 0.524}
+    Quip: 
+  - Name: Iceland
+    Iso: IS
+    Population: 380000
+    Pin: {x: -0.106, y: 0.721}
+    Quip: 
+  - Name: Malta
+    Iso: MT
+    Population: 520000
+    Pin: {x: 0.078, y: 0.467}
+    Quip: 
+  - Name: Luxembourg
+    Iso: LU
+    Population: 660000
+    Pin: {x: 0.034, y: 0.553}
+    Quip: 
+  - Name: Fiji
+    Iso: FJ
+    Population: 930000
+    Pin: {x: 0.95, y: -0.167}
+    Quip: 
+  - Name: Estonia
+    Iso: EE
+    Population: 1300000
+    Pin: {x: 0.142, y: 0.651}
+    Quip: 
+  - Name: Jamaica
+    Iso: JM
+    Population: 2800000
+    Pin: {x: -0.467, y: 0.167}
+    Quip: 
+  - Name: Mongolia
+    Iso: MN
+    Population: 3300000
+    Pin: {x: 0.572, y: 0.521}
+    Quip: '[amber]Mongolia[/amber]. All that empty sky and only [amber]3,300,000[/amber]
+      under it. You could not have missed more people if you tried, and cancer is
+      still cured. Efficient.'
+  - Name: New Zealand
+    Iso: NZ
+    Population: 5100000
+    Pin: {x: 0.956, y: -0.456}
+    Quip: 
+  - Name: Ireland
+    Iso: IE
+    Population: 5100000
+    Pin: {x: -0.05, y: 0.6}
+    Quip: 
+  - Name: Norway
+    Iso: NO
+    Population: 5400000
+    Pin: {x: 0.05, y: 0.678}
+    Quip: 
+  - Name: Switzerland
+    Iso: CH
+    Population: 8700000
+    Pin: {x: 0.046, y: 0.52}
+    Quip: 
+  - Name: Sweden
+    Iso: SE
+    Population: 10400000
+    Pin: {x: 0.083, y: 0.689}
+    Quip: 
+  - Name: Portugal
+    Iso: PT
+    Population: 10300000
+    Pin: {x: -0.036, y: 0.44}
+    Quip: 
+  - Name: Greece
+    Iso: GR
+    Population: 10400000
+    Pin: {x: 0.122, y: 0.478}
+    Quip: 
+  - Name: Chile
+    Iso: CL
+    Population: 19600000
+    Pin: {x: -0.372, y: -0.383}
+    Quip: 
+  - Name: Australia
+    Iso: AU
+    Population: 26000000
+    Pin: {x: 0.744, y: -0.278}
+    Quip: '[amber]Australia[/amber]. An entire continent, mostly spiders, and you
+      volunteered the lot. The spiders had it coming. The [amber]26,000,000[/amber]
+      people, less so. Cancer is cured, though.'
+  - Name: Canada
+    Iso: CA
+    Population: 39000000
+    Pin: {x: -0.589, y: 0.644}
+    Quip: 
+  - Name: Poland
+    Iso: PL
+    Population: 38000000
+    Pin: {x: 0.106, y: 0.578}
+    Quip: 
+  - Name: Argentina
+    Iso: AR
+    Population: 46000000
+    Pin: {x: -0.356, y: -0.422}
+    Quip: 
+  - Name: Kenya
+    Iso: KE
+    Population: 54000000
+    Pin: {x: 0.211, y: 0.002}
+    Quip: 
+  - Name: South Korea
+    Iso: KR
+    Population: 52000000
+    Pin: {x: 0.685, y: 0.428}
+    Quip: 
+  - Name: Spain
+    Iso: ES
+    Population: 47000000
+    Pin: {x: -0.021, y: 0.449}
+    Quip: 
+  - Name: France
+    Iso: FR
+    Population: 65000000
+    Pin: {x: 0.013, y: 0.518}
+    Quip: 
+  - Name: United Kingdom
+    Iso: GB
+    Population: 67000000
+    Pin: {x: -0.03, y: 0.6}
+    Quip: 
+  - Name: Egypt
+    Iso: EG
+    Population: 110000000
+    Pin: {x: 0.167, y: 0.298}
+    Quip: 
+  - Name: Japan
+    Iso: JP
+    Population: 124000000
+    Pin: {x: 0.767, y: 0.411}
+    Quip: 
+  - Name: Mexico
+    Iso: MX
+    Population: 128000000
+    Pin: {x: -0.567, y: 0.262}
+    Quip: 
+  - Name: Brazil
+    Iso: BR
+    Population: 215000000
+    Pin: {x: -0.283, y: -0.111}
+    Quip: 
+  - Name: Nigeria
+    Iso: NG
+    Population: 223000000
+    Pin: {x: 0.044, y: 0.107}
+    Quip: 
+  - Name: United States
+    Iso: US
+    Population: 335000000
+    Pin: {x: -0.544, y: 0.442}
+    Quip: 
+  - Name: Indonesia
+    Iso: ID
+    Population: 277000000
+    Pin: {x: 0.65, y: -0.05}
+    Quip: 
+  - Name: India
+    Iso: IN
+    Population: 1430000000
+    Pin: {x: 0.439, y: 0.244}
+    Quip: '[amber]India.[/amber] [amber]1,430,000,000[/amber] people. That is not
+      a country, that is nearly one in five of every human breathing, and you spent
+      them on a cure like loose change. I could kiss you.'
+  - Name: China
+    Iso: CN
+    Population: 1410000000
+    Pin: {x: 0.578, y: 0.389}
+    Quip: '[amber]China.[/amber] [amber]1,410,000,000[/amber] people, and the button
+      did not so much as hesitate, and neither did you. You cured cancer and unpicked
+      a fifth of the species in the same little press. Magnificent.'
+--- !u!4 &774020052
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774020050}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &780289903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1844,11 +2172,14 @@ MonoBehaviour:
   _ending: {fileID: 0}
   _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
-  _buttonPosition: {x: 2.7, y: 0.4}
+  _buttonPosition: {x: 0, y: -0.2}
   _buttonRadius: 0.7
   _buttonLineWidth: 0.055
   _buttonSorting: 15
   _buttonFadeIn: 0.4
+  _buttonColor: {r: 0.859, g: 0.706, b: 0.278, a: 1}
+  _buttonHotColor: {r: 0.96, g: 0.84, b: 0.45, a: 1}
+  _showMoneyGlyph: 1
   _strangerPosition: {x: 0, y: -0.7}
   _strangerScale: 1.15
   _strangerHold: 0.35
@@ -2615,6 +2946,9 @@ MonoBehaviour:
   _buttonLineWidth: 0.055
   _buttonSorting: 15
   _buttonFadeIn: 0.4
+  _buttonColor: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _buttonHotColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _showMoneyGlyph: 0
   _strangerPosition: {x: 0, y: -0.7}
   _strangerScale: 1.15
   _strangerHold: 0.35
@@ -3168,3 +3502,4 @@ SceneRoots:
   - {fileID: 1420226529}
   - {fileID: 899297543}
   - {fileID: 1367039564}
+  - {fileID: 774020052}
