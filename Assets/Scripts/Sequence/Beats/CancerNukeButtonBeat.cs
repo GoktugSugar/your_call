@@ -44,19 +44,20 @@ namespace YourCall
         [SerializeField] private Color _buttonInk = Palette.InkRed;
         [Tooltip("The button brightens to the amber attention accent on hover, like the lever and the timer button.")]
         [SerializeField] private Color _buttonHot = Palette.Amber;
-        [SerializeField] private string _buttonLabel = "press";
+        [Tooltip("Optional button label. Empty draws no text (pressable without it, like the blue/red buttons).")]
+        [SerializeField] private string _buttonLabel = "";
         [SerializeField] private float _buttonLabelSize = 2.6f;
         [SerializeField] private int _buttonSorting = 14;
         [SerializeField] private float _buttonFadeIn = 0.4f;
         [SerializeField] private float _buttonFadeOut = 0.35f;
 
         [Header("The ink world map (equirectangular doodle)")]
-        [Tooltip("Centre of the map on screen.")]
-        [SerializeField] private Vector2 _mapAnchor = new Vector2(0f, 0.7f);
+        [Tooltip("Centre of the map on screen (raised so a clean band sits below the frame for the readout).")]
+        [SerializeField] private Vector2 _mapAnchor = new Vector2(0f, 1.0f);
         [Tooltip("Half width of the map (x = longitude -180..180 maps to -halfWidth..+halfWidth).")]
-        [SerializeField] private float _mapHalfWidth = 4.7f;
+        [SerializeField] private float _mapHalfWidth = 4.6f;
         [Tooltip("Half height of the map (y = latitude -90..90 maps to -halfHeight..+halfHeight).")]
-        [SerializeField] private float _mapHalfHeight = 2.15f;
+        [SerializeField] private float _mapHalfHeight = 1.85f;
         [SerializeField] private float _mapLineWidth = 0.05f;
         [SerializeField] private Color _mapInk = Palette.Ink;
         [SerializeField] private int _mapSorting = 12;
@@ -74,8 +75,8 @@ namespace YourCall
         [SerializeField] private float _pinSettle = 0.18f;
 
         [Header("The country readout (name in ink, population in amber)")]
-        [Tooltip("Where the name/population caption sits (fixed, below the map, so it always reads).")]
-        [SerializeField] private Vector2 _readoutAnchor = new Vector2(0f, -1.95f);
+        [Tooltip("Where the name/population caption sits: in the clean band below the map frame, clear of the border.")]
+        [SerializeField] private Vector2 _readoutAnchor = new Vector2(0f, -2.05f);
         [SerializeField] private float _nameSize = 3.4f;
         [SerializeField] private float _popSize = 2.7f;
         [SerializeField] private Color _nameColor = Palette.Ink;
@@ -374,12 +375,17 @@ namespace YourCall
             if (_buttonOutline.gameObject.GetComponent<LineBoil>() == null) _buttonOutline.gameObject.AddComponent<LineBoil>().Capture();
             InkLine.SetAlpha(_buttonOutline, _buttonInk, 0f);
 
-            _buttonText = InkText.Create(_buttonRoot.transform, "Label", _buttonLabelSize, _buttonInk, TextAlignmentOptions.Center, _buttonSorting + 1);
-            if (_font != null) _buttonText.font = _font;
-            _buttonText.rectTransform.sizeDelta = new Vector2(_buttonRadius * 2.2f, 1f);
-            _buttonText.transform.localPosition = Vector3.zero;
-            _buttonText.text = _buttonLabel;
-            InkText.SetAlpha(_buttonText, 0f);
+            // The button is pressable without a label (consistent with the blue/red buttons); only draw
+            // text if a label is set.
+            if (!string.IsNullOrEmpty(_buttonLabel))
+            {
+                _buttonText = InkText.Create(_buttonRoot.transform, "Label", _buttonLabelSize, _buttonInk, TextAlignmentOptions.Center, _buttonSorting + 1);
+                if (_font != null) _buttonText.font = _font;
+                _buttonText.rectTransform.sizeDelta = new Vector2(_buttonRadius * 2.2f, 1f);
+                _buttonText.transform.localPosition = Vector3.zero;
+                _buttonText.text = _buttonLabel;
+                InkText.SetAlpha(_buttonText, 0f);
+            }
         }
 
         private bool OverButton()
@@ -711,20 +717,24 @@ namespace YourCall
                     new Vector2(18,-35), new Vector2(12,-18), new Vector2(8,4), new Vector2(-7,4),
                     new Vector2(-16,15),
                 },
+                // Europe: a compact western blob whose east edge stops near longitude 29, so it reads
+                // separate from Asia (the two used to overlap around longitude 28 to 40).
                 ["Europe"] = new[]
                 {
-                    new Vector2(-9,44), new Vector2(-9,38), new Vector2(0,38), new Vector2(15,40),
-                    new Vector2(28,41), new Vector2(40,47), new Vector2(40,55), new Vector2(30,60),
-                    new Vector2(25,66), new Vector2(10,64), new Vector2(5,60), new Vector2(-5,58),
-                    new Vector2(-10,52), new Vector2(-9,44),
+                    new Vector2(-9,43), new Vector2(-8,37), new Vector2(2,38), new Vector2(12,40),
+                    new Vector2(20,41), new Vector2(27,46), new Vector2(29,53), new Vector2(26,59),
+                    new Vector2(21,64), new Vector2(11,64), new Vector2(6,60), new Vector2(-4,58),
+                    new Vector2(-10,51), new Vector2(-9,43),
                 },
+                // Asia: a large eastern mass whose west edge starts near longitude 35, leaving a clean
+                // seam (the Urals) between it and Europe rather than crossing into it.
                 ["Asia"] = new[]
                 {
-                    new Vector2(28,42), new Vector2(45,38), new Vector2(50,28), new Vector2(60,25),
+                    new Vector2(36,45), new Vector2(45,38), new Vector2(50,28), new Vector2(60,25),
                     new Vector2(78,8), new Vector2(88,20), new Vector2(97,5), new Vector2(108,10),
                     new Vector2(122,30), new Vector2(135,35), new Vector2(140,50), new Vector2(160,62),
-                    new Vector2(180,66), new Vector2(168,71), new Vector2(120,75), new Vector2(80,73),
-                    new Vector2(50,68), new Vector2(35,60), new Vector2(28,50), new Vector2(28,42),
+                    new Vector2(180,66), new Vector2(168,71), new Vector2(120,75), new Vector2(80,74),
+                    new Vector2(52,69), new Vector2(40,62), new Vector2(35,53), new Vector2(36,45),
                 },
                 ["Australia"] = new[]
                 {

@@ -58,6 +58,16 @@ namespace YourCall
         [SerializeField] private Ending _ending;
         [Tooltip("Optional font for the on-screen readout (Caveat, to match the narration). Empty uses the default.")]
         [SerializeField] private TMP_FontAsset _font;
+        [Tooltip("Shared ink material for the pressable button.")]
+        [SerializeField] private Material _inkMaterial;
+
+        [Header("The button (pressable ink; press it to accept the offer)")]
+        [Tooltip("Beside the offer, clear of the readout and the folding stranger. Pressing it accepts (the same as the Press it text option).")]
+        [SerializeField] private Vector2 _buttonPosition = new Vector2(2.7f, 0.4f);
+        [SerializeField] private float _buttonRadius = 0.7f;
+        [SerializeField] private float _buttonLineWidth = 0.055f;
+        [SerializeField] private int _buttonSorting = 15;
+        [SerializeField] private float _buttonFadeIn = 0.4f;
 
         [Header("The stranger (halving only)")]
         [SerializeField] private Vector2 _strangerPosition = new Vector2(0f, -0.7f);
@@ -173,6 +183,7 @@ namespace YourCall
         private int _picked = -1;
         private TextMeshPro _moneyLabel;
         private TextMeshPro _deadLabel;
+        private InkButton _button;
         private bool _readoutShown;
         private Camera _cam;
 
@@ -193,6 +204,12 @@ namespace YourCall
             _cam = ctx.Camera != null ? ctx.Camera : Camera.main;
             BuildReadout();
 
+            // The button to press: the physical affordance for accepting the offer (the text choices stay
+            // as the secondary fallback). It persists across the tiers, armed only during each choice.
+            _button = InkButton.Create(transform, "OfferButton", new Vector3(_buttonPosition.x, _buttonPosition.y, 0f),
+                _inkMaterial, _font, _buttonRadius, _buttonLineWidth, string.Empty, 2.6f, _buttonSorting, innerRing: true);
+            yield return _button.FadeIn(_buttonFadeIn);
+
             int floor = Mathf.Max(1, _rageThreshold);
             int amount = Climbing ? Mathf.Max(1, _startAmount) : Mathf.Max(floor, _startAmount);
             long total = 0;          // halving: money banked. climbing: cumulative per-person given.
@@ -202,6 +219,7 @@ namespace YourCall
             string refuseLabel = Climbing ? _climbRefuseLabel : _refuseLabel;
 
             ctx.Choices.Chosen += OnPicked;
+            if (_button != null) _button.Pressed += OnButtonPressed;
             try
             {
                 while (true)
@@ -211,7 +229,9 @@ namespace YourCall
                     ctx.Narrator.Show(string.Format(Climbing ? _climbOfferFormat : _offerFormat, Money(amount)));
                     while (ctx.Narrator.IsShowing) yield return null;
                     ctx.Choices.Present(acceptLabel, refuseLabel);
+                    if (_button != null) _button.Arm(true);
                     while (_picked < 0) yield return null;
+                    if (_button != null) _button.Arm(false);
 
                     if (_picked == 1)
                     {
@@ -272,15 +292,19 @@ namespace YourCall
             finally
             {
                 ctx.Choices.Chosen -= OnPicked;
+                if (_button != null) _button.Pressed -= OnButtonPressed;
             }
 
             TeardownReadout();
+            TeardownButton();
         }
 
         private void OnPicked(int index)
         {
             if (_picked < 0) _picked = index;
         }
+
+        private void OnButtonPressed() { if (_picked < 0) _picked = 0; }
 
         private int NextAmount(int amount)
         {
@@ -327,6 +351,7 @@ namespace YourCall
         private IEnumerator RageQuit(SequenceContext ctx)
         {
             TeardownReadout();
+            TeardownButton();
             ctx.Choices.Dismiss();
             if (ctx.Imp != null)
             {
@@ -468,6 +493,11 @@ namespace YourCall
         {
             if (_moneyLabel != null) { Destroy(_moneyLabel.gameObject); _moneyLabel = null; }
             if (_deadLabel != null) { Destroy(_deadLabel.gameObject); _deadLabel = null; }
+        }
+
+        private void TeardownButton()
+        {
+            if (_button != null) { Destroy(_button.gameObject); _button = null; }
         }
     }
 }

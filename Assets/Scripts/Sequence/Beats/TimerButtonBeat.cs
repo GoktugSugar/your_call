@@ -99,7 +99,9 @@ namespace YourCall
         {
             _cam = ctx.Camera != null ? ctx.Camera : Camera.main;
 
-            // The imp states the rule (and swears there is a catch he will not name).
+            // The imp states the rule (and swears there is a catch he will not name). Each setup line
+            // finishes typing AND lands with a click to continue before the next, so the last one ("clock
+            // starts now") is never cut off mid-sentence by the countdown and needling starting.
             if (_ruleLines != null)
             {
                 for (int i = 0; i < _ruleLines.Length; i++)
@@ -107,11 +109,11 @@ namespace YourCall
                     if (string.IsNullOrEmpty(_ruleLines[i])) continue;
                     ctx.Narrator.Show(_ruleLines[i]);
                     while (ctx.Narrator.IsShowing) yield return null;
-                    // Only gate on a click between rule lines, not on the last one (the clock starts).
-                    if (i < _ruleLines.Length - 1) yield return WaitAdvance(_advanceLockout);
+                    yield return WaitAdvance(_advanceLockout);
                 }
             }
 
+            // Only now, with the setup fully delivered and acknowledged, does the clock begin.
             BuildButton();
             BuildCountdown();
 

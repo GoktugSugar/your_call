@@ -25,7 +25,9 @@ namespace YourCall
         [Header("References")]
         [Tooltip("The golden crowned figure prefab (a CrownedFigure). The beat gold-brands it.")]
         [SerializeField] private CrownedFigure _crownedPrefab;
-        [Tooltip("Optional font (unused directly; kept for consistency with the other button beats).")]
+        [Tooltip("Shared ink material for the pressable button.")]
+        [SerializeField] private Material _inkMaterial;
+        [Tooltip("Optional font for the button label (unused while the button is unlabelled).")]
         [SerializeField] private TMP_FontAsset _font;
 
         [Header("The golden figure")]
@@ -33,6 +35,15 @@ namespace YourCall
         [SerializeField] private float _figureScale = 1.7f;
         [SerializeField] private Color _goldColor = Palette.InkGold;
         [SerializeField] private float _inkInDuration = 0.9f;
+
+        [Header("The button (pressable ink; press it to take the swap)")]
+        [Tooltip("Beside the golden figure, clear of it. Pressing it takes the better life (the same as the Take text option).")]
+        [SerializeField] private Vector2 _buttonPosition = new Vector2(2.7f, 0.3f);
+        [SerializeField] private float _buttonRadius = 0.7f;
+        [SerializeField] private float _buttonLineWidth = 0.055f;
+        [SerializeField] private int _buttonSorting = 14;
+        [SerializeField] private float _buttonFadeIn = 0.4f;
+        [SerializeField] private float _buttonFadeOut = 0.35f;
 
         [Header("Crowd split (seeded)")]
         [SerializeField] private int _takeSeed = 37;
@@ -75,6 +86,7 @@ namespace YourCall
         [SerializeField] private float _statsHideFade = 0.6f;
 
         private CrownedFigure _figure;
+        private InkButton _button;
         private int _picked = -1;
 
         public override IEnumerator Play(SequenceContext ctx)
@@ -112,13 +124,24 @@ namespace YourCall
             }
             ctx.Narrator.Clear();
 
-            // The choice: become the golden one, or keep your own.
+            // The button to press: the swap trigger, beside the golden figure.
+            _button = InkButton.Create(transform, "BetterButton", new Vector3(_buttonPosition.x, _buttonPosition.y, 0f),
+                _inkMaterial, _font, _buttonRadius, _buttonLineWidth, string.Empty, 2.6f, _buttonSorting, innerRing: true);
+            yield return _button.FadeIn(_buttonFadeIn);
+
+            // The choice: press the button (take the swap), or keep your own via the text option.
             _picked = -1;
             ctx.Choices.Chosen += OnPicked;
+            _button.Pressed += OnButtonPressed;
+            _button.Arm(true);
             ctx.Choices.Present(_takeLabel, _keepLabel);
             try { while (_picked < 0) yield return null; }
-            finally { ctx.Choices.Chosen -= OnPicked; }
+            finally { ctx.Choices.Chosen -= OnPicked; _button.Pressed -= OnButtonPressed; _button.Arm(false); }
             bool took = _picked == 0;
+
+            // The button has done its job; fade it away before the consequence plays out.
+            yield return _button.FadeOut(_buttonFadeOut);
+            if (_button != null) { Destroy(_button.gameObject); _button = null; }
 
             // Silent profile nudge (self vs others / identity): keep leans self, take leans away from self.
             ctx.Profile.Record(new[] { new AxisImpact(MoralAxis.SelfVsOthers, took ? _identityNudge : -_identityNudge) });
@@ -146,6 +169,7 @@ namespace YourCall
         }
 
         private void OnPicked(int index) { if (_picked < 0) _picked = index; }
+        private void OnButtonPressed() { if (_picked < 0) _picked = 0; }
 
         private IEnumerator InkFigureIn(float dur)
         {

@@ -27,11 +27,10 @@ namespace YourCall
         [Tooltip("Optional font for the button label (Caveat). Empty uses the default.")]
         [SerializeField] private TMP_FontAsset _font;
 
-        [Header("The button (minimal ink)")]
+        [Header("The button (minimal ink, pressable)")]
         [SerializeField] private Vector2 _buttonPosition = new Vector2(0f, 0.2f);
         [SerializeField] private float _buttonRadius = 0.8f;
         [SerializeField] private float _lineWidth = 0.055f;
-        [SerializeField] private Color _buttonInk = Palette.Ink;
         [SerializeField] private int _sortingOrder = 14;
 
         [Header("Crowd split (seeded)")]
@@ -69,9 +68,7 @@ namespace YourCall
         [SerializeField] private float _statsHideFade = 0.6f;
         [SerializeField] private float _buttonFadeOut = 0.4f;
 
-        private GameObject _buttonRoot;
-        private LineRenderer _buttonOutline;
-        private LineRenderer _buttonInner;
+        private InkButton _button;
         private int _picked = -1;
 
         public override IEnumerator Play(SequenceContext ctx)
@@ -82,8 +79,9 @@ namespace YourCall
                 yield break;
             }
 
-            BuildButton();
-            yield return FadeButton(0f, 1f, _buttonFadeIn);
+            _button = InkButton.Create(transform, "AlreadyButton", new Vector3(_buttonPosition.x, _buttonPosition.y, 0f),
+                _inkMaterial, _font, _buttonRadius, _lineWidth, string.Empty, 2.6f, _sortingOrder, innerRing: true);
+            yield return _button.FadeIn(_buttonFadeIn);
 
             // The imp's framing, one box at a time.
             if (_framingLines != null)
@@ -98,12 +96,14 @@ namespace YourCall
             }
             ctx.Narrator.Clear();
 
-            // The choice: press it again, or leave it.
+            // The choice: press the button itself, or the text options.
             _picked = -1;
             ctx.Choices.Chosen += OnPicked;
+            _button.Pressed += OnButtonPressed;
+            _button.Arm(true);
             ctx.Choices.Present(_pressLabel, _leaveLabel);
             try { while (_picked < 0) yield return null; }
-            finally { ctx.Choices.Chosen -= OnPicked; }
+            finally { ctx.Choices.Chosen -= OnPicked; _button.Pressed -= OnButtonPressed; _button.Arm(false); }
             bool pressed = _picked == 0;
 
             // Nothing overtly mechanical: the imp mocks either way, cryptic, never confirming.
@@ -113,8 +113,8 @@ namespace YourCall
             yield return WaitAdvance(_advanceLockout);
             ctx.Narrator.Clear();
 
-            yield return FadeButton(1f, 0f, _buttonFadeOut);
-            TeardownButton();
+            yield return _button.FadeOut(_buttonFadeOut);
+            if (_button != null) { Destroy(_button.gameObject); _button = null; }
 
             // How others chose.
             var report = new ResolutionReport { Heading = _statsHeading };
@@ -127,46 +127,7 @@ namespace YourCall
         }
 
         private void OnPicked(int index) { if (_picked < 0) _picked = index; }
-
-        private void BuildButton()
-        {
-            _buttonRoot = new GameObject("AlreadyButton");
-            _buttonRoot.transform.SetParent(transform, false);
-            _buttonRoot.transform.localPosition = new Vector3(_buttonPosition.x, _buttonPosition.y, 0f);
-
-            _buttonOutline = InkLine.Create(_buttonRoot.transform, "Outline", _inkMaterial, _lineWidth, _buttonInk, _sortingOrder);
-            var ring = new List<Vector3>();
-            InkLine.AddArc(ring, Vector2.zero, _buttonRadius, 0f, 360f, 40);
-            InkLine.SetPoints(_buttonOutline, ring);
-            if (_buttonOutline.gameObject.GetComponent<LineBoil>() == null) _buttonOutline.gameObject.AddComponent<LineBoil>().Capture();
-
-            // A small inner ring so it reads as a worn, well-pressed button.
-            _buttonInner = InkLine.Create(_buttonRoot.transform, "Inner", _inkMaterial, _lineWidth * 0.7f, _buttonInk, _sortingOrder);
-            var inner = new List<Vector3>();
-            InkLine.AddArc(inner, Vector2.zero, _buttonRadius * 0.6f, 0f, 360f, 32);
-            InkLine.SetPoints(_buttonInner, inner);
-            if (_buttonInner.gameObject.GetComponent<LineBoil>() == null) _buttonInner.gameObject.AddComponent<LineBoil>().Capture();
-        }
-
-        private IEnumerator FadeButton(float from, float to, float dur)
-        {
-            float t = 0f, d = Mathf.Max(dur, 0.01f);
-            while (t < d)
-            {
-                t += Time.deltaTime;
-                float a = Mathf.Lerp(from, to, t / d);
-                if (_buttonOutline != null) InkLine.SetAlpha(_buttonOutline, _buttonInk, a);
-                if (_buttonInner != null) InkLine.SetAlpha(_buttonInner, _buttonInk, a);
-                yield return null;
-            }
-        }
-
-        private void TeardownButton()
-        {
-            if (_buttonRoot != null) { Destroy(_buttonRoot); _buttonRoot = null; }
-            _buttonOutline = null;
-            _buttonInner = null;
-        }
+        private void OnButtonPressed() { if (_picked < 0) _picked = 0; }
 
         private IEnumerator WaitAdvance(float lockout)
         {

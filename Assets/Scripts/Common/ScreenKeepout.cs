@@ -30,6 +30,15 @@ namespace YourCall
         private static readonly List<ScreenKeepout> _active = new List<ScreenKeepout>();
         public static IReadOnlyList<ScreenKeepout> Active => _active;
 
+        /// <summary>Switch this keep-out to track the live renderer bounds of its own subtree, with the
+        /// given padding. For a runtime-built element (e.g. the walking button) the beat adds a ScreenKeepout
+        /// and calls this so the roaming imp stays clear of it. Safe to call after the component is added.</summary>
+        public void UseRendererBounds(float padding)
+        {
+            _mode = Mode.RendererBounds;
+            _padding = padding;
+        }
+
         private void OnEnable() { if (!_active.Contains(this)) _active.Add(this); }
         private void OnDisable() { _active.Remove(this); }
 

@@ -26,9 +26,15 @@ namespace YourCall
         [Tooltip("Optional font for the button's outburst (Caveat). Empty uses the default.")]
         [SerializeField] private TMP_FontAsset _font;
 
-        [Header("The button")]
-        [SerializeField] private Vector2 _buttonPosition = new Vector2(0.6f, -0.2f);
+        [Header("The button (centred)")]
+        [SerializeField] private Vector2 _buttonPosition = new Vector2(0f, 0f);
         [SerializeField] private float _buttonScale = 1.1f;
+        [Tooltip("Click radius for pressing the button directly (world units, roughly the drawn button's size).")]
+        [SerializeField] private float _pressRadius = 0.62f;
+        [Tooltip("The quick hand-drawn press squash before it comes to life.")]
+        [SerializeField] private float _pressDuration = 0.14f;
+        [Tooltip("Padding for the imp keep-out around the button, so the imp never sits on it.")]
+        [SerializeField] private float _keepoutPadding = 0.45f;
 
         [Header("The button's voice (floating ink, its own words, not the imp's)")]
         [SerializeField] private float _voiceSize = 2.3f;
@@ -83,6 +89,7 @@ namespace YourCall
         private Camera _cam;
         private WalkingButton _button;
         private TextMeshPro _voice;
+        private ClickSfx _clickSfx;
         private int _picked = -1;
 
         public override IEnumerator Play(SequenceContext ctx)
@@ -104,6 +111,10 @@ namespace YourCall
             _button.transform.localPosition = new Vector3(_buttonPosition.x, _buttonPosition.y, 0f);
             _button.transform.localScale = new Vector3(_buttonScale, _buttonScale, 1f);
 
+            // Add the button to the imp's keep-out so the imp never sits on it while roaming the setup.
+            var keepout = _button.gameObject.AddComponent<ScreenKeepout>();
+            keepout.UseRendererBounds(_keepoutPadding);
+
             // Setup.
             if (_setupLines != null)
             {
@@ -117,15 +128,28 @@ namespace YourCall
             }
             ctx.Narrator.Clear();
 
-            // The choice.
+            // The choice: click the button itself, or the text options.
             _picked = -1;
             ctx.Choices.Chosen += OnPicked;
             ctx.Choices.Present(_pressLabel, _leaveLabel);
-            try { while (_picked < 0) yield return null; }
-            finally { ctx.Choices.Chosen -= OnPicked; }
+            try
+            {
+                while (_picked < 0)
+                {
+                    if (OverButton() && PointerInput.Clicked) { _picked = 0; break; }
+                    yield return null;
+                }
+            }
+            finally { ctx.Choices.Chosen -= OnPicked; ctx.Choices.Dismiss(); }
             bool pressed = _picked == 0;
 
-            if (pressed) yield return PlayTheGag(ctx);
+            if (pressed)
+            {
+                // Press feedback: a quick squash and a click, before it comes to life.
+                PlayClick();
+                yield return _button.Press(_pressDuration);
+                yield return PlayTheGag(ctx);
+            }
             else
             {
                 ctx.Narrator.Show(_leftReact);
@@ -163,10 +187,13 @@ namespace YourCall
             yield return new WaitForSeconds(_surpriseHold);
             ctx.Narrator.Clear();
 
-            // It gets up, mutters, and walks off the screen and out.
+            // It gets up, mutters, and walks off the screen and out, AWAY from the imp so it never
+            // walks through it (the imp is held still in a side wing during the gag).
             ShowVoice(_buttonMutter);
-            float exitX = LeftExitLocalX();
-            yield return _button.WalkOff(exitX, OffScreenLeft);
+            bool impOnLeft = ctx.Imp != null && ctx.Imp.transform.position.x < _button.transform.position.x;
+            float exitX = impOnLeft ? RightExitLocalX() : LeftExitLocalX();
+            System.Func<Vector3, bool> offScreen = impOnLeft ? (System.Func<Vector3, bool>)OffScreenRight : OffScreenLeft;
+            yield return _button.WalkOff(exitX, offScreen);
             yield return FadeVoice(0f);
 
             // The imp recovers, smug mask back on, and comments.
@@ -228,7 +255,26 @@ namespace YourCall
             if (_button != null) { Destroy(_button.gameObject); _button = null; }
         }
 
-        // Off-screen threshold to the left of the camera, plus a hard local-X stop as a fallback.
+        // Is the pointer over the drawn button (so a direct click presses it)?
+        private bool OverButton()
+        {
+            if (_cam == null || _button == null) return false;
+            Vector3 wp = PointerInput.WorldPosition(_cam, 0f);
+            Vector2 c = _button.transform.position;
+            return ((Vector2)wp - c).sqrMagnitude <= _pressRadius * _pressRadius;
+        }
+
+        private void PlayClick()
+        {
+            if (_clickSfx == null)
+            {
+                _clickSfx = GetComponent<ClickSfx>();
+                if (_clickSfx == null) _clickSfx = gameObject.AddComponent<ClickSfx>();
+            }
+            _clickSfx.Play();
+        }
+
+        // Off-screen thresholds to either side of the camera, plus a hard local-X stop as a fallback.
         private float LeftExitLocalX()
         {
             if (_cam != null && _cam.orthographic)
@@ -239,11 +285,28 @@ namespace YourCall
             return -14f;
         }
 
+        private float RightExitLocalX()
+        {
+            if (_cam != null && _cam.orthographic)
+            {
+                float rightEdge = _cam.transform.position.x + _cam.orthographicSize * _cam.aspect;
+                return (rightEdge + 2f) - transform.position.x + transform.localPosition.x;
+            }
+            return 14f;
+        }
+
         private bool OffScreenLeft(Vector3 worldPos)
         {
             if (_cam == null || !_cam.orthographic) return false;
             float leftEdge = _cam.transform.position.x - _cam.orthographicSize * _cam.aspect;
             return worldPos.x < leftEdge - 1.2f;
+        }
+
+        private bool OffScreenRight(Vector3 worldPos)
+        {
+            if (_cam == null || !_cam.orthographic) return false;
+            float rightEdge = _cam.transform.position.x + _cam.orthographicSize * _cam.aspect;
+            return worldPos.x > rightEdge + 1.2f;
         }
 
         private IEnumerator WaitAdvance(float lockout)

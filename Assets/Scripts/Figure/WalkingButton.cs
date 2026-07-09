@@ -68,6 +68,23 @@ namespace YourCall
             return lr;
         }
 
+        /// <summary>A quick hand-drawn press: the button squashes down (flattens and spreads) and springs
+        /// back, the physical feedback of being pressed, before it comes to life. Purely the button; no
+        /// limbs yet.</summary>
+        public IEnumerator Press(float duration, float squash = 0.2f)
+        {
+            if (!_built) Build();
+            float d = Mathf.Max(duration, 0.05f), t = 0f;
+            while (t < d)
+            {
+                t += Time.deltaTime;
+                float k = Mathf.Sin(Mathf.Clamp01(t / d) * Mathf.PI); // 0 -> 1 -> 0
+                _rig.localScale = new Vector3(1f + k * squash * 0.6f, 1f - k * squash, 1f);
+                yield return null;
+            }
+            _rig.localScale = Vector3.one;
+        }
+
         /// <summary>Sprout limbs and a put-out face, with a hurt recoil. It is alive and offended.</summary>
         public IEnumerator ComeAlive(float duration)
         {

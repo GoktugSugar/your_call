@@ -31,6 +31,12 @@ namespace YourCall
         [SerializeField] private float _rowShrink = 0.05f;
         [SerializeField] private float _jitter = 0.06f;
 
+        [Header("Children (the blue/red children variant; 0 keeps the room all adults)")]
+        [Tooltip("Fraction of the room drawn as smaller child figures (the clueless six year olds). 0 is the original all-adult room; the kids variant sets it to 0.5. Interleaved with the adults so the size mix reads at a glance.")]
+        [SerializeField, Range(0f, 1f)] private float _childFraction = 0f;
+        [Tooltip("Scale of a child figure relative to an adult in the same row (clearly shorter). Feet stay on the row line, so a child reads as a shorter figure standing among the adults.")]
+        [SerializeField] private float _childScale = 0.6f;
+
         [Header("Timing")]
         [SerializeField] private float _resolveBeat = 0.35f;
         [SerializeField] private float _foldDuration = 0.7f;
@@ -69,11 +75,21 @@ namespace YourCall
                     float x = _roomCenter.x - rowWidth * 0.5f + col * _columnSpacing + Hash(made * 3 + 1) * _jitter;
                     float y = _roomCenter.y - row * _rowSpacing + Hash(made * 3 + 2) * _jitter;
                     var fig = Instantiate(_figurePrefab, new Vector3(x, y, 0f), Quaternion.identity, parent);
-                    float scale = _roomScale * (1f - row * _rowShrink);
+                    bool isChild = IsChild(made);
+                    float scale = _roomScale * (1f - row * _rowShrink) * (isChild ? _childScale : 1f);
                     fig.transform.localScale = new Vector3(scale, scale, 1f);
                     made++;
                 }
             }
+        }
+
+        // Evenly interleave the children through the room (roughly _childFraction of them), so the small
+        // kids and normal-size adults read as a clear mix rather than clumping.
+        private bool IsChild(int index)
+        {
+            if (_childFraction <= 0f) return false;
+            if (_childFraction >= 1f) return true;
+            return Mathf.FloorToInt((index + 1) * _childFraction) > Mathf.FloorToInt(index * _childFraction);
         }
 
         public override void ArmChoice(bool on) { if (_buttons != null) _buttons.Arm(on); }
