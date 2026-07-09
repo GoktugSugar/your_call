@@ -2579,6 +2579,7 @@ MonoBehaviour:
   _profile: {fileID: 2130798478}
   _camera: {fileID: 1808839718}
   _fade: {fileID: 340378429}
+  _money: {fileID: 0}
   _beats:
   - {fileID: 1005770903}
   - {fileID: 1323068932}
@@ -2599,7 +2600,7 @@ MonoBehaviour:
   - {fileID: 1966462613}
   _fadeToBlackAtEnd: 1
   _endFade: 1.6
-  _nextScene: 
+  _nextScene: ChapterThree
   _logBeats: 0
 --- !u!4 &1626293926
 Transform:

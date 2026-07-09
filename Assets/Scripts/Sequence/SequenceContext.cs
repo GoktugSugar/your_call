@@ -18,8 +18,12 @@ namespace YourCall
         public readonly Camera Camera;
         public readonly ScreenFade Fade;
 
+        /// <summary>The chapter's finite money pot, for the money chapter (Chapter 3). Null in chapters
+        /// that carry no money, so the money beats can assert on it and every other beat ignores it.</summary>
+        public readonly MoneyBalance Money;
+
         public SequenceContext(NarratorView narrator, ImpFigure imp, StatsView stats,
-            ChoiceButtons choices, Profile profile, Camera camera, ScreenFade fade)
+            ChoiceButtons choices, Profile profile, Camera camera, ScreenFade fade, MoneyBalance money = null)
         {
             Narrator = narrator;
             Imp = imp;
@@ -28,6 +32,7 @@ namespace YourCall
             Profile = profile;
             Camera = camera;
             Fade = fade;
+            Money = money;
         }
     }
 }

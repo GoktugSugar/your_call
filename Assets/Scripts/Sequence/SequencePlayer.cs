@@ -22,6 +22,9 @@ namespace YourCall
         [SerializeField] private Profile _profile;
         [SerializeField] private Camera _camera;
         [SerializeField] private ScreenFade _fade;
+        [Tooltip("Optional: the finite money pot for the money chapter (Chapter 3). Empty in other chapters, " +
+                 "so the money beats can assert on it and every other beat ignores it.")]
+        [SerializeField] private MoneyBalance _money;
 
         [Header("Beats (played in order)")]
         [SerializeField] private List<SequenceBeat> _beats = new List<SequenceBeat>();
@@ -60,7 +63,7 @@ namespace YourCall
 
         private IEnumerator RunAll(int startIndex)
         {
-            var ctx = new SequenceContext(_narrator, _imp, _stats, _choices, _profile, _camera, _fade);
+            var ctx = new SequenceContext(_narrator, _imp, _stats, _choices, _profile, _camera, _fade, _money);
 
             // Entering partway (the dev picker jumped to a mid-chapter beat): the skipped intro beats
             // never ran, so make sure the screen is clear and the imp is present before the beat plays.

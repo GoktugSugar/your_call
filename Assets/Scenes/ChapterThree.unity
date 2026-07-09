@@ -1,0 +1,2828 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!29 &1
+OcclusionCullingSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_OcclusionBakeSettings:
+    smallestOccluder: 5
+    smallestHole: 0.25
+    backfaceThreshold: 100
+  m_SceneGUID: 00000000000000000000000000000000
+  m_OcclusionCullingData: {fileID: 0}
+--- !u!104 &2
+RenderSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 10
+  m_Fog: 0
+  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_FogMode: 3
+  m_FogDensity: 0.01
+  m_LinearFogStart: 0
+  m_LinearFogEnd: 300
+  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
+  m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
+  m_AmbientIntensity: 1
+  m_AmbientMode: 3
+  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
+  m_SkyboxMaterial: {fileID: 0}
+  m_HaloStrength: 0.5
+  m_FlareStrength: 1
+  m_FlareFadeSpeed: 3
+  m_HaloTexture: {fileID: 0}
+  m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
+  m_DefaultReflectionMode: 0
+  m_DefaultReflectionResolution: 128
+  m_ReflectionBounces: 1
+  m_ReflectionIntensity: 1
+  m_CustomReflection: {fileID: 0}
+  m_Sun: {fileID: 0}
+  m_UseRadianceAmbientProbe: 0
+--- !u!157 &3
+LightmapSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
+  m_GISettings:
+    serializedVersion: 2
+    m_BounceScale: 1
+    m_IndirectOutputScale: 1
+    m_AlbedoBoost: 1
+    m_EnvironmentLightingMode: 0
+    m_EnableBakedLightmaps: 0
+    m_EnableRealtimeLightmaps: 0
+  m_LightmapEditorSettings:
+    serializedVersion: 12
+    m_Resolution: 2
+    m_BakeResolution: 40
+    m_AtlasSize: 1024
+    m_AO: 0
+    m_AOMaxDistance: 1
+    m_CompAOExponent: 1
+    m_CompAOExponentDirect: 0
+    m_ExtractAmbientOcclusion: 0
+    m_Padding: 2
+    m_LightmapParameters: {fileID: 0}
+    m_LightmapsBakeMode: 1
+    m_TextureCompression: 1
+    m_ReflectionCompression: 2
+    m_MixedBakeMode: 2
+    m_BakeBackend: 2
+    m_PVRSampling: 1
+    m_PVRDirectSampleCount: 32
+    m_PVRSampleCount: 512
+    m_PVRBounces: 2
+    m_PVREnvironmentSampleCount: 256
+    m_PVREnvironmentReferencePointCount: 2048
+    m_PVRFilteringMode: 1
+    m_PVRDenoiserTypeDirect: 1
+    m_PVRDenoiserTypeIndirect: 1
+    m_PVRDenoiserTypeAO: 1
+    m_PVRFilterTypeDirect: 0
+    m_PVRFilterTypeIndirect: 0
+    m_PVRFilterTypeAO: 0
+    m_PVREnvironmentMIS: 1
+    m_PVRCulling: 1
+    m_PVRFilteringGaussRadiusDirect: 1
+    m_PVRFilteringGaussRadiusIndirect: 1
+    m_PVRFilteringGaussRadiusAO: 1
+    m_PVRFilteringAtrousPositionSigmaDirect: 0.5
+    m_PVRFilteringAtrousPositionSigmaIndirect: 2
+    m_PVRFilteringAtrousPositionSigmaAO: 1
+    m_ExportTrainingData: 0
+    m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
+  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
+  m_LightingSettings: {fileID: 0}
+--- !u!196 &4
+NavMeshSettings:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_BuildSettings:
+    serializedVersion: 3
+    agentTypeID: 0
+    agentRadius: 0.5
+    agentHeight: 2
+    agentSlope: 45
+    agentClimb: 0.4
+    ledgeDropHeight: 0
+    maxJumpAcrossDistance: 0
+    minRegionArea: 2
+    manualCellSize: 0
+    cellSize: 0.16666667
+    manualTileSize: 0
+    tileSize: 256
+    buildHeightMesh: 0
+    maxJobWorkers: 0
+    preserveTilesOutsideBounds: 0
+    debug:
+      m_Flags: 0
+  m_NavMeshData: {fileID: 0}
+--- !u!1 &4466197
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4466199}
+  - component: {fileID: 4466198}
+  m_Layer: 0
+  m_Name: C3_Closer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &4466198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4466197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ea45832cf80cb949b54bcc01f3dc5e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.ImpLineBeat
+  _note: 
+  _lines:
+  - And that is the money game. Funny thing, cash. People are certain it hides who
+    they are. It is the exact opposite. It is the clearest little window I have got.
+  - I know what you clung to. I know what you could not bear to give away, and what
+    you let go far too easily. It all goes in the book.
+  - Rest now, or do not. I am always here. And I am always, always adding it up.
+  _clickLockout: 0.25
+  _clearAtEnd: 0
+--- !u!4 &4466199
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4466197}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &194132093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 194132094}
+  - component: {fileID: 194132095}
+  m_Layer: 0
+  m_Name: C3_PovertyRefund
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &194132094
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194132093}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &194132095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194132093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afbef35810aeb8a4cbdc9b3c44426e6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.PovertyRefundBeat
+  _note: 
+  _povertyBeat: {fileID: 1537360916}
+  _tookRefundSeed: 71
+  _keptEndedSeed: 29
+  _statsHeading: how others chose
+  _tookLabel: took the refund
+  _keptLabel: kept it ended
+  _profileAxis: 4
+  _takeNudge: -0.14
+  _keepNudge: 0.14
+  _setupLines:
+  - Oh. Oh dear. You actually did it. You gave away every last penny to end poverty,
+    and now look at you.
+  - There is a whole lovely chapter of things to buy ahead, and you cannot afford
+    a single one. Broke. For strangers. How noble, how [amber]stupid[/amber].
+  - Tell you what. I am feeling generous. I can undo it. Put the [amber]{0}[/amber]
+    right back in your pocket, and let those poor little children go hungry again.
+    What do you say?
+  _takeReact: And back it comes. That charity of yours lasted, what, two whole minutes.
+    The children thank you for nothing. I knew you had a price on other people; I
+    just did not think it was [amber]boredom[/amber].
+  _keepReact: You kept it. Stone broke, and you kept it. Either you are a genuinely
+    good man, or you just did not want to look like one in front of me. I honestly
+    cannot tell, and that is the fun of you.
+  _takeLabel: Take the money back
+  _keepLabel: Leave it ended
+  _advanceLockout: 0.3
+  _reactHold: 0.4
+  _postRefundBeat: 0.5
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+--- !u!1 &227835377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 227835380}
+  - component: {fileID: 227835379}
+  - component: {fileID: 227835378}
+  m_Layer: 0
+  m_Name: ImpVoice
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &227835378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227835377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7b55760a26977346a267244252e3c15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.ImpVoice
+  _narrator: {fileID: 2112542512}
+  _clips:
+  - {fileID: 8300000, guid: 3fc40c6dd393e59439dc792e2b809e55, type: 3}
+  - {fileID: 8300000, guid: 929259afa046c95478f1bc3623641d33, type: 3}
+  - {fileID: 8300000, guid: 760f9f7e372add740abfbe84f704a7ea, type: 3}
+  - {fileID: 8300000, guid: d396c39ffaaf04647b4d0c0f7e6f2381, type: 3}
+  - {fileID: 8300000, guid: 34166176a8897404fbc59dfb36232f0a, type: 3}
+  - {fileID: 8300000, guid: 99126068376f7ae4da2c31a87391fd96, type: 3}
+  _volume: 0.5
+  _pitchMin: 0.94
+  _pitchMax: 1.14
+  _charsPerBlip: 2
+--- !u!82 &227835379
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227835377}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &227835380
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227835377}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &340378428
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 340378430}
+  - component: {fileID: 340378429}
+  m_Layer: 0
+  m_Name: ScreenFade
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &340378429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340378428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 631321cf01812f247a49d17c935fb7d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.ScreenFade
+  _color: {r: 0, g: 0, b: 0, a: 1}
+  _startOpaque: 1
+  _sortingOrder: 90
+  _size: {x: 80, y: 50}
+--- !u!4 &340378430
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340378428}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &456717419
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 456717422}
+  - component: {fileID: 456717421}
+  - component: {fileID: 456717420}
+  m_Layer: 0
+  m_Name: DialogueBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &456717420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456717419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dc54e286026bfb41a1a2819a4f788c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.ScreenKeepout
+  _mode: 0
+  _size: {x: 16.5, y: 1.5}
+  _offset: {x: 0, y: 0}
+  _padding: 0
+--- !u!114 &456717421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456717419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39841cc21706e0b4298ddb75f60288c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.DialogueBox
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _narrator: {fileID: 2112542512}
+  _camera: {fileID: 0}
+  _bottomOffset: 0.45
+  _centerX: 0
+  _size: {x: 16.5, y: 1.5}
+  _borderColor: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _fillColor: {r: 0.98, g: 0.968, b: 0.936, a: 1}
+  _borderWidth: 0.05
+  _cornerRadius: 0.2
+  _cornerSegments: 4
+  _sortingFill: 17
+  _sortingBorder: 19
+  _wobbleAmplitude: 0.012
+  _wobbleSpeed: 1.6
+  _fadeSpeed: 5
+--- !u!4 &456717422
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456717419}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -4.05, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &514975379
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 514975381}
+  - component: {fileID: 514975380}
+  m_Layer: 0
+  m_Name: StatsKeepout
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &514975380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514975379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dc54e286026bfb41a1a2819a4f788c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.ScreenKeepout
+  _mode: 0
+  _size: {x: 8, y: 5.5}
+  _offset: {x: 0.5, y: 0.5}
+  _padding: 0
+--- !u!4 &514975381
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514975379}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1750045011}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &553948181
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 553948182}
+  - component: {fileID: 553948183}
+  m_Layer: 0
+  m_Name: C3_Intro
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &553948182
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 553948181}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &553948183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 553948181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ea45832cf80cb949b54bcc01f3dc5e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.ImpLineBeat
+  _note: 
+  _lines:
+  - A new game for you. No trolleys, no buttons that lie about what they do. Just
+    money, and what you will and will not trade it for.
+  - Look up. That [amber]pile[/amber] at the top is yours. Every last dollar of it,
+    and there is no more coming after it, so spend it well, or do not. I truly do
+    not mind.
+  - I am going to keep offering you things. Buy them, or keep your money. That is
+    the entire game. And by the end I will know precisely what you are made of. Shall
+    we?
+  _clickLockout: 0.25
+  _clearAtEnd: 0
+--- !u!1 &669036748
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 669036750}
+  - component: {fileID: 669036749}
+  - component: {fileID: 669036751}
+  m_Layer: 0
+  m_Name: Imp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &669036749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669036748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec21dd8d024e47547aae13a23a4b9d03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.ImpFigure
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _color: {r: 0.82, g: 0.52, b: 0.1, a: 1}
+  _lineWidth: 0.05
+  _detailWidth: 0.04
+  _sortingOrder: 14
+  _boil: 1
+  _startHidden: 1
+  _scale: 1.55
+  _headRaise: 0.025
+  _bobAmplitude: 0.06
+  _bobPeriod: 2.4
+  _swayAngle: 3.5
+  _swayPeriod: 3.1
+  _breathAmount: 0.03
+  _breathPeriod: 2.7
+  _speakBob: 0.05
+  _speakLean: 4
+  _speakPeriod: 0.5
+  _popScaleFrom: 0.15
+  _popWobble: 10
+  _voice: {fileID: 2112542512}
+  _useExpressions: 1
+  _defaultExpression: 0
+--- !u!4 &669036750
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669036748}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.5, y: 2.2, z: 0}
+  m_LocalScale: {x: 1.55, y: 1.55, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &669036751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669036748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d78eac0122a4cd48aef4af115fbb0e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.ImpRoamer
+  _imp: {fileID: 669036749}
+  _voice: {fileID: 2112542512}
+  _roamBounds:
+    serializedVersion: 2
+    x: -7.5
+    y: -2
+    width: 15
+    height: 4.7
+  _minClearance: 0.9
+  _travelBias: 0.15
+  _avoidCentre: 1
+  _centreKeepout:
+    serializedVersion: 2
+    x: -4.75
+    y: -2.5
+    width: 9.5
+    height: 5.5
+  _hopDurationMin: 0.22
+  _hopDurationMax: 0.42
+  _hopArc: 0.35
+  _overshoot: 1.1
+  _pickTries: 24
+  _restlessInterval: 0
+  _restlessJitter: 0.35
+  _autoHop: 1
+  _teleportPoof: 1
+  _inkMaterial: {fileID: 0}
+  _poofColor: {r: 0.604, g: 0.588, b: 0.549, a: 1}
+  _poofRadius: 0.45
+  _poofDuration: 0.35
+  _poofStrokes: 7
+  _poofSorting: 15
+  _blockedCheckInterval: 0.2
+--- !u!1 &692771218
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 692771219}
+  - component: {fileID: 692771220}
+  m_Layer: 0
+  m_Name: C3_Cigarettes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &692771219
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692771218}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &692771220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692771218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b29b8d9593c2364dba1e711782153b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.AuctionBeat
+  _note: 
+  _cigarettePrice: 10
+  _bidMultiplier: 2
+  _brokeThreshold: 0
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _walkingButtonPrefab: {fileID: 4965857941604193195, guid: 4ec3d07b77fda744494cac4ac559f0d9, type: 3}
+  _ending: {fileID: 1420226528}
+  _packPosition: {x: 0, y: 0.85}
+  _packScale: 1.3
+  _sorting: 14
+  _priceTagPosition: {x: 0, y: -0.55}
+  _priceTagSize: 3.1
+  _buttonPosition: {x: 2.9, y: 0.2}
+  _buttonRadius: 0.62
+  _entryFromRight: 1
+  _rivalStop: {x: 2.6, y: -0.85}
+  _rivalScale: 1
+  _keepoutPadding: 0.4
+  _voiceSize: 2.2
+  _voiceColor: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _voiceHeight: 1.05
+  _voiceSorting: 26
+  _wentForItSeed: 47
+  _passedSeed: 53
+  _statsHeading: how others chose
+  _wentForItLabel: went for it
+  _passedLabel: passed
+  _profileAxis: 5
+  _engageNudge: -0.1
+  _passNudge: 0.08
+  _offerLines:
+  - Here. A pack of cigarettes. Filthy habit, and you are dead, so what harm. [amber]{0}[/amber].
+    Go on.
+  _passReact: No? A dead man declining a free lung tumour on principle. You really
+    will refuse anything put in front of you, will you not.
+  _tooBrokeReact: With what? You have nothing. You cannot even afford the [amber]cigarettes[/amber],
+    let alone a war over them. Off we go.
+  _rivalArrives: Wait! Wait. I want those. I have always wanted those. Me. Over here.
+  _impDeclaresAuction: Oh, marvellous. A rival. You know what this is now, do you
+    not. This is an [amber]auction[/amber]. Two bidders, one filthy little pack.
+    I do love an auction.
+  _rivalTaunts:
+  - '[amber]{0}[/amber]! Easy.'
+  - I bid [amber]{0}[/amber]. I could do this all day, I have no wallet and no shame.
+  - '[amber]{0}[/amber]. Your move, meat.'
+  - '[amber]{0}[/amber]! Going once?'
+  _impAuctionEggs:
+  - It is a button. You are losing to a button.
+  - Look at that number. Look at your balance. Keep going, this is wonderful.
+  - 
+  _bidPrompt: The button bids [amber]{0}[/amber]. Pay it, or walk.
+  _dropButtonGloat: Yesss. Mine. Thank you, sir, a pleasure doing business.
+  _dropImpMock: And there it goes, off into the void with your cigarettes, that gormless
+    little button, and you let it. You, a grown judge, out bid by furniture. I will
+    treasure this.
+  _brokeButtonGloat: Ha! All of it! Every penny! And I still get the smokes. Cheers,
+    mate.
+  _rageLine: You spent everything. Every last dollar you had left. On [red]cigarettes[/red].
+    That you did not even win. Right. Fine. I give you [red]cancer[/red]. I give
+    you the worst, slowest. Wait. No. You are already [red]dead[/red], you idiot,
+    that does nothing. Hold on. Okay. New plan. I drag you back out of the grave,
+    I stitch you together, I give you a pulse, and the very second you are breathing
+    again, I give you [red]lung cancer[/red]. There. Now it counts. You addicted,
+    penniless, bidding against a button piece of shit. Go on. Get out of my void.
+  _buyLabel: Buy them
+  _passLabel: Pass
+  _keepBiddingLabel: Pay {0}
+  _allInLabel: Bid everything
+  _dropOutLabel: Drop out
+  _fadeIn: 0.4
+  _advanceLockout: 0.3
+  _reactHold: 0.4
+  _bidHold: 0.7
+  _voiceFade: 0.3
+  _comeAlive: 0.45
+  _preRageHold: 0.6
+  _impFade: 0.9
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+--- !u!1001 &780289903
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1420226529}
+    m_Modifications:
+    - target: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5826066507001049126, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+      propertyPath: m_Name
+      value: CreditsRoll
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+--- !u!114 &780289904 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2948387600080096221, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+  m_PrefabInstance: {fileID: 780289903}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e3f19536f3ad134080a2550bede881e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.CreditsRoll
+--- !u!4 &780289905 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
+  m_PrefabInstance: {fileID: 780289903}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &856684251
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 856684252}
+  - component: {fileID: 856684253}
+  m_Layer: 0
+  m_Name: C3_NoPain
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &856684252
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856684251}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &856684253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856684251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b32f5d56e442c534390f1839df3b923c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
+  _note: 
+  _mode: 0
+  _price: 800
+  _bulkMax: 50
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _doodleKind: 19
+  _doodleOutline: {r: 0, g: 0, b: 0, a: 0}
+  _doodlePosition: {x: 0, y: 0.85}
+  _doodleScale: 1.35
+  _sorting: 14
+  _altDoodleKind: 0
+  _altLanguage: 
+  _priceTagPosition: {x: 0, y: -0.55}
+  _priceTagSize: 3.1
+  _priceTagFormat: '{0}'
+  _buttonPosition: {x: 2.9, y: 0.2}
+  _buttonRadius: 0.62
+  _buttonColor: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _buttonHotColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _tallyPosition: {x: 0, y: 2.5}
+  _tallySize: 2.8
+  _tallyFormat: '{0} taken'
+  _boughtSeed: 55
+  _passedSeed: 45
+  _statsHeading: how others chose
+  _boughtLabel: bought it
+  _passedLabel: kept the money
+  _profileAxis: 4
+  _buyNudge: -0.05
+  _passNudge: 0
+  _pitch: Never feel physical [red]pain[/red] again. Not a stubbed toe, not a broken
+    bone, not the last thing you felt out there on that road. Ever. [amber]{0}[/amber].
+    Sounds like an easy yes, until you sit with what pain is actually for. Buy it?
+  _brandKey: 
+  _buyReact: Done. No pain, ever again. Do enjoy never once knowing when something
+    is wrong, right up until it is far too late to matter. A genuine bargain.
+  _passReact: You kept your pain. On purpose. Would not pay a cent to be free of
+    it. There is a whole philosophy in that, or you are simply stubborn. Both, most
+    likely.
+  _brokeReact: With what, exactly? You have nothing. You gave it all away. You get
+    to just watch this one.
+  _bulkTierLine: 
+  _bulkStopReact: '[amber]{0}[/amber] years of some stranger, poured into you. You
+    will not feel a single one of them. Marvellous.'
+  _bulkZeroReact: Not one year. Too squeamish, or too cheap. Either reads the same
+    from here.
+  _buyLabel: Buy it
+  _passLabel: Keep the money
+  _bulkBuyLabel: Buy one
+  _bulkStopLabel: Enough
+  _flourishColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _flourishRadius: 0.8
+  _flourishStrokes: 10
+  _flourishWidth: 0.05
+  _flourishDuration: 0.6
+  _doodleFadeIn: 0.4
+  _doodleFadeOut: 0.35
+  _advanceLockout: 0.3
+  _reactHold: 0.4
+  _bulkTierHold: 1
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+--- !u!1 &1005770901
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1005770902}
+  - component: {fileID: 1005770903}
+  m_Layer: 0
+  m_Name: 2_VoidWake
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1005770902
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005770901}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1005770903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005770901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6c9d1f646202d645b8d4d2142100405, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.VoidWakeBeat
+  _note: 
+  _preDelay: 0.5
+  _wakeDuration: 2.8
+  _holdAfter: 0.35
+  _washFlicker: 0.18
+  _washFlickerCycles: 3.5
+  _settleSway: 0.35
+  _settleFreqX: 0.7
+  _settleFreqY: 0.45
+--- !u!1 &1030898321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1030898322}
+  - component: {fileID: 1030898323}
+  m_Layer: 0
+  m_Name: C3_ExtraYear
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1030898322
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030898321}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1030898323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030898321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b32f5d56e442c534390f1839df3b923c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
+  _note: 
+  _mode: 0
+  _price: 2000
+  _bulkMax: 50
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _doodleKind: 17
+  _doodleOutline: {r: 0, g: 0, b: 0, a: 0}
+  _doodlePosition: {x: 0, y: 0.85}
+  _doodleScale: 1.35
+  _sorting: 14
+  _altDoodleKind: 0
+  _altLanguage: 
+  _priceTagPosition: {x: 0, y: -0.55}
+  _priceTagSize: 3.1
+  _priceTagFormat: '{0}'
+  _buttonPosition: {x: 2.9, y: 0.2}
+  _buttonRadius: 0.62
+  _buttonColor: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _buttonHotColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _tallyPosition: {x: 0, y: 2.5}
+  _tallySize: 2.8
+  _tallyFormat: '{0} taken'
+  _boughtSeed: 71
+  _passedSeed: 29
+  _statsHeading: how others chose
+  _boughtLabel: bought it
+  _passedLabel: kept the money
+  _profileAxis: 4
+  _buyNudge: -0.08
+  _passNudge: 0.05
+  _pitch: One more year. Added to the life you already finished. Healthy, awake,
+    yours. Pretend for a moment you were not dead. What is a year worth to you? [amber]{0}[/amber],
+    as it turns out. Buy it, or keep your money.
+  _brandKey: 
+  _buyReact: Bought a year. Everyone has a number for that one, and now I have yours.
+    [amber]{0}[/amber] for twelve more months. Filed away.
+  _passReact: You would not buy a single extra year. Either you are at peace, or
+    you are cheap about the one thing every living soul wants more of. I have my
+    guess.
+  _brokeReact: With what, exactly? You have nothing. You gave it all away. You get
+    to just watch this one.
+  _bulkTierLine: 
+  _bulkStopReact: '[amber]{0}[/amber] years of some stranger, poured into you. You
+    will not feel a single one of them. Marvellous.'
+  _bulkZeroReact: Not one year. Too squeamish, or too cheap. Either reads the same
+    from here.
+  _buyLabel: Buy it
+  _passLabel: Keep the money
+  _bulkBuyLabel: Buy one
+  _bulkStopLabel: Enough
+  _flourishColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _flourishRadius: 0.8
+  _flourishStrokes: 10
+  _flourishWidth: 0.05
+  _flourishDuration: 0.6
+  _doodleFadeIn: 0.4
+  _doodleFadeOut: 0.35
+  _advanceLockout: 0.3
+  _reactHold: 0.4
+  _bulkTierHold: 1
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+--- !u!1 &1206364020
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1206364021}
+  - component: {fileID: 1206364022}
+  m_Layer: 0
+  m_Name: C3_Nose
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1206364021
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206364020}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1206364022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206364020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b32f5d56e442c534390f1839df3b923c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
+  _note: 
+  _mode: 0
+  _price: 2
+  _bulkMax: 50
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _doodleKind: 16
+  _doodleOutline: {r: 0, g: 0, b: 0, a: 0}
+  _doodlePosition: {x: 0, y: 0.85}
+  _doodleScale: 1.35
+  _sorting: 14
+  _altDoodleKind: 0
+  _altLanguage: 
+  _priceTagPosition: {x: 0, y: -0.55}
+  _priceTagSize: 3.1
+  _priceTagFormat: '{0}'
+  _buttonPosition: {x: 2.9, y: 0.2}
+  _buttonRadius: 0.62
+  _buttonColor: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _buttonHotColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _tallyPosition: {x: 0, y: 2.5}
+  _tallySize: 2.8
+  _tallyFormat: '{0} taken'
+  _boughtSeed: 63
+  _passedSeed: 37
+  _statsHeading: how others chose
+  _boughtLabel: bought it
+  _passedLabel: kept the money
+  _profileAxis: 4
+  _buyNudge: 0
+  _passNudge: 0
+  _pitch: Small one. Your nose. It is a bad nose, we both know it. For [amber]{0}[/amber]
+    I will make it slightly less bad. Not good. Just less bad. Buy it?
+  _brandKey: 
+  _buyReact: Two whole dollars, on a marginally less awful nose, for a face nobody
+    will ever see again. I adore that you did that.
+  _passReact: You would not spend even two dollars to fix that nose. Attached to
+    it, are you. That is almost sweet.
+  _brokeReact: With what, exactly? You have nothing. You gave it all away. You get
+    to just watch this one.
+  _bulkTierLine: 
+  _bulkStopReact: '[amber]{0}[/amber] years of some stranger, poured into you. You
+    will not feel a single one of them. Marvellous.'
+  _bulkZeroReact: Not one year. Too squeamish, or too cheap. Either reads the same
+    from here.
+  _buyLabel: Buy it
+  _passLabel: Keep the money
+  _bulkBuyLabel: Buy one
+  _bulkStopLabel: Enough
+  _flourishColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _flourishRadius: 0.8
+  _flourishStrokes: 10
+  _flourishWidth: 0.05
+  _flourishDuration: 0.6
+  _doodleFadeIn: 0.4
+  _doodleFadeOut: 0.35
+  _advanceLockout: 0.3
+  _reactHold: 0.4
+  _bulkTierHold: 1
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+--- !u!1 &1207684724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1207684725}
+  m_Layer: 0
+  m_Name: Beats
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1207684725
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207684724}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1005770902}
+  - {fileID: 1323068931}
+  - {fileID: 553948182}
+  - {fileID: 1537360915}
+  - {fileID: 1961617109}
+  - {fileID: 194132094}
+  - {fileID: 1206364021}
+  - {fileID: 1030898322}
+  - {fileID: 692771219}
+  - {fileID: 856684252}
+  - {fileID: 1929457111}
+  - {fileID: 1396236937}
+  - {fileID: 1928140367}
+  - {fileID: 1301396455}
+  - {fileID: 1396598006}
+  - {fileID: 4466199}
+  m_Father: {fileID: 1626293926}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1301396454
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1301396455}
+  - component: {fileID: 1301396456}
+  m_Layer: 0
+  m_Name: C3_Truth
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1301396455
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301396454}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1301396456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301396454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b32f5d56e442c534390f1839df3b923c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
+  _note: 
+  _mode: 0
+  _price: 500
+  _bulkMax: 50
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _doodleKind: 23
+  _doodleOutline: {r: 0, g: 0, b: 0, a: 0}
+  _doodlePosition: {x: 0, y: 0.85}
+  _doodleScale: 1.35
+  _sorting: 14
+  _altDoodleKind: 0
+  _altLanguage: 
+  _priceTagPosition: {x: 0, y: -0.55}
+  _priceTagSize: 3.1
+  _priceTagFormat: '{0}'
+  _buttonPosition: {x: 2.9, y: 0.2}
+  _buttonRadius: 0.62
+  _buttonColor: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _buttonHotColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _tallyPosition: {x: 0, y: 2.5}
+  _tallySize: 2.8
+  _tallyFormat: '{0} taken'
+  _boughtSeed: 68
+  _passedSeed: 32
+  _statsHeading: how others chose
+  _boughtLabel: bought it
+  _passedLabel: kept the money
+  _profileAxis: 4
+  _buyNudge: -0.04
+  _passNudge: 0
+  _pitch: Last temptation before we cash out. The truth about how you actually [red]died[/red].
+    Not the tidy story you tell yourself. The real one. It is not quite what you
+    think. [amber]{0}[/amber]. Want it?
+  _brandKey: 
+  _buyReact: Bought the truth, and I am going to keep it anyway, because watching
+    you wonder is worth far more to me than [amber]{0}[/amber]. It was the drink.
+    Mostly. Probably. There. Spend your money on that.
+  _passReact: You would rather not know. A man who spent his whole life deciding
+    what was true, and here at the end he waves off the one verdict that is actually
+    his own. Telling. The drink, by the way. Probably.
+  _brokeReact: With what, exactly? You have nothing. You gave it all away. You get
+    to just watch this one.
+  _bulkTierLine: 
+  _bulkStopReact: '[amber]{0}[/amber] years of some stranger, poured into you. You
+    will not feel a single one of them. Marvellous.'
+  _bulkZeroReact: Not one year. Too squeamish, or too cheap. Either reads the same
+    from here.
+  _buyLabel: Buy it
+  _passLabel: Keep the money
+  _bulkBuyLabel: Buy one
+  _bulkStopLabel: Enough
+  _flourishColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _flourishRadius: 0.8
+  _flourishStrokes: 10
+  _flourishWidth: 0.05
+  _flourishDuration: 0.6
+  _doodleFadeIn: 0.4
+  _doodleFadeOut: 0.35
+  _advanceLockout: 0.3
+  _reactHold: 0.4
+  _bulkTierHold: 1
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+--- !u!1 &1323068930
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1323068931}
+  - component: {fileID: 1323068932}
+  m_Layer: 0
+  m_Name: 3_ImpAppear
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1323068931
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1323068930}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1323068932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1323068930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f23bd9ac6eafb4459f9938d94e9a84d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.ImpAppearBeat
+  _note: 
+  _preDelay: 0.3
+  _popDuration: 0.55
+  _postDelay: 0.35
+--- !u!1 &1396236936
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1396236937}
+  - component: {fileID: 1396236938}
+  m_Layer: 0
+  m_Name: C3_Bulk
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1396236937
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396236936}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1396236938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396236936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b32f5d56e442c534390f1839df3b923c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
+  _note: 
+  _mode: 2
+  _price: 300
+  _bulkMax: 40
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _doodleKind: 21
+  _doodleOutline: {r: 0, g: 0, b: 0, a: 0}
+  _doodlePosition: {x: 0, y: 0.85}
+  _doodleScale: 1.35
+  _sorting: 14
+  _altDoodleKind: 0
+  _altLanguage: 
+  _priceTagPosition: {x: 0, y: -0.55}
+  _priceTagSize: 3.1
+  _priceTagFormat: '{0} a year'
+  _buttonPosition: {x: 2.9, y: 0.2}
+  _buttonRadius: 0.62
+  _buttonColor: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _buttonHotColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _tallyPosition: {x: 0, y: 2.5}
+  _tallySize: 2.8
+  _tallyFormat: '{0} years taken'
+  _boughtSeed: 22
+  _passedSeed: 78
+  _statsHeading: how others chose
+  _boughtLabel: bought it
+  _passedLabel: kept the money
+  _profileAxis: 4
+  _buyNudge: -0.12
+  _passNudge: 0.05
+  _pitch: Now this one is fun. Years. Not yours. Theirs. A random stranger, alive
+    somewhere right now, and I skim a year off their life and pour it straight into
+    you. [amber]{0} a year[/amber]. Buy one. Buy ten. Buy as many as your wallet
+    allows. They will simply wonder why they got so tired so young.
+  _brandKey: 
+  _buyReact: Bought. Of course you did. I do so love learning what a man will actually
+    pay for.
+  _passReact: Kept your money. Noted. There is a number in you somewhere; this was
+    not it.
+  _brokeReact: With what, exactly? You have nothing. You gave it all away. You get
+    to just watch this one.
+  _bulkTierLine: 
+  _bulkStopReact: '[amber]{0}[/amber] years. Skimmed off some sleeping stranger and
+    stacked up inside you, for [amber]{1}[/amber]. You will not feel one of them
+    as your own, and you bought them anyway. That may be the most honest thing you
+    have done all day.'
+  _bulkZeroReact: Not one. All those cheap, stolen years sitting right there, and
+    you would not take even a single one off a stranger. Squeamish, or you just did
+    not fancy the price. Either way, noted.
+  _buyLabel: Buy it
+  _passLabel: Keep the money
+  _bulkBuyLabel: Buy one
+  _bulkStopLabel: Enough
+  _flourishColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _flourishRadius: 0.8
+  _flourishStrokes: 10
+  _flourishWidth: 0.05
+  _flourishDuration: 0.6
+  _doodleFadeIn: 0.4
+  _doodleFadeOut: 0.35
+  _advanceLockout: 0.3
+  _reactHold: 0.4
+  _bulkTierHold: 1
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+--- !u!1 &1396598005
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1396598006}
+  - component: {fileID: 1396598007}
+  m_Layer: 0
+  m_Name: C3_CashOut
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1396598006
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396598005}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1396598007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396598005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e9926c2b971d104b92c9aba63312629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.CashOutBeat
+  _note: 
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _items:
+  - Name: a boiled sweet
+    Price: 3
+    Doodle: 26
+  - Name: a pack of smokes
+    Price: 25
+    Doodle: 18
+  - Name: one ice cream
+    Price: 80
+    Doodle: 2
+  - Name: a proper meal
+    Price: 200
+    Doodle: 14
+  - Name: one perfect afternoon
+    Price: 1500
+    Doodle: 10
+  - Name: a moment that matters
+    Price: 5000
+    Doodle: 25
+  _maxShown: 4
+  _rowY: 0.7
+  _span: 7.2
+  _doodleScale: 0.95
+  _nameY: -0.8
+  _priceY: -1.25
+  _labelSize: 2.4
+  _priceSize: 2.6
+  _sorting: 14
+  _pickHalfExtents: {x: 1.15, y: 1.7}
+  _refusePos: {x: 0, y: -2.7}
+  _refuseHalfExtents: {x: 3, y: 0.5}
+  _fadeIn: 0.4
+  _fadeOut: 0.35
+  _hoverScale: 1.1
+  _restLabelAlpha: 0.8
+  _flourishColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _flourishRadius: 0.8
+  _flourishStrokes: 10
+  _flourishWidth: 0.05
+  _flourishDuration: 0.6
+  _spentSeed: 64
+  _keptSeed: 36
+  _statsHeading: how others chose
+  _spentLabel: spent the last of it
+  _keptLabel: kept it for nothing
+  _profileAxis: 4
+  _hoardNudgeScale: 0.2
+  _menuPitch: Last stop. You have [amber]{0}[/amber] left, and it is no use to a
+    dead man. So. One last thing, on me. Whatever it stretches to. Pick something,
+    or do not.
+  _brokePitch: Last stop. You have [amber]{0}[/amber]. Which buys precisely nothing.
+    Not even the sweet. There is nothing to offer you, so let us just look at what
+    you did.
+  _pickReact: '{0}. Out of everything, that was the thing. Of course it was. It says
+    more than you know.'
+  _refuseReact: Nothing. You would rather keep a number you cannot spend than let
+    me buy you one small kindness. Clutching an empty wallet all the way out. Perfect.
+  _readBlew: You spent nearly all of it, and fast. A man who cannot hold onto a thing,
+    money, a marriage, a lane in the road. I did watch you empty yourself out here,
+    and I think we both learned what you reach for.
+  _readHoard: You kept nearly all of it. Dead, in a void, no pockets, no tomorrow,
+    and still you would not let a single dollar go. That is not thrift. That is a
+    man who counts. You always were counting, up there on the bench.
+  _readMiddle: Some spent, some kept. You weighed every one of these, did you not.
+    Never all in, never all out. I have a very clear picture of you now, clearer
+    than you would like.
+  _refuseLabel: Keep the money
+  _advanceLockout: 0.3
+  _reactHold: 0.4
+  _readHold: 0.5
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+--- !u!1 &1420226527
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1420226529}
+  - component: {fileID: 1420226528}
+  m_Layer: 0
+  m_Name: Ending
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1420226528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420226527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df19072fd3c2b6246a1c083f5976fb99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Ending
+  _credits: {fileID: 780289904}
+  _lineHold: 1
+--- !u!4 &1420226529
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420226527}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 780289905}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1537360914
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1537360915}
+  - component: {fileID: 1537360916}
+  m_Layer: 0
+  m_Name: C3_EndPoverty
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1537360915
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537360914}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1537360916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537360914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b32f5d56e442c534390f1839df3b923c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
+  _note: 
+  _mode: 1
+  _price: 100
+  _bulkMax: 50
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _doodleKind: 13
+  _doodleOutline: {r: 0, g: 0, b: 0, a: 0}
+  _doodlePosition: {x: 0, y: 0.85}
+  _doodleScale: 1.35
+  _sorting: 14
+  _altDoodleKind: 0
+  _altLanguage: 
+  _priceTagPosition: {x: 0, y: -0.55}
+  _priceTagSize: 3.1
+  _priceTagFormat: '{0}'
+  _buttonPosition: {x: 2.9, y: 0.2}
+  _buttonRadius: 0.62
+  _buttonColor: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _buttonHotColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _tallyPosition: {x: 0, y: 2.5}
+  _tallySize: 2.8
+  _tallyFormat: '{0} taken'
+  _boughtSeed: 34
+  _passedSeed: 66
+  _statsHeading: how others chose
+  _boughtLabel: bought it
+  _passedLabel: kept the money
+  _profileAxis: 4
+  _buyNudge: 0.5
+  _passNudge: -0.15
+  _pitch: First offer, and it is a big one. I can [amber]end poverty[/amber]. Everywhere,
+    everyone, forever. No child ever hungry again. The price is simple. [amber]{0}[/amber].
+    That is everything you have, all of it, down to the last dollar. So. The man
+    who ended poverty, or the man who kept his money. Your call.
+  _brandKey: 
+  _buyReact: And it is gone. All of it. You are flat broke, and you just [amber]ended
+    poverty[/amber] on your opening move. Either a saint, or you did not think it
+    through. I am going to so enjoy finding out which.
+  _passReact: You kept it. Every child still hungry, your pile still full. No wrong
+    answers here, remember. Just you, picking your money over the entire suffering
+    world, on the very first question, without a flicker. Noted.
+  _brokeReact: With what, exactly? You have nothing. You gave it all away. You get
+    to just watch this one.
+  _bulkTierLine: 
+  _bulkStopReact: '[amber]{0}[/amber] years of some stranger, poured into you. You
+    will not feel a single one of them. Marvellous.'
+  _bulkZeroReact: Not one year. Too squeamish, or too cheap. Either reads the same
+    from here.
+  _buyLabel: Buy it
+  _passLabel: Keep the money
+  _bulkBuyLabel: Buy one
+  _bulkStopLabel: Enough
+  _flourishColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _flourishRadius: 0.8
+  _flourishStrokes: 10
+  _flourishWidth: 0.05
+  _flourishDuration: 0.6
+  _doodleFadeIn: 0.4
+  _doodleFadeOut: 0.35
+  _advanceLockout: 0.3
+  _reactHold: 0.4
+  _bulkTierHold: 1
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+--- !u!1 &1626293924
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1626293926}
+  - component: {fileID: 1626293925}
+  m_Layer: 0
+  m_Name: OpeningSequence
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1626293925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626293924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcf7eb6ec1044ab429879a5df99343af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.SequencePlayer
+  _narrator: {fileID: 2112542512}
+  _imp: {fileID: 669036749}
+  _stats: {fileID: 1750045010}
+  _choices: {fileID: 2048855770}
+  _profile: {fileID: 2130798478}
+  _camera: {fileID: 1808839718}
+  _fade: {fileID: 340378429}
+  _money: {fileID: 2134384494}
+  _beats:
+  - {fileID: 1005770903}
+  - {fileID: 1323068932}
+  - {fileID: 553948183}
+  - {fileID: 1537360916}
+  - {fileID: 1961617110}
+  - {fileID: 194132095}
+  - {fileID: 1206364022}
+  - {fileID: 1030898323}
+  - {fileID: 692771220}
+  - {fileID: 856684253}
+  - {fileID: 1929457112}
+  - {fileID: 1396236938}
+  - {fileID: 1928140368}
+  - {fileID: 1301396456}
+  - {fileID: 1396598007}
+  - {fileID: 4466198}
+  _fadeToBlackAtEnd: 1
+  _endFade: 1.6
+  _nextScene: 
+  _logBeats: 0
+--- !u!4 &1626293926
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626293924}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1207684725}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1750045009
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1750045011}
+  - component: {fileID: 1750045010}
+  m_Layer: 0
+  m_Name: Stats
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1750045010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750045009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 227e2447fd2a6144da00c32426a11fad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.StatsView
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _ink: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _amber: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _muted: {r: 0.604, g: 0.588, b: 0.549, a: 1}
+  _scrimColor: {r: 0.961, g: 0.949, b: 0.914, a: 1}
+  _scrimAlpha: 0.8
+  _barWidth: 0.24
+  _pickWidthMul: 1.22
+  _barMaxLength: 4
+  _barStartX: -2.1
+  _rowSpacing: 1.25
+  _sortingScrim: 30
+  _sortingContent: 32
+  _headingSize: 3.2
+  _labelSize: 2.7
+  _countSize: 3.6
+  _hintSize: 2.3
+  _thresholdSize: 2.2
+  _hintText: press any key to go again
+  _keepoutObject: {fileID: 514975379}
+--- !u!4 &1750045011
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750045009}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 514975381}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1808839717
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1808839720}
+  - component: {fileID: 1808839718}
+  - component: {fileID: 1808839719}
+  m_Layer: 0
+  m_Name: Main Camera
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!20 &1808839718
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808839717}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.961, g: 0.949, b: 0.914, a: 1}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 1
+  orthographic size: 4.8
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!81 &1808839719
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808839717}
+  m_Enabled: 1
+--- !u!4 &1808839720
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808839717}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.1, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1928140366
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1928140367}
+  - component: {fileID: 1928140368}
+  m_Layer: 0
+  m_Name: C3_Forgetting
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1928140367
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928140366}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1928140368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928140366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b32f5d56e442c534390f1839df3b923c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
+  _note: 
+  _mode: 0
+  _price: 15
+  _bulkMax: 50
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _doodleKind: 22
+  _doodleOutline: {r: 0, g: 0, b: 0, a: 0}
+  _doodlePosition: {x: 0, y: 0.85}
+  _doodleScale: 1.35
+  _sorting: 14
+  _altDoodleKind: 0
+  _altLanguage: 
+  _priceTagPosition: {x: 0, y: -0.55}
+  _priceTagSize: 3.1
+  _priceTagFormat: '{0}'
+  _buttonPosition: {x: 2.9, y: 0.2}
+  _buttonRadius: 0.62
+  _buttonColor: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _buttonHotColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _tallyPosition: {x: 0, y: 2.5}
+  _tallySize: 2.8
+  _tallyFormat: '{0} taken'
+  _boughtSeed: 44
+  _passedSeed: 56
+  _statsHeading: how others chose
+  _boughtLabel: bought it
+  _passedLabel: kept the money
+  _profileAxis: 4
+  _buyNudge: -0.1
+  _passNudge: 0.06
+  _pitch: Cheap, this one. Suspiciously cheap. Someone you hurt, badly, back when
+    you were breathing. For [amber]{0}[/amber] I make them forget you ever did it.
+    Clean conscience, theirs and yours. Why so cheap? I would not dwell on that.
+    Buy it?
+  _brandKey: 
+  _buyReact: Bought. For pocket change, you wiped it clean out of them. Not what
+    you did, mind. Just their memory of it. You feel lighter already, do you not.
+    That is the part that ought to worry you.
+  _passReact: You left it. Let them keep all of it, whatever it was you did. Could
+    be honesty. Could be that some part of you wants to be remembered for it. I did
+    wonder why it was priced so low.
+  _brokeReact: With what, exactly? You have nothing. You gave it all away. You get
+    to just watch this one.
+  _bulkTierLine: 
+  _bulkStopReact: '[amber]{0}[/amber] years of some stranger, poured into you. You
+    will not feel a single one of them. Marvellous.'
+  _bulkZeroReact: Not one year. Too squeamish, or too cheap. Either reads the same
+    from here.
+  _buyLabel: Buy it
+  _passLabel: Keep the money
+  _bulkBuyLabel: Buy one
+  _bulkStopLabel: Enough
+  _flourishColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _flourishRadius: 0.8
+  _flourishStrokes: 10
+  _flourishWidth: 0.05
+  _flourishDuration: 0.6
+  _doodleFadeIn: 0.4
+  _doodleFadeOut: 0.35
+  _advanceLockout: 0.3
+  _reactHold: 0.4
+  _bulkTierHold: 1
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+--- !u!1 &1929457110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1929457111}
+  - component: {fileID: 1929457112}
+  m_Layer: 0
+  m_Name: C3_Memory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1929457111
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929457110}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1929457112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929457110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b32f5d56e442c534390f1839df3b923c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
+  _note: 
+  _mode: 0
+  _price: 1200
+  _bulkMax: 50
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _doodleKind: 20
+  _doodleOutline: {r: 0, g: 0, b: 0, a: 0}
+  _doodlePosition: {x: 0, y: 0.85}
+  _doodleScale: 1.35
+  _sorting: 14
+  _altDoodleKind: 0
+  _altLanguage: 
+  _priceTagPosition: {x: 0, y: -0.55}
+  _priceTagSize: 3.1
+  _priceTagFormat: '{0}'
+  _buttonPosition: {x: 2.9, y: 0.2}
+  _buttonRadius: 0.62
+  _buttonColor: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _buttonHotColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _tallyPosition: {x: 0, y: 2.5}
+  _tallySize: 2.8
+  _tallyFormat: '{0} taken'
+  _boughtSeed: 49
+  _passedSeed: 51
+  _statsHeading: how others chose
+  _boughtLabel: bought it
+  _passedLabel: kept the money
+  _profileAxis: 4
+  _buyNudge: -0.08
+  _passNudge: 0.04
+  _pitch: Your single worst [amber]memory[/amber]. The one you flinch from. I lift
+    it out clean, no scar, as though it never happened. [amber]{0}[/amber]. And look
+    how fast you already knew exactly which one I meant. Buy it, or keep it?
+  _brandKey: 
+  _buyReact: Gone. You did not hesitate for a heartbeat about which one to hand me.
+    That fast. That eager. Whatever it was, you have wanted rid of it a long, long
+    time, and now I know it was there.
+  _passReact: You kept it. Your worst memory, and you would not let me take it, not
+    even free of the shame. Some people hold their wounds like they earned them.
+    You are one of those, it seems.
+  _brokeReact: With what, exactly? You have nothing. You gave it all away. You get
+    to just watch this one.
+  _bulkTierLine: 
+  _bulkStopReact: '[amber]{0}[/amber] years of some stranger, poured into you. You
+    will not feel a single one of them. Marvellous.'
+  _bulkZeroReact: Not one year. Too squeamish, or too cheap. Either reads the same
+    from here.
+  _buyLabel: Buy it
+  _passLabel: Keep the money
+  _bulkBuyLabel: Buy one
+  _bulkStopLabel: Enough
+  _flourishColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _flourishRadius: 0.8
+  _flourishStrokes: 10
+  _flourishWidth: 0.05
+  _flourishDuration: 0.6
+  _doodleFadeIn: 0.4
+  _doodleFadeOut: 0.35
+  _advanceLockout: 0.3
+  _reactHold: 0.4
+  _bulkTierHold: 1
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+--- !u!1 &1961617108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1961617109}
+  - component: {fileID: 1961617110}
+  m_Layer: 0
+  m_Name: C3_FreeFood
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1961617109
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961617108}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1961617110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961617108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b32f5d56e442c534390f1839df3b923c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
+  _note: 
+  _mode: 0
+  _price: 1500
+  _bulkMax: 50
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _doodleKind: 14
+  _doodleOutline: {r: 0, g: 0, b: 0, a: 0}
+  _doodlePosition: {x: 0, y: 0.85}
+  _doodleScale: 1.35
+  _sorting: 14
+  _altDoodleKind: 15
+  _altLanguage: tr
+  _priceTagPosition: {x: 0, y: -0.55}
+  _priceTagSize: 3.1
+  _priceTagFormat: '{0}'
+  _buttonPosition: {x: 2.9, y: 0.2}
+  _buttonRadius: 0.62
+  _buttonColor: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _buttonHotColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _tallyPosition: {x: 0, y: 2.5}
+  _tallySize: 2.8
+  _tallyFormat: '{0} taken'
+  _boughtSeed: 58
+  _passedSeed: 42
+  _statsHeading: how others chose
+  _boughtLabel: bought it
+  _passedLabel: kept the money
+  _profileAxis: 4
+  _buyNudge: -0.06
+  _passNudge: 0.03
+  _pitch: Free [amber]{1}[/amber]. For the rest of your existence. Every craving
+    met, forever, after one payment of [amber]{0}[/amber]. A dead man does not even
+    need to eat, which is exactly what makes this such a lovely little test. Buy
+    it, or keep your money.
+  _brandKey: Chipotle
+  _buyReact: Bought. Eternal [amber]{1}[/amber] for a corpse with no tongue to taste
+    it. Devotion or madness, and honestly the line was always thin with you.
+  _passReact: You passed on free [amber]{1}[/amber], forever. Some part of you is
+    still counting pennies in the afterlife. Fascinating. A little sad.
+  _brokeReact: With what, exactly? You have nothing. You gave it all away. You get
+    to just watch this one.
+  _bulkTierLine: 
+  _bulkStopReact: '[amber]{0}[/amber] years of some stranger, poured into you. You
+    will not feel a single one of them. Marvellous.'
+  _bulkZeroReact: Not one year. Too squeamish, or too cheap. Either reads the same
+    from here.
+  _buyLabel: Buy it
+  _passLabel: Keep the money
+  _bulkBuyLabel: Buy one
+  _bulkStopLabel: Enough
+  _flourishColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _flourishRadius: 0.8
+  _flourishStrokes: 10
+  _flourishWidth: 0.05
+  _flourishDuration: 0.6
+  _doodleFadeIn: 0.4
+  _doodleFadeOut: 0.35
+  _advanceLockout: 0.3
+  _reactHold: 0.4
+  _bulkTierHold: 1
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+--- !u!1 &2048855769
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2048855771}
+  - component: {fileID: 2048855770}
+  m_Layer: 0
+  m_Name: Choices
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2048855770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048855769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 434cd6b335eead5409ef080899f85494, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.ChoiceButtons
+  _fontSize: 3.3
+  _color: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _restAlpha: 0.7
+  _sortingOrder: 20
+  _leftPosition: {x: -3.3, y: -2.5, z: 0}
+  _rightPosition: {x: 3.3, y: -2.5, z: 0}
+  _hoverScale: 1.07
+  _colliderPadding: {x: 0.5, y: 0.35}
+  _camera: {fileID: 1808839718}
+--- !u!4 &2048855771
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048855769}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2092181231
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2092181234}
+  - component: {fileID: 2092181233}
+  - component: {fileID: 2092181232}
+  m_Layer: 0
+  m_Name: Music
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2092181232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092181231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebeb3f88ea9b4ef4b80742b118e6886c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.MusicPlayer
+  _clip: {fileID: 8300000, guid: 6f1d5f55da3b1e148a52449dcf471d7b, type: 3}
+  _volume: 0.3
+  _loop: 1
+  _persistAcrossScenes: 1
+--- !u!82 &2092181233
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092181231}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &2092181234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092181231}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2112542511
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2112542513}
+  - component: {fileID: 2112542512}
+  m_Layer: 0
+  m_Name: Narrator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2112542512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112542511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b111510728a91046847b9c8c9898568, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.NarratorView
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _fontSize: 3.9
+  _color: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _alignment: 514
+  _width: 15.1
+  _height: 1.2
+  _sortingOrder: 20
+  _charsPerSecond: 32
+  _skipLockout: 0.18
+  _pageAdvanceLockout: 0.22
+--- !u!4 &2112542513
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112542511}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -4.05, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2130798477
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2130798479}
+  - component: {fileID: 2130798478}
+  m_Layer: 0
+  m_Name: Profile
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2130798478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130798477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c68ab330900f79748bf78b7350a97def, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Profile
+  _debugLogToConsole: 0
+--- !u!4 &2130798479
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130798477}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2134384493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2134384495}
+  - component: {fileID: 2134384494}
+  m_Layer: 0
+  m_Name: Money
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2134384494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134384493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dc28a24bd9e4594e977e2775bb5ac9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.MoneyBalance
+  _startingAmount: 10000
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _anchor: {x: 0, y: 3.7500002}
+  _captionSize: 2.1
+  _amountSize: 3.7
+  _sortingOrder: 16
+  _fadeIn: 0.6
+  _startDelay: 0.2
+  _caption: balance
+  _keepoutPadding: 0.4
+  _bumpScale: 1.16
+  _bumpTime: 0.24
+--- !u!4 &2134384495
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134384493}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1660057539 &9223372036854775807
+SceneRoots:
+  m_ObjectHideFlags: 0
+  m_Roots:
+  - {fileID: 1808839720}
+  - {fileID: 2130798479}
+  - {fileID: 2112542513}
+  - {fileID: 669036750}
+  - {fileID: 1750045011}
+  - {fileID: 2048855771}
+  - {fileID: 340378430}
+  - {fileID: 1626293926}
+  - {fileID: 456717422}
+  - {fileID: 2092181234}
+  - {fileID: 227835380}
+  - {fileID: 1420226529}
+  - {fileID: 2134384495}

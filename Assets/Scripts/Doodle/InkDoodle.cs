@@ -71,6 +71,23 @@ namespace YourCall
                 case DoodleKind.Sun: return Palette.InkOrange;        // hot, warm
                 case DoodleKind.ThirdArmFigure: return Palette.InkGreen;  // an odd body, quirky
                 case DoodleKind.TwoHeadFigure: return Palette.InkPurple;  // an odd body, quirky
+
+                // Chapter 3 (the money): each priceable thing gets a matched coloured outline.
+                case DoodleKind.Poverty: return Palette.InkGold;      // charity / money, gold
+                case DoodleKind.Burrito: return Palette.InkOrange;    // warm food
+                case DoodleKind.Kebab: return Palette.InkRed;         // grilled meat, warm
+                case DoodleKind.Nose: return Palette.InkPink;         // skin
+                case DoodleKind.Hourglass: return Palette.InkGreen;   // a year of life
+                case DoodleKind.CigarettePack: return Palette.InkRed; // a warning red
+                case DoodleKind.Bandage: return Palette.InkPink;      // skin / hurt
+                case DoodleKind.MemoryCloud: return Palette.InkPurple;// the mind
+                case DoodleKind.StolenYears: return Palette.InkRed;   // taking a life, the horror
+                case DoodleKind.Forgetting: return Palette.InkSky;    // fading, cool
+                case DoodleKind.Tombstone: return Palette.Muted;      // somber stone
+                case DoodleKind.Coin: return Palette.InkGold;         // money
+                case DoodleKind.Star: return Palette.InkGold;         // something bright / meaningful
+                case DoodleKind.Candy: return Palette.InkPink;        // cheap sweet
+
                 default: return Palette.Ink;
             }
         }
@@ -91,6 +108,22 @@ namespace YourCall
                 case DoodleKind.Sun: Sun(); break;
                 case DoodleKind.ThirdArmFigure: ThirdArmFigure(); break;
                 case DoodleKind.TwoHeadFigure: TwoHeadFigure(); break;
+
+                // Chapter 3 (the money) doodles.
+                case DoodleKind.Poverty: Poverty(); break;
+                case DoodleKind.Burrito: Burrito(); break;
+                case DoodleKind.Kebab: Kebab(); break;
+                case DoodleKind.Nose: Nose(); break;
+                case DoodleKind.Hourglass: Hourglass(); break;
+                case DoodleKind.CigarettePack: CigarettePack(); break;
+                case DoodleKind.Bandage: Bandage(); break;
+                case DoodleKind.MemoryCloud: MemoryCloud(); break;
+                case DoodleKind.StolenYears: StolenYears(); break;
+                case DoodleKind.Forgetting: Forgetting(); break;
+                case DoodleKind.Tombstone: Tombstone(); break;
+                case DoodleKind.Coin: Coin(); break;
+                case DoodleKind.Star: Star(); break;
+                case DoodleKind.Candy: Candy(); break;
                 default: break;
             }
         }
@@ -305,6 +338,203 @@ namespace YourCall
             Stroke("NeckR", Line(new Vector2(0f, 0.32f), new Vector2(0.17f, 0.44f)));
             Stroke("HeadL", Circle(new Vector2(-0.19f, 0.58f), 0.14f));
             Stroke("HeadR", Circle(new Vector2(0.19f, 0.58f), 0.14f));
+        }
+
+        // ---------- Chapter 3 (the money) doodles ----------
+
+        // Rotate a point about the origin (for the tilted food doodles).
+        private static Vector3 Rot(float x, float y, float r)
+        {
+            float c = Mathf.Cos(r), s = Mathf.Sin(r);
+            return new Vector3(x * c - y * s, x * s + y * c, 0f);
+        }
+
+        // A small parametric heart centred at c (used by the ending-poverty doodle).
+        private static List<Vector3> Heart(Vector2 c, float s)
+        {
+            var pts = new List<Vector3>();
+            int seg = 40;
+            for (int i = 0; i <= seg; i++)
+            {
+                float t = i / (float)seg * Mathf.PI * 2f;
+                float x = 16f * Mathf.Pow(Mathf.Sin(t), 3f);
+                float y = 13f * Mathf.Cos(t) - 5f * Mathf.Cos(2f * t) - 2f * Mathf.Cos(3f * t) - Mathf.Cos(4f * t);
+                pts.Add(new Vector3(c.x + x / 16f * s, c.y + y / 16f * s, 0f));
+            }
+            return pts;
+        }
+
+        // End poverty: a cupped hand offering a little heart (charity / giving).
+        private void Poverty()
+        {
+            var cup = new List<Vector3>();
+            InkLine.AddArc(cup, new Vector2(0f, 0.02f), 0.5f, 200f, 340f, 20);
+            Stroke("Cup", cup);
+            Stroke("FingerL", Line(new Vector2(-0.47f, -0.13f), new Vector2(-0.55f, 0.13f)), _width * 0.85f);
+            Stroke("FingerR", Line(new Vector2(0.47f, -0.13f), new Vector2(0.55f, 0.11f)), _width * 0.85f);
+            Stroke("Heart", Heart(new Vector2(0f, 0.42f), 0.3f), _width * 0.95f);
+        }
+
+        // Free food for life (English): a wrapped burrito.
+        private void Burrito()
+        {
+            float rot = -18f * Mathf.Deg2Rad;
+            var body = new List<Vector3>();
+            for (int i = 0; i <= 34; i++) { float a = i / 34f * Mathf.PI * 2f; body.Add(Rot(Mathf.Cos(a) * 0.72f, Mathf.Sin(a) * 0.34f, rot)); }
+            Stroke("Body", body);
+            Stroke("Fold1", new List<Vector3> { Rot(-0.2f, 0.2f, rot), Rot(-0.05f, -0.22f, rot) }, _width * 0.75f);
+            Stroke("Fold2", new List<Vector3> { Rot(0.2f, 0.22f, rot), Rot(0.32f, -0.18f, rot) }, _width * 0.75f);
+            Stroke("Foil", new List<Vector3> { Rot(0.55f, 0.16f, rot), Rot(0.64f, 0.02f, rot), Rot(0.55f, -0.1f, rot), Rot(0.66f, -0.16f, rot) }, _width * 0.8f);
+        }
+
+        // Free food for life (Turkish): a skewer of kebab chunks.
+        private void Kebab()
+        {
+            Vector2 dir = new Vector2(Mathf.Cos(35f * Mathf.Deg2Rad), Mathf.Sin(35f * Mathf.Deg2Rad));
+            Vector2 a = -dir * 0.78f, b = dir * 0.86f;
+            Stroke("Skewer", Line(a, b), _width * 0.8f);
+            float[] ts = { 0.3f, 0.52f, 0.74f };
+            for (int i = 0; i < ts.Length; i++)
+            {
+                Vector2 c = Vector2.Lerp(a, b, ts[i]);
+                var chunk = new List<Vector3>();
+                for (int j = 0; j <= 14; j++) { float ang = j / 14f * Mathf.PI * 2f; chunk.Add(new Vector3(c.x + Mathf.Cos(ang) * 0.2f, c.y + Mathf.Sin(ang) * 0.17f, 0f)); }
+                Stroke("Chunk" + i, chunk, _width * 0.9f);
+            }
+        }
+
+        // A marginally less bad nose (a nose in profile).
+        private void Nose()
+        {
+            Stroke("Profile", Line(new Vector2(-0.18f, 0.62f), new Vector2(-0.02f, 0.3f), new Vector2(0.34f, -0.06f), new Vector2(0.12f, -0.24f), new Vector2(0.24f, -0.34f), new Vector2(-0.04f, -0.42f)));
+            var nostril = new List<Vector3>();
+            InkLine.AddArc(nostril, new Vector2(0.06f, -0.28f), 0.09f, -10f, 170f, 10);
+            Stroke("Nostril", nostril, _width * 0.8f);
+        }
+
+        // One extra year of life: an hourglass.
+        private void Hourglass()
+        {
+            Stroke("TopBar", Line(new Vector2(-0.45f, 0.62f), new Vector2(0.45f, 0.62f)));
+            Stroke("BotBar", Line(new Vector2(-0.45f, -0.62f), new Vector2(0.45f, -0.62f)));
+            Stroke("SideL", Line(new Vector2(-0.4f, 0.6f), new Vector2(0f, 0f), new Vector2(-0.4f, -0.6f)));
+            Stroke("SideR", Line(new Vector2(0.4f, 0.6f), new Vector2(0f, 0f), new Vector2(0.4f, -0.6f)));
+            Stroke("Sand", Line(new Vector2(-0.26f, -0.6f), new Vector2(0f, -0.28f), new Vector2(0.26f, -0.6f)), _width * 0.8f);
+            Stroke("Grain", Line(new Vector2(0f, 0.05f), new Vector2(0f, -0.16f)), _width * 0.7f);
+        }
+
+        // The cigarette auction: a pack with a few cigarettes.
+        private void CigarettePack()
+        {
+            Stroke("Box", Line(new Vector2(-0.36f, 0.15f), new Vector2(-0.36f, -0.6f), new Vector2(0.36f, -0.6f), new Vector2(0.36f, 0.15f)));
+            Stroke("Lid", Line(new Vector2(-0.36f, 0.15f), new Vector2(-0.2f, 0.42f), new Vector2(0.5f, 0.42f), new Vector2(0.36f, 0.15f)), _width * 0.85f);
+            Stroke("Band", Line(new Vector2(-0.36f, -0.25f), new Vector2(0.36f, -0.25f)), _width * 0.7f);
+            for (int i = 0; i < 3; i++)
+            {
+                float x = -0.18f + i * 0.18f;
+                Stroke("Cig" + i, Line(new Vector2(x, 0.15f), new Vector2(x, 0.5f)), _width * 0.9f);
+                Stroke("Tip" + i, Line(new Vector2(x - 0.06f, 0.5f), new Vector2(x + 0.06f, 0.5f)), _width * 1.1f);
+            }
+        }
+
+        // No more pain: a plaster / bandage.
+        private void Bandage()
+        {
+            float rot = 28f * Mathf.Deg2Rad;
+            var body = new List<Vector3>();
+            for (int i = 0; i <= 30; i++) { float a = i / 30f * Mathf.PI * 2f; body.Add(Rot(Mathf.Cos(a) * 0.66f, Mathf.Sin(a) * 0.26f, rot)); }
+            Stroke("Body", body);
+            var pad = new List<Vector3> { Rot(-0.18f, 0.15f, rot), Rot(0.18f, 0.15f, rot), Rot(0.18f, -0.15f, rot), Rot(-0.18f, -0.15f, rot), Rot(-0.18f, 0.15f, rot) };
+            Stroke("Pad", pad, _width * 0.75f);
+            Stroke("H1", new List<Vector3> { Rot(-0.5f, 0.08f, rot), Rot(-0.34f, 0.08f, rot) }, _width * 0.6f);
+            Stroke("H2", new List<Vector3> { Rot(-0.5f, -0.06f, rot), Rot(-0.34f, -0.06f, rot) }, _width * 0.6f);
+            Stroke("H3", new List<Vector3> { Rot(0.34f, 0.08f, rot), Rot(0.5f, 0.08f, rot) }, _width * 0.6f);
+            Stroke("H4", new List<Vector3> { Rot(0.34f, -0.06f, rot), Rot(0.5f, -0.06f, rot) }, _width * 0.6f);
+        }
+
+        // The deleted memory: a thought cloud with a scribble drifting inside.
+        private void MemoryCloud()
+        {
+            var cloud = new List<Vector3>();
+            for (int i = 0; i <= 48; i++) { float a = i / 48f * Mathf.PI * 2f; float r = 0.52f + 0.08f * Mathf.Sin(a * 6f); cloud.Add(new Vector3(Mathf.Cos(a) * r, 0.18f + Mathf.Sin(a) * r * 0.72f, 0f)); }
+            Stroke("Cloud", cloud);
+            Stroke("Bub1", Circle(new Vector2(-0.28f, -0.45f), 0.1f, 12), _width * 0.85f);
+            Stroke("Bub2", Circle(new Vector2(-0.5f, -0.66f), 0.06f, 10), _width * 0.8f);
+            var sp = new List<Vector3>();
+            for (int i = 0; i <= 40; i++) { float t = i / 40f; float ang = t * Mathf.PI * 4f; float r = 0.24f * (1f - t); sp.Add(new Vector3(Mathf.Cos(ang) * r, 0.2f + Mathf.Sin(ang) * r, 0f)); }
+            Stroke("Scribble", sp, _width * 0.8f);
+        }
+
+        // Bulk (ten years of a stranger's life): a small stranger beside a clock.
+        private void StolenYears()
+        {
+            Stroke("Head", Circle(new Vector2(-0.42f, 0.42f), 0.13f, 16));
+            Stroke("Body", Line(new Vector2(-0.42f, 0.29f), new Vector2(-0.42f, -0.12f)));
+            Stroke("LegL", Line(new Vector2(-0.42f, -0.12f), new Vector2(-0.56f, -0.48f)));
+            Stroke("LegR", Line(new Vector2(-0.42f, -0.12f), new Vector2(-0.28f, -0.48f)));
+            Stroke("ArmL", Line(new Vector2(-0.42f, 0.18f), new Vector2(-0.6f, -0.02f)));
+            Stroke("ArmR", Line(new Vector2(-0.42f, 0.18f), new Vector2(-0.24f, -0.02f)));
+            Stroke("Clock", Circle(new Vector2(0.32f, 0.1f), 0.34f, 26));
+            Stroke("HandH", Line(new Vector2(0.32f, 0.1f), new Vector2(0.32f, 0.34f)), _width * 0.9f);
+            Stroke("HandM", Line(new Vector2(0.32f, 0.1f), new Vector2(0.52f, 0.1f)), _width * 0.9f);
+            for (int i = 0; i < 12; i++) { float a = i * 30f * Mathf.Deg2Rad; var d = new Vector2(Mathf.Cos(a), Mathf.Sin(a)); Stroke("Tk" + i, Line(new Vector2(0.32f, 0.1f) + d * 0.3f, new Vector2(0.32f, 0.1f) + d * 0.34f), _width * 0.5f); }
+        }
+
+        // The cheap forgetting: a head with the memory drifting off and fading.
+        private void Forgetting()
+        {
+            Stroke("Head", Circle(new Vector2(-0.1f, 0f), 0.44f, 28));
+            Stroke("EyeL", Circle(new Vector2(-0.26f, 0.08f), 0.04f, 8), _width * 0.8f);
+            Stroke("EyeR", Circle(new Vector2(0.02f, 0.08f), 0.04f, 8), _width * 0.8f);
+            Stroke("Mouth", Line(new Vector2(-0.24f, -0.16f), new Vector2(0f, -0.16f)), _width * 0.8f);
+            var wisp = new List<Vector3>();
+            for (int i = 0; i <= 24; i++) { float t = i / 24f; float ang = t * Mathf.PI * 3f; wisp.Add(new Vector3(0.3f + t * 0.42f, 0.4f + t * 0.35f + Mathf.Sin(ang) * 0.06f, 0f)); }
+            Stroke("Wisp", wisp, _width * 0.75f);
+            Stroke("Puff1", Circle(new Vector2(0.72f, 0.78f), 0.06f, 10), _width * 0.65f);
+            Stroke("Puff2", Circle(new Vector2(0.84f, 0.9f), 0.04f, 8), _width * 0.6f);
+        }
+
+        // The truth about how you died: a headstone with a question mark (kept light).
+        private void Tombstone()
+        {
+            var stone = new List<Vector3> { new Vector3(-0.4f, -0.62f, 0f), new Vector3(-0.4f, 0.2f, 0f) };
+            var arch = new List<Vector3>();
+            InkLine.AddArc(arch, new Vector2(0f, 0.2f), 0.4f, 0f, 180f, 16);
+            stone.AddRange(arch);
+            stone.Add(new Vector3(0.4f, -0.62f, 0f));
+            Stroke("Stone", stone);
+            Stroke("Ground", Line(new Vector2(-0.66f, -0.62f), new Vector2(0.66f, -0.62f)), _width * 0.85f);
+            var q = new List<Vector3>();
+            InkLine.AddArc(q, new Vector2(0f, 0.3f), 0.15f, 200f, -30f, 16);
+            q.Add(new Vector3(0f, 0.05f, 0f));
+            Stroke("QCurve", q, _width * 0.9f);
+            Stroke("QDot", Circle(new Vector2(0f, -0.14f), 0.03f, 8), _width);
+        }
+
+        // Cash-out menu: a coin with a dollar sign.
+        private void Coin()
+        {
+            Stroke("Rim", Circle(new Vector2(0f, 0f), 0.5f, 30));
+            Stroke("Inner", Circle(new Vector2(0f, 0f), 0.4f, 28), _width * 0.7f);
+            Stroke("S", Line(new Vector2(0.16f, 0.24f), new Vector2(-0.02f, 0.28f), new Vector2(-0.14f, 0.14f), new Vector2(0.06f, 0.02f), new Vector2(0.14f, -0.12f), new Vector2(-0.04f, -0.26f), new Vector2(-0.18f, -0.2f)), _width * 0.9f);
+            Stroke("Bar", Line(new Vector2(0f, 0.34f), new Vector2(0f, -0.32f)), _width * 0.8f);
+        }
+
+        // Cash-out menu: a star (something meaningful).
+        private void Star()
+        {
+            var pts = new List<Vector3>();
+            for (int i = 0; i <= 10; i++) { float a = Mathf.PI / 2f + i * Mathf.PI / 5f; float r = (i % 2 == 0) ? 0.6f : 0.26f; pts.Add(new Vector3(Mathf.Cos(a) * r, Mathf.Sin(a) * r, 0f)); }
+            Stroke("Star", pts);
+        }
+
+        // Cash-out menu: a wrapped sweet (cheap junk).
+        private void Candy()
+        {
+            Stroke("Body", Circle(new Vector2(0f, 0f), 0.32f, 20));
+            Stroke("EndL", Line(new Vector2(-0.3f, 0.1f), new Vector2(-0.6f, 0.22f), new Vector2(-0.56f, -0.02f), new Vector2(-0.6f, -0.22f), new Vector2(-0.3f, -0.1f)), _width * 0.8f);
+            Stroke("EndR", Line(new Vector2(0.3f, 0.1f), new Vector2(0.6f, 0.22f), new Vector2(0.56f, -0.02f), new Vector2(0.6f, -0.22f), new Vector2(0.3f, -0.1f)), _width * 0.8f);
+            Stroke("Swirl", Line(new Vector2(-0.12f, 0.12f), new Vector2(0.12f, -0.12f)), _width * 0.7f);
         }
 
         // ---------- fade ----------
