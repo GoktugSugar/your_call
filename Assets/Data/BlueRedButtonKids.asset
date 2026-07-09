@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ecd1a615a340f4c9104ca01624d106, type: 3}
+  m_Name: BlueRedButtonKids
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Dilemma
+  _id: blue_red_button_kids
+  _verb: 2
+  _weight: 2
+  _narratorPrompt: 'Same room, same two buttons, same one rule. If more than half
+    of them press [blue]blue[/blue], the [blue]blue[/blue] souls live; if fewer, only
+    the [red]red[/red] ones walk out. One new wrinkle, since you took to the last one
+    so well. Half of this room are [amber]six years old[/amber]. Actual children.
+    They did not hear the rule, they would not follow it if they had, and they are
+    going to slap whichever button is closest and brightest. Press [blue]blue[/blue]
+    and you [amber]gamble[/amber] this soul on a crowd that is half small children.
+    Press [red]red[/red] and it lives for [amber]certain[/amber], whatever the little
+    hands do. You are choosing for someone else, remember. Your call.'
+  _choices:
+  - _id: blue
+    _label: blue
+    _narratorReact: You pressed [blue]blue[/blue] and threw that soul in with a room
+      half made of [amber]six year olds[/amber], and somehow enough little hands came
+      down [blue]blue[/blue]. It lives. You won a wager decided by children who thought
+      the whole thing was a game. Do not you dare call that a good decision.
+    _narratorReactStruck: You pressed [blue]blue[/blue] and staked that soul on a
+      room where half the voters are [amber]children[/amber] pressing at random, and
+      the children pressed at random. Not enough [blue]blue[/blue]. It is [red]gone[/red].
+      You bet a life on small kids grasping a rule they were never going to grasp,
+      and they did what small kids do.
+    _struckParty:
+    _gambledParty: charge
+    _route:
+    _diverts: 0
+    _seedVotes: 0
+    _profileImpact:
+    - _axis: 3
+      _value: 1
+    - _axis: 0
+      _value: 1
+  - _id: red
+    _label: red
+    _narratorReact: You pressed [red]red[/red], and that soul is safe, whatever the
+      [amber]children[/amber] did. You would not put a life within reach of a single
+      small sticky hand. All those years deciding what grown adults deserved, and
+      now you will not trust a room of [amber]six year olds[/amber] with one press.
+      It lives, and you will never know which way the little ones would have gone.
+      Sit with that.
+    _narratorReactStruck:
+    _struckParty:
+    _gambledParty:
+    _route:
+    _diverts: 0
+    _seedVotes: 0
+    _profileImpact:
+    - _axis: 3
+      _value: -1
+  _statsHeading: how the room voted
+  _roomBlueFraction: 0.43
+  _crowdThreshold: 0.5
+  _thresholdLabel: half
+  _crowdRandomFraction: 0.5

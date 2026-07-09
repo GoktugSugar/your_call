@@ -60,6 +60,10 @@ namespace YourCall
         [SerializeField, Range(0f, 1f)] private float _crowdThreshold = 0.5f;
         [Tooltip("Label for the threshold marker on the stats screen.")]
         [SerializeField] private string _thresholdLabel = "the line";
+        [Tooltip("Fraction of the room that presses at random (the children variant: half the room are six year olds pressing whatever). " +
+                 "0 keeps the room deterministic (the original blue/red beat). Above 0 makes the blue fraction genuinely noisier / less " +
+                 "reliable run to run: that share is resolved as a coin toss each play, so the gamble is a real gamble. See CoordinationGambleResolver.")]
+        [SerializeField, Range(0f, 1f)] private float _crowdRandomFraction = 0f;
 
         public string Id => _id;
         public DilemmaVerb Verb => _verb;
@@ -83,5 +87,6 @@ namespace YourCall
         public float RoomBlueFraction => _roomBlueFraction;
         public float CrowdThreshold => _crowdThreshold;
         public string ThresholdLabel => _thresholdLabel;
+        public float CrowdRandomFraction => _crowdRandomFraction;
     }
 }

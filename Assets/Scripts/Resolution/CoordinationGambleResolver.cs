@@ -20,7 +20,7 @@ namespace YourCall
 
             if (!string.IsNullOrEmpty(chosen.StruckParty)) outcome.StruckParties.Add(chosen.StruckParty);
 
-            float blueFraction = c.Dilemma.RoomBlueFraction;
+            float blueFraction = EffectiveBlueFraction(c.Dilemma);
             float threshold = c.Dilemma.CrowdThreshold;
             bool blueReachedThreshold = blueFraction >= threshold;
 
@@ -37,6 +37,24 @@ namespace YourCall
 
             outcome.Report = BuildRoomReport(c, blueFraction, threshold);
             return outcome;
+        }
+
+        /// <summary>
+        /// The blue fraction the gamble resolves against. Normally the seeded value straight off the
+        /// dilemma (deterministic, offline-first). For the children variant a share of the room
+        /// (<see cref="Dilemma.CrowdRandomFraction"/>) are six year olds pressing at random: that share
+        /// is drawn as a fresh coin toss each play and blended with the seeded (adult) lean, so the blue
+        /// fraction is genuinely noisier and the gamble is a real gamble, not a fixed outcome. Computed
+        /// once per resolve, so the outcome and the stat the player is shown always agree. With a random
+        /// fraction of 0 (every other dilemma) this returns the seeded value unchanged.
+        /// </summary>
+        private static float EffectiveBlueFraction(Dilemma d)
+        {
+            float seeded = d.RoomBlueFraction;
+            float randomFraction = Mathf.Clamp01(d.CrowdRandomFraction);
+            if (randomFraction <= 0f) return seeded;
+            float cluelessBlue = Random.value;   // the kids: who knows which button they hit
+            return Mathf.Clamp01((1f - randomFraction) * seeded + randomFraction * cluelessBlue);
         }
 
         private static ResolutionReport BuildRoomReport(DilemmaContext c, float blueFraction, float threshold)
