@@ -497,7 +497,7 @@ MonoBehaviour:
   _popScaleFrom: 0.15
   _popWobble: 10
   _voice: {fileID: 2112542512}
-  _useExpressions: 0
+  _useExpressions: 1
   _defaultExpression: 0
 --- !u!4 &669036750
 Transform:
@@ -862,6 +862,86 @@ MonoBehaviour:
   _settleSway: 0.35
   _settleFreqX: 0.7
   _settleFreqY: 0.45
+--- !u!1 &1168867545
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1168867546}
+  - component: {fileID: 1168867547}
+  m_Layer: 0
+  m_Name: C2_Already
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1168867546
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168867545}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1168867547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168867545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c339bd32a3c8c245bda86601cd991ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.AlreadyPressedBeat
+  _note: 
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _buttonPosition: {x: 0, y: 0.2}
+  _buttonRadius: 0.8
+  _lineWidth: 0.055
+  _buttonInk: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _sortingOrder: 14
+  _pressSeed: 44
+  _leaveSeed: 56
+  _statsHeading: how others chose
+  _pressStatLabel: pressed it again
+  _leaveStatLabel: left it alone
+  _framingLines:
+  - Now. This one you have seen before.
+  - Not in here. Out there, in the life you had. You stood in front of this exact
+    button once, your hand hovering over it, just like now.
+  - And you pressed it. [amber]Everything[/amber] after was the long slide down from
+    that. The late night, the drink, the headlights, the sudden [red]end[/red] of
+    you. All of it, downstream of one little button.
+  - I can let you press it again. Change it. Or leave it lying exactly where it is.
+    I will not tell you what it does. I never do.
+  _pressedReact: You pressed it. Again. You just rolled the dice on your entire existence
+    a second time, with no earthly idea what the dice even were. Bold. Idiotic. My
+    favourite pairing. Did it change a single thing? I will never, ever say.
+  _leftReact: You left it. Naturally you did. You stood at the one button that might
+    unpick the whole sorry slide, and you could not make your hand close on it. Too
+    frightened of a thing you cannot even name. Did it matter? You will never know.
+  _pressLabel: Press it again
+  _leaveLabel: Leave it
+  _advanceLockout: 0.3
+  _buttonFadeIn: 0.45
+  _reactHold: 0.4
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+  _buttonFadeOut: 0.4
 --- !u!1 &1207684724
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,6 +980,10 @@ Transform:
   - {fileID: 753976751}
   - {fileID: 1208405948}
   - {fileID: 1966462614}
+  - {fileID: 1539104736}
+  - {fileID: 1168867546}
+  - {fileID: 1577463768}
+  - {fileID: 1578260627}
   m_Father: {fileID: 1626293926}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1208405947
@@ -1211,6 +1295,342 @@ Transform:
   m_Children: []
   m_Father: {fileID: 899297543}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1539104735
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1539104736}
+  - component: {fileID: 1539104737}
+  m_Layer: 0
+  m_Name: C2_Everyone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1539104736
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539104735}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1539104737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539104735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2259163e739015648aff9c06f5099287, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.EscalatingOfferBeat
+  _note: 
+  _mode: 1
+  _startAmount: 1
+  _stepFactor: 2
+  _rageThreshold: 1
+  _capAmount: 512
+  _figurePrefab: {fileID: 0}
+  _ending: {fileID: 0}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _strangerPosition: {x: 0, y: -0.7}
+  _strangerScale: 1.15
+  _strangerHold: 0.35
+  _foldDuration: 0.7
+  _foldSettle: 0.3
+  _moneyAnchor: {x: 0, y: 2.7}
+  _moneySize: 3.4
+  _deadAnchor: {x: 0, y: 1.95}
+  _deadSize: 2.3
+  _sortingOrder: 16
+  _readoutFade: 0.4
+  _worldPopulation: 8100000000
+  _topAcceptancePct: 78
+  _floorAcceptancePct: 6
+  _statsHeading: how others chose
+  _tookLabel: kept giving
+  _walkedLabel: stopped here
+  _selfNudgePerAccept: -0.12
+  _othersNudgePerAccept: 0.08
+  _offerFormat: Here. One button. Press it and [amber]{0}[/amber] is yours, and somewhere
+    a stranger you will never meet folds up and [red]dies[/red]. Or do not, and we
+    stop. Your call.
+  _climbOfferFormat: Here. Press it and every living person gets [amber]{0}[/amber].
+    It costs you nothing. It gains you nothing. You will never meet a single one
+    of them. Press it, or walk away.
+  _halveTierQuips:
+  - Amount: 100000
+    Line: One [red]life[/red], banked. Barely broke a sweat, did you.
+  - Amount: 50000
+    Line: Half the price, and the very same yes. Efficient of you.
+  - Amount: 25000
+    Line: '[amber]Twenty five thousand[/amber] now. The number keeps falling and
+      your thumb does not. Curious.'
+  - Amount: 12500
+    Line: Another one [red]folds[/red]. You did not even watch that time.
+  - Amount: 6250
+    Line: We are into the loose change of a whole person now. Keep pressing.
+  - Amount: 3125
+    Line: Cheaper than a used car, and off they [red]go[/red].
+  - Amount: 1562
+    Line: You have stopped reading the number, have you not. You simply press.
+  - Amount: 781
+    Line: Look at the tidy little pile you are making. All those quiet [red]dead[/red]
+      strangers.
+  - Amount: 390
+    Line: Three figures for a living soul, and not a flicker of hesitation.
+  - Amount: 195
+    Line: Under two hundred. I would be embarrassed. You are not, which I adore.
+  - Amount: 97
+    Line: Double digits any moment now. This is my favourite part.
+  - Amount: 48
+    Line: Forty eight dollars. A decent dinner. A whole [red]person[/red]. The same
+      button.
+  - Amount: 24
+    Line: Twenty four. You could find that in a coat pocket.
+  - Amount: 12
+    Line: A dozen dollars a [red]body[/red]. Bulk rate. Do carry on.
+  - Amount: 6
+    Line: Six. Six! I can hardly say it with a straight face, and I have no face.
+  - Amount: 3
+    Line: Three dollars. We are nearly at the bottom, you magnificent ghoul. Press
+      on.
+  _climbTierQuips:
+  - Amount: 1
+    Line: One dollar. To every soul alive at once. That is a great many dollars,
+      and not one of them yours.
+  - Amount: 2
+    Line: Two now. Somewhere a stranger you will never meet is a little less broke,
+      and you feel precisely nothing.
+  - Amount: 4
+    Line: Four each. Billions of tiny thank-yous you will never once hear. Press
+      on, saint.
+  - Amount: 8
+    Line: Eight. Look at you, quietly handing a fortune to people who will never
+      learn your name.
+  - Amount: 16
+    Line: Sixteen apiece. It costs you nothing and buys you nothing, and still you
+      press. Fascinating.
+  - Amount: 32
+    Line: Thirty two. Either you are boundlessly generous or you simply like the
+      button. I honestly cannot tell.
+  - Amount: 64
+    Line: Sixty four each. Real money, to real strangers, for no reason on earth.
+      Marvellous.
+  - Amount: 128
+    Line: A hundred and twenty eight a head. The whole world is richer and you are
+      exactly the same.
+  - Amount: 256
+    Line: Two hundred and fifty six. You could stop. No one is watching. No one ever
+      was.
+  - Amount: 512
+    Line: The very top, over and over, every living person the richer, and not a
+      thing in it for you. Keep going or do not. I am delighted either way.
+  _refuseReact: And there it is. [amber]{0}[/amber] was the number you would not
+    go below. Everyone has one. Now I know yours.
+  _climbRefuseHigh: And you stop. [amber]{0}[/amber] a head to every stranger alive,
+    for nothing back, and then you were done. A saint, on a timer. Noted.
+  _climbRefuseLow: And you are done already. Barely a dollar for the entire living
+    world, when it would have cost you nothing at all. Why would you. There was nothing
+    in it for you.
+  _breakLine: '[red]A person.[/red] You just killed a person. For [amber]one dollar[/amber].
+    One. I am not doing the voice for this one. There is nothing funny here, nothing,
+    and I find everything funny. You are a greedy piece of shit and I am done with
+    you. Go and rot. I quit.'
+  _acceptLabel: Press it
+  _refuseLabel: Refuse
+  _climbAcceptLabel: Press it
+  _climbRefuseLabel: Stop
+  _postAcceptBeat: 0.35
+  _eggAutoAdvance: 1
+  _eggHold: 1.3
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+  _advanceLockout: 0.3
+  _preBreakHold: 0.6
+  _impFade: 0.9
+--- !u!1 &1577463767
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1577463768}
+  - component: {fileID: 1577463769}
+  m_Layer: 0
+  m_Name: C2_Better
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1577463768
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577463767}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1577463769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577463767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 220a3de2e12d0dc4db37a5193ee1f182, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.BetterOfferBeat
+  _note: 
+  _crownedPrefab: {fileID: 6980539495787555654, guid: b35c6ea894415a04da58b979849070c8, type: 3}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _figurePosition: {x: 0, y: -0.6}
+  _figureScale: 1.7
+  _goldColor: {r: 0.859, g: 0.706, b: 0.278, a: 1}
+  _inkInDuration: 0.9
+  _takeSeed: 37
+  _keepSeed: 63
+  _statsHeading: how others chose
+  _takeStatLabel: took the better life
+  _keepStatLabel: kept their own
+  _identityNudge: 0.08
+  _sellLines:
+  - Different button. Look at this one first.
+  - There. That is the best life a human being has ever actually lived. Every door
+    opened. Every love returned. Not one day of it wasted. A [gold]golden[/gold]
+    little existence, first breath to last.
+  - Press the button and you become this person. Completely. Their memories, their
+    joy, all of it yours.
+  - But not you. [amber]You[/amber] would be gone. No trace left. The happy one over
+    there would not be the man who ended drunk behind the wheel. It would be them.
+    Flawless, and not yours.
+  - So. Take the best life anyone has ever had and stop being you. Or keep your own,
+    the one that ended in a ditch, and stay exactly who you are. Choose.
+  _tookReact: Gone. You traded yourself away for a stranger's paradise. Somewhere
+    a person is perfectly, endlessly happy, and it is not you, because there is no
+    more you to enjoy it. You wiped out a whole self just to stop being the one you
+    were. I do hope it was worth it. You will not be around to say.
+  _keptReact: You kept it. Your own grubby little life, the one that drove itself
+    into a wall. Flawless, endless happiness on offer, and you said no, because it
+    would not have been [amber]yours[/amber]. You clung to being you, right down
+    to the drink and the wreck. Sentimental. Or vain. I can never tell the two apart,
+    and neither can you.
+  _takeLabel: Take their life
+  _keepLabel: Keep your own
+  _advanceLockout: 0.3
+  _reactHold: 0.4
+  _drainDuration: 0.7
+  _fadeDuration: 1.1
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+--- !u!1 &1578260626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1578260627}
+  - component: {fileID: 1578260628}
+  m_Layer: 0
+  m_Name: C2_Walkaway
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1578260627
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578260626}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1578260628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578260626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa3de726eacda54a9a1f56aaca5bd21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.WalkingButtonBeat
+  _note: 
+  _buttonPrefab: {fileID: 4965857941604193195, guid: 4ec3d07b77fda744494cac4ac559f0d9, type: 3}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _buttonPosition: {x: 0.6, y: -0.2}
+  _buttonScale: 1.1
+  _voiceSize: 2.3
+  _voiceColor: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _voiceHeight: 1.15
+  _voiceSorting: 26
+  _pressSeed: 58
+  _leaveSeed: 42
+  _statsHeading: how others chose
+  _pressStatLabel: pressed it
+  _leaveStatLabel: left it be
+  _setupLines:
+  - Last one. And this time, honestly, I have no idea what it does.
+  - A plain button. No trick, no catch, no tidy little lesson at the end. Even I
+    do not know. Press it, or do not. Genuinely your call.
+  _leftReact: You did not press it. The one button in this entire place with nothing
+    whatsoever riding on it, and you still could not make yourself. You are exhausting,
+    and I mean that with real affection.
+  _buttonYelp: Ow! Fuck. That actually hurt, you absolute prick.
+  _buttonMutter: Unbelievable. I did nothing to you. Nothing.
+  _impSurprised: What. What was. Hold on, that is not. It has never done that. It
+    does not do things.
+  _impRecover: Right. Well. That has never happened, not once, and I have been at
+    this an extremely long time. Let us both agree we did not see it, and move along.
+  _pressLabel: Press it
+  _leaveLabel: Leave it
+  _advanceLockout: 0.3
+  _comeAliveDuration: 0.45
+  _yelpHold: 1.3
+  _surpriseHold: 0.5
+  _recoverHold: 0.4
+  _voiceFade: 0.3
+  _statsFade: 0.5
+  _statsHideFade: 0.6
 --- !u!1 &1626293924
 GameObject:
   m_ObjectHideFlags: 0
@@ -1256,6 +1676,10 @@ MonoBehaviour:
   - {fileID: 1841324290}
   - {fileID: 753976752}
   - {fileID: 1208405949}
+  - {fileID: 1539104737}
+  - {fileID: 1168867547}
+  - {fileID: 1577463769}
+  - {fileID: 1578260628}
   - {fileID: 1966462613}
   _fadeToBlackAtEnd: 1
   _endFade: 1.6
@@ -1531,9 +1955,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.EscalatingOfferBeat
   _note: 
+  _mode: 0
   _startAmount: 100000
-  _halveFactor: 0.5
+  _stepFactor: 0.5
   _rageThreshold: 1
+  _capAmount: 512
   _figurePrefab: {fileID: 1666028741476117448, guid: b6bd21ed588401b45b32b720eac18fef, type: 3}
   _ending: {fileID: 1420226528}
   _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
@@ -1548,29 +1974,103 @@ MonoBehaviour:
   _deadSize: 2.3
   _sortingOrder: 16
   _readoutFade: 0.4
+  _worldPopulation: 8100000000
   _topAcceptancePct: 61
   _floorAcceptancePct: 2
   _statsHeading: how others chose
   _tookLabel: took the money
   _walkedLabel: walked away
   _selfNudgePerAccept: -0.12
+  _othersNudgePerAccept: 0.08
   _offerFormat: Here. One button. Press it and [amber]{0}[/amber] is yours, and somewhere
     a stranger you will never meet folds up and [red]dies[/red]. Or do not, and we
     stop. Your call.
-  _eggLines:
-  - Done. That was easy, was it not.
-  - And again. You are quick, I will give you that.
-  - Mm. Keep going. We have all the time in the world down here.
-  - Barely a flicker that time.
-  - Look at you go.
+  _climbOfferFormat: Here. Press it and every living person gets [amber]{0}[/amber].
+    It costs you nothing. It gains you nothing. You will never meet a single one
+    of them. Press it, or walk away.
+  _halveTierQuips:
+  - Amount: 100000
+    Line: One [red]life[/red], banked. Barely broke a sweat, did you.
+  - Amount: 50000
+    Line: Half the price, and the very same yes. Efficient of you.
+  - Amount: 25000
+    Line: '[amber]Twenty five thousand[/amber] now. The number keeps falling and
+      your thumb does not. Curious.'
+  - Amount: 12500
+    Line: Another one [red]folds[/red]. You did not even watch that time.
+  - Amount: 6250
+    Line: We are into the loose change of a whole person now. Keep pressing.
+  - Amount: 3125
+    Line: Cheaper than a used car, and off they [red]go[/red].
+  - Amount: 1562
+    Line: You have stopped reading the number, have you not. You simply press.
+  - Amount: 781
+    Line: Look at the tidy little pile you are making. All those quiet [red]dead[/red]
+      strangers.
+  - Amount: 390
+    Line: Three figures for a living soul, and not a flicker of hesitation.
+  - Amount: 195
+    Line: Under two hundred. I would be embarrassed. You are not, which I adore.
+  - Amount: 97
+    Line: Double digits any moment now. This is my favourite part.
+  - Amount: 48
+    Line: Forty eight dollars. A decent dinner. A whole [red]person[/red]. The same
+      button.
+  - Amount: 24
+    Line: Twenty four. You could find that in a coat pocket.
+  - Amount: 12
+    Line: A dozen dollars a [red]body[/red]. Bulk rate. Do carry on.
+  - Amount: 6
+    Line: Six. Six! I can hardly say it with a straight face, and I have no face.
+  - Amount: 3
+    Line: Three dollars. We are nearly at the bottom, you magnificent ghoul. Press
+      on.
+  _climbTierQuips:
+  - Amount: 1
+    Line: One dollar. To every soul alive at once. That is a great many dollars,
+      and not one of them yours.
+  - Amount: 2
+    Line: Two now. Somewhere a stranger you will never meet is a little less broke,
+      and you feel precisely nothing.
+  - Amount: 4
+    Line: Four each. Billions of tiny thank-yous you will never once hear. Press
+      on, saint.
+  - Amount: 8
+    Line: Eight. Look at you, quietly handing a fortune to people who will never
+      learn your name.
+  - Amount: 16
+    Line: Sixteen apiece. It costs you nothing and buys you nothing, and still you
+      press. Fascinating.
+  - Amount: 32
+    Line: Thirty two. Either you are boundlessly generous or you simply like the
+      button. I honestly cannot tell.
+  - Amount: 64
+    Line: Sixty four each. Real money, to real strangers, for no reason on earth.
+      Marvellous.
+  - Amount: 128
+    Line: A hundred and twenty eight a head. The whole world is richer and you are
+      exactly the same.
+  - Amount: 256
+    Line: Two hundred and fifty six. You could stop. No one is watching. No one ever
+      was.
+  - Amount: 512
+    Line: The very top, over and over, every living person the richer, and not a
+      thing in it for you. Keep going or do not. I am delighted either way.
   _refuseReact: And there it is. [amber]{0}[/amber] was the number you would not
     go below. Everyone has one. Now I know yours.
+  _climbRefuseHigh: And you stop. [amber]{0}[/amber] a head to every stranger alive,
+    for nothing back, and then you were done. A saint, on a timer. Noted.
+  _climbRefuseLow: And you are done already. Barely a dollar for the entire living
+    world, when it would have cost you nothing at all. Why would you. There was nothing
+    in it for you.
   _breakLine: '[red]A person.[/red] You just killed a person. For [amber]one dollar[/amber].
     One. I am not doing the voice for this one. There is nothing funny here, nothing,
     and I find everything funny. You are a greedy piece of shit and I am done with
     you. Go and rot. I quit.'
   _acceptLabel: Press it
   _refuseLabel: Refuse
+  _climbAcceptLabel: Press it
+  _climbRefuseLabel: Stop
   _postAcceptBeat: 0.35
   _eggAutoAdvance: 1
   _eggHold: 1.3

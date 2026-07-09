@@ -3,11 +3,12 @@ using UnityEngine;
 namespace YourCall
 {
     /// <summary>
-    /// The single source of truth for the palette: black ink, one paper ground, and
-    /// exactly one amber accent used only for attention and consequence. Kept in one
-    /// place so the accent never drifts into decoration (see docs/art-and-ui.md).
-    /// The only exception is InkBlue and InkRed, used solely on the blue/red button
-    /// dilemma (its two buttons and its stats bars); see the note by those fields.
+    /// The single source of truth for the palette: black ink on a paper ground, with
+    /// colour used deliberately as an accent for emphasis and meaning, never blanket
+    /// decoration (see docs/art-and-ui.md). Amber is the attention/consequence accent;
+    /// the rest carry a fixed colour-to-meaning mapping (red = death and the guilty,
+    /// blue/red = the button dilemma, pink = love, brown = the bear, gold = the best life).
+    /// Kept in one place so no colour drifts into decoration.
     /// </summary>
     public static class Palette
     {
@@ -42,5 +43,11 @@ namespace YourCall
         /// dilemma, and the little heart over them: deliberate colour for meaning (pink = love), on the
         /// ink base, the same crayon-line treatment as the red and blue figures. See docs/art-and-ui.md.</summary>
         public static readonly Color InkPink = new Color(0.851f, 0.451f, 0.573f, 1f);
+
+        /// <summary>Warm hand-drawn gold. Marks "the best life any human has lived": the golden crowned
+        /// figure in Chapter 2's better-offer button (gold = the best life / perfect happiness), on the
+        /// ink base. Distinct from the amber accent (more yellow, luminous). Exposed on CrownedFigure so
+        /// it can be tuned. See docs/art-and-ui.md.</summary>
+        public static readonly Color InkGold = new Color(0.859f, 0.706f, 0.278f, 1f);
     }
 }
