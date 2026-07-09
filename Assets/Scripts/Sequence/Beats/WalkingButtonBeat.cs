@@ -223,7 +223,7 @@ namespace YourCall
                 _voice.enableWordWrapping = true;
                 InkText.SetAlpha(_voice, 0f);
             }
-            _voice.text = line;
+            _voice.text = Localization.Localize(line);
             StopVoiceRoutine();
             _voiceRoutine = StartCoroutine(FadeVoiceTo(1f));
         }

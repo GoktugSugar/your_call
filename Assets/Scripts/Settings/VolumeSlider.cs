@@ -48,6 +48,7 @@ namespace YourCall
 
         public float Value { get; private set; } = 1f;
 
+        private string _labelSource;
         private TextMeshPro _label;
         private LineRenderer _track;
         private LineRenderer _fill;
@@ -90,9 +91,16 @@ namespace YourCall
                 _built = true;
             }
 
-            _label.text = labelText;
+            _labelSource = labelText;
+            _label.text = Localization.Localize(labelText);
             Value = Mathf.Clamp01(value);
             Apply();
+        }
+
+        /// <summary>Re-apply the label in the active language (called when the language changes live).</summary>
+        public void Relocalize()
+        {
+            if (_label != null) _label.text = Localization.Localize(_labelSource);
         }
 
         public void SetSelected(bool on) { _selected = on; }

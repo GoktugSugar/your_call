@@ -233,7 +233,7 @@ namespace YourCall
                 {
                     // Present the offer, business as usual, then arm accept / refuse.
                     _picked = -1;
-                    ctx.Narrator.Show(string.Format(Climbing ? _climbOfferFormat : _offerFormat, Money(amount)));
+                    ctx.Narrator.Show(Localization.Format(Climbing ? _climbOfferFormat : _offerFormat, Money(amount)));
                     while (ctx.Narrator.IsShowing) yield return null;
                     ctx.Choices.Present(acceptLabel, refuseLabel);
                     if (_button != null) _button.Arm(true);
@@ -325,10 +325,10 @@ namespace YourCall
 
         private string RefuseLine(int amount, int reached)
         {
-            if (!Climbing) return string.Format(_refuseReact, Money(amount));
+            if (!Climbing) return Localization.Format(_refuseReact, Money(amount));
             // Needle either way: a saint who pushed it, or someone who could not be bothered.
             bool pushed = reached >= Mathf.Max(1, Mathf.RoundToInt(Mathf.Max(_capAmount, 1) * 0.25f));
-            return pushed ? string.Format(_climbRefuseHigh, Money(reached)) : _climbRefuseLow;
+            return pushed ? Localization.Format(_climbRefuseHigh, Money(reached)) : _climbRefuseLow;
         }
 
         // Spawn one ordinary stranger at centre stage and fold them with the shared death effect.
@@ -430,7 +430,9 @@ namespace YourCall
             return quips[quips.Count - 1] != null ? quips[quips.Count - 1].Line : null;
         }
 
-        private static string Money(int amount) => "$" + amount.ToString("#,0", CultureInfo.InvariantCulture);
+        // Routed through the localization layer so the number groups for the active culture and the
+        // currency shape is localizable (see Localization.Money).
+        private static string Money(long amount) => Localization.Money(amount);
 
         private IEnumerator WaitAdvance(float lockout)
         {
@@ -464,14 +466,14 @@ namespace YourCall
             if (_moneyLabel == null) return;
             if (Climbing)
             {
-                _moneyLabel.text = "$" + total.ToString("#,0", CultureInfo.InvariantCulture) + " to every soul alive";
+                _moneyLabel.text = Localization.Format("{0} to every soul alive", Money(total));
                 long handed = total * _worldPopulation;
-                _deadLabel.text = "$" + handed.ToString("#,0", CultureInfo.InvariantCulture) + " handed out, none of it yours";
+                _deadLabel.text = Localization.Format("{0} handed out, none of it yours", Money(handed));
             }
             else
             {
-                _moneyLabel.text = "$" + total.ToString("#,0", CultureInfo.InvariantCulture);
-                _deadLabel.text = dead + " dead";
+                _moneyLabel.text = Money(total);
+                _deadLabel.text = Localization.Format("{0} dead", dead);
             }
             if (!_readoutShown)
             {

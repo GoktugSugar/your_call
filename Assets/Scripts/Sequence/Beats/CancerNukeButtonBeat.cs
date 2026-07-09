@@ -315,18 +315,21 @@ namespace YourCall
 
         private string ReactionFor(NukeCountry c)
         {
-            string pop = c.Population.ToString("#,0", CultureInfo.InvariantCulture);
-            string name = c.Name;
+            string pop = Localization.Number(c.Population);
+            string name = Localization.Localize(c.Name);
             if (IsHomeCountry(c)) return Format(_selfCountryJab, name, pop);
-            if (!string.IsNullOrEmpty(c.Quip)) return c.Quip;
+            if (!string.IsNullOrEmpty(c.Quip)) return Localization.Localize(c.Quip);
             if (c.Population < _tinyBelow) return Format(_tinyJab, name, pop);
             if (c.Population < _smallBelow) return Format(_smallJab, name, pop);
             if (c.Population >= _hugeAtLeast) return Format(_hugeJab, name, pop);
             return Format(_largeJab, name, pop);
         }
 
+        // Localize the jab template first, then fill in the (already localized) name and population, so
+        // each language keeps its own wording around the country and the number.
         private static string Format(string fmt, string name, string pop)
         {
+            fmt = Localization.Localize(fmt);
             if (string.IsNullOrEmpty(fmt)) return name;
             return fmt.Replace("{0}", name).Replace("{1}", pop);
         }
@@ -367,7 +370,7 @@ namespace YourCall
                 if (_font != null) _buttonText.font = _font;
                 _buttonText.rectTransform.sizeDelta = new Vector2(_buttonRadius * 2.2f, 1f);
                 _buttonText.transform.localPosition = Vector3.zero;
-                _buttonText.text = _buttonLabel;
+                _buttonText.text = Localization.Localize(_buttonLabel);
                 InkText.SetAlpha(_buttonText, 0f);
             }
         }
@@ -549,8 +552,8 @@ namespace YourCall
             _popLabel.rectTransform.sizeDelta = new Vector2(12f, 1.2f);
             _nameLabel.transform.localPosition = new Vector3(_readoutAnchor.x, _readoutAnchor.y + 0.55f, 0f);
             _popLabel.transform.localPosition = new Vector3(_readoutAnchor.x, _readoutAnchor.y - 0.2f, 0f);
-            _nameLabel.text = c.Name;
-            _popLabel.text = c.Population.ToString("#,0", CultureInfo.InvariantCulture) + _popSuffix;
+            _nameLabel.text = Localization.Localize(c.Name);
+            _popLabel.text = Localization.Number(c.Population) + Localization.Localize(_popSuffix);
             InkText.SetAlpha(_nameLabel, 0f);
             InkText.SetAlpha(_popLabel, 0f);
         }

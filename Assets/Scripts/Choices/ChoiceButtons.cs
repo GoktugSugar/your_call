@@ -62,8 +62,8 @@ namespace YourCall
 
         public void Present(string leftLabel, string rightLabel)
         {
-            _labels[0].text = leftLabel;
-            _labels[1].text = rightLabel;
+            _labels[0].text = Localization.Localize(leftLabel);
+            _labels[1].text = Localization.Localize(rightLabel);
             for (int i = 0; i < 2; i++) { _hoverT[i] = 0f; SizeCollider(i); }
             _targetVis = 1f;
             _armed = true;

@@ -55,6 +55,7 @@ namespace YourCall
 
             if (_controller != null) _controller.Activated += OnActivated;
             if (_settings != null) _settings.Closed += OnSettingsClosed;
+            Localization.LanguageChanged += RelocalizeTitle;
 
             // The imp plays its pop-in entrance on load, the same scale/bounce appearance it uses elsewhere.
             if (_imp != null) StartCoroutine(_imp.PopIn(_impPopDuration));
@@ -64,13 +65,19 @@ namespace YourCall
         {
             if (_controller != null) _controller.Activated -= OnActivated;
             if (_settings != null) _settings.Closed -= OnSettingsClosed;
+            Localization.LanguageChanged -= RelocalizeTitle;
+        }
+
+        private void RelocalizeTitle()
+        {
+            if (_titleText != null) _titleText.text = Localization.Localize(_title);
         }
 
         private void BuildTitle()
         {
             _titleText = InkText.Create(transform, "Title", _titleSize, _titleColor, TextAlignmentOptions.Center, _titleSorting);
             if (_font != null) _titleText.font = _font;
-            _titleText.text = _title;
+            _titleText.text = Localization.Localize(_title);
             _titleText.rectTransform.sizeDelta = new Vector2(20f, _titleSize * 1.5f);
             _titleText.rectTransform.position = _titlePosition;
 

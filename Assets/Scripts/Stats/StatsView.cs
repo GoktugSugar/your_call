@@ -102,8 +102,8 @@ namespace YourCall
             float top = (n - 1) * 0.5f * _rowSpacing;
             _heading.transform.localPosition = new Vector3(contentCenterX, top + 1.95f, 0f);
             _hint.transform.localPosition = new Vector3(contentCenterX, -top - 1.15f, 0f);
-            _heading.text = report != null ? report.Heading : string.Empty;
-            _hint.text = _hintText;
+            _heading.text = report != null ? Localization.Localize(report.Heading) : string.Empty;
+            _hint.text = Localization.Localize(_hintText);
 
             bool showThreshold = report != null && report.HasThreshold && report.MaxValue > 0f && n > 0;
             if (showThreshold)
@@ -114,7 +114,7 @@ namespace YourCall
                 _threshold.SetPosition(0, new Vector3(mx, topY, 0f));
                 _threshold.SetPosition(1, new Vector3(mx, botY, 0f));
                 _thresholdLabel.transform.localPosition = new Vector3(mx, topY + 0.35f, 0f);
-                _thresholdLabel.text = Mathf.RoundToInt(report.ThresholdValue) + "  " + report.ThresholdLabel;
+                _thresholdLabel.text = Localization.Number(Mathf.RoundToInt(report.ThresholdValue)) + "  " + Localization.Localize(report.ThresholdLabel);
             }
 
             // 1) Dim the world.
@@ -237,14 +237,14 @@ namespace YourCall
                 var label = InkText.Create(transform, "Label" + i, _labelSize, pick ? _amber : _muted, TextAlignmentOptions.Left, _sortingContent);
                 label.rectTransform.sizeDelta = new Vector2(6f, 1f);
                 label.transform.localPosition = new Vector3(_barStartX + 3.0f, rowY + 0.34f, 0f);
-                label.text = bars[i].Label;
+                label.text = Localization.Localize(bars[i].Label);
                 InkText.SetAlpha(label, 0f);
                 _labels.Add(label);
 
                 var count = InkText.Create(transform, "Count" + i, _countSize, pick ? _amber : _ink, TextAlignmentOptions.Left, _sortingContent);
                 count.rectTransform.sizeDelta = new Vector2(2.5f, 1f);
                 count.transform.localPosition = new Vector3(_barStartX + len + 0.3f + 1.25f, rowY, 0f);
-                count.text = Mathf.RoundToInt(bars[i].Value).ToString();
+                count.text = Localization.Number(Mathf.RoundToInt(bars[i].Value));
                 InkText.SetAlpha(count, 0f);
                 _counts.Add(count);
             }

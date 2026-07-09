@@ -62,6 +62,18 @@ namespace YourCall
             BuildItems();
             SelectFirstInteractable();
             SetInteractable(true);
+            Localization.LanguageChanged += Relocalize;
+        }
+
+        private void OnDestroy()
+        {
+            Localization.LanguageChanged -= Relocalize;
+        }
+
+        // Re-apply the line labels in the active language (fires when the language setting changes live).
+        private void Relocalize()
+        {
+            for (int i = 0; i < _built.Count; i++) _built[i].Relocalize();
         }
 
         private void BuildItems()

@@ -92,12 +92,17 @@ namespace YourCall
         public Vector2 MeasureWrapped(string authored, float maxWidth)
         {
             if (_text == null) return Vector2.zero;
-            Vector2 v = _text.GetPreferredValues(InkMarkup.ToRichText(authored), maxWidth, 0f);
+            Vector2 v = _text.GetPreferredValues(InkMarkup.ToRichText(Localization.Localize(authored)), maxWidth, 0f);
             return new Vector2(Mathf.Clamp(v.x, 0.2f, maxWidth), Mathf.Max(v.y, 0.2f));
         }
 
         private IEnumerator Run(string authored)
         {
+            // Localize the whole line once here, so every caller (the imp lines, the dilemma prompts and
+            // reactions, the menu barks) is translated with no change at the call site. The blip voice and
+            // paging then run on the active language's text. Already-translated or English text passes through
+            // unchanged (a key miss returns the source), so it is safe to localize here unconditionally.
+            authored = Localization.Localize(authored);
             List<string> pages = BuildPages(InkMarkup.ToRichText(authored));
             for (int p = 0; p < pages.Count; p++)
             {

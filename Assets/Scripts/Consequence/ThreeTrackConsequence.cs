@@ -134,7 +134,7 @@ namespace YourCall
                 if (_font != null) t.font = _font;
                 t.rectTransform.sizeDelta = new Vector2(4.5f, 1.1f);
                 t.transform.localPosition = new Vector3(x, _optionsRowY, 0f);
-                t.text = choices[i].Label;
+                t.text = Localization.Localize(choices[i].Label);
                 InkText.SetAlpha(t, 0f);
                 var col = t.gameObject.AddComponent<BoxCollider2D>();
                 col.isTrigger = true;

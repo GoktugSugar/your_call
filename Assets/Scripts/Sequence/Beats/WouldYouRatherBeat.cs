@@ -164,7 +164,7 @@ namespace YourCall
             t.rectTransform.sizeDelta = new Vector2(2.6f, 1.2f);
             t.enableWordWrapping = true;
             t.transform.localPosition = localPos;
-            t.text = text;
+            t.text = Localization.Localize(text);
             InkText.SetAlpha(t, 0f);
             return t;
         }

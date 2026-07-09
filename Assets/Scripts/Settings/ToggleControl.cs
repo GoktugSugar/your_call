@@ -43,6 +43,7 @@ namespace YourCall
 
         public bool On { get; private set; }
 
+        private string _labelSource;
         private TextMeshPro _label;
         private LineRenderer _box;
         private LineRenderer _tick;
@@ -93,10 +94,17 @@ namespace YourCall
                 _built = true;
             }
 
-            _label.text = labelText;
+            _labelSource = labelText;
+            _label.text = Localization.Localize(labelText);
             On = on;
             _onT = on ? 1f : 0f;
             Apply();
+        }
+
+        /// <summary>Re-apply the label in the active language (called when the language changes live).</summary>
+        public void Relocalize()
+        {
+            if (_label != null) _label.text = Localization.Localize(_labelSource);
         }
 
         public void SetSelected(bool on) { _selected = on; }

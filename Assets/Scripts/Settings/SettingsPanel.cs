@@ -37,7 +37,7 @@ namespace YourCall
 
         [Header("Frame")]
         [SerializeField] private Vector3 _center = new Vector3(0f, -0.1f, 0f);
-        [SerializeField] private Vector2 _size = new Vector2(9f, 6.2f);
+        [SerializeField] private Vector2 _size = new Vector2(9f, 7.8f);
         [SerializeField] private Color _borderColor = Palette.Ink;
         [SerializeField] private Color _fillColor = new Color(0.980f, 0.968f, 0.936f, 1f);
         [SerializeField] private float _borderWidth = 0.05f;
@@ -51,12 +51,12 @@ namespace YourCall
         [SerializeField] private string _headingText = "Settings";
         [SerializeField] private float _headingSize = 3.2f;
         [SerializeField] private Color _headingColor = Palette.Ink;
-        [SerializeField] private float _headingY = 2.45f;
+        [SerializeField] private float _headingY = 3.0f;
 
         [Header("Rows")]
         [Tooltip("Rows are stacked (a centred label above each centred control), so they need a little " +
                  "more vertical room than a single line.")]
-        [SerializeField] private float _rowStartY = 1.15f;
+        [SerializeField] private float _rowStartY = 1.9f;
         [SerializeField] private float _rowSpacing = 1.15f;
         [SerializeField] private float _closeGap = 0.4f;
         [Tooltip("Nudge the rows horizontally. The controls are laid out symmetric about their own " +
@@ -83,6 +83,7 @@ namespace YourCall
         private VolumeSlider _music;
         private VolumeSlider _sfx;
         private ToggleControl _fullscreen;
+        private OptionControl _language;
         private MenuItem _close;
         private AudioSource _previewSource;
 
@@ -98,6 +99,28 @@ namespace YourCall
         {
             Build();
             SetShownAll(0f);
+            Localization.LanguageChanged += Relocalize;
+        }
+
+        private void OnDestroy()
+        {
+            Localization.LanguageChanged -= Relocalize;
+        }
+
+        // Re-apply every label in the active language (fires when the language setting changes live).
+        private void Relocalize()
+        {
+            if (_heading != null) _heading.text = Localization.Localize(_headingText);
+            if (_music != null) _music.Relocalize();
+            if (_sfx != null) _sfx.Relocalize();
+            if (_fullscreen != null) _fullscreen.Relocalize();
+            if (_language != null)
+            {
+                _language.Relocalize();
+                // Keep the picker showing the truly active language, even if it was changed elsewhere.
+                _language.SetIndexSilent(Languages.IndexOf(Localization.CurrentCode));
+            }
+            if (_close != null) _close.Relocalize();
         }
 
         public bool IsOpen => _open;
@@ -182,7 +205,7 @@ namespace YourCall
 
             _heading = InkText.Create(transform, "Heading", _headingSize, _headingColor, TextAlignmentOptions.Center, 6);
             if (_font != null) _heading.font = _font;
-            _heading.text = _headingText;
+            _heading.text = Localization.Localize(_headingText);
             _heading.rectTransform.sizeDelta = new Vector2(_size.x, _headingSize * 1.4f);
             _heading.rectTransform.localPosition = new Vector3(0f, _headingY, 0f);
 
@@ -215,6 +238,14 @@ namespace YourCall
             AddRow(_fullscreen.SetSelected, _fullscreen.Adjust, _fullscreen.Toggle, _fullscreen.Arm, _fullscreen.SetShown);
             int fsIndex = _rows.Count - 1;
             _fullscreen.Hovered += () => SelectRow(fsIndex);
+            y -= _rowSpacing;
+
+            string currentLang = GameSettings.Instance != null ? GameSettings.Instance.Language : Localization.CurrentCode;
+            _language = MakeOption("LanguageRow", "Language", LanguageNames(), Languages.IndexOf(currentLang), y);
+            _language.Changed += i => { if (GameSettings.Instance != null) GameSettings.Instance.SetLanguage(Languages.All[i].Code); };
+            AddRow(_language.SetSelected, _language.Adjust, _language.Toggle, _language.Arm, _language.SetShown);
+            int langIndex = _rows.Count - 1;
+            _language.Hovered += () => SelectRow(langIndex);
             y -= _rowSpacing + _closeGap;
 
             _close = MakeClose("CloseRow", "Close", y);
@@ -247,6 +278,24 @@ namespace YourCall
             var t = go.AddComponent<ToggleControl>();
             t.Setup(_inkMaterial, _font, label, on);
             return t;
+        }
+
+        private OptionControl MakeOption(string name, string label, string[] options, int index, float y)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(transform, false);
+            go.transform.localPosition = new Vector3(_contentOffsetX, y, 0f);
+            var o = go.AddComponent<OptionControl>();
+            o.Setup(_inkMaterial, _font, label, options, index);
+            return o;
+        }
+
+        // The languages' own names (English, Türkçe, ...), shown in each language, never translated.
+        private static string[] LanguageNames()
+        {
+            var names = new string[Languages.All.Length];
+            for (int i = 0; i < names.Length; i++) names[i] = Languages.All[i].NativeName;
+            return names;
         }
 
         private MenuItem MakeClose(string name, string label, float y)

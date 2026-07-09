@@ -49,6 +49,7 @@ namespace YourCall
         public bool Interactable { get; private set; } = true;
         public string Label { get; private set; }
 
+        private string _source;   // the English source label; the display is localized from it
         private TextMeshPro _text;
         private LineRenderer _underline;
         private List<Vector3> _underlineBase;
@@ -64,6 +65,7 @@ namespace YourCall
         public void Setup(Material inkMaterial, TMP_FontAsset font, string text, bool interactable)
         {
             Label = text;
+            _source = text;
             Interactable = interactable;
 
             if (!_built)
@@ -81,15 +83,26 @@ namespace YourCall
                 _built = true;
             }
 
-            _text.text = text;
+            _collider.enabled = interactable;
+            ApplyText();
+            Apply();
+        }
+
+        /// <summary>Re-apply the label in the active language (called when the language changes live).</summary>
+        public void Relocalize()
+        {
+            if (!_built) return;
+            ApplyText();
+        }
+
+        // Lay out the localized label and size the pick area and underline to it.
+        private void ApplyText()
+        {
+            _text.text = Localization.Localize(_source);
             _text.ForceMeshUpdate();
             float w = Mathf.Max(_minPickWidth, _text.preferredWidth);
-
             _collider.size = new Vector2(w + _pickPadX, _pickHeight);
-            _collider.enabled = interactable;
-
             BuildUnderline(w * _underlineSpan);
-            Apply();
         }
 
         private void BuildUnderline(float span)

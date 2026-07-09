@@ -137,12 +137,13 @@ namespace YourCall
             float y = 0f;
             if (!string.IsNullOrEmpty(_title))
             {
-                AddLine(_title, _titleSize, _titleColor, y);
+                AddLine(Localization.Localize(_title), _titleSize, _titleColor, y);
                 y -= _titleGap;
             }
             for (int i = 0; i < _credits.Length; i++)
             {
-                AddLine(_credits[i].role, _roleSize, _roleColor, y);
+                // The role labels localize; the names are proper nouns and stay as authored.
+                AddLine(Localization.Localize(_credits[i].role), _roleSize, _roleColor, y);
                 y -= _roleToName;
                 AddLine(_credits[i].name, _nameSize, _nameColor, y);
                 y -= _blockGap;

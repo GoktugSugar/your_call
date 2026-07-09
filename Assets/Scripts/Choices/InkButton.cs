@@ -104,7 +104,7 @@ namespace YourCall
                 if (_font != null) _labelTMP.font = _font;
                 _labelTMP.rectTransform.sizeDelta = new Vector2(_radius * 2.2f, 1f);
                 _labelTMP.transform.localPosition = Vector3.zero;
-                _labelTMP.text = _label;
+                _labelTMP.text = Localization.Localize(_label);
             }
 
             _built = true;

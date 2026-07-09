@@ -325,7 +325,7 @@ MonoBehaviour:
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
   _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
   _center: {x: 0, y: -0.1, z: 0}
-  _size: {x: 9, y: 6.2}
+  _size: {x: 9, y: 7.8}
   _borderColor: {r: 0.106, g: 0.102, b: 0.09, a: 1}
   _fillColor: {r: 0.98, g: 0.968, b: 0.936, a: 1}
   _borderWidth: 0.05
@@ -335,8 +335,8 @@ MonoBehaviour:
   _headingText: Settings
   _headingSize: 3.2
   _headingColor: {r: 0.106, g: 0.102, b: 0.09, a: 1}
-  _headingY: 2.45
-  _rowStartY: 1.15
+  _headingY: 3
+  _rowStartY: 1.9
   _rowSpacing: 1.15
   _closeGap: 0.4
   _contentOffsetX: 0
@@ -648,6 +648,13 @@ MonoBehaviour:
     height: 4.4
   _minClearance: 1.2
   _travelBias: 0.15
+  _avoidCentre: 1
+  _centreKeepout:
+    serializedVersion: 2
+    x: -4.75
+    y: -2.5
+    width: 9.5
+    height: 5.5
   _hopDurationMin: 0.22
   _hopDurationMax: 0.42
   _hopArc: 0.4
@@ -696,6 +703,7 @@ MonoBehaviour:
   _defaultMusicVolume: 1
   _defaultSfxVolume: 1
   _defaultFullscreen: 1
+  _defaultLanguage: en
   _applyFullscreenOnBoot: 1
   _persistAcrossScenes: 1
 --- !u!4 &1418221592
@@ -747,6 +755,7 @@ MonoBehaviour:
   _controller: {fileID: 1228188322}
   _settings: {fileID: 503732712}
   _imp: {fileID: 1269116347}
+  _impPopDuration: 0.6
   _settingsKeepout: {fileID: 267009561}
   _newGameScene: Opening
   _title: Your Call

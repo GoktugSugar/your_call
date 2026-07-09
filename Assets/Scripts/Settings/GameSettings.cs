@@ -20,6 +20,7 @@ namespace YourCall
         private const string MusicKey = "settings.musicVolume";
         private const string SfxKey = "settings.sfxVolume";
         private const string FullscreenKey = "settings.fullscreen";
+        private const string LanguageKey = "settings.language";
 
         [Header("Defaults (used the first run, before anything is saved)")]
         [Tooltip("A scalar over the game's own mix level, not the raw source volume: 1 is the " +
@@ -27,6 +28,9 @@ namespace YourCall
         [SerializeField, Range(0f, 1f)] private float _defaultMusicVolume = 1f;
         [SerializeField, Range(0f, 1f)] private float _defaultSfxVolume = 1f;
         [SerializeField] private bool _defaultFullscreen = true;
+        [Tooltip("The language code the game starts in the first run (before anything is saved). English by " +
+                 "default; must be one of the codes in Languages.All.")]
+        [SerializeField] private string _defaultLanguage = "en";
 
         [Header("Behaviour")]
         [Tooltip("Apply the saved fullscreen state to the window on boot. Handy to leave off while " +
@@ -38,9 +42,13 @@ namespace YourCall
         public float SfxVolume { get; private set; }
         public bool Fullscreen { get; private set; }
 
+        /// <summary>The active language code ("en", "tr", ...). Drives the <see cref="Localization"/> layer.</summary>
+        public string Language { get; private set; }
+
         public event Action<float> MusicVolumeChanged;
         public event Action<float> SfxVolumeChanged;
         public event Action<bool> FullscreenChanged;
+        public event Action<string> LanguageChanged;
 
         /// <summary>SFX scale to apply right now; full when there is no settings object in the scene.</summary>
         public static float SfxScalar => Instance != null ? Instance.SfxVolume : 1f;
@@ -68,6 +76,12 @@ namespace YourCall
             MusicVolume = Mathf.Clamp01(PlayerPrefs.GetFloat(MusicKey, _defaultMusicVolume));
             SfxVolume = Mathf.Clamp01(PlayerPrefs.GetFloat(SfxKey, _defaultSfxVolume));
             Fullscreen = PlayerPrefs.GetInt(FullscreenKey, _defaultFullscreen ? 1 : 0) != 0;
+
+            string lang = PlayerPrefs.GetString(LanguageKey, _defaultLanguage);
+            if (!Languages.Has(lang)) lang = Languages.DefaultCode;
+            Language = lang;
+            // Drive the localization layer before any text is shown (this runs at -100 execution order).
+            Localization.SetLanguage(lang);
         }
 
         public void SetMusicVolume(float v)
@@ -95,6 +109,17 @@ namespace YourCall
             PlayerPrefs.SetInt(FullscreenKey, on ? 1 : 0);
             ApplyFullscreen();
             FullscreenChanged?.Invoke(on);
+        }
+
+        /// <summary>Select the language by code, persist it, and drive the localization layer live (which
+        /// re-localizes the menu and settings via Localization.LanguageChanged). Unknown codes are ignored.</summary>
+        public void SetLanguage(string code)
+        {
+            if (!Languages.Has(code) || string.Equals(code, Language, StringComparison.OrdinalIgnoreCase)) return;
+            Language = code;
+            PlayerPrefs.SetString(LanguageKey, code);
+            Localization.SetLanguage(code);
+            LanguageChanged?.Invoke(code);
         }
 
         /// <summary>Flush prefs to disk. Called when the settings panel closes, and on quit, so a

@@ -207,7 +207,7 @@ namespace YourCall
             if (_font != null) _buttonText.font = _font;
             _buttonText.rectTransform.sizeDelta = new Vector2(_buttonRadius * 2.2f, 1f);
             _buttonText.transform.localPosition = Vector3.zero;
-            _buttonText.text = _buttonLabel;
+            _buttonText.text = Localization.Localize(_buttonLabel);
         }
 
         private void ApplyButtonVisual(bool hot)
@@ -230,7 +230,7 @@ namespace YourCall
 
         private void SetCountdown(int value)
         {
-            if (_countText != null) _countText.text = value.ToString();
+            if (_countText != null) _countText.text = Localization.Number(value);
         }
 
         private IEnumerator FadeButton(float target)

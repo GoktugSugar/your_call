@@ -46,7 +46,7 @@ namespace YourCall
             if (!_built) Build();
             if (string.IsNullOrEmpty(line)) { Hide(); return; }
             _text.transform.position = figureWorldPos + new Vector3(0f, _heightAboveFigure, 0f);
-            _text.text = line;
+            _text.text = Localization.Localize(line);
             if (_routine != null) StopCoroutine(_routine);
             _routine = StartCoroutine(FadeTo(1f));
         }
