@@ -88,6 +88,20 @@ namespace YourCall
                 case DoodleKind.Star: return Palette.InkGold;         // something bright / meaningful
                 case DoodleKind.Candy: return Palette.InkPink;        // cheap sweet
 
+                // Chapter 3 rework: the ten double-edged items, the cucumber, the question mark.
+                case DoodleKind.Charisma: return Palette.InkOrange;   // warmth / being adored
+                case DoodleKind.OffSwitch: return Palette.InkSky;     // cool detachment
+                case DoodleKind.PerfectMemory: return Palette.InkPurple; // the mind
+                case DoodleKind.LieDetector: return Palette.InkGreen; // detector / truth
+                case DoodleKind.Rewind: return Palette.InkBlue;       // time / undo
+                case DoodleKind.IqUp: return Palette.InkPurple;       // intelligence / the mind
+                case DoodleKind.NeverTired: return Palette.InkRed;    // wired, alert
+                case DoodleKind.Clover: return Palette.InkGreen;      // luck, green
+                case DoodleKind.FeelNothing: return Palette.Muted;    // numb, greyed
+                case DoodleKind.InnerVoice: return Palette.InkSky;    // a guiding voice
+                case DoodleKind.Cucumber: return Palette.InkGreen;    // a cucumber, green
+                case DoodleKind.QuestionMark: return Palette.Muted;   // the somber mystery of the death
+
                 default: return Palette.Ink;
             }
         }
@@ -124,6 +138,20 @@ namespace YourCall
                 case DoodleKind.Coin: Coin(); break;
                 case DoodleKind.Star: Star(); break;
                 case DoodleKind.Candy: Candy(); break;
+
+                // Chapter 3 rework doodles.
+                case DoodleKind.Charisma: Charisma(); break;
+                case DoodleKind.OffSwitch: OffSwitch(); break;
+                case DoodleKind.PerfectMemory: PerfectMemory(); break;
+                case DoodleKind.LieDetector: LieDetector(); break;
+                case DoodleKind.Rewind: Rewind(); break;
+                case DoodleKind.IqUp: IqUp(); break;
+                case DoodleKind.NeverTired: NeverTired(); break;
+                case DoodleKind.Clover: Clover(); break;
+                case DoodleKind.FeelNothing: FeelNothing(); break;
+                case DoodleKind.InnerVoice: InnerVoice(); break;
+                case DoodleKind.Cucumber: Cucumber(); break;
+                case DoodleKind.QuestionMark: QuestionMark(); break;
                 default: break;
             }
         }
@@ -535,6 +563,157 @@ namespace YourCall
             Stroke("EndL", Line(new Vector2(-0.3f, 0.1f), new Vector2(-0.6f, 0.22f), new Vector2(-0.56f, -0.02f), new Vector2(-0.6f, -0.22f), new Vector2(-0.3f, -0.1f)), _width * 0.8f);
             Stroke("EndR", Line(new Vector2(0.3f, 0.1f), new Vector2(0.6f, 0.22f), new Vector2(0.56f, -0.02f), new Vector2(0.6f, -0.22f), new Vector2(0.3f, -0.1f)), _width * 0.8f);
             Stroke("Swirl", Line(new Vector2(-0.12f, 0.12f), new Vector2(0.12f, -0.12f)), _width * 0.7f);
+        }
+
+        // ---------- Chapter 3 rework: the ten double-edged items, the cucumber, the question mark ----------
+
+        // Charisma: a figure with a halo of little rays, so it reads as magnetic / instantly adored.
+        private void Charisma()
+        {
+            Stroke("Head", Circle(new Vector2(0f, 0.28f), 0.15f));
+            Stroke("Body", Line(new Vector2(0f, 0.13f), new Vector2(0f, -0.28f)));
+            Stroke("ArmL", Line(new Vector2(0f, 0.04f), new Vector2(-0.24f, -0.1f)));
+            Stroke("ArmR", Line(new Vector2(0f, 0.04f), new Vector2(0.24f, -0.1f)));
+            Stroke("LegL", Line(new Vector2(0f, -0.28f), new Vector2(-0.18f, -0.62f)));
+            Stroke("LegR", Line(new Vector2(0f, -0.28f), new Vector2(0.18f, -0.62f)));
+            Vector2 c = new Vector2(0f, 0.28f);
+            for (int i = 0; i < 10; i++)
+            {
+                float a = i * 36f * Mathf.Deg2Rad;
+                var d = new Vector2(Mathf.Cos(a), Mathf.Sin(a));
+                Stroke("Ray" + i, Line(c + d * 0.24f, c + d * 0.4f), _width * 0.7f);
+            }
+        }
+
+        // The Off Switch: a head with a small toggle switch, the knob to the off side.
+        private void OffSwitch()
+        {
+            Stroke("Head", Circle(new Vector2(0f, 0.06f), 0.46f));
+            var pill = new List<Vector3>();
+            for (int i = 0; i <= 24; i++) { float a = i / 24f * Mathf.PI * 2f; pill.Add(new Vector3(Mathf.Cos(a) * 0.24f, -0.02f + Mathf.Sin(a) * 0.13f, 0f)); }
+            Stroke("Pill", pill, _width * 0.8f);
+            Stroke("Knob", Circle(new Vector2(-0.11f, -0.02f), 0.09f, 12), _width * 0.9f);
+        }
+
+        // Perfect Memory: a head etched with sharp, hard lines (nothing ever softens or fades).
+        private void PerfectMemory()
+        {
+            Stroke("Head", Circle(new Vector2(0f, 0.02f), 0.46f));
+            Stroke("L1", Line(new Vector2(-0.26f, 0.24f), new Vector2(0.24f, 0.24f)), _width * 0.7f);
+            Stroke("L2", Line(new Vector2(-0.28f, 0.06f), new Vector2(0.26f, 0.06f)), _width * 0.7f);
+            Stroke("L3", Line(new Vector2(-0.26f, -0.12f), new Vector2(0.24f, -0.12f)), _width * 0.7f);
+            Stroke("L4", Line(new Vector2(-0.2f, -0.3f), new Vector2(0.18f, -0.3f)), _width * 0.7f);
+        }
+
+        // The Lie Detector: an open eye that always sees the truth.
+        private void LieDetector()
+        {
+            var top = new List<Vector3>(); InkLine.AddArc(top, new Vector2(0f, -0.1f), 0.55f, 20f, 160f, 20); Stroke("Lid", top);
+            var bot = new List<Vector3>(); InkLine.AddArc(bot, new Vector2(0f, 0.34f), 0.55f, 200f, 340f, 20); Stroke("Under", bot);
+            Stroke("Iris", Circle(new Vector2(0f, 0.06f), 0.17f, 20));
+            Stroke("Pupil", Circle(new Vector2(0f, 0.06f), 0.06f, 12), _width * 1.1f);
+        }
+
+        // Rewind (once ever): a bold curved arrow sweeping back on itself.
+        private void Rewind()
+        {
+            var arc = new List<Vector3>();
+            InkLine.AddArc(arc, Vector2.zero, 0.46f, 300f, 490f, 26); // lower-right, up over the top, to upper-left
+            Stroke("Arc", arc);
+            Vector2 end = arc[arc.Count - 1];
+            Stroke("Ah1", Line(end, end + new Vector2(0.06f, 0.2f)), _width * 0.9f);
+            Stroke("Ah2", Line(end, end + new Vector2(-0.18f, 0.08f)), _width * 0.9f);
+        }
+
+        // Ten more IQ: a head with a small up-arrow rising from it.
+        private void IqUp()
+        {
+            Stroke("Head", Circle(new Vector2(0f, -0.06f), 0.44f));
+            Stroke("Shaft", Line(new Vector2(0f, 0.42f), new Vector2(0f, 0.86f)), _width * 0.95f);
+            Stroke("Ah1", Line(new Vector2(0f, 0.86f), new Vector2(-0.14f, 0.68f)), _width * 0.95f);
+            Stroke("Ah2", Line(new Vector2(0f, 0.86f), new Vector2(0.14f, 0.68f)), _width * 0.95f);
+        }
+
+        // Never Tired: a wide open eye and a crossed-out z (no sleep, ever).
+        private void NeverTired()
+        {
+            var top = new List<Vector3>(); InkLine.AddArc(top, new Vector2(-0.2f, -0.28f), 0.44f, 25f, 155f, 16); Stroke("Lid", top);
+            var bot = new List<Vector3>(); InkLine.AddArc(bot, new Vector2(-0.2f, 0.12f), 0.44f, 205f, 335f, 16); Stroke("Under", bot);
+            Stroke("Iris", Circle(new Vector2(-0.2f, -0.08f), 0.12f, 16));
+            Stroke("Pupil", Circle(new Vector2(-0.2f, -0.08f), 0.045f, 8), _width * 1.1f);
+            Stroke("Z", Line(new Vector2(0.28f, 0.62f), new Vector2(0.6f, 0.62f), new Vector2(0.28f, 0.34f), new Vector2(0.6f, 0.34f)), _width * 0.9f);
+            Stroke("Slash", Line(new Vector2(0.24f, 0.34f), new Vector2(0.64f, 0.66f)), _width * 0.85f);
+        }
+
+        // The Good Luck: a four-leaf clover with a curling stem.
+        private void Clover()
+        {
+            Vector2 c = new Vector2(0f, 0.12f);
+            float[] ang = { 45f, 135f, 225f, 315f };
+            for (int i = 0; i < 4; i++)
+            {
+                float a = ang[i] * Mathf.Deg2Rad;
+                Vector2 lc = c + new Vector2(Mathf.Cos(a), Mathf.Sin(a)) * 0.26f;
+                var leaf = new List<Vector3>();
+                for (int j = 0; j <= 18; j++) { float t = j / 18f * Mathf.PI * 2f; leaf.Add(new Vector3(lc.x + Mathf.Cos(t) * 0.2f, lc.y + Mathf.Sin(t) * 0.24f, 0f)); }
+                Stroke("Leaf" + i, leaf, _width * 0.85f);
+            }
+            Stroke("Stem", Line(c, new Vector2(0.06f, -0.4f), new Vector2(-0.02f, -0.62f)), _width * 0.85f);
+        }
+
+        // Feel Nothing: a blank face with a dead flat mouth (no grief, no joy).
+        private void FeelNothing()
+        {
+            Stroke("Head", Circle(new Vector2(0f, 0.04f), 0.46f));
+            Stroke("EyeL", Line(new Vector2(-0.24f, 0.14f), new Vector2(-0.1f, 0.14f)), _width * 0.9f);
+            Stroke("EyeR", Line(new Vector2(0.1f, 0.14f), new Vector2(0.24f, 0.14f)), _width * 0.9f);
+            Stroke("Mouth", Line(new Vector2(-0.24f, -0.18f), new Vector2(0.24f, -0.18f)), _width * 0.95f);
+        }
+
+        // One More Voice: a head with a little speech bubble and a whisper curl beside it.
+        private void InnerVoice()
+        {
+            Stroke("Head", Circle(new Vector2(-0.14f, -0.02f), 0.42f));
+            Stroke("EyeL", Circle(new Vector2(-0.26f, 0.04f), 0.035f, 8), _width * 0.8f);
+            Stroke("EyeR", Circle(new Vector2(-0.02f, 0.04f), 0.035f, 8), _width * 0.8f);
+            var bub = new List<Vector3>(); InkLine.AddArc(bub, new Vector2(0.42f, 0.4f), 0.24f, 0f, 360f, 18); Stroke("Bubble", bub, _width * 0.85f);
+            Stroke("Tail", Line(new Vector2(0.28f, 0.24f), new Vector2(0.16f, 0.06f)), _width * 0.8f);
+            var curl = new List<Vector3>();
+            for (int i = 0; i <= 20; i++) { float t = i / 20f; float ang = t * Mathf.PI * 2.4f; float r = 0.12f * (1f - t * 0.5f); curl.Add(new Vector3(0.42f + Mathf.Cos(ang) * r, 0.4f + Mathf.Sin(ang) * r, 0f)); }
+            Stroke("Curl", curl, _width * 0.7f);
+        }
+
+        // The 100 dollar cucumber (the deadpan finale): a simple cucumber, exactly what it looks like.
+        private void Cucumber()
+        {
+            float rot = 18f * Mathf.Deg2Rad;
+            var body = new List<Vector3>();
+            int seg = 40;
+            for (int i = 0; i <= seg; i++)
+            {
+                float t = i / (float)seg * Mathf.PI * 2f;
+                float x = Mathf.Cos(t) * 0.28f;
+                float y = Mathf.Sin(t) * 0.66f;
+                x += Mathf.Sin(y * 1.4f) * 0.08f; // a gentle curve
+                body.Add(Rot(x, y, rot));
+            }
+            Stroke("Body", body);
+            Stroke("D1", new List<Vector3> { Rot(-0.02f, 0.28f, rot), Rot(0.06f, 0.24f, rot) }, _width * 0.6f);
+            Stroke("D2", new List<Vector3> { Rot(-0.06f, 0.02f, rot), Rot(0.03f, -0.02f, rot) }, _width * 0.6f);
+            Stroke("D3", new List<Vector3> { Rot(-0.02f, -0.26f, rot), Rot(0.07f, -0.3f, rot) }, _width * 0.6f);
+            Stroke("Nub", new List<Vector3> { Rot(0.0f, 0.66f, rot), Rot(0.0f, 0.78f, rot) }, _width * 0.8f);
+        }
+
+        // The truth about how you died (reworked visual): a plain ink question mark, nothing else.
+        private void QuestionMark()
+        {
+            var q = new List<Vector3>();
+            InkLine.AddArc(q, new Vector2(0f, 0.34f), 0.3f, 200f, -40f, 24);
+            q.Add(new Vector3(0.18f, 0.12f, 0f));
+            q.Add(new Vector3(0f, -0.02f, 0f));
+            q.Add(new Vector3(0f, -0.22f, 0f));
+            Stroke("Hook", q, _width * 1.1f);
+            Stroke("Dot", Circle(new Vector2(0f, -0.5f), 0.06f, 10), _width * 1.2f);
         }
 
         // ---------- fade ----------

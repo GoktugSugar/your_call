@@ -33,9 +33,23 @@ namespace YourCall
         MemoryCloud,    // the deleted memory: a thought cloud with a scribble inside, purple
         StolenYears,    // bulk: a small stranger figure beside a clock (ten years of their life), red
         Forgetting,     // the cheap forgetting: a head with the memory drifting away, sky
-        Tombstone,      // the truth about how you died: a headstone with a question mark, muted
-        Coin,           // cash-out menu: a coin, gold
-        Star,           // cash-out menu: a star (something meaningful), gold
-        Candy           // cash-out menu: a wrapped sweet (cheap junk), pink
+        Tombstone,      // the truth about how you died: a headstone with a question mark, muted (superseded by QuestionMark)
+        Coin,           // cash-out menu: a coin, gold (cash-out removed; kept for ordinal stability)
+        Star,           // cash-out menu: a star (something meaningful), gold (cash-out removed; kept)
+        Candy,          // cash-out menu: a wrapped sweet (cheap junk), pink (cash-out removed; kept)
+
+        // ---- Chapter 3 rework: the ten double-edged items, the cucumber finale, and the plain question mark ----
+        Charisma,       // everyone instantly likes you: a figure with radiating lines, warm
+        OffSwitch,      // turn off one emotion at will: a head with a small switch
+        PerfectMemory,  // never forget anything: a head with sharp, hard lines
+        LieDetector,    // always know when you are lied to: an open eye
+        Rewind,         // once ever, undo one life decision: a curved back-arrow
+        IqUp,           // ten more IQ: a head with a small up-arrow
+        NeverTired,     // never sleep or tire again: an eye held open over a crossed-out z
+        Clover,         // the good luck: a four-leaf clover, green
+        FeelNothing,    // never grief or joy at full volume: a flat-line mouth face
+        InnerVoice,     // a wise voice always right: a head with a small speech curl
+        Cucumber,       // the deadpan 100 dollar finale: a cucumber, green
+        QuestionMark    // the truth about how you died (reworked visual): just an ink question mark
     }
 }

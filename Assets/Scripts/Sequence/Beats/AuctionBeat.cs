@@ -26,13 +26,13 @@ namespace YourCall
     /// </summary>
     public sealed class AuctionBeat : SequenceBeat
     {
-        [Header("Auction rules (tunable)")]
-        [Tooltip("The pack's asking price, in dollars.")]
-        [SerializeField] private int _cigarettePrice = 10;
-        [Tooltip("The button bids this multiple of the standing price every round (the double-bid rule).")]
-        [SerializeField] private int _bidMultiplier = 2;
-        [Tooltip("At or below this balance the player is considered broke: a keep-going they cannot cover spends the whole pot and fires the secret ending.")]
-        [SerializeField] private int _brokeThreshold = 0;
+        [Header("Auction rules (tunable). A real auction: no money is EVER deducted, so the pot stays intact whatever happens.")]
+        [Tooltip("The player's opening bid, in dollars (the pack's asking price).")]
+        [SerializeField] private int _cigarettePrice = 20;
+        [Tooltip("Every bid climbs by this fixed amount, alternating (player 20, button 30, player 40, button 50, ...).")]
+        [SerializeField] private int _bidIncrement = 10;
+        [Tooltip("After the player chooses to keep bidding this many times (counting their opening bid), the imp has seen enough and fires the secret ending. The pot is never touched.")]
+        [SerializeField] private int _persistenceRounds = 3;
 
         [Header("References")]
         [SerializeField] private Material _inkMaterial;
@@ -40,7 +40,7 @@ namespace YourCall
         [SerializeField] private TMP_FontAsset _font;
         [Tooltip("The walking-button figure prefab (reused from Chapter 2), the rival bidder.")]
         [SerializeField] private WalkingButton _walkingButtonPrefab;
-        [Tooltip("The reusable ending fired when the player bids everything (the imp's rage line, then the credits roll).")]
+        [Tooltip("The reusable ending fired when the player keeps bidding to the limit (the imp's rage line, then the credits roll).")]
         [SerializeField] private Ending _ending;
 
         [Header("The pack (a coloured-outline cigarette doodle; kept left, clear of the rival)")]
@@ -111,43 +111,47 @@ namespace YourCall
             "[amber]{0}[/amber]. Your move, meat.",
             "[amber]{0}[/amber]! Going once?",
         };
-        [Tooltip("The imp needles during the auction (cycled, optional; auto-advances). Empty entries are skipped.")]
+        [Tooltip("The imp needles during the auction (cycled, optional; auto-advances). Empty entries are skipped. No money moves, so he needles the sheer pointlessness, not the balance.")]
         [SerializeField, TextArea(1, 3)] private string[] _impAuctionEggs = new[]
         {
             "It is a button. You are losing to a button.",
-            "Look at that number. Look at your balance. Keep going, this is wonderful.",
+            "You do know it costs you nothing to walk away. You know that. And here you are.",
             "",
         };
 
         [Tooltip("The bid prompt shown as narration each round. {0} = the button's bid.")]
-        [SerializeField, TextArea(1, 3)] private string _bidPrompt = "The button bids [amber]{0}[/amber]. Pay it, or walk.";
+        [SerializeField, TextArea(1, 3)] private string _bidPrompt = "The button bids [amber]{0}[/amber]. Outbid it, or walk away.";
 
-        [Tooltip("If the player drops out: the button's gloat as it takes the pack (its own voice).")]
-        [SerializeField, TextArea(1, 3)] private string _dropButtonGloat = "Yesss. Mine. Thank you, sir, a pleasure doing business.";
+        [Tooltip("If the player drops out: the button's gloat as it takes the pack (its own voice). Held long enough to read.")]
+        [SerializeField, TextArea(1, 3)] private string _dropButtonGloat = "Yesss. Mine. All mine. Thank you, sir, a pleasure doing business.";
         [Tooltip("If the player drops out: the imp mocks losing to a button.")]
         [SerializeField, TextArea(2, 5)] private string _dropImpMock =
             "And there it goes, off into the void with your cigarettes, that gormless little button, and you let it. You, a grown judge, out bid by furniture. I will treasure this.";
 
-        [Tooltip("The secret ending: the button's gloat as it walks off with the pack after driving the player broke (its own voice).")]
-        [SerializeField, TextArea(1, 3)] private string _brokeButtonGloat = "Ha! All of it! Every penny! And I still get the smokes. Cheers, mate.";
-        [Tooltip("The imp's rage line for the secret ending. He reaches for a threat, hits the wall of the player already being dead, then decides to resurrect them so the curse counts. Strong language, no dashes. Direction only, tune the wording.")]
+        [Tooltip("The secret ending: the imp cuts the auction off when the player will clearly never stop. Shown as narration.")]
+        [SerializeField, TextArea(2, 5)] private string _impCutsIn =
+            "Right. Stop. STOP. Look at you. You would bid until the stars burned out. Over a packet of cigarettes. Against a button that wants them more than you have ever wanted anything.";
+        [Tooltip("The secret ending: the button's gloat as it walks off with the pack anyway (its own voice). Held long enough to read.")]
+        [SerializeField, TextArea(1, 3)] private string _brokeButtonGloat = "Ha! Never stood a chance, mate. These are mine. Toodleoo.";
+        [Tooltip("The imp's rage line for the secret ending. The twist now: it cost the player nothing, which somehow makes it worse. He reaches for a threat, hits the wall of the player being dead, then resurrects them so the curse counts. Strong language, no dashes. Direction only, tune the wording.")]
         [SerializeField, TextArea(4, 9)] private string _rageLine =
-            "You spent everything. Every last dollar you had left. On [red]cigarettes[/red]. That you did not even win. Right. Fine. I give you [red]cancer[/red]. I give you the worst, slowest. Wait. No. You are already [red]dead[/red], you idiot, that does nothing. Hold on. Okay. New plan. I drag you back out of the grave, I stitch you together, I give you a pulse, and the very second you are breathing again, I give you [red]lung cancer[/red]. There. Now it counts. You addicted, penniless, bidding against a button piece of shit. Go on. Get out of my void.";
+            "You would have gone forever. Over a pack of [red]cigarettes[/red]. And here is the part that truly gets me: it did not cost you a single penny, your money is right there, untouched, and you STILL could not walk away. Right. Fine. I give you [red]cancer[/red]. The worst, slowest kind. Wait. No. You are already [red]dead[/red], you idiot, that does nothing. Hold on. New plan. I drag you back out of the grave, I stitch you together, I give you a pulse, and the second you are breathing again, I give you [red]lung cancer[/red]. There. Now it counts. Over a button and a packet of smokes. Get out of my void.";
 
         [Header("Choice affordance labels (no dashes). {0} = a money amount where noted.")]
         [SerializeField] private string _buyLabel = "Buy them";
         [SerializeField] private string _passLabel = "Pass";
-        [Tooltip("Keep going and pay the button's bid. {0} = the bid.")]
-        [SerializeField] private string _keepBiddingLabel = "Pay {0}";
-        [Tooltip("Keep going when you cannot cover the bid (spend everything).")]
-        [SerializeField] private string _allInLabel = "Bid everything";
+        [Tooltip("Keep going and outbid the button. {0} = the player's next bid.")]
+        [SerializeField] private string _keepBiddingLabel = "Bid {0}";
         [SerializeField] private string _dropOutLabel = "Drop out";
 
         [Header("Timing")]
         [SerializeField] private float _fadeIn = 0.4f;
         [SerializeField] private float _advanceLockout = 0.3f;
         [SerializeField] private float _reactHold = 0.4f;
+        [Tooltip("How long a mid-auction taunt / needle holds.")]
         [SerializeField] private float _bidHold = 0.7f;
+        [Tooltip("How long the button's FIRST (arrival) and LAST (winning gloat) lines hold, so they read clearly. Longer than a mid-auction taunt.")]
+        [SerializeField] private float _voiceReadHold = 1.6f;
         [SerializeField] private float _voiceFade = 0.3f;
         [SerializeField] private float _comeAlive = 0.45f;
         [SerializeField] private float _preRageHold = 0.6f;
@@ -248,11 +252,11 @@ namespace YourCall
             var keepout = _rival.gameObject.AddComponent<ScreenKeepout>();
             keepout.UseRendererBounds(_keepoutPadding);
 
-            // Sprout limbs, stride in to its spot, announce itself.
+            // Sprout limbs, stride in to its spot, announce itself. Its first line holds long enough to read.
             yield return _rival.ComeAlive(_comeAlive);
             yield return _rival.WalkOff(_rivalStop.x);   // walk to an on-screen spot (stops on arrival)
             ShowVoice(_rivalArrives);
-            yield return new WaitForSeconds(_bidHold);
+            yield return new WaitForSeconds(_voiceReadHold);
 
             // The imp declares the auction.
             yield return FadeVoice(0f);
@@ -266,62 +270,58 @@ namespace YourCall
 
         private IEnumerator RunAuction(SequenceContext ctx)
         {
-            int standing = Mathf.Max(1, _cigarettePrice);
-            int mult = Mathf.Max(2, _bidMultiplier);
+            int inc = Mathf.Max(1, _bidIncrement);
+            int playerBid = Mathf.Max(1, _cigarettePrice);   // the player's standing bid (their opening bid)
+            int playerBids = 1;                              // the opening bid counts as the first
+            int limit = Mathf.Max(1, _persistenceRounds);
 
             ctx.Choices.Chosen += OnPicked;
             try
             {
                 while (true)
                 {
-                    int buttonBid = standing * mult;
+                    int buttonBid = playerBid + inc;         // the button always counters by +inc
+                    int nextBid = buttonBid + inc;           // what the player would bid to stay in
 
-                    // The button bids (its voice + the readout + a needle).
+                    // The button bids (its voice + the climbing readout + a needle). No money moves.
                     ShowVoice(Localization.Format(NextTaunt(), Localization.Money(buttonBid)));
                     SetTag(Localization.Money(buttonBid));
                     ctx.Narrator.Show(Localization.Format(_bidPrompt, Localization.Money(buttonBid)));
                     while (ctx.Narrator.IsShowing) yield return null;
 
-                    bool canAfford = buttonBid <= ctx.Money.Balance - Mathf.Max(0, _brokeThreshold);
-                    string keepLabel = canAfford ? Localization.Format(_keepBiddingLabel, Localization.Money(buttonBid)) : _allInLabel;
-
                     _picked = -1;
-                    ctx.Choices.Present(keepLabel, _dropOutLabel);
+                    ctx.Choices.Present(Localization.Format(_keepBiddingLabel, Localization.Money(nextBid)), _dropOutLabel);
                     while (_picked < 0) yield return null;
                     ctx.Choices.Dismiss();
 
                     if (_picked == 1)
                     {
-                        // Dropped out: the button wins and walks off with the pack; the player keeps what is left.
+                        // Dropped out: the button wins and walks off with the pack; the player keeps every
+                        // dollar (nothing was ever deducted). The sensible exit.
                         yield return DropOut(ctx);
                         yield break;
                     }
 
-                    // Kept going.
+                    // Kept going. Still no money moves, the number just climbs.
+                    playerBid = nextBid;
+                    playerBids++;
                     ctx.Narrator.Clear();
-                    if (canAfford)
-                    {
-                        ctx.Money.Spend(buttonBid);
-                        standing = buttonBid;
 
-                        // An occasional imp needle as the balance bleeds (auto-advances).
-                        string egg = NextEgg();
-                        if (!string.IsNullOrEmpty(egg))
-                        {
-                            ctx.Narrator.Show(Localization.Localize(egg));
-                            while (ctx.Narrator.IsShowing) yield return null;
-                            yield return new WaitForSeconds(_bidHold);
-                            ctx.Narrator.Clear();
-                        }
-                    }
-                    else
+                    if (playerBids >= limit)
                     {
-                        // Went all in: spent everything trying to win, and lost anyway. The secret ending.
-                        // The top balance readout carries the "broke" moment; the bid tag is cleared in
-                        // BrokeEnding so no stray "$0" is left floating mid screen.
-                        ctx.Money.Spend(ctx.Money.Balance);
-                        yield return BrokeEnding(ctx);
+                        // The player will clearly never stop. The imp has seen enough: the secret ending.
+                        yield return PersistenceEnding(ctx);
                         yield break;   // the credits reload the scene; we never return
+                    }
+
+                    // An occasional imp needle at the sheer pointlessness (auto-advances).
+                    string egg = NextEgg();
+                    if (!string.IsNullOrEmpty(egg))
+                    {
+                        ctx.Narrator.Show(Localization.Localize(egg));
+                        while (ctx.Narrator.IsShowing) yield return null;
+                        yield return new WaitForSeconds(_bidHold);
+                        ctx.Narrator.Clear();
                     }
                 }
             }
@@ -333,9 +333,10 @@ namespace YourCall
 
         private IEnumerator DropOut(SequenceContext ctx)
         {
+            // No money was ever deducted, so the pot is intact; the player just loses to a button.
             ctx.Narrator.Clear();
             ShowVoice(_dropButtonGloat);
-            yield return new WaitForSeconds(_bidHold);
+            yield return new WaitForSeconds(_voiceReadHold);   // the button's last line, held to read
             // The button strides off the screen with the cigarettes; the pack goes with it.
             if (_pack != null) StartCoroutine(_pack.FadeOut(_fadeIn));
             yield return WalkRivalOff();
@@ -353,12 +354,22 @@ namespace YourCall
             Teardown();
         }
 
-        private IEnumerator BrokeEnding(SequenceContext ctx)
+        // The secret ending: the player would never stop bidding, so the imp cuts it off. No money was ever
+        // deducted, so the pot is intact; he kills them anyway, out of exasperation at the pointlessness.
+        private IEnumerator PersistenceEnding(SequenceContext ctx)
         {
+            // The imp cuts the auction off.
+            ctx.Choices.Dismiss();
+            ctx.Narrator.Show(Localization.Localize(_impCutsIn));
+            while (ctx.Narrator.IsShowing) yield return null;
+            yield return new WaitForSeconds(_reactHold);
+            ctx.Narrator.Clear();
+
+            // The button gloats one last time (held to read) and walks off with the pack anyway.
             ShowVoice(_brokeButtonGloat);
-            yield return new WaitForSeconds(_bidHold);
+            yield return new WaitForSeconds(_voiceReadHold);
             if (_pack != null) StartCoroutine(_pack.FadeOut(_fadeIn));
-            StartCoroutine(FadeTag(1f, 0f, _fadeIn));   // clear the bid readout: no stray "$0" left mid screen
+            StartCoroutine(FadeTag(1f, 0f, _fadeIn));   // clear the bid readout: no stray amount left mid screen
             yield return WalkRivalOff();
             yield return FadeVoice(0f);
             if (_voice != null) { Destroy(_voice.gameObject); _voice = null; }
@@ -367,7 +378,6 @@ namespace YourCall
             // The imp holds still for his last word, then the rage line and the credits.
             var roamer = ctx.Imp != null ? ctx.Imp.GetComponent<ImpRoamer>() : null;
             if (roamer != null) roamer.enabled = false;
-            ctx.Choices.Dismiss();
             if (_preRageHold > 0f) yield return new WaitForSeconds(_preRageHold);
 
             if (_ending != null)

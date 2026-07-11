@@ -95,6 +95,10 @@ namespace YourCall
         [SerializeField, TextArea(2, 5)] private string _brokeReact =
             "With what, exactly? You have nothing. You gave it all away. You get to just watch this one.";
 
+        [Header("The recurring finale tease (optional). Dangles the big thing coming at the very end.")]
+        [Tooltip("An optional short imp line dropped after this beat, teasing that something worth saving for is coming at the end. Empty shows none. Choice independent, never graded; escalate the hype across beats as data.")]
+        [SerializeField, TextArea(1, 3)] private string _teaseLine = "";
+
         [Header("Bulk copy (bulk only)")]
         [Tooltip("Optional business-as-usual line each purchase (auto-advances). {0} = count so far. Empty shows none.")]
         [SerializeField, TextArea(1, 3)] private string _bulkTierLine = "";
@@ -163,6 +167,9 @@ namespace YourCall
 
             if (_mode == PriceMode.Bulk) yield return RunBulk(ctx, price);
             else yield return RunSingle(ctx, price);
+
+            // The recurring finale tease (choice independent), dangling the big thing at the very end.
+            if (!string.IsNullOrEmpty(_teaseLine)) yield return Say(ctx, _teaseLine, price);
 
             yield return FadeVisualsOut();
             yield return RevealSplit(ctx);
