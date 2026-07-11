@@ -151,6 +151,9 @@ namespace YourCall.Dev
         private void Jump(string scene, int beatIndex)
         {
             SequencePlayer.PendingStartBeat = beatIndex;   // consumed by the target scene's SequencePlayer
+            // A dev jump is not the real run: switch off auto-save so testing never overwrites the player's
+            // save, and never clears it on an ending reached mid-test. New Game / Continue turn it back on.
+            if (SaveService.Instance != null) SaveService.Instance.SetRealRun(false);
             _open = false;
             SceneManager.LoadScene(scene);
         }

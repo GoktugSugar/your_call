@@ -55,5 +55,15 @@ namespace YourCall
         {
             get { int s = 0; for (int i = 0; i < Bought.Count; i++) s += Bought[i].Amount; return s; }
         }
+
+        /// <summary>Replace the ledger with a saved snapshot (Continue restoring a mid-chapter money run), so
+        /// the buyback and the end-of-chapter receipt see exactly what the player had bought and skipped.</summary>
+        public void LoadFrom(IEnumerable<Entry> savedBought, IEnumerable<Entry> savedSkipped)
+        {
+            Bought.Clear();
+            Skipped.Clear();
+            if (savedBought != null) Bought.AddRange(savedBought);
+            if (savedSkipped != null) Skipped.AddRange(savedSkipped);
+        }
     }
 }

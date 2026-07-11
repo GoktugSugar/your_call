@@ -7,9 +7,10 @@ namespace YourCall
 {
     /// <summary>
     /// The main menu screen, composed: it draws the hand-lettered title, hands navigation to the
-    /// <see cref="MainMenuController"/>, and turns a chosen line into an action, New Game loads the
-    /// opening sequence and Settings opens the in-style panel (Continue is disabled and never
-    /// fires). While the settings panel is open it parks the menu's input so the two never fight.
+    /// <see cref="MainMenuController"/>, and turns a chosen line into an action, New Game starts a fresh
+    /// run (confirming first if a save exists, since it overwrites), Continue resumes the single save at
+    /// the exact beat, and Settings opens the in-style panel. While the settings panel or the New Game
+    /// confirm is open it parks the menu's input so the two never fight.
     /// The imp idles here too, since it is the face of the game, revealed on entry and left to its
     /// own life. It reaches into scene loading and the panel; the small parts stay decoupled and
     /// event-driven. One job: run the menu screen.
@@ -48,10 +49,12 @@ namespace YourCall
 
         private TextMeshPro _titleText;
         private LineRenderer _titleLine;
+        private NewGameConfirm _confirm;
 
         private void Start()
         {
             BuildTitle();
+            BuildConfirm();
 
             if (_controller != null) _controller.Activated += OnActivated;
             if (_settings != null) _settings.Closed += OnSettingsClosed;
@@ -71,6 +74,18 @@ namespace YourCall
         private void RelocalizeTitle()
         {
             if (_titleText != null) _titleText.text = Localization.Localize(_title);
+            if (_confirm != null) _confirm.Relocalize();
+        }
+
+        // The New Game confirmation, built at runtime and kept hidden until New Game would erase a save.
+        private void BuildConfirm()
+        {
+            var go = new GameObject("NewGameConfirm");
+            go.transform.SetParent(transform, false);
+            _confirm = go.AddComponent<NewGameConfirm>();
+            _confirm.Setup(_inkMaterial, _font);
+            _confirm.Confirmed += OnConfirmNewGame;
+            _confirm.Cancelled += OnCancelNewGame;
         }
 
         private void BuildTitle()
@@ -113,15 +128,64 @@ namespace YourCall
             switch (action)
             {
                 case MenuAction.NewGame:
-                    SceneManager.LoadScene(_newGameScene);
+                    TryNewGame();
                     break;
                 case MenuAction.Settings:
                     OpenSettings();
                     break;
                 case MenuAction.Continue:
-                    // Disabled until a save/resume system exists; never reaches here for now.
+                    StartContinue();
                     break;
             }
+        }
+
+        // New Game replaces the single save. If a run is already in progress, confirm first (it will be
+        // erased); otherwise start fresh straight away.
+        private void TryNewGame()
+        {
+            var s = SaveService.Instance;
+            if (s != null && s.HasSave) OpenConfirm();
+            else StartNewGame();
+        }
+
+        private void OpenConfirm()
+        {
+            if (_confirm == null) { StartNewGame(); return; }
+            if (_controller != null) _controller.SetInteractable(false);
+            SetMenuShown(false);
+            _confirm.Open();
+        }
+
+        private void OnConfirmNewGame() => StartNewGame();
+
+        private void OnCancelNewGame()
+        {
+            SetMenuShown(true);
+            if (_controller != null) _controller.SetInteractable(true);
+        }
+
+        // Begin a fresh run: replace the save, clear any carried-over profile (the Profile is persistent, so a
+        // previous run's tally would otherwise bleed in), mark the run real (so it auto-saves), and load the
+        // opening. The fresh run's first auto-save (on entering beat 0) writes the new save.
+        private void StartNewGame()
+        {
+            var s = SaveService.Instance != null ? SaveService.Instance : SaveService.Ensure();
+            if (s != null) { s.Delete(); s.SetRealRun(true); }
+            if (Profile.Instance != null) Profile.Instance.ResetState();
+            SceneManager.LoadScene(_newGameScene);
+        }
+
+        // Resume the saved run at the exact beat: hand the loaded save to the chapter's SequencePlayer (which
+        // restores the profile and money before playing) and the beat index it should enter at, then load the
+        // saved chapter. The same partway-entry path the dev picker uses.
+        private void StartContinue()
+        {
+            var s = SaveService.Instance != null ? SaveService.Instance : SaveService.Ensure();
+            if (s == null || !s.TryLoad(out var data)) return;   // no valid save (Continue would be disabled)
+            SaveService.PendingResume = data;
+            SequencePlayer.PendingStartBeat = data.beatIndex;
+            s.SetRealRun(true);
+            SceneManager.LoadScene(data.chapterScene);
         }
 
         private void OpenSettings()

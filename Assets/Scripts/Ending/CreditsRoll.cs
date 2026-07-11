@@ -70,6 +70,11 @@ namespace YourCall
         /// <summary>Roll the credits, then wait for a click or key and return to the start (reload).</summary>
         public IEnumerator Play()
         {
+            // Reaching any ending (secret or otherwise) ends the run: record it as seen and clear the single
+            // save so Continue does not drop the player back into a finished run. A no-op for a dev-triggered
+            // ending, so testing never wipes the player's real save (SaveService gates this on a real run).
+            if (SaveService.Instance != null) SaveService.Instance.OnRunEnded(gameObject.scene.name);
+
             if (_camera == null) _camera = Camera.main;
             Build();
 

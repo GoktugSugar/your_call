@@ -12,6 +12,12 @@ namespace YourCall
     /// </summary>
     public static class PointerInput
     {
+        /// <summary>When true, every action read below (clicks, holds, advance) reports nothing, so the whole
+        /// game's diegetic input is frozen in one place. The pause overlay raises this while it is open (and
+        /// reads the input devices directly itself), so no beat can advance underneath the paused screen.
+        /// Pointer POSITION is deliberately still reported; only the button/key ACTIONS are gated.</summary>
+        public static bool Suppressed;
+
         public static Vector2 ScreenPosition
         {
             get
@@ -27,6 +33,7 @@ namespace YourCall
         {
             get
             {
+                if (Suppressed) return false;
 #if ENABLE_INPUT_SYSTEM
                 if (Mouse.current != null) return Mouse.current.leftButton.wasPressedThisFrame;
 #endif
@@ -39,6 +46,7 @@ namespace YourCall
         {
             get
             {
+                if (Suppressed) return false;
 #if ENABLE_INPUT_SYSTEM
                 if (Mouse.current != null) return Mouse.current.leftButton.isPressed;
 #endif
@@ -51,6 +59,7 @@ namespace YourCall
         {
             get
             {
+                if (Suppressed) return false;
 #if ENABLE_INPUT_SYSTEM
                 if (Mouse.current != null) return Mouse.current.leftButton.wasReleasedThisFrame;
 #endif
@@ -63,6 +72,7 @@ namespace YourCall
         {
             get
             {
+                if (Suppressed) return false;
 #if ENABLE_INPUT_SYSTEM
                 if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame) return true;
                 if (Keyboard.current != null && Keyboard.current.anyKey.wasPressedThisFrame) return true;

@@ -193,7 +193,7 @@ namespace YourCall
         {
 #if ENABLE_INPUT_SYSTEM
             var kb = Keyboard.current;
-            if (kb != null)
+            if (kb != null && !PointerInput.Suppressed)
             {
                 if (kb.digit1Key.wasPressedThisFrame || kb.leftArrowKey.wasPressedThisFrame) return 0;
                 if (kb.digit2Key.wasPressedThisFrame || kb.rightArrowKey.wasPressedThisFrame) return 1;

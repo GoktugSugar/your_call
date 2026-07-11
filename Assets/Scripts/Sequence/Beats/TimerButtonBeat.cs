@@ -185,7 +185,7 @@ namespace YourCall
             if (hot && PointerInput.Clicked) return true;
 #if ENABLE_INPUT_SYSTEM
             var kb = Keyboard.current;
-            if (kb != null && (kb.spaceKey.wasPressedThisFrame || kb.enterKey.wasPressedThisFrame || kb.digit1Key.wasPressedThisFrame))
+            if (!PointerInput.Suppressed && kb != null && (kb.spaceKey.wasPressedThisFrame || kb.enterKey.wasPressedThisFrame || kb.digit1Key.wasPressedThisFrame))
                 return true;
 #endif
             return false;

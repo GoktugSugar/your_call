@@ -96,9 +96,13 @@ namespace YourCall
             }
         }
 
-        // No save system yet, so Continue is disabled. When a save/resume system lands, this returns
-        // whether a save exists and Continue enables itself with no other change here.
-        private bool SavePresent() => false;
+        // Continue is enabled exactly when a valid save is present on disk (the save/resume system). The
+        // service auto-spawns before any scene, so it is available here; Ensure() is a null-safe fallback.
+        private bool SavePresent()
+        {
+            var s = SaveService.Instance != null ? SaveService.Instance : SaveService.Ensure();
+            return s != null && s.HasSave;
+        }
 
         public void SetInteractable(bool on)
         {

@@ -93,6 +93,15 @@ namespace YourCall
             AfterChange();
         }
 
+        /// <summary>Set the balance directly, for the save system restoring a resumed run (see
+        /// <see cref="SaveService"/>). Refreshes the readout without a spend/refund bump or event, since this
+        /// is a silent restore, not an in-game transaction.</summary>
+        public void SetBalance(int amount)
+        {
+            Balance = Mathf.Max(0, amount);
+            Refresh();
+        }
+
         private void AfterChange()
         {
             Refresh();

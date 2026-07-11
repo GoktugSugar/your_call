@@ -189,7 +189,7 @@ namespace YourCall
         {
 #if ENABLE_INPUT_SYSTEM
             var kb = Keyboard.current;
-            if (kb == null) return;
+            if (kb == null || PointerInput.Suppressed) return;
             if (kb.digit1Key.wasPressedThisFrame && _labels.Count > 0) { Choose(0); return; }
             if (kb.digit2Key.wasPressedThisFrame && _labels.Count > 1) { Choose(1); return; }
             if (kb.digit3Key.wasPressedThisFrame && _labels.Count > 2) { Choose(2); return; }

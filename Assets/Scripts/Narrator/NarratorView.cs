@@ -37,6 +37,10 @@ namespace YourCall
         private TextMeshPro _text;
         private Coroutine _routine;
 
+        /// <summary>The dialogue font (Caveat), so runtime-built UI in the same scene (e.g. the pause overlay)
+        /// can match the handwriting without its own serialized reference. May be null (falls back to default).</summary>
+        public TMP_FontAsset Font => _font;
+
         /// <summary>True while narration is being delivered (typing or awaiting a page turn).</summary>
         public bool IsShowing { get; private set; }
 

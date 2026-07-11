@@ -7,6 +7,15 @@
     { "area": "menu", "k": "New Game", "v": "Yeni Oyun" },
     { "area": "menu", "k": "Settings", "v": "Ayarlar" },
 
+    { "area": "save", "k": "This erases your run in progress. Start a new game?", "v": "Devam eden oyununu siler. Yeni bir oyuna başlansın mı?" },
+    { "area": "save", "k": "Yes, start over", "v": "Evet, baştan başla" },
+    { "area": "save", "k": "No, keep playing", "v": "Hayır, oynamaya devam et" },
+    { "area": "save", "k": "Paused", "v": "Duraklatıldı" },
+    { "area": "save", "k": "Resume", "v": "Oyuna Dön" },
+    { "area": "save", "k": "Save", "v": "Kaydet" },
+    { "area": "save", "k": "Quit to Menu", "v": "Menüye Dön" },
+    { "area": "save", "k": "Saved", "v": "Kaydedildi" },
+
     { "area": "menu.bark", "k": "Still here, are we?", "v": "Hâlâ buradasın, öyle mi?" },
     { "area": "menu.bark", "k": "You already know which one you will pick, and so do I.", "v": "Hangisini seçeceğini zaten biliyorsun, ben de biliyorum." },
     { "area": "menu.bark", "k": "Take your time, no one is waiting for you now.", "v": "Acele etme, artık seni bekleyen kimse yok." },
