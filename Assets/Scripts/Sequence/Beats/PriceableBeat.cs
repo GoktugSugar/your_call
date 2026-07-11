@@ -20,10 +20,11 @@ namespace YourCall
     ///    stranger's life).
     ///
     /// It draws the thing's coloured-outline doodle (a coloured ink line, not a fill; the food doodle can
-    /// swap per language, burrito for English, kebab for Turkish), a price tag, a pressable ink button and
-    /// the text choices, spends through the balance, plays a light amber ink consequence on a buy, then the
-    /// seeded reveal. The imp mocks either way (choice independent, never graded). Reuses InkDoodle,
-    /// InkButton, ChoiceButtons, StatsView and the silent Profile; DilemmaStage / the sequence stay generic.
+    /// swap per language, burrito for English, kebab for Turkish) and a price tag, offers buy/pass as plain
+    /// text choices (no ink button; the coloured doodle carries the visual), spends through the balance,
+    /// plays a light amber ink consequence on a buy, then the seeded reveal. The imp mocks either way
+    /// (choice independent, never graded). Reuses InkDoodle, ChoiceButtons, StatsView and the silent
+    /// Profile; DilemmaStage / the sequence stay generic.
     /// </summary>
     public sealed class PriceableBeat : SequenceBeat
     {
@@ -58,12 +59,6 @@ namespace YourCall
         [SerializeField] private float _priceTagSize = 3.1f;
         [Tooltip("Format for the price tag. {0} is the money amount. e.g. '{0}' or '{0} a year'.")]
         [SerializeField] private string _priceTagFormat = "{0}";
-
-        [Header("The buy button (pressable ink; press it to buy)")]
-        [SerializeField] private Vector2 _buttonPosition = new Vector2(2.9f, 0.2f);
-        [SerializeField] private float _buttonRadius = 0.62f;
-        [SerializeField] private Color _buttonColor = Palette.Ink;
-        [SerializeField] private Color _buttonHotColor = Palette.Amber;
 
         [Header("Bulk tally (bulk only)")]
         [SerializeField] private Vector2 _tallyPosition = new Vector2(0f, 2.5f);
@@ -139,7 +134,6 @@ namespace YourCall
 
         private Camera _cam;
         private InkDoodle _doodle;
-        private InkButton _button;
         private TextMeshPro _priceTag;
         private TextMeshPro _tally;
         private int _picked = -1;
@@ -162,7 +156,6 @@ namespace YourCall
             BuildVisuals(price);
             StartCoroutine(_doodle.FadeIn(_doodleFadeIn));
             yield return FadeTag(0f, 1f, _doodleFadeIn);
-            yield return _button.FadeIn(_doodleFadeIn);
 
             // The imp pitches.
             ctx.Narrator.Show(BuildPitch(price));
@@ -183,18 +176,14 @@ namespace YourCall
             bool affordable = _mode == PriceMode.EntireBalance ? price > 0 : (price <= 0 || ctx.Money.CanAfford(price));
             _picked = -1;
             ctx.Choices.Chosen += OnPicked;
-            _button.Pressed += OnButtonPressed;
             ctx.Choices.Present(_buyLabel, _passLabel);
-            if (affordable) _button.Arm(true);
             try
             {
                 while (_picked < 0) yield return null;
             }
             finally
             {
-                _button.Arm(false);
                 ctx.Choices.Chosen -= OnPicked;
-                _button.Pressed -= OnButtonPressed;
                 ctx.Choices.Dismiss();
             }
 
@@ -234,7 +223,6 @@ namespace YourCall
             int count = 0;
             BuildTally();
             ctx.Choices.Chosen += OnPicked;
-            _button.Pressed += OnButtonPressed;
             try
             {
                 while (true)
@@ -242,9 +230,7 @@ namespace YourCall
                     bool affordable = ctx.Money.CanAfford(price) && count < Mathf.Max(1, _bulkMax);
                     _picked = -1;
                     ctx.Choices.Present(_bulkBuyLabel, _bulkStopLabel);
-                    if (affordable) _button.Arm(true);
                     while (_picked < 0) yield return null;
-                    _button.Arm(false);
 
                     if (_picked == 1) break;                 // stop
                     if (!affordable) { break; }              // cannot buy more: the tally stands, they are done
@@ -271,9 +257,7 @@ namespace YourCall
             }
             finally
             {
-                _button.Arm(false);
                 ctx.Choices.Chosen -= OnPicked;
-                _button.Pressed -= OnButtonPressed;
                 ctx.Choices.Dismiss();
             }
 
@@ -285,7 +269,6 @@ namespace YourCall
         // ---------- shared bits ----------
 
         private void OnPicked(int index) { if (_picked < 0) _picked = index; }
-        private void OnButtonPressed() { if (_picked < 0) _picked = 0; }
 
         private IEnumerator Say(SequenceContext ctx, string line, int price, bool alreadyFormatted = false)
         {
@@ -339,9 +322,6 @@ namespace YourCall
             _priceTag.transform.localPosition = new Vector3(_priceTagPosition.x, _priceTagPosition.y, 0f);
             _priceTag.text = Localization.Format(_priceTagFormat, Localization.Money(price));
             InkText.SetAlpha(_priceTag, 0f);
-
-            _button = InkButton.Create(transform, "BuyButton", new Vector3(_buttonPosition.x, _buttonPosition.y, 0f),
-                _inkMaterial, _font, _buttonRadius, 0.055f, string.Empty, 2.6f, _sorting + 1, true, _buttonColor, _buttonHotColor);
         }
 
         private DoodleKind ChooseDoodle()
@@ -383,7 +363,6 @@ namespace YourCall
         private IEnumerator FadeVisualsOut()
         {
             if (_doodle != null) StartCoroutine(_doodle.FadeOut(_doodleFadeOut));
-            if (_button != null) StartCoroutine(_button.FadeOut(_doodleFadeOut));
             if (_tally != null) StartCoroutine(FadeLabelOut(_tally, _doodleFadeOut));
             yield return FadeTag(1f, 0f, _doodleFadeOut);
         }
@@ -398,7 +377,6 @@ namespace YourCall
         private void Teardown()
         {
             if (_doodle != null) Destroy(_doodle.gameObject);
-            if (_button != null) Destroy(_button.gameObject);
             if (_priceTag != null) Destroy(_priceTag.gameObject);
             if (_tally != null) Destroy(_tally.gameObject);
         }

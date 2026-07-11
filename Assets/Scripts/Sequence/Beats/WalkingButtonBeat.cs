@@ -223,7 +223,9 @@ namespace YourCall
                 _voice.enableWordWrapping = true;
                 InkText.SetAlpha(_voice, 0f);
             }
-            _voice.text = Localization.Localize(line);
+            // Route the button's floating voice through the shared emphasis markup (like the narrator), so any
+            // [amber]/[red] tags render as colour instead of literal characters. Same fix as the auction rival.
+            _voice.text = InkMarkup.ToRichText(Localization.Localize(line));
             StopVoiceRoutine();
             _voiceRoutine = StartCoroutine(FadeVoiceTo(1f));
         }

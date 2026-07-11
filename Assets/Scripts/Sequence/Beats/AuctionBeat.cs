@@ -43,23 +43,25 @@ namespace YourCall
         [Tooltip("The reusable ending fired when the player bids everything (the imp's rage line, then the credits roll).")]
         [SerializeField] private Ending _ending;
 
-        [Header("The pack (a coloured-outline cigarette doodle)")]
-        [SerializeField] private Vector2 _packPosition = new Vector2(0f, 0.85f);
+        [Header("The pack (a coloured-outline cigarette doodle; kept left, clear of the rival)")]
+        [SerializeField] private Vector2 _packPosition = new Vector2(-2.6f, 0.85f);
         [SerializeField] private float _packScale = 1.3f;
         [SerializeField] private int _sorting = 14;
 
-        [Header("The price tag / bid readout (amber = money)")]
-        [SerializeField] private Vector2 _priceTagPosition = new Vector2(0f, -0.55f);
+        [Header("The price tag / bid readout (amber = money; sits under the pack on the left)")]
+        [SerializeField] private Vector2 _priceTagPosition = new Vector2(-2.6f, -0.55f);
         [SerializeField] private float _priceTagSize = 3.1f;
 
-        [Header("The buy button (initial offer)")]
-        [SerializeField] private Vector2 _buttonPosition = new Vector2(2.9f, 0.2f);
-        [SerializeField] private float _buttonRadius = 0.62f;
+        [Header("The imp (eased to the left for the auction, clear of the rival on the right)")]
+        [Tooltip("World spot the imp eases to when the auction begins, so it sits on the left while the rival bids from the right.")]
+        [SerializeField] private Vector2 _impAuctionSpot = new Vector2(-6.6f, -0.3f);
+        [Tooltip("How long the imp takes to ease over to its auction spot.")]
+        [SerializeField] private float _impMoveDuration = 0.45f;
 
-        [Header("The rival button (walks in from the side)")]
+        [Header("The rival button (walks in from the right)")]
         [SerializeField] private bool _entryFromRight = true;
-        [Tooltip("Where the rival button stops when it walks in (local position).")]
-        [SerializeField] private Vector2 _rivalStop = new Vector2(2.6f, -0.85f);
+        [Tooltip("Where the rival button stops when it walks in (local position). Kept well to the right so its voice never overlaps the pack or the imp.")]
+        [SerializeField] private Vector2 _rivalStop = new Vector2(4.4f, -0.85f);
         [SerializeField] private float _rivalScale = 1.0f;
         [SerializeField] private float _keepoutPadding = 0.4f;
 
@@ -156,7 +158,6 @@ namespace YourCall
         private Camera _cam;
         private InkDoodle _pack;
         private TextMeshPro _priceTag;
-        private InkButton _buyButton;
         private WalkingButton _rival;
         private TextMeshPro _voice;
         private Coroutine _voiceRoutine;
@@ -181,9 +182,8 @@ namespace YourCall
             StartCoroutine(_pack.FadeIn(_fadeIn));
             SetTag(Localization.Money(_cigarettePrice));
             yield return FadeTag(0f, 1f, _fadeIn);
-            yield return _buyButton.FadeIn(_fadeIn);
 
-            // The initial offer: buy or pass.
+            // The initial offer: buy or pass (plain text choices; the coloured pack carries the visual).
             for (int i = 0; i < _offerLines.Length; i++)
             {
                 if (string.IsNullOrEmpty(_offerLines[i])) continue;
@@ -194,11 +194,9 @@ namespace YourCall
 
             _picked = -1;
             ctx.Choices.Chosen += OnPicked;
-            _buyButton.Pressed += OnButtonPressed;
             ctx.Choices.Present(_buyLabel, _passLabel);
-            _buyButton.Arm(true);
             try { while (_picked < 0) yield return null; }
-            finally { _buyButton.Arm(false); ctx.Choices.Chosen -= OnPicked; _buyButton.Pressed -= OnButtonPressed; ctx.Choices.Dismiss(); }
+            finally { ctx.Choices.Chosen -= OnPicked; ctx.Choices.Dismiss(); }
 
             bool wantsToBuy = _picked == 0;
             ctx.Narrator.Clear();
@@ -208,7 +206,6 @@ namespace YourCall
                 // Passed: a light mock, a seeded split, and the beat ends.
                 ctx.Profile.Record(new[] { new AxisImpact(_profileAxis, _passNudge) });
                 yield return Say(ctx, Localization.Localize(_passReact));
-                if (_buyButton != null) StartCoroutine(_buyButton.FadeOut(_fadeIn));
                 yield return FadeVisualsOut();
                 yield return RevealSplit(ctx, wentForIt: false);
                 Teardown();
@@ -220,16 +217,14 @@ namespace YourCall
             {
                 ctx.Profile.Record(new[] { new AxisImpact(_profileAxis, _passNudge) });
                 yield return Say(ctx, Localization.Localize(_tooBrokeReact));
-                if (_buyButton != null) StartCoroutine(_buyButton.FadeOut(_fadeIn));
                 yield return FadeVisualsOut();
                 yield return RevealSplit(ctx, wentForIt: false);
                 Teardown();
                 yield break;
             }
 
-            // Went for it: the button intrudes. The buy button retires; the auction takes over.
+            // Went for it: the rival button intrudes and the auction takes over.
             ctx.Profile.Record(new[] { new AxisImpact(_profileAxis, _engageNudge) });
-            if (_buyButton != null) { StartCoroutine(_buyButton.FadeOut(_fadeIn)); }
             yield return BringInRival(ctx);
 
             yield return RunAuction(ctx);
@@ -239,9 +234,11 @@ namespace YourCall
 
         private IEnumerator BringInRival(SequenceContext ctx)
         {
-            // Hold the imp still so the arrival reads in place.
+            // Hold the imp still (no roaming) and ease it over to the left, so it sits clear of the rival
+            // that walks in on the right and its voice never lands on the imp or the pack.
             var roamer = ctx.Imp != null ? ctx.Imp.GetComponent<ImpRoamer>() : null;
             if (roamer != null) roamer.enabled = false;
+            if (ctx.Imp != null) StartCoroutine(MoveImpTo(ctx.Imp.transform, _impAuctionSpot, _impMoveDuration));
 
             _rival = Instantiate(_walkingButtonPrefab, transform);
             _rival.name = "RivalButton";
@@ -320,8 +317,9 @@ namespace YourCall
                     else
                     {
                         // Went all in: spent everything trying to win, and lost anyway. The secret ending.
+                        // The top balance readout carries the "broke" moment; the bid tag is cleared in
+                        // BrokeEnding so no stray "$0" is left floating mid screen.
                         ctx.Money.Spend(ctx.Money.Balance);
-                        SetTag(Localization.Money(0));
                         yield return BrokeEnding(ctx);
                         yield break;   // the credits reload the scene; we never return
                     }
@@ -360,9 +358,11 @@ namespace YourCall
             ShowVoice(_brokeButtonGloat);
             yield return new WaitForSeconds(_bidHold);
             if (_pack != null) StartCoroutine(_pack.FadeOut(_fadeIn));
+            StartCoroutine(FadeTag(1f, 0f, _fadeIn));   // clear the bid readout: no stray "$0" left mid screen
             yield return WalkRivalOff();
             yield return FadeVoice(0f);
             if (_voice != null) { Destroy(_voice.gameObject); _voice = null; }
+            if (_priceTag != null) { Destroy(_priceTag.gameObject); _priceTag = null; }
 
             // The imp holds still for his last word, then the rage line and the credits.
             var roamer = ctx.Imp != null ? ctx.Imp.GetComponent<ImpRoamer>() : null;
@@ -396,7 +396,6 @@ namespace YourCall
         // ---------- helpers ----------
 
         private void OnPicked(int index) { if (_picked < 0) _picked = index; }
-        private void OnButtonPressed() { if (_picked < 0) _picked = 0; }
 
         private string NextTaunt()
         {
@@ -429,6 +428,23 @@ namespace YourCall
             if (roamer != null) roamer.enabled = true;
         }
 
+        // Ease the imp (its root transform; the idle life rides on a child rig, so this never fights it)
+        // over to a world spot, used to plant it on the left for the auction.
+        private IEnumerator MoveImpTo(Transform imp, Vector2 worldXY, float dur)
+        {
+            if (imp == null) yield break;
+            Vector3 from = imp.position;
+            Vector3 to = new Vector3(worldXY.x, worldXY.y, from.z);
+            float d = Mathf.Max(dur, 0.01f), t = 0f;
+            while (t < d)
+            {
+                t += Time.deltaTime;
+                imp.position = Vector3.Lerp(from, to, Mathf.SmoothStep(0f, 1f, t / d));
+                yield return null;
+            }
+            imp.position = to;
+        }
+
         private IEnumerator FadeImp(ImpFigure imp)
         {
             if (imp == null) yield break;
@@ -450,9 +466,6 @@ namespace YourCall
             _priceTag.rectTransform.sizeDelta = new Vector2(8f, 1.2f);
             _priceTag.transform.localPosition = new Vector3(_priceTagPosition.x, _priceTagPosition.y, 0f);
             InkText.SetAlpha(_priceTag, 0f);
-
-            _buyButton = InkButton.Create(transform, "BuyButton", new Vector3(_buttonPosition.x, _buttonPosition.y, 0f),
-                _inkMaterial, _font, _buttonRadius, 0.055f, string.Empty, 2.6f, _sorting + 1, true, Palette.Ink, Palette.Amber);
         }
 
         private void SetTag(string text) { if (_priceTag != null) _priceTag.text = text; }
@@ -474,7 +487,6 @@ namespace YourCall
         {
             if (_pack != null) Destroy(_pack.gameObject);
             if (_priceTag != null) Destroy(_priceTag.gameObject);
-            if (_buyButton != null) Destroy(_buyButton.gameObject);
             if (_voice != null) Destroy(_voice.gameObject);
             if (_rival != null) Destroy(_rival.gameObject);
         }
@@ -491,7 +503,9 @@ namespace YourCall
                 _voice.enableWordWrapping = true;
                 InkText.SetAlpha(_voice, 0f);
             }
-            _voice.text = Localization.Localize(line);
+            // Route the rival's floating voice through the shared emphasis markup, exactly like the narrator,
+            // so its [amber]/[red] tags render as colour instead of printing as literal characters.
+            _voice.text = InkMarkup.ToRichText(Localization.Localize(line));
             if (_voiceRoutine != null) StopCoroutine(_voiceRoutine);
             _voiceRoutine = StartCoroutine(FadeVoiceTo(1f));
         }

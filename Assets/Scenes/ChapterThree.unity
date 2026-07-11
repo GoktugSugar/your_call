@@ -795,15 +795,13 @@ MonoBehaviour:
   _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
   _walkingButtonPrefab: {fileID: 4965857941604193195, guid: 4ec3d07b77fda744494cac4ac559f0d9, type: 3}
   _ending: {fileID: 1420226528}
-  _packPosition: {x: 0, y: 0.85}
+  _packPosition: {x: -2.6, y: 0.85}
   _packScale: 1.3
   _sorting: 14
-  _priceTagPosition: {x: 0, y: -0.55}
+  _priceTagPosition: {x: -2.6, y: -0.55}
   _priceTagSize: 3.1
-  _buttonPosition: {x: 2.9, y: 0.2}
-  _buttonRadius: 0.62
   _entryFromRight: 1
-  _rivalStop: {x: 2.6, y: -0.85}
+  _rivalStop: {x: 4.4, y: -0.85}
   _rivalScale: 1
   _keepoutPadding: 0.4
   _voiceSize: 2.2
