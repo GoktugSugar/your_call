@@ -172,81 +172,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1207684725}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &194132093
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 194132094}
-  - component: {fileID: 194132095}
-  m_Layer: 0
-  m_Name: C3_PovertyRefund
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &194132094
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 194132093}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1207684725}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &194132095
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 194132093}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afbef35810aeb8a4cbdc9b3c44426e6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::YourCall.PovertyRefundBeat
-  _note: 
-  _povertyBeat: {fileID: 1537360916}
-  _tookRefundSeed: 71
-  _keptEndedSeed: 29
-  _statsHeading: how others chose
-  _tookLabel: took the refund
-  _keptLabel: kept it ended
-  _profileAxis: 4
-  _takeNudge: -0.14
-  _keepNudge: 0.14
-  _setupLines:
-  - Oh. Oh dear. You actually did it. You gave away every last penny to end poverty,
-    and now look at you.
-  - There is a whole lovely chapter of things to buy ahead, and you cannot afford
-    a single one. Broke. For strangers. How noble, how [amber]stupid[/amber].
-  - Tell you what. I am feeling generous. I can undo it. Put the [amber]{0}[/amber]
-    right back in your pocket, and let those poor little children go hungry again.
-    What do you say?
-  _takeReact: And back it comes. That charity of yours lasted, what, two whole minutes.
-    The children thank you for nothing. I knew you had a price on other people; I
-    just did not think it was [amber]boredom[/amber].
-  _keepReact: You kept it. Stone broke, and you kept it. Either you are a genuinely
-    good man, or you just did not want to look like one in front of me. I honestly
-    cannot tell, and that is the fun of you.
-  _takeLabel: Take the money back
-  _keepLabel: Leave it ended
-  _advanceLockout: 0.3
-  _reactHold: 0.4
-  _postRefundBeat: 0.5
-  _statsFade: 0.5
-  _statsHideFade: 0.6
 --- !u!1 &227835377
 GameObject:
   m_ObjectHideFlags: 0
@@ -1060,16 +985,15 @@ Transform:
   - {fileID: 553948182}
   - {fileID: 1537360915}
   - {fileID: 1961617109}
-  - {fileID: 194132094}
   - {fileID: 3000000002}
   - {fileID: 3000000005}
   - {fileID: 3000000008}
-  - {fileID: 3100000002}
   - {fileID: 3000000011}
   - {fileID: 692771219}
   - {fileID: 3000000014}
   - {fileID: 3000000017}
   - {fileID: 856684252}
+  - {fileID: 3200000002}
   - {fileID: 3000000023}
   - {fileID: 1929457111}
   - {fileID: 3000000026}
@@ -1551,16 +1475,15 @@ MonoBehaviour:
   - {fileID: 553948183}
   - {fileID: 1537360916}
   - {fileID: 1961617110}
-  - {fileID: 194132095}
   - {fileID: 3000000003}
   - {fileID: 3000000006}
   - {fileID: 3000000009}
-  - {fileID: 3100000003}
   - {fileID: 3000000012}
   - {fileID: 692771220}
   - {fileID: 3000000015}
   - {fileID: 3000000018}
   - {fileID: 856684253}
+  - {fileID: 3200000003}
   - {fileID: 3000000024}
   - {fileID: 1929457112}
   - {fileID: 3000000027}
@@ -3090,74 +3013,6 @@ MonoBehaviour:
   _teaseLine: 
   _buyLabel: Buy it
   _passLabel: Keep the money
---- !u!1 &3100000001
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3100000002}
-  - component: {fileID: 3100000003}
-  m_Layer: 0
-  m_Name: C3_Years
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3100000002
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3100000001}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1207684725}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3100000003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3100000001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b32f5d56e442c534390f1839df3b923c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
-  _note: 
-  _mode: 2
-  _price: 100
-  _bulkMax: 20
-  _bulkPriceClimb: 100
-  _itemName: 'A year of life'
-  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
-  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
-  _doodleKind: 17
-  _boughtSeed: 46
-  _passedSeed: 54
-  _statsHeading: how others chose
-  _boughtLabel: bought some
-  _passedLabel: kept the money
-  _profileAxis: 4
-  _buyNudge: -0.05
-  _passNudge: 0
-  _priceTagFormat: '{0}'
-  _tallyFormat: '{0} years'
-  _pitch: 'A year of your life, healthy, added on. The first is cheap, [amber]{0}[/amber]. Every year after that costs a little more. Buy as many as you can bear. How long do you want to stay?'
-  _bulkStopReact: '[amber]{0}[/amber] more years, each one dearer than the last, [amber]{1}[/amber] the lot. So you do want to stay. After all of it, you want more. Noted.'
-  _bulkZeroReact: 'Not one year. Not even the cheap first one. Done with it already, or just too tight to pay for more of yourself. Either reads the same from here.'
-  _bulkBuyLabel: 'Buy a year'
-  _bulkStopLabel: 'Enough'
 --- !u!1 &3100000004
 GameObject:
   m_ObjectHideFlags: 0
@@ -3202,6 +3057,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e175be0ee14a978e06af25e00614af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.ChapterOverview
+  _note: 
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+--- !u!1 &3200000001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3200000002}
+  - component: {fileID: 3200000003}
+  m_Layer: 0
+  m_Name: C3_Buyback
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3200000002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3200000001}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3200000003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3200000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e6881a2d6bd4bed90d930000a9deebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.BuybackBeat
   _note: 
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
   _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
