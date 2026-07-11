@@ -102,6 +102,8 @@ namespace YourCall
             {
                 ctx.Money.Refund(refund);
                 PovertyEnded = false;
+                // Undo it on the receipt too: they took the money back, so End Poverty is no longer a purchase.
+                if (_povertyBeat != null) ctx.Ledger?.RemoveBought(_povertyBeat.ItemName);
                 yield return new WaitForSeconds(_postRefundBeat);
                 ctx.Profile.Record(new[] { new AxisImpact(_profileAxis, _takeNudge) });
                 yield return Say(ctx, Localization.Format(_takeReact, Localization.Money(refund)));

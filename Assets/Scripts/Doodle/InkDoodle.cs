@@ -451,18 +451,20 @@ namespace YourCall
             Stroke("Grain", Line(new Vector2(0f, 0.05f), new Vector2(0f, -0.16f)), _width * 0.7f);
         }
 
-        // The cigarette auction: a pack with a few cigarettes.
+        // The cigarette auction: a tidy flip-top pack with a couple of cigarettes peeking out.
         private void CigarettePack()
         {
-            Stroke("Box", Line(new Vector2(-0.36f, 0.15f), new Vector2(-0.36f, -0.6f), new Vector2(0.36f, -0.6f), new Vector2(0.36f, 0.15f)));
-            Stroke("Lid", Line(new Vector2(-0.36f, 0.15f), new Vector2(-0.2f, 0.42f), new Vector2(0.5f, 0.42f), new Vector2(0.36f, 0.15f)), _width * 0.85f);
-            Stroke("Band", Line(new Vector2(-0.36f, -0.25f), new Vector2(0.36f, -0.25f)), _width * 0.7f);
-            for (int i = 0; i < 3; i++)
-            {
-                float x = -0.18f + i * 0.18f;
-                Stroke("Cig" + i, Line(new Vector2(x, 0.15f), new Vector2(x, 0.5f)), _width * 0.9f);
-                Stroke("Tip" + i, Line(new Vector2(x - 0.06f, 0.5f), new Vector2(x + 0.06f, 0.5f)), _width * 1.1f);
-            }
+            float w = 0.36f, top = 0.46f, bot = -0.64f;
+            // two cigarettes peeking above the opening, filters showing (thicker tips).
+            Stroke("Cig1", Line(new Vector2(-0.12f, top - 0.04f), new Vector2(-0.12f, top + 0.24f)), _width * 0.9f);
+            Stroke("Tip1", Line(new Vector2(-0.12f, top + 0.13f), new Vector2(-0.12f, top + 0.24f)), _width * 1.7f);
+            Stroke("Cig2", Line(new Vector2(0.12f, top - 0.04f), new Vector2(0.12f, top + 0.16f)), _width * 0.9f);
+            Stroke("Tip2", Line(new Vector2(0.12f, top + 0.07f), new Vector2(0.12f, top + 0.16f)), _width * 1.7f);
+            // the pack body (a clean rounded rectangle).
+            Stroke("Body", Line(new Vector2(-w, top), new Vector2(-w, bot), new Vector2(w, bot), new Vector2(w, top), new Vector2(-w, top)));
+            // the flip-top seam near the top, and a brand band across the middle.
+            Stroke("Seam", Line(new Vector2(-w, top - 0.18f), new Vector2(w, top - 0.18f)), _width * 0.7f);
+            Stroke("Band", Line(new Vector2(-w, -0.16f), new Vector2(w, -0.16f)), _width * 0.75f);
         }
 
         // No more pain: a plaster / bandage.
@@ -567,22 +569,18 @@ namespace YourCall
 
         // ---------- Chapter 3 rework: the ten double-edged items, the cucumber, the question mark ----------
 
-        // Charisma: a figure with a halo of little rays, so it reads as magnetic / instantly adored.
+        // Charisma: a pair of sunglasses (everyone likes the cool version of you). Nothing else.
         private void Charisma()
         {
-            Stroke("Head", Circle(new Vector2(0f, 0.28f), 0.15f));
-            Stroke("Body", Line(new Vector2(0f, 0.13f), new Vector2(0f, -0.28f)));
-            Stroke("ArmL", Line(new Vector2(0f, 0.04f), new Vector2(-0.24f, -0.1f)));
-            Stroke("ArmR", Line(new Vector2(0f, 0.04f), new Vector2(0.24f, -0.1f)));
-            Stroke("LegL", Line(new Vector2(0f, -0.28f), new Vector2(-0.18f, -0.62f)));
-            Stroke("LegR", Line(new Vector2(0f, -0.28f), new Vector2(0.18f, -0.62f)));
-            Vector2 c = new Vector2(0f, 0.28f);
-            for (int i = 0; i < 10; i++)
-            {
-                float a = i * 36f * Mathf.Deg2Rad;
-                var d = new Vector2(Mathf.Cos(a), Mathf.Sin(a));
-                Stroke("Ray" + i, Line(c + d * 0.24f, c + d * 0.4f), _width * 0.7f);
-            }
+            var lensL = new List<Vector3>();
+            for (int i = 0; i <= 22; i++) { float a = i / 22f * Mathf.PI * 2f; lensL.Add(new Vector3(-0.34f + Mathf.Cos(a) * 0.28f, Mathf.Sin(a) * 0.22f, 0f)); }
+            Stroke("LensL", lensL);
+            var lensR = new List<Vector3>();
+            for (int i = 0; i <= 22; i++) { float a = i / 22f * Mathf.PI * 2f; lensR.Add(new Vector3(0.34f + Mathf.Cos(a) * 0.28f, Mathf.Sin(a) * 0.22f, 0f)); }
+            Stroke("LensR", lensR);
+            Stroke("Bridge", Line(new Vector2(-0.08f, 0.14f), new Vector2(0f, 0.19f), new Vector2(0.08f, 0.14f)), _width * 0.85f);
+            Stroke("ArmL", Line(new Vector2(-0.6f, 0.14f), new Vector2(-0.82f, 0.22f)), _width * 0.9f);
+            Stroke("ArmR", Line(new Vector2(0.6f, 0.14f), new Vector2(0.82f, 0.22f)), _width * 0.9f);
         }
 
         // The Off Switch: a head with a small toggle switch, the knob to the off side.
@@ -625,13 +623,23 @@ namespace YourCall
             Stroke("Ah2", Line(end, end + new Vector2(-0.18f, 0.08f)), _width * 0.9f);
         }
 
-        // Ten more IQ: a head with a small up-arrow rising from it.
+        // Ten more IQ: a brain (a bumpy lobed outline with a centre divide and a few folds).
         private void IqUp()
         {
-            Stroke("Head", Circle(new Vector2(0f, -0.06f), 0.44f));
-            Stroke("Shaft", Line(new Vector2(0f, 0.42f), new Vector2(0f, 0.86f)), _width * 0.95f);
-            Stroke("Ah1", Line(new Vector2(0f, 0.86f), new Vector2(-0.14f, 0.68f)), _width * 0.95f);
-            Stroke("Ah2", Line(new Vector2(0f, 0.86f), new Vector2(0.14f, 0.68f)), _width * 0.95f);
+            var outline = new List<Vector3>();
+            int seg = 64;
+            for (int i = 0; i <= seg; i++)
+            {
+                float t = i / (float)seg * Mathf.PI * 2f;
+                float r = 0.48f + 0.06f * Mathf.Sin(t * 7f);
+                outline.Add(new Vector3(Mathf.Cos(t) * r * 1.05f, 0.06f + Mathf.Sin(t) * r * 0.84f, 0f));
+            }
+            Stroke("Brain", outline);
+            Stroke("Divide", Line(new Vector2(0.01f, 0.5f), new Vector2(0.04f, 0.12f), new Vector2(-0.02f, -0.28f)), _width * 0.75f);
+            Stroke("Fold1", Line(new Vector2(-0.32f, 0.28f), new Vector2(-0.17f, 0.33f), new Vector2(-0.27f, 0.13f), new Vector2(-0.11f, 0.1f)), _width * 0.6f);
+            Stroke("Fold2", Line(new Vector2(0.32f, 0.28f), new Vector2(0.17f, 0.33f), new Vector2(0.27f, 0.13f), new Vector2(0.11f, 0.1f)), _width * 0.6f);
+            Stroke("Fold3", Line(new Vector2(-0.28f, -0.14f), new Vector2(-0.13f, -0.1f), new Vector2(-0.22f, -0.28f)), _width * 0.6f);
+            Stroke("Fold4", Line(new Vector2(0.28f, -0.14f), new Vector2(0.13f, -0.1f), new Vector2(0.22f, -0.28f)), _width * 0.6f);
         }
 
         // Never Tired: a wide open eye and a crossed-out z (no sleep, ever).

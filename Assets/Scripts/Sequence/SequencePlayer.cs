@@ -63,7 +63,10 @@ namespace YourCall
 
         private IEnumerator RunAll(int startIndex)
         {
-            var ctx = new SequenceContext(_narrator, _imp, _stats, _choices, _profile, _camera, _fade, _money);
+            // The money chapter also carries a purchase ledger, created here (a plain service, no scene
+            // object) so the end-of-chapter overview can list what was bought. Null in every other chapter.
+            var ledger = _money != null ? new PurchaseLedger() : null;
+            var ctx = new SequenceContext(_narrator, _imp, _stats, _choices, _profile, _camera, _fade, _money, ledger);
 
             // Entering partway (the dev picker jumped to a mid-chapter beat): the skipped intro beats
             // never ran, so make sure the screen is clear and the imp is present before the beat plays.

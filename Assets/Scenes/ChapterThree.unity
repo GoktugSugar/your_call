@@ -911,6 +911,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
   _note: 
   _mode: 0
+  _itemName: 'No More Pain'
   _price: 4500
   _bulkMax: 50
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
@@ -1063,11 +1064,11 @@ Transform:
   - {fileID: 3000000002}
   - {fileID: 3000000005}
   - {fileID: 3000000008}
+  - {fileID: 3100000002}
   - {fileID: 3000000011}
   - {fileID: 692771219}
   - {fileID: 3000000014}
   - {fileID: 3000000017}
-  - {fileID: 3000000020}
   - {fileID: 856684252}
   - {fileID: 3000000023}
   - {fileID: 1929457111}
@@ -1077,7 +1078,7 @@ Transform:
   - {fileID: 1928140367}
   - {fileID: 1301396455}
   - {fileID: 3000000032}
-  - {fileID: 3000000035}
+  - {fileID: 3100000005}
   - {fileID: 4466199}
   m_Father: {fileID: 1626293926}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1127,6 +1128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
   _note: 
   _mode: 0
+  _itemName: 'The truth'
   _teaseLine: 'Right. One more after this. THE one. Everything so far was me clearing my throat. Whatever you have left, whatever it is, hold onto it.'
   _price: 900
   _bulkMax: 50
@@ -1284,6 +1286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
   _note: 
   _mode: 2
+  _itemName: 'A stranger''s years'
   _price: 700
   _bulkMax: 40
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
@@ -1441,6 +1444,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
   _note: 
   _mode: 1
+  _itemName: 'End Poverty'
   _price: 100
   _bulkMax: 50
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
@@ -1551,11 +1555,11 @@ MonoBehaviour:
   - {fileID: 3000000003}
   - {fileID: 3000000006}
   - {fileID: 3000000009}
+  - {fileID: 3100000003}
   - {fileID: 3000000012}
   - {fileID: 692771220}
   - {fileID: 3000000015}
   - {fileID: 3000000018}
-  - {fileID: 3000000021}
   - {fileID: 856684253}
   - {fileID: 3000000024}
   - {fileID: 1929457112}
@@ -1565,7 +1569,7 @@ MonoBehaviour:
   - {fileID: 1928140368}
   - {fileID: 1301396456}
   - {fileID: 3000000033}
-  - {fileID: 3000000036}
+  - {fileID: 3100000006}
   - {fileID: 4466198}
   _fadeToBlackAtEnd: 1
   _endFade: 1.6
@@ -1790,6 +1794,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
   _note: 
   _mode: 0
+  _itemName: 'The cheap forgetting'
   _price: 40
   _bulkMax: 50
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
@@ -1899,6 +1904,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
   _note: 
   _mode: 0
+  _itemName: 'A deleted memory'
   _price: 2200
   _bulkMax: 50
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
@@ -2007,6 +2013,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
   _note: 
   _mode: 0
+  _itemName: 'Free food for life'
   _teaseLine: 'Eat up. But do not spend it all here. There is one more thing at the very end, and you will want money for it. Trust me on that.'
   _price: 1800
   _bulkMax: 50
@@ -2469,6 +2476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
   _note: 
   _mode: 0
+  _itemName: 'The Good Luck'
   _price: 3000
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
   _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
@@ -2534,6 +2542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
   _note: 
   _mode: 0
+  _itemName: 'Charisma'
   _price: 3500
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
   _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
@@ -2599,6 +2608,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
   _note: 
   _mode: 0
+  _itemName: 'Ten More IQ'
   _price: 2500
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
   _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
@@ -2664,6 +2674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
   _note: 
   _mode: 0
+  _itemName: 'Never Tired'
   _price: 2600
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
   _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
@@ -2729,6 +2740,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
   _note: 
   _mode: 0
+  _itemName: 'The Lie Detector'
   _price: 3200
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
   _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
@@ -2794,6 +2806,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
   _note: 
   _mode: 0
+  _itemName: 'Perfect Memory'
   _price: 2800
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
   _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
@@ -2810,71 +2823,6 @@ MonoBehaviour:
   _buyReact: 'Sold. And every joy stays bright, yes. So does every humiliation, every cruelty, every thing you did that you have spent years letting blur. All of it, sharp, forever. There is no mercy in a perfect memory. You bought it anyway.'
   _passReact: 'Kept it. You like the forgetting. The soft edges. The things time was kindly sanding off you. Fair enough. Stay blurry.'
   _brokeReact: 'With what? You will not remember that you could not afford this, at least. A small mercy. Move on.'
-  _teaseLine: 
-  _buyLabel: Buy it
-  _passLabel: Keep the money
---- !u!1 &3000000019
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3000000020}
-  - component: {fileID: 3000000021}
-  m_Layer: 0
-  m_Name: C3_OffSwitch
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3000000020
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3000000019}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1207684725}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3000000021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3000000019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b32f5d56e442c534390f1839df3b923c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
-  _note: 
-  _mode: 0
-  _price: 3000
-  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
-  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
-  _doodleKind: 28
-  _boughtSeed: 36
-  _passedSeed: 64
-  _statsHeading: how others chose
-  _boughtLabel: bought it
-  _passedLabel: kept the money
-  _profileAxis: 4
-  _buyNudge: -0.05
-  _passNudge: 0
-  _pitch: 'The Off Switch. Pick one feeling and turn it off, at will, forever. Guilt. Fear. Grief. Whichever one haunts you. [amber]{0}[/amber]. Buy it?'
-  _buyReact: 'Bought. Which one will you kill, I wonder. The guilt, most likely, given the road. And what exactly is a man, once he can switch off the parts of him that ache. We shall find out. You did.'
-  _passReact: 'Passed. You would keep even the feelings that flay you alive. Either brave, or you suspect you are nothing without them. Both, I think.'
-  _brokeReact: 'With what? You cannot switch back on the money you spent, nor buy this. Watch it go.'
   _teaseLine: 
   _buyLabel: Buy it
   _passLabel: Keep the money
@@ -2924,6 +2872,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
   _note: 
   _mode: 0
+  _itemName: 'One More Voice'
   _price: 3400
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
   _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
@@ -2989,6 +2938,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
   _note: 
   _mode: 0
+  _itemName: 'Feel Nothing'
   _price: 2800
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
   _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
@@ -3054,6 +3004,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
   _note: 
   _mode: 0
+  _itemName: 'Rewind'
   _price: 6000
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
   _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
@@ -3119,6 +3070,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
   _note: 
   _mode: 0
+  _itemName: 'The cucumber'
   _price: 100
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
   _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
@@ -3138,7 +3090,7 @@ MonoBehaviour:
   _teaseLine: 
   _buyLabel: Buy it
   _passLabel: Keep the money
---- !u!1 &3000000034
+--- !u!1 &3100000001
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3146,22 +3098,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3000000035}
-  - component: {fileID: 3000000036}
+  - component: {fileID: 3100000002}
+  - component: {fileID: 3100000003}
   m_Layer: 0
-  m_Name: C3_MoneyRead
+  m_Name: C3_Years
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3000000035
+--- !u!4 &3100000002
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3000000034}
+  m_GameObject: {fileID: 3100000001}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -3170,19 +3122,89 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1207684725}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3000000036
+--- !u!114 &3100000003
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3000000034}
+  m_GameObject: {fileID: 3100000001}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3819991ddee34e24a10352a61edcf500, type: 3}
+  m_Script: {fileID: 11500000, guid: b32f5d56e442c534390f1839df3b923c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::YourCall.MoneyReadBeat
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.PriceableBeat
   _note: 
+  _mode: 2
+  _price: 100
+  _bulkMax: 20
+  _bulkPriceClimb: 100
+  _itemName: 'A year of life'
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _doodleKind: 17
+  _boughtSeed: 46
+  _passedSeed: 54
+  _statsHeading: how others chose
+  _boughtLabel: bought some
+  _passedLabel: kept the money
+  _profileAxis: 4
+  _buyNudge: -0.05
+  _passNudge: 0
+  _priceTagFormat: '{0}'
+  _tallyFormat: '{0} years'
+  _pitch: 'A year of your life, healthy, added on. The first is cheap, [amber]{0}[/amber]. Every year after that costs a little more. Buy as many as you can bear. How long do you want to stay?'
+  _bulkStopReact: '[amber]{0}[/amber] more years, each one dearer than the last, [amber]{1}[/amber] the lot. So you do want to stay. After all of it, you want more. Noted.'
+  _bulkZeroReact: 'Not one year. Not even the cheap first one. Done with it already, or just too tight to pay for more of yourself. Either reads the same from here.'
+  _bulkBuyLabel: 'Buy a year'
+  _bulkStopLabel: 'Enough'
+--- !u!1 &3100000004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3100000005}
+  - component: {fileID: 3100000006}
+  m_Layer: 0
+  m_Name: C3_Overview
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3100000005
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3100000004}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3100000006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3100000004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78e175be0ee14a978e06af25e00614af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.ChapterOverview
+  _note: 
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -22,8 +22,13 @@ namespace YourCall
         /// that carry no money, so the money beats can assert on it and every other beat ignores it.</summary>
         public readonly MoneyBalance Money;
 
+        /// <summary>The run's purchase record, for the money chapter (Chapter 3), so the end-of-chapter
+        /// overview can list what was bought. Null in chapters that carry no money.</summary>
+        public readonly PurchaseLedger Ledger;
+
         public SequenceContext(NarratorView narrator, ImpFigure imp, StatsView stats,
-            ChoiceButtons choices, Profile profile, Camera camera, ScreenFade fade, MoneyBalance money = null)
+            ChoiceButtons choices, Profile profile, Camera camera, ScreenFade fade,
+            MoneyBalance money = null, PurchaseLedger ledger = null)
         {
             Narrator = narrator;
             Imp = imp;
@@ -33,6 +38,7 @@ namespace YourCall
             Camera = camera;
             Fade = fade;
             Money = money;
+            Ledger = ledger;
         }
     }
 }

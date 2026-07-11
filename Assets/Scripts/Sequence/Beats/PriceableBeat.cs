@@ -12,12 +12,15 @@ namespace YourCall
     /// priceable beat is a new GameObject with this component plus its doodle, not new code.
     ///
     /// Three modes cover every plain beat and two of the specials:
-    ///  - <b>Fixed</b>: a set price (the food, the nose, the extra year, no more pain, the memory, the
-    ///    forgetting, the truth about how you died).
+    ///  - <b>Fixed</b>: a set price (the food, no more pain, the memory, the forgetting, the truth, and each
+    ///    of the double-edged items and the cucumber).
     ///  - <b>EntireBalance</b>: the price is exactly the whole current pot (End Poverty, the opener that
     ///    costs everything). It exposes <see cref="Bought"/> and <see cref="AmountSpent"/> for the refund.
-    ///  - <b>Bulk</b>: priced per unit, buy as many as you like until you stop or run out (ten years of a
-    ///    stranger's life).
+    ///  - <b>Bulk</b>: priced per unit, buy as many as you like until you stop or run out; the per-unit
+    ///    price can climb per buy (a stranger's years; a year of life, climbing from a cheap first year).
+    ///
+    /// On a buy or a pass it records to the run's <see cref="PurchaseLedger"/> (via the context), so the
+    /// end-of-chapter overview / receipt can list what was bought.
     ///
     /// It draws the thing's coloured-outline doodle (a coloured ink line, not a fill; the food doodle can
     /// swap per language, burrito for English, kebab for Turkish) and a price tag, offers buy/pass as plain
@@ -32,10 +35,16 @@ namespace YourCall
 
         [Header("Mode & price")]
         [SerializeField] private PriceMode _mode = PriceMode.Fixed;
-        [Tooltip("Fixed / Bulk price in dollars. Ignored for EntireBalance (that costs exactly the whole pot).")]
+        [Tooltip("Fixed / Bulk price in dollars (Bulk: the FIRST unit's price). Ignored for EntireBalance (that costs exactly the whole pot).")]
         [SerializeField] private int _price = 100;
         [Tooltip("Bulk only: the most units the player may buy (a safety cap).")]
         [SerializeField] private int _bulkMax = 50;
+        [Tooltip("Bulk only: how much MORE each additional unit costs than the previous (a climbing price). 0 = flat. e.g. 100 makes year 1 = _price, year 2 = _price + 100, year 3 = _price + 200, so buying many costs progressively more.")]
+        [SerializeField] private int _bulkPriceClimb = 0;
+
+        [Header("Receipt")]
+        [Tooltip("A short item name for the end-of-chapter overview / receipt (localized). Empty omits the name (the doodle still shows).")]
+        [SerializeField] private string _itemName = "";
 
         [Header("References")]
         [SerializeField] private Material _inkMaterial;
@@ -135,6 +144,8 @@ namespace YourCall
         public bool Bought { get; private set; }
         /// <summary>How much the player spent here (the whole pot, for End Poverty; total, for bulk).</summary>
         public int AmountSpent { get; private set; }
+        /// <summary>The receipt name (for the overview, and for the poverty refund to un-record End Poverty).</summary>
+        public string ItemName => _itemName;
 
         private Camera _cam;
         private InkDoodle _doodle;
@@ -203,6 +214,7 @@ namespace YourCall
                 yield return Say(ctx, _brokeReact, price);
                 ctx.Profile.Record(new[] { new AxisImpact(_profileAxis, _passNudge) });
                 Bought = false;
+                RecordSkip(ctx, price);
                 yield break;
             }
 
@@ -213,12 +225,14 @@ namespace YourCall
                 Bought = true;
                 yield return BuyConsequence();
                 ctx.Profile.Record(new[] { new AxisImpact(_profileAxis, _buyNudge) });
+                RecordBuy(ctx, 1);
                 yield return Say(ctx, _buyReact, price);
             }
             else
             {
                 Bought = false;
                 ctx.Profile.Record(new[] { new AxisImpact(_profileAxis, _passNudge) });
+                RecordSkip(ctx, price);
                 yield return Say(ctx, _passReact, price);
             }
         }
@@ -228,13 +242,17 @@ namespace YourCall
         private IEnumerator RunBulk(SequenceContext ctx, int price)
         {
             int count = 0;
+            int climb = Mathf.Max(0, _bulkPriceClimb);
             BuildTally();
             ctx.Choices.Chosen += OnPicked;
             try
             {
                 while (true)
                 {
-                    bool affordable = ctx.Money.CanAfford(price) && count < Mathf.Max(1, _bulkMax);
+                    // The next unit's price climbs as they buy (year 1 = price, year 2 = price + climb, ...).
+                    int unitPrice = price + count * climb;
+                    SetPriceTag(unitPrice);
+                    bool affordable = ctx.Money.CanAfford(unitPrice) && count < Mathf.Max(1, _bulkMax);
                     _picked = -1;
                     ctx.Choices.Present(_bulkBuyLabel, _bulkStopLabel);
                     while (_picked < 0) yield return null;
@@ -242,8 +260,8 @@ namespace YourCall
                     if (_picked == 1) break;                 // stop
                     if (!affordable) { break; }              // cannot buy more: the tally stands, they are done
 
-                    // Buy one unit.
-                    int spent = ctx.Money.Spend(price);
+                    // Buy one unit at the current (climbing) price.
+                    int spent = ctx.Money.Spend(unitPrice);
                     AmountSpent += spent;
                     count += 1;
                     Bought = true;
@@ -269,9 +287,22 @@ namespace YourCall
             }
 
             ctx.Narrator.Clear();
-            if (count > 0) yield return Say(ctx, Localization.Format(_bulkStopReact, count, Localization.Money(AmountSpent)), price, alreadyFormatted: true);
-            else { ctx.Profile.Record(new[] { new AxisImpact(_profileAxis, _passNudge) }); yield return Say(ctx, _bulkZeroReact, price); }
+            if (count > 0)
+            {
+                RecordBuy(ctx, count);
+                yield return Say(ctx, Localization.Format(_bulkStopReact, count, Localization.Money(AmountSpent)), price, alreadyFormatted: true);
+            }
+            else
+            {
+                ctx.Profile.Record(new[] { new AxisImpact(_profileAxis, _passNudge) });
+                RecordSkip(ctx, price);
+                yield return Say(ctx, _bulkZeroReact, price);
+            }
         }
+
+        // Record to the run's purchase ledger (for the end-of-chapter overview). Null in non-money chapters.
+        private void RecordBuy(SequenceContext ctx, int count) => ctx.Ledger?.RecordBuy(_itemName, ChooseDoodle(), AmountSpent, count);
+        private void RecordSkip(SequenceContext ctx, int price) => ctx.Ledger?.RecordSkip(_itemName, ChooseDoodle(), price);
 
         // ---------- shared bits ----------
 
@@ -329,6 +360,12 @@ namespace YourCall
             _priceTag.transform.localPosition = new Vector3(_priceTagPosition.x, _priceTagPosition.y, 0f);
             _priceTag.text = Localization.Format(_priceTagFormat, Localization.Money(price));
             InkText.SetAlpha(_priceTag, 0f);
+        }
+
+        // Update the price tag to a new amount (the bulk climbing price shows the next unit's asking price).
+        private void SetPriceTag(int price)
+        {
+            if (_priceTag != null) _priceTag.text = Localization.Format(_priceTagFormat, Localization.Money(price));
         }
 
         private DoodleKind ChooseDoodle()
