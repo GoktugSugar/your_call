@@ -742,36 +742,38 @@ namespace YourCall
 
         // ---------- Chapter 3 would-you-rather breather doodles ----------
 
-        // The insulting cat: a front-facing cat, pointy ears, whiskers, a curling tail.
+        // The insulting cat: just a front-facing cat HEAD, pointy ears and wide whiskers. Head only,
+        // enlarged to fill the doodle box so it reads at the would-you-rather option size.
         private void Cat()
         {
-            Stroke("Head", Circle(new Vector2(0f, 0.34f), 0.28f));
-            Stroke("EarL", Line(new Vector2(-0.22f, 0.5f), new Vector2(-0.3f, 0.74f), new Vector2(-0.08f, 0.56f)));
-            Stroke("EarR", Line(new Vector2(0.22f, 0.5f), new Vector2(0.3f, 0.74f), new Vector2(0.08f, 0.56f)));
-            Stroke("EyeL", Circle(new Vector2(-0.1f, 0.38f), 0.035f, 8), _width * 0.9f);
-            Stroke("EyeR", Circle(new Vector2(0.1f, 0.38f), 0.035f, 8), _width * 0.9f);
-            Stroke("Nose", Line(new Vector2(-0.03f, 0.28f), new Vector2(0.03f, 0.28f), new Vector2(0f, 0.24f), new Vector2(-0.03f, 0.28f)), _width * 0.8f);
-            Stroke("WhL1", Line(new Vector2(-0.14f, 0.28f), new Vector2(-0.46f, 0.32f)), _width * 0.55f);
-            Stroke("WhL2", Line(new Vector2(-0.14f, 0.24f), new Vector2(-0.46f, 0.2f)), _width * 0.55f);
-            Stroke("WhR1", Line(new Vector2(0.14f, 0.28f), new Vector2(0.46f, 0.32f)), _width * 0.55f);
-            Stroke("WhR2", Line(new Vector2(0.14f, 0.24f), new Vector2(0.46f, 0.2f)), _width * 0.55f);
-            Stroke("Body", Line(new Vector2(-0.24f, 0.09f), new Vector2(-0.32f, -0.5f), new Vector2(0.32f, -0.5f), new Vector2(0.24f, 0.09f)));
-            Stroke("Tail", Line(new Vector2(0.3f, -0.46f), new Vector2(0.58f, -0.4f), new Vector2(0.62f, -0.08f), new Vector2(0.44f, 0.08f)), _width * 0.85f);
+            Stroke("Head", Circle(new Vector2(0f, -0.02f), 0.5f));
+            Stroke("EarL", Line(new Vector2(-0.36f, 0.28f), new Vector2(-0.5f, 0.78f), new Vector2(-0.08f, 0.42f)));
+            Stroke("EarR", Line(new Vector2(0.36f, 0.28f), new Vector2(0.5f, 0.78f), new Vector2(0.08f, 0.42f)));
+            Stroke("EyeL", Circle(new Vector2(-0.19f, 0.06f), 0.05f, 10), _width * 0.9f);
+            Stroke("EyeR", Circle(new Vector2(0.19f, 0.06f), 0.05f, 10), _width * 0.9f);
+            Stroke("Nose", Line(new Vector2(-0.05f, -0.12f), new Vector2(0.05f, -0.12f), new Vector2(0f, -0.2f), new Vector2(-0.05f, -0.12f)), _width * 0.8f);
+            Stroke("MouthL", Line(new Vector2(0f, -0.2f), new Vector2(0f, -0.28f), new Vector2(-0.11f, -0.22f)), _width * 0.7f);
+            Stroke("MouthR", Line(new Vector2(0f, -0.28f), new Vector2(0.11f, -0.22f)), _width * 0.7f);
+            Stroke("WhL1", Line(new Vector2(-0.2f, -0.08f), new Vector2(-0.72f, -0.02f)), _width * 0.5f);
+            Stroke("WhL2", Line(new Vector2(-0.2f, -0.16f), new Vector2(-0.72f, -0.2f)), _width * 0.5f);
+            Stroke("WhR1", Line(new Vector2(0.2f, -0.08f), new Vector2(0.72f, -0.02f)), _width * 0.5f);
+            Stroke("WhR2", Line(new Vector2(0.2f, -0.16f), new Vector2(0.72f, -0.2f)), _width * 0.5f);
         }
 
-        // The lying dog: a side-view dog, a snout, a floppy ear, four legs, a tail up.
+        // The lying dog: just a front-facing dog HEAD, floppy ears down the sides, a muzzle and a
+        // big nose. Head only, enlarged to fill the box; floppy ears and muzzle set it apart from the cat.
         private void Dog()
         {
-            Stroke("Body", Line(new Vector2(-0.52f, 0.14f), new Vector2(-0.52f, -0.3f), new Vector2(0.4f, -0.3f), new Vector2(0.44f, 0.2f)));
-            Stroke("Head", Circle(new Vector2(0.52f, 0.28f), 0.22f));
-            Stroke("Snout", Line(new Vector2(0.68f, 0.2f), new Vector2(0.9f, 0.16f), new Vector2(0.9f, 0.02f), new Vector2(0.64f, 0.06f)), _width * 0.85f);
-            Stroke("Eye", Circle(new Vector2(0.54f, 0.34f), 0.03f, 8), _width * 0.9f);
-            Stroke("Ear", Line(new Vector2(0.42f, 0.44f), new Vector2(0.32f, 0.18f), new Vector2(0.48f, 0.12f)), _width * 0.85f);
-            Stroke("Leg1", Line(new Vector2(-0.42f, -0.3f), new Vector2(-0.44f, -0.58f)), _width * 0.85f);
-            Stroke("Leg2", Line(new Vector2(-0.2f, -0.3f), new Vector2(-0.22f, -0.58f)), _width * 0.85f);
-            Stroke("Leg3", Line(new Vector2(0.1f, -0.3f), new Vector2(0.12f, -0.58f)), _width * 0.85f);
-            Stroke("Leg4", Line(new Vector2(0.3f, -0.3f), new Vector2(0.32f, -0.58f)), _width * 0.85f);
-            Stroke("Tail", Line(new Vector2(-0.52f, 0.02f), new Vector2(-0.74f, 0.26f), new Vector2(-0.6f, 0.42f)), _width * 0.85f);
+            Stroke("Head", Circle(new Vector2(0f, 0.12f), 0.42f));
+            Stroke("EarL", Line(new Vector2(-0.34f, 0.4f), new Vector2(-0.66f, 0.16f), new Vector2(-0.6f, -0.28f), new Vector2(-0.34f, -0.04f)), _width * 0.9f);
+            Stroke("EarR", Line(new Vector2(0.34f, 0.4f), new Vector2(0.66f, 0.16f), new Vector2(0.6f, -0.28f), new Vector2(0.34f, -0.04f)), _width * 0.9f);
+            Stroke("EyeL", Circle(new Vector2(-0.16f, 0.2f), 0.05f, 10), _width * 0.9f);
+            Stroke("EyeR", Circle(new Vector2(0.16f, 0.2f), 0.05f, 10), _width * 0.9f);
+            Stroke("Muzzle", Circle(new Vector2(0f, -0.26f), 0.24f));
+            Stroke("Nose", Circle(new Vector2(0f, -0.14f), 0.07f, 12), _width * 1.3f);
+            Stroke("MouthV", Line(new Vector2(0f, -0.21f), new Vector2(0f, -0.36f)), _width * 0.7f);
+            Stroke("MouthL", Line(new Vector2(0f, -0.36f), new Vector2(-0.14f, -0.42f)), _width * 0.7f);
+            Stroke("MouthR", Line(new Vector2(0f, -0.36f), new Vector2(0.14f, -0.42f)), _width * 0.7f);
         }
 
         // The never-staining shirt: a T-shirt outline with a collar.

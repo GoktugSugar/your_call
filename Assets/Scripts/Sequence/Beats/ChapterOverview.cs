@@ -21,14 +21,17 @@ namespace YourCall
         [SerializeField] private Material _inkMaterial;
         [SerializeField] private TMP_FontAsset _font;
 
-        [Header("Layout (world space; the receipt sits above the dialogue box)")]
-        [SerializeField] private float _titleY = 3.9f;
-        [SerializeField] private float _rowsTop = 3.1f;
-        [SerializeField] private float _rowHeight = 0.5f;
+        [Header("Layout (world space; the receipt sits below the balance, above the dialogue box)")]
+        // Title sits clear below the MoneyBalance readout (its amount reaches down to ~y3.4);
+        // rows start below the title. Item doodles are kept small so each row's doodle clears its
+        // neighbours (a doodle spans ~its scale in height, so scale must stay under the row height).
+        [SerializeField] private float _titleY = 3.1f;
+        [SerializeField] private float _rowsTop = 2.5f;
+        [SerializeField] private float _rowHeight = 0.47f;
         [Tooltip("Most bought rows shown at full size; any extras collapse into an 'and N more' line.")]
         [SerializeField] private int _maxRows = 6;
         [SerializeField] private float _doodleX = -3.5f;
-        [SerializeField] private float _rowDoodleScale = 0.42f;
+        [SerializeField] private float _rowDoodleScale = 0.28f;
         [SerializeField] private float _nameX = -2.8f;
         [SerializeField] private float _priceX = 3.7f;
         [SerializeField] private float _nameSize = 2.3f;
@@ -38,7 +41,7 @@ namespace YourCall
         [SerializeField] private int _sorting = 15;
         [Tooltip("Most skipped items shown (the dearest ones the player passed on). 0 hides the passed-on row.")]
         [SerializeField] private int _maxSkipped = 4;
-        [SerializeField] private float _skippedDoodleScale = 0.32f;
+        [SerializeField] private float _skippedDoodleScale = 0.28f;
         [SerializeField] private float _skippedSpan = 4.6f;
         [SerializeField] private float _keepoutPadding = 0.5f;
 
