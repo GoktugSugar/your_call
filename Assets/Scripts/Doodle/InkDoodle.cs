@@ -102,6 +102,14 @@ namespace YourCall
                 case DoodleKind.Cucumber: return Palette.InkGreen;    // a cucumber, green
                 case DoodleKind.QuestionMark: return Palette.Muted;   // the somber mystery of the death
 
+                // Chapter 3 would-you-rather breathers.
+                case DoodleKind.Cat: return Palette.InkPurple;        // the talking cat
+                case DoodleKind.Dog: return Palette.InkBrown;         // the talking dog
+                case DoodleKind.Shirt: return Palette.InkBlue;        // fabric
+                case DoodleKind.Shoe: return Palette.InkOrange;       // a shoe
+                case DoodleKind.Wallet: return Palette.InkGreen;      // cash
+                case DoodleKind.MoneyBag: return Palette.InkGold;     // money
+
                 default: return Palette.Ink;
             }
         }
@@ -152,6 +160,14 @@ namespace YourCall
                 case DoodleKind.InnerVoice: InnerVoice(); break;
                 case DoodleKind.Cucumber: Cucumber(); break;
                 case DoodleKind.QuestionMark: QuestionMark(); break;
+
+                // Chapter 3 would-you-rather breather doodles.
+                case DoodleKind.Cat: Cat(); break;
+                case DoodleKind.Dog: Dog(); break;
+                case DoodleKind.Shirt: Shirt(); break;
+                case DoodleKind.Shoe: Shoe(); break;
+                case DoodleKind.Wallet: Wallet(); break;
+                case DoodleKind.MoneyBag: MoneyBag(); break;
                 default: break;
             }
         }
@@ -722,6 +738,87 @@ namespace YourCall
             q.Add(new Vector3(0f, -0.22f, 0f));
             Stroke("Hook", q, _width * 1.1f);
             Stroke("Dot", Circle(new Vector2(0f, -0.5f), 0.06f, 10), _width * 1.2f);
+        }
+
+        // ---------- Chapter 3 would-you-rather breather doodles ----------
+
+        // The insulting cat: a front-facing cat, pointy ears, whiskers, a curling tail.
+        private void Cat()
+        {
+            Stroke("Head", Circle(new Vector2(0f, 0.34f), 0.28f));
+            Stroke("EarL", Line(new Vector2(-0.22f, 0.5f), new Vector2(-0.3f, 0.74f), new Vector2(-0.08f, 0.56f)));
+            Stroke("EarR", Line(new Vector2(0.22f, 0.5f), new Vector2(0.3f, 0.74f), new Vector2(0.08f, 0.56f)));
+            Stroke("EyeL", Circle(new Vector2(-0.1f, 0.38f), 0.035f, 8), _width * 0.9f);
+            Stroke("EyeR", Circle(new Vector2(0.1f, 0.38f), 0.035f, 8), _width * 0.9f);
+            Stroke("Nose", Line(new Vector2(-0.03f, 0.28f), new Vector2(0.03f, 0.28f), new Vector2(0f, 0.24f), new Vector2(-0.03f, 0.28f)), _width * 0.8f);
+            Stroke("WhL1", Line(new Vector2(-0.14f, 0.28f), new Vector2(-0.46f, 0.32f)), _width * 0.55f);
+            Stroke("WhL2", Line(new Vector2(-0.14f, 0.24f), new Vector2(-0.46f, 0.2f)), _width * 0.55f);
+            Stroke("WhR1", Line(new Vector2(0.14f, 0.28f), new Vector2(0.46f, 0.32f)), _width * 0.55f);
+            Stroke("WhR2", Line(new Vector2(0.14f, 0.24f), new Vector2(0.46f, 0.2f)), _width * 0.55f);
+            Stroke("Body", Line(new Vector2(-0.24f, 0.09f), new Vector2(-0.32f, -0.5f), new Vector2(0.32f, -0.5f), new Vector2(0.24f, 0.09f)));
+            Stroke("Tail", Line(new Vector2(0.3f, -0.46f), new Vector2(0.58f, -0.4f), new Vector2(0.62f, -0.08f), new Vector2(0.44f, 0.08f)), _width * 0.85f);
+        }
+
+        // The lying dog: a side-view dog, a snout, a floppy ear, four legs, a tail up.
+        private void Dog()
+        {
+            Stroke("Body", Line(new Vector2(-0.52f, 0.14f), new Vector2(-0.52f, -0.3f), new Vector2(0.4f, -0.3f), new Vector2(0.44f, 0.2f)));
+            Stroke("Head", Circle(new Vector2(0.52f, 0.28f), 0.22f));
+            Stroke("Snout", Line(new Vector2(0.68f, 0.2f), new Vector2(0.9f, 0.16f), new Vector2(0.9f, 0.02f), new Vector2(0.64f, 0.06f)), _width * 0.85f);
+            Stroke("Eye", Circle(new Vector2(0.54f, 0.34f), 0.03f, 8), _width * 0.9f);
+            Stroke("Ear", Line(new Vector2(0.42f, 0.44f), new Vector2(0.32f, 0.18f), new Vector2(0.48f, 0.12f)), _width * 0.85f);
+            Stroke("Leg1", Line(new Vector2(-0.42f, -0.3f), new Vector2(-0.44f, -0.58f)), _width * 0.85f);
+            Stroke("Leg2", Line(new Vector2(-0.2f, -0.3f), new Vector2(-0.22f, -0.58f)), _width * 0.85f);
+            Stroke("Leg3", Line(new Vector2(0.1f, -0.3f), new Vector2(0.12f, -0.58f)), _width * 0.85f);
+            Stroke("Leg4", Line(new Vector2(0.3f, -0.3f), new Vector2(0.32f, -0.58f)), _width * 0.85f);
+            Stroke("Tail", Line(new Vector2(-0.52f, 0.02f), new Vector2(-0.74f, 0.26f), new Vector2(-0.6f, 0.42f)), _width * 0.85f);
+        }
+
+        // The never-staining shirt: a T-shirt outline with a collar.
+        private void Shirt()
+        {
+            Stroke("Body", Line(
+                new Vector2(-0.28f, 0.5f), new Vector2(-0.5f, 0.4f), new Vector2(-0.66f, 0.18f),
+                new Vector2(-0.5f, 0.02f), new Vector2(-0.42f, 0.12f), new Vector2(-0.42f, -0.6f),
+                new Vector2(0.42f, -0.6f), new Vector2(0.42f, 0.12f), new Vector2(0.5f, 0.02f),
+                new Vector2(0.66f, 0.18f), new Vector2(0.5f, 0.4f), new Vector2(0.28f, 0.5f)));
+            var collar = new List<Vector3>();
+            InkLine.AddArc(collar, new Vector2(0f, 0.5f), 0.28f, 200f, 340f, 14);
+            Stroke("Collar", collar, _width * 0.85f);
+        }
+
+        // The never-hurting shoes: a side-profile sneaker.
+        private void Shoe()
+        {
+            Stroke("Sole", Line(new Vector2(-0.7f, -0.4f), new Vector2(0.6f, -0.4f), new Vector2(0.72f, -0.26f)));
+            Stroke("Upper", Line(new Vector2(-0.7f, -0.4f), new Vector2(-0.68f, -0.02f), new Vector2(-0.3f, 0.14f), new Vector2(0.1f, 0.12f), new Vector2(0.4f, -0.04f), new Vector2(0.72f, -0.26f)));
+            Stroke("Ankle", Line(new Vector2(-0.68f, -0.02f), new Vector2(-0.46f, 0.06f)), _width * 0.8f);
+            Stroke("Lace1", Line(new Vector2(-0.28f, 0.12f), new Vector2(-0.14f, 0f)), _width * 0.7f);
+            Stroke("Lace2", Line(new Vector2(-0.12f, 0.1f), new Vector2(0.02f, -0.02f)), _width * 0.7f);
+            Stroke("Lace3", Line(new Vector2(0.04f, 0.08f), new Vector2(0.18f, -0.04f)), _width * 0.7f);
+        }
+
+        // The endless 20: a bifold wallet with a note poking out the top.
+        private void Wallet()
+        {
+            Stroke("Note", Line(new Vector2(-0.2f, 0.32f), new Vector2(-0.2f, 0.5f), new Vector2(0.28f, 0.5f), new Vector2(0.28f, 0.32f)), _width * 0.8f);
+            Stroke("NoteMark", Line(new Vector2(-0.06f, 0.44f), new Vector2(0.14f, 0.44f)), _width * 0.7f);
+            Stroke("Body", Line(new Vector2(-0.5f, 0.34f), new Vector2(-0.5f, -0.36f), new Vector2(0.5f, -0.36f), new Vector2(0.5f, 0.34f), new Vector2(-0.5f, 0.34f)));
+            Stroke("Fold", Line(new Vector2(-0.5f, 0f), new Vector2(0.5f, 0f)), _width * 0.7f);
+            Stroke("Clasp", Line(new Vector2(0.36f, -0.06f), new Vector2(0.36f, 0.06f)), _width * 0.9f);
+        }
+
+        // One big win: a cinched money sack with a dollar sign.
+        private void MoneyBag()
+        {
+            var sack = new List<Vector3>();
+            for (int i = 0; i <= 34; i++) { float a = i / 34f * Mathf.PI * 2f; float r = 0.48f + 0.04f * Mathf.Sin(a * 3f); sack.Add(new Vector3(Mathf.Cos(a) * r, -0.12f + Mathf.Sin(a) * r * 0.9f, 0f)); }
+            Stroke("Sack", sack);
+            Stroke("NeckL", Line(new Vector2(-0.22f, 0.34f), new Vector2(-0.3f, 0.56f), new Vector2(-0.08f, 0.5f)), _width * 0.85f);
+            Stroke("NeckR", Line(new Vector2(0.22f, 0.34f), new Vector2(0.3f, 0.56f), new Vector2(0.08f, 0.5f)), _width * 0.85f);
+            Stroke("Tie", Line(new Vector2(-0.22f, 0.34f), new Vector2(0.22f, 0.34f)), _width * 0.8f);
+            Stroke("S", Line(new Vector2(0.14f, 0.02f), new Vector2(-0.04f, 0.06f), new Vector2(-0.12f, -0.06f), new Vector2(0.08f, -0.14f), new Vector2(0.12f, -0.26f), new Vector2(-0.06f, -0.3f)), _width * 0.85f);
+            Stroke("SBar", Line(new Vector2(0f, 0.1f), new Vector2(0f, -0.34f)), _width * 0.75f);
         }
 
         // ---------- fade ----------

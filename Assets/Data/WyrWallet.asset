@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ecd1a615a340f4c9104ca01624d106, type: 3}
+  m_Name: WyrWallet
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Dilemma
+  _id: wyr_wallet_win
+  _verb: 0
+  _weight: 0
+  _narratorPrompt: 'A gift of money, one shape or the other. Would you rather have a [amber]wallet that holds 20 dollars again every morning[/amber], forever, a small sure drip, or [amber]one enormous win, right now, once[/amber], and never a penny more after. The steady, or the spike. Pick.'
+  _choices:
+  - _id: wallet
+    _label: The endless 20
+    _narratorReact: 'The endless twenty. The sure thing, the same small certainty every dawn until the stars burn out. A man who needs to always know the number. You would, would you not.'
+    _narratorReactStruck:
+    _struckParty:
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 49
+    _endsGame: 0
+    _profileImpact: []
+  - _id: win
+    _label: One big win
+    _narratorReact: 'The one big win. Everything at once and nothing after, the spike over the drip. You would rather blaze bright and broke than glow forever. I have watched you spend all chapter, so, no surprise there.'
+    _narratorReactStruck:
+    _struckParty:
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 51
+    _endsGame: 0
+    _profileImpact: []
+  _figuresBranded: 0
+  _statsHeading: how others chose
+  _roomBlueFraction: 0.43
+  _crowdThreshold: 0.5
+  _thresholdLabel: the line
+  _optionADoodle: 43
+  _optionBDoodle: 44

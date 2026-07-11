@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ecd1a615a340f4c9104ca01624d106, type: 3}
+  m_Name: WyrShirtShoe
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Dilemma
+  _id: wyr_shirt_shoe
+  _verb: 0
+  _weight: 0
+  _narratorPrompt: 'One thing you wear, made perfect forever. Would you rather have a [amber]shirt that never stains[/amber], never creases, never wears, or [amber]shoes that never hurt[/amber], never rub, never wear out. You only get the one. Pick.'
+  _choices:
+  - _id: shirt
+    _label: The perfect shirt
+    _narratorReact: 'The shirt. You would rather look right than feel right. A man who dresses for the room, not for himself. I cannot say I am surprised.'
+    _narratorReactStruck:
+    _struckParty:
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 43
+    _endsGame: 0
+    _profileImpact: []
+  - _id: shoes
+    _label: The perfect shoes
+    _narratorReact: 'The shoes. Comfort from the ground up, and never mind how it looks. You would walk a thousand quiet miles in a stained shirt. Sensible. Dull, but sensible.'
+    _narratorReactStruck:
+    _struckParty:
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 57
+    _endsGame: 0
+    _profileImpact: []
+  _figuresBranded: 0
+  _statsHeading: how others chose
+  _roomBlueFraction: 0.43
+  _crowdThreshold: 0.5
+  _thresholdLabel: the line
+  _optionADoodle: 41
+  _optionBDoodle: 42

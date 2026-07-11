@@ -50,6 +50,14 @@ namespace YourCall
         FeelNothing,    // never grief or joy at full volume: a flat-line mouth face
         InnerVoice,     // a wise voice always right: a head with a small speech curl
         Cucumber,       // the deadpan 100 dollar finale: a cucumber, green
-        QuestionMark    // the truth about how you died (reworked visual): just an ink question mark
+        QuestionMark,   // the truth about how you died (reworked visual): just an ink question mark
+
+        // ---- Chapter 3 would-you-rather breathers (three new pool pairs) ----
+        Cat,            // the insulting cat (front facing, pointy ears, whiskers), purple
+        Dog,            // the lying dog (side view, snout, floppy ear), brown
+        Shirt,          // the never-staining shirt (a T-shirt), blue
+        Shoe,           // the never-hurting shoes (a side sneaker), orange
+        Wallet,         // the endless 20 (a bifold wallet with a note), green
+        MoneyBag        // one big win (a cinched sack with a dollar sign), gold
     }
 }

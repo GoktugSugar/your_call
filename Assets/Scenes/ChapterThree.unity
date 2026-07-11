@@ -996,10 +996,13 @@ Transform:
   - {fileID: 3200000002}
   - {fileID: 3000000023}
   - {fileID: 1929457111}
+  - {fileID: 3300000002}
   - {fileID: 3000000026}
   - {fileID: 3000000029}
   - {fileID: 1396236937}
+  - {fileID: 3300000005}
   - {fileID: 1928140367}
+  - {fileID: 3300000008}
   - {fileID: 1301396455}
   - {fileID: 3000000032}
   - {fileID: 3100000005}
@@ -1486,10 +1489,13 @@ MonoBehaviour:
   - {fileID: 3200000003}
   - {fileID: 3000000024}
   - {fileID: 1929457112}
+  - {fileID: 3300000003}
   - {fileID: 3000000027}
   - {fileID: 3000000030}
   - {fileID: 1396236938}
+  - {fileID: 3300000006}
   - {fileID: 1928140368}
+  - {fileID: 3300000009}
   - {fileID: 1301396456}
   - {fileID: 3000000033}
   - {fileID: 3100000006}
@@ -3105,6 +3111,150 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.BuybackBeat
   _note: 
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+--- !u!1 &3300000001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3300000002}
+  - component: {fileID: 3300000003}
+  m_Layer: 0
+  m_Name: C3_WyrCatDog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3300000002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3300000001}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3300000003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3300000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa1dc2dcf3f2f7b45bee8ac9ba59b270, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.WouldYouRatherBeat
+  _note: 
+  _dilemma: {fileID: 11400000, guid: 9b05c3aa722c450eb8500e1a49a5f122, type: 2}
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+--- !u!1 &3300000004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3300000005}
+  - component: {fileID: 3300000006}
+  m_Layer: 0
+  m_Name: C3_WyrWallet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3300000005
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3300000004}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3300000006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3300000004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa1dc2dcf3f2f7b45bee8ac9ba59b270, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.WouldYouRatherBeat
+  _note: 
+  _dilemma: {fileID: 11400000, guid: ef9017a014d142e581e20930391656e0, type: 2}
+  _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
+  _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+--- !u!1 &3300000007
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3300000008}
+  - component: {fileID: 3300000009}
+  m_Layer: 0
+  m_Name: C3_WyrShirtShoe
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3300000008
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3300000007}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3300000009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3300000007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa1dc2dcf3f2f7b45bee8ac9ba59b270, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.WouldYouRatherBeat
+  _note: 
+  _dilemma: {fileID: 11400000, guid: a2e36cbe6aee4d9cb9fd8c5d4aeeacb1, type: 2}
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
   _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
 --- !u!1660057539 &9223372036854775807
