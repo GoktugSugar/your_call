@@ -110,6 +110,14 @@ namespace YourCall
                 case DoodleKind.Wallet: return Palette.InkGreen;      // cash
                 case DoodleKind.MoneyBag: return Palette.InkGold;     // money
 
+                // Chapter 4 would-you-rather breathers.
+                case DoodleKind.Dragon: return Palette.InkPurple;     // a fantastical pet
+                case DoodleKind.Dinosaur: return Palette.InkGreen;    // a big reptile
+                case DoodleKind.House: return Palette.InkOrange;      // a warm home
+                case DoodleKind.Car: return Palette.InkBlue;          // a car
+                case DoodleKind.Robot: return Palette.InkSky;         // cool metal
+                case DoodleKind.Ghost: return Palette.InkPurple;      // spectral
+
                 default: return Palette.Ink;
             }
         }
@@ -168,6 +176,14 @@ namespace YourCall
                 case DoodleKind.Shoe: Shoe(); break;
                 case DoodleKind.Wallet: Wallet(); break;
                 case DoodleKind.MoneyBag: MoneyBag(); break;
+
+                // Chapter 4 would-you-rather breather doodles.
+                case DoodleKind.Dragon: Dragon(); break;
+                case DoodleKind.Dinosaur: Dinosaur(); break;
+                case DoodleKind.House: House(); break;
+                case DoodleKind.Car: Car(); break;
+                case DoodleKind.Robot: Robot(); break;
+                case DoodleKind.Ghost: Ghost(); break;
                 default: break;
             }
         }
@@ -821,6 +837,101 @@ namespace YourCall
             Stroke("Tie", Line(new Vector2(-0.22f, 0.34f), new Vector2(0.22f, 0.34f)), _width * 0.8f);
             Stroke("S", Line(new Vector2(0.14f, 0.02f), new Vector2(-0.04f, 0.06f), new Vector2(-0.12f, -0.06f), new Vector2(0.08f, -0.14f), new Vector2(0.12f, -0.26f), new Vector2(-0.06f, -0.3f)), _width * 0.85f);
             Stroke("SBar", Line(new Vector2(0f, 0.1f), new Vector2(0f, -0.34f)), _width * 0.75f);
+        }
+
+        // ---------- Chapter 4 would-you-rather breather doodles ----------
+
+        // A pet dragon the size of a cat: a rounded body, an up neck to a wedge head, a bat wing, a curling
+        // arrow tail, two little legs. Facing right.
+        private void Dragon()
+        {
+            var body = new List<Vector3>();
+            for (int i = 0; i <= 24; i++) { float a = i / 24f * Mathf.PI * 2f; body.Add(new Vector3(-0.05f + Mathf.Cos(a) * 0.36f, -0.14f + Mathf.Sin(a) * 0.26f, 0f)); }
+            Stroke("Body", body);
+            Stroke("Neck", Line(new Vector2(0.26f, 0f), new Vector2(0.44f, 0.36f)));
+            Stroke("Head", Line(new Vector2(0.44f, 0.36f), new Vector2(0.66f, 0.44f), new Vector2(0.6f, 0.3f), new Vector2(0.42f, 0.3f)), _width * 0.9f);
+            Stroke("Wing", Line(new Vector2(0f, 0.1f), new Vector2(-0.06f, 0.62f), new Vector2(0.1f, 0.42f), new Vector2(0.16f, 0.64f), new Vector2(0.26f, 0.34f)), _width * 0.9f);
+            Stroke("Tail", Line(new Vector2(-0.4f, -0.1f), new Vector2(-0.66f, 0.06f), new Vector2(-0.82f, -0.14f)), _width * 0.85f);
+            Stroke("TailTip", Line(new Vector2(-0.82f, -0.14f), new Vector2(-0.94f, -0.02f), new Vector2(-0.88f, -0.24f), new Vector2(-0.82f, -0.14f)), _width * 0.8f);
+            Stroke("LegF", Line(new Vector2(0.12f, -0.36f), new Vector2(0.14f, -0.56f)), _width * 0.85f);
+            Stroke("LegB", Line(new Vector2(-0.16f, -0.36f), new Vector2(-0.18f, -0.56f)), _width * 0.85f);
+        }
+
+        // A pet dinosaur the size of a dog: a long-necked sauropod, a big body, four stumpy legs, a long tail.
+        private void Dinosaur()
+        {
+            var body = new List<Vector3>();
+            for (int i = 0; i <= 26; i++) { float a = i / 26f * Mathf.PI * 2f; body.Add(new Vector3(-0.05f + Mathf.Cos(a) * 0.42f, -0.16f + Mathf.Sin(a) * 0.26f, 0f)); }
+            Stroke("Body", body);
+            Stroke("Neck", Line(new Vector2(0.3f, 0.02f), new Vector2(0.46f, 0.4f), new Vector2(0.44f, 0.66f)));
+            Stroke("Head", Circle(new Vector2(0.5f, 0.7f), 0.1f, 12), _width * 0.85f);
+            Stroke("Tail", Line(new Vector2(-0.44f, -0.08f), new Vector2(-0.72f, -0.04f), new Vector2(-0.95f, -0.24f)), _width * 0.85f);
+            Stroke("Leg1", Line(new Vector2(-0.28f, -0.38f), new Vector2(-0.3f, -0.6f)), _width * 0.9f);
+            Stroke("Leg2", Line(new Vector2(-0.06f, -0.4f), new Vector2(-0.07f, -0.62f)), _width * 0.9f);
+            Stroke("Leg3", Line(new Vector2(0.14f, -0.4f), new Vector2(0.15f, -0.62f)), _width * 0.9f);
+            Stroke("Leg4", Line(new Vector2(0.3f, -0.36f), new Vector2(0.32f, -0.58f)), _width * 0.9f);
+        }
+
+        // A house that walks: walls, a peaked roof, a door, a window, a chimney, and two little legs.
+        private void House()
+        {
+            Stroke("Walls", Line(new Vector2(-0.5f, -0.4f), new Vector2(-0.5f, 0.2f), new Vector2(0.5f, 0.2f), new Vector2(0.5f, -0.4f), new Vector2(-0.5f, -0.4f)));
+            Stroke("Roof", Line(new Vector2(-0.6f, 0.2f), new Vector2(0f, 0.6f), new Vector2(0.6f, 0.2f)));
+            Stroke("Door", Line(new Vector2(-0.14f, -0.4f), new Vector2(-0.14f, -0.04f), new Vector2(0.12f, -0.04f), new Vector2(0.12f, -0.4f)), _width * 0.85f);
+            Stroke("Window", Line(new Vector2(0.22f, -0.02f), new Vector2(0.22f, 0.12f), new Vector2(0.4f, 0.12f), new Vector2(0.4f, -0.02f), new Vector2(0.22f, -0.02f)), _width * 0.7f);
+            Stroke("Chimney", Line(new Vector2(0.28f, 0.4f), new Vector2(0.28f, 0.56f), new Vector2(0.42f, 0.56f), new Vector2(0.42f, 0.32f)), _width * 0.8f);
+            Stroke("LegL", Line(new Vector2(-0.24f, -0.4f), new Vector2(-0.28f, -0.62f), new Vector2(-0.16f, -0.62f)), _width * 0.85f);
+            Stroke("LegR", Line(new Vector2(0.24f, -0.4f), new Vector2(0.3f, -0.62f), new Vector2(0.42f, -0.62f)), _width * 0.85f);
+        }
+
+        // A car that swims: a side-profile car, a cabin bump, two wheels.
+        private void Car()
+        {
+            Stroke("Body", Line(
+                new Vector2(-0.66f, -0.18f), new Vector2(-0.66f, -0.02f), new Vector2(-0.4f, -0.02f),
+                new Vector2(-0.26f, 0.24f), new Vector2(0.2f, 0.24f), new Vector2(0.34f, -0.02f),
+                new Vector2(0.66f, -0.02f), new Vector2(0.66f, -0.18f)));
+            Stroke("Pillar", Line(new Vector2(-0.02f, 0.24f), new Vector2(-0.02f, -0.02f)), _width * 0.7f);
+            Stroke("WheelL", Circle(new Vector2(-0.38f, -0.28f), 0.16f, 16), _width * 0.9f);
+            Stroke("WheelR", Circle(new Vector2(0.4f, -0.28f), 0.16f, 16), _width * 0.9f);
+        }
+
+        // A robot butler: a boxy head with an antenna and dot eyes, a body panel, blocky arms and feet.
+        private void Robot()
+        {
+            Stroke("Head", Line(new Vector2(-0.24f, 0.28f), new Vector2(-0.24f, 0.6f), new Vector2(0.24f, 0.6f), new Vector2(0.24f, 0.28f), new Vector2(-0.24f, 0.28f)));
+            Stroke("Antenna", Line(new Vector2(0f, 0.6f), new Vector2(0f, 0.76f)), _width * 0.8f);
+            Stroke("AntTip", Circle(new Vector2(0f, 0.8f), 0.05f, 10), _width * 0.9f);
+            Stroke("EyeL", Circle(new Vector2(-0.1f, 0.46f), 0.05f, 10), _width * 0.9f);
+            Stroke("EyeR", Circle(new Vector2(0.1f, 0.46f), 0.05f, 10), _width * 0.9f);
+            Stroke("Mouth", Line(new Vector2(-0.12f, 0.34f), new Vector2(0.12f, 0.34f)), _width * 0.7f);
+            Stroke("Body", Line(new Vector2(-0.3f, -0.34f), new Vector2(-0.3f, 0.24f), new Vector2(0.3f, 0.24f), new Vector2(0.3f, -0.34f), new Vector2(-0.3f, -0.34f)));
+            Stroke("Panel", Line(new Vector2(-0.12f, -0.02f), new Vector2(0.12f, -0.02f)), _width * 0.6f);
+            Stroke("ArmL", Line(new Vector2(-0.3f, 0.14f), new Vector2(-0.48f, 0.14f), new Vector2(-0.48f, -0.12f)), _width * 0.85f);
+            Stroke("ArmR", Line(new Vector2(0.3f, 0.14f), new Vector2(0.48f, 0.14f), new Vector2(0.48f, -0.12f)), _width * 0.85f);
+            Stroke("LegL", Line(new Vector2(-0.16f, -0.34f), new Vector2(-0.16f, -0.58f)), _width * 0.9f);
+            Stroke("LegR", Line(new Vector2(0.16f, -0.34f), new Vector2(0.16f, -0.58f)), _width * 0.9f);
+            Stroke("FootL", Line(new Vector2(-0.26f, -0.58f), new Vector2(-0.06f, -0.58f)), _width * 0.9f);
+            Stroke("FootR", Line(new Vector2(0.06f, -0.58f), new Vector2(0.26f, -0.58f)), _width * 0.9f);
+        }
+
+        // A ghost flatmate: a domed sheet with a wavy hem, two eyes, a small o mouth.
+        private void Ghost()
+        {
+            var g = new List<Vector3>();
+            InkLine.AddArc(g, new Vector2(0f, 0.1f), 0.42f, 0f, 180f, 20);   // right -> top -> left
+            g.Add(new Vector3(-0.42f, -0.34f, 0f));                          // down the left side
+            g.Add(new Vector3(-0.28f, -0.22f, 0f));                          // wavy hem, left to right
+            g.Add(new Vector3(-0.14f, -0.34f, 0f));
+            g.Add(new Vector3(0f, -0.22f, 0f));
+            g.Add(new Vector3(0.14f, -0.34f, 0f));
+            g.Add(new Vector3(0.28f, -0.22f, 0f));
+            g.Add(new Vector3(0.42f, -0.34f, 0f));
+            g.Add(new Vector3(0.42f, 0.1f, 0f));                             // up the right side, closing
+            Stroke("Sheet", g);
+            Stroke("EyeL", Circle(new Vector2(-0.14f, 0.12f), 0.07f, 12), _width * 0.85f);
+            Stroke("EyeR", Circle(new Vector2(0.14f, 0.12f), 0.07f, 12), _width * 0.85f);
+            Stroke("Mouth", Circle(new Vector2(0f, -0.06f), 0.06f, 10), _width * 0.8f);
         }
 
         // ---------- fade ----------

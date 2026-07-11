@@ -58,6 +58,14 @@ namespace YourCall
         Shirt,          // the never-staining shirt (a T-shirt), blue
         Shoe,           // the never-hurting shoes (a side sneaker), orange
         Wallet,         // the endless 20 (a bifold wallet with a note), green
-        MoneyBag        // one big win (a cinched sack with a dollar sign), gold
+        MoneyBag,       // one big win (a cinched sack with a dollar sign), gold
+
+        // ---- Chapter 4 (the gun) would-you-rather breathers (three new pool pairs) ----
+        Dragon,         // a pet dragon the size of a cat (a winged, snouted, tailed creature), purple
+        Dinosaur,       // a pet dinosaur the size of a dog (a long-necked sauropod), green
+        House,          // a house that walks (walls, roof, chimney, little legs), orange
+        Car,            // a car that swims (a side-profile car with two wheels), blue
+        Robot,          // a robot butler (a boxy figure with an antenna), sky
+        Ghost           // a ghost flatmate (a sheet ghost with eyes), purple
     }
 }

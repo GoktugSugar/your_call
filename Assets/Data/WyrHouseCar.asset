@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ecd1a615a340f4c9104ca01624d106, type: 3}
+  m_Name: WyrHouseCar
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Dilemma
+  _id: wyr_house_car
+  _verb: 0
+  _weight: 0
+  _narratorPrompt: 'One of your possessions comes to life and develops opinions. Would you rather it be a [amber]house that gets up and walks off[/amber] whenever it decides it likes a different street, or a [amber]car that would honestly rather be swimming[/amber] and keeps trying to. One or the other. Choose.'
+  _choices:
+  - _id: house
+    _label: The walking house
+    _narratorReact: 'The walking house, then. You would rather never know where home is when you wake than lose the roof at all. A nomad who still wants walls. There is a whole personality in that, and I have noted every bit of it.'
+    _narratorReactStruck:
+    _struckParty:
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 47
+    _endsGame: 0
+    _profileImpact: []
+  - _id: car
+    _label: The swimming car
+    _narratorReact: 'The swimming car, then. You picked the one that will drown you the first time it sees a lake and mistakes it for freedom. You want the thing with a dream, even a stupid, wet, fatal one. Romantic. Doomed. Noted.'
+    _narratorReactStruck:
+    _struckParty:
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 53
+    _endsGame: 0
+    _profileImpact: []
+  _figuresBranded: 0
+  _statsHeading: how others chose
+  _roomBlueFraction: 0.43
+  _crowdThreshold: 0.5
+  _thresholdLabel: the line
+  _optionADoodle: 47
+  _optionBDoodle: 48

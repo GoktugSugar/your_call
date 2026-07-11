@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ecd1a615a340f4c9104ca01624d106, type: 3}
+  m_Name: WyrDragonDino
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Dilemma
+  _id: wyr_dragon_dino
+  _verb: 0
+  _weight: 0
+  _narratorPrompt: 'You get one impossible little pet, forever, and it will not shut up about being impossible. Would you rather have a [amber]pet dragon the size of a cat[/amber], smug, fireproof, sets the curtains alight when excited, or a [amber]pet dinosaur the size of a dog[/amber], sweet, dim, and extinct on a technicality. One or the other. Pick.'
+  _choices:
+  - _id: dragon
+    _label: The tiny dragon
+    _narratorReact: 'The dragon, then. Of course, the one that could burn the flat down and knows it. You want the pet that might kill you if it sneezed. Fireproof curtains for you. Very telling.'
+    _narratorReactStruck:
+    _struckParty:
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 54
+    _endsGame: 0
+    _profileImpact: []
+  - _id: dino
+    _label: The tiny dinosaur
+    _narratorReact: 'The dinosaur, then. You went for the sweet dim one that history already gave up on. Loyal, doomed, and absolutely going to eat your shoes. You did not want a threat, you wanted a friend with a tragic backstory. Fair.'
+    _narratorReactStruck:
+    _struckParty:
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 46
+    _endsGame: 0
+    _profileImpact: []
+  _figuresBranded: 0
+  _statsHeading: how others chose
+  _roomBlueFraction: 0.43
+  _crowdThreshold: 0.5
+  _thresholdLabel: the line
+  _optionADoodle: 45
+  _optionBDoodle: 46

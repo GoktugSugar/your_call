@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ecd1a615a340f4c9104ca01624d106, type: 3}
+  m_Name: WyrRobotGhost
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.Dilemma
+  _id: wyr_robot_ghost
+  _verb: 0
+  _weight: 0
+  _narratorPrompt: 'You are assigned one flatmate for eternity, no swaps. Would you rather it be a [amber]robot butler that judges you in complete silence[/amber], impeccable, cold, always right, or a [amber]ghost that means well and ruins everything[/amber], warm, useless, walks through your cereal. Pick.'
+  _choices:
+  - _id: robot
+    _label: The judging robot
+    _narratorReact: 'The robot, then. You would take silent, accurate contempt over warm, well meaning chaos. At least it will never be wrong about you, which is exactly the thing most people cannot stand. You want to be seen clearly, even coldly. Interesting.'
+    _narratorReactStruck:
+    _struckParty:
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 49
+    _endsGame: 0
+    _profileImpact: []
+  - _id: ghost
+    _label: The hapless ghost
+    _narratorReact: 'The ghost, then. You picked warmth that wrecks the kitchen over competence that despises you. You would rather be loved badly than served perfectly. Sentimental to the bone. I could have guessed, but it is nice to be sure.'
+    _narratorReactStruck:
+    _struckParty:
+    _gambledParty:
+    _route: straight
+    _diverts: 0
+    _seedVotes: 51
+    _endsGame: 0
+    _profileImpact: []
+  _figuresBranded: 0
+  _statsHeading: how others chose
+  _roomBlueFraction: 0.43
+  _crowdThreshold: 0.5
+  _thresholdLabel: the line
+  _optionADoodle: 49
+  _optionBDoodle: 50
