@@ -94,9 +94,9 @@ namespace YourCall
             if (_plea != null)
             {
                 if (!string.IsNullOrEmpty(dilemma.SpurPlea) && _spur.Count > 0)
-                    _plea.Show(dilemma.SpurPlea, _track.SpurFigurePositions(dilemma.SpurFigureCount)[0]);
+                    _plea.Show(dilemma.SpurPlea, _spur[0]);
                 else if (!string.IsNullOrEmpty(dilemma.MainPlea) && _main.Count > 0)
-                    _plea.Show(dilemma.MainPlea, _track.MainFigurePositions(dilemma.MainFigureCount)[0]);
+                    _plea.Show(dilemma.MainPlea, _main[0]);
                 else
                     _plea.Hide();
             }

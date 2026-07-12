@@ -64,7 +64,7 @@ namespace YourCall
             var plea = NewFloatingText("Plea");
 
             yield return Lines(ctx, _promptLines);
-            yield return ShowPlea(plea, person.transform.position, _plea);
+            yield return ShowPlea(plea, person, _plea);
 
             var aim = NewAimField();
             aim.SetTargets(Boxes(new AimField.Box(_boxCenter, _boxSize)));

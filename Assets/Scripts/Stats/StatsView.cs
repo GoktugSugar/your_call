@@ -29,6 +29,8 @@ namespace YourCall
         [SerializeField] private float _barMaxLength = 4.0f;
         [SerializeField] private float _barStartX = -2.1f;
         [SerializeField] private float _rowSpacing = 1.25f;
+        [Tooltip("Rows compact to a tighter effective spacing only when there are enough of them to overflow the screen (the Last Bullet colour breakdown is six bars). This caps the top bar's distance from centre; the 2 to 3 bar reveals keep _rowSpacing exactly.")]
+        [SerializeField] private float _maxContentHalfHeight = 2.3f;
         [SerializeField] private int _sortingScrim = 30;
         [SerializeField] private int _sortingContent = 32;
 
@@ -53,6 +55,7 @@ namespace YourCall
         private readonly List<float> _barTargets = new List<float>();
         private readonly List<TextMeshPro> _labels = new List<TextMeshPro>();
         private readonly List<TextMeshPro> _counts = new List<TextMeshPro>();
+        private float _effRowSpacing = 1.25f;
         private bool _built;
 
         private void Awake() { Build(); }
@@ -95,11 +98,15 @@ namespace YourCall
         public IEnumerator Reveal(ResolutionReport report, float fade)
         {
             if (_keepoutObject != null) _keepoutObject.SetActive(true);
+            // Compact the rows only when there are enough to overflow, so a many-bar reveal (the Last Bullet
+            // colour breakdown, six bars) still fits under the heading; 2 to 3 bars keep _rowSpacing exactly.
+            int barCount = report != null ? report.Bars.Count : 0;
+            _effRowSpacing = barCount > 1 ? Mathf.Min(_rowSpacing, 2f * _maxContentHalfHeight / (barCount - 1)) : _rowSpacing;
             BuildRows(report);
 
             int n = _bars.Count;
             float contentCenterX = _barStartX + _barMaxLength * 0.5f;
-            float top = (n - 1) * 0.5f * _rowSpacing;
+            float top = (n - 1) * 0.5f * _effRowSpacing;
             _heading.transform.localPosition = new Vector3(contentCenterX, top + 1.95f, 0f);
             _hint.transform.localPosition = new Vector3(contentCenterX, -top - 1.15f, 0f);
             _heading.text = report != null ? Localization.Localize(report.Heading) : string.Empty;
@@ -109,8 +116,8 @@ namespace YourCall
             if (showThreshold)
             {
                 float mx = _barStartX + _barMaxLength * Mathf.Clamp01(report.ThresholdValue / report.MaxValue);
-                float topY = top + _rowSpacing * 0.5f;
-                float botY = -top - _rowSpacing * 0.5f;
+                float topY = top + _effRowSpacing * 0.5f;
+                float botY = -top - _effRowSpacing * 0.5f;
                 _threshold.SetPosition(0, new Vector3(mx, topY, 0f));
                 _threshold.SetPosition(1, new Vector3(mx, botY, 0f));
                 _thresholdLabel.transform.localPosition = new Vector3(mx, topY + 0.35f, 0f);
@@ -197,8 +204,8 @@ namespace YourCall
 
         private float RowY(int i, int n)
         {
-            float top = (n - 1) * 0.5f * _rowSpacing;
-            return top - i * _rowSpacing;
+            float top = (n - 1) * 0.5f * _effRowSpacing;
+            return top - i * _effRowSpacing;
         }
 
         private void BuildRows(ResolutionReport report)

@@ -67,6 +67,12 @@ namespace YourCall
         protected float ArmDrop => _armDrop;
         protected float LegSpan => _legSpan;
 
+        /// <summary>The top of the figure's head in local units above the feet origin (neck + the head's
+        /// full diameter). Used by the shared floating-plea placement so a plea sits a clearance above the
+        /// head at any figure scale (see <see cref="FigurePleaPlacement"/>). Virtual so an on-model relative
+        /// that redraws a taller or shorter head can report its own.</summary>
+        public virtual float HeadTopLocalY => _neckY + 2f * _headRadius;
+
         private void Awake() { Build(); }
 
         public void Build()

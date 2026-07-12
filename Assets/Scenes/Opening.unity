@@ -2284,7 +2284,7 @@ MonoBehaviour:
   _color: {r: 0.106, g: 0.102, b: 0.09, a: 1}
   _sortingOrder: 24
   _width: 5.5
-  _heightAboveFigure: 1.25
+  _headClearance: 0.5
   _fade: 0.35
 --- !u!4 &1515680713
 Transform:

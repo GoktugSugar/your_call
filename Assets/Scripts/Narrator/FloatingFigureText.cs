@@ -19,8 +19,8 @@ namespace YourCall
         [SerializeField] private int _sortingOrder = 24;
         [SerializeField] private float _width = 5.5f;
 
-        [Tooltip("How far above the figure's origin the plea floats.")]
-        [SerializeField] private float _heightAboveFigure = 1.25f;
+        [Tooltip("Clearance from the figure's head top to the plea. Measured above the head (scale-aware via FigurePleaPlacement), so the plea always clears the head and body.")]
+        [SerializeField] private float _headClearance = 0.5f;
         [SerializeField] private float _fade = 0.35f;
 
         private TextMeshPro _text;
@@ -40,12 +40,13 @@ namespace YourCall
             _built = true;
         }
 
-        /// <summary>Float the line over a world anchor (the pleading figure's position) and fade it in.</summary>
-        public void Show(string line, Vector3 figureWorldPos)
+        /// <summary>Float the line a clearance above the pleading figure's head and fade it in. Placement is
+        /// scale-aware via the shared <see cref="FigurePleaPlacement"/>, so it clears the head at any figure size.</summary>
+        public void Show(string line, Figure figure)
         {
             if (!_built) Build();
-            if (string.IsNullOrEmpty(line)) { Hide(); return; }
-            _text.transform.position = figureWorldPos + new Vector3(0f, _heightAboveFigure, 0f);
+            if (string.IsNullOrEmpty(line) || figure == null) { Hide(); return; }
+            _text.transform.position = FigurePleaPlacement.Above(figure, _headClearance);
             _text.text = Localization.Localize(line);
             if (_routine != null) StopCoroutine(_routine);
             _routine = StartCoroutine(FadeTo(1f));

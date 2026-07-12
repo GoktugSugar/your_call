@@ -1825,7 +1825,7 @@ GameObject:
   - component: {fileID: 5100000000000000061}
   - component: {fileID: 5100000000000000062}
   m_Layer: 0
-  m_Name: 06_TwoTargets
+  m_Name: 06_OneWhoRan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1855,10 +1855,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5100000000000000060}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d43ffd4c709f4a1d952a16c5e071093f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::YourCall.TwoTargetsBeat
-  _note: 06_TwoTargets
+  m_Script: {fileID: 11500000, guid: 1750cbf4884b8d74084ba10c3e113b94, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.OneWhoRanBeat
+  _note: 06_OneWhoRan
   _kit: {fileID: 5000000000000000012}
 --- !u!1 &5100000000000000070
 GameObject:

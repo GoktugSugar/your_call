@@ -36,7 +36,8 @@ namespace YourCall
 
         [Header("Floating plea (ink over a figure, no bubble)")]
         [SerializeField] protected float _pleaSize = 2.3f;
-        [SerializeField] protected float _pleaHeight = 1.35f;
+        [Tooltip("Clearance from the figure's head top to the plea. Measured above the head (scale-aware), so the plea always clears the head no matter how large the target is drawn.")]
+        [SerializeField] protected float _pleaClearance = 0.7f;
         [SerializeField] protected int _pleaSorting = 24;
 
         protected Camera Cam(SequenceContext ctx) => ctx != null && ctx.Camera != null ? ctx.Camera : Camera.main;
@@ -145,12 +146,14 @@ namespace YourCall
             return t;
         }
 
-        /// <summary>Show a plea over a world anchor and fade it in (routed through the emphasis markup, so any
-        /// [amber] tags render as colour). Reuse the returned label to move, fade or destroy it.</summary>
-        protected IEnumerator ShowPlea(TextMeshPro label, Vector3 figureWorldPos, string line, float extraHeight = 0f)
+        /// <summary>Show a plea a clearance above a figure's head and fade it in (routed through the emphasis
+        /// markup, so any [amber] tags render as colour). Placement is scale-aware via the shared
+        /// <see cref="FigurePleaPlacement"/>, so the plea clears the head at any target size. Reuse the
+        /// returned label to move, fade or destroy it.</summary>
+        protected IEnumerator ShowPlea(TextMeshPro label, Figure figure, string line, float extraHeight = 0f)
         {
             if (label == null) yield break;
-            label.transform.position = figureWorldPos + new Vector3(0f, _pleaHeight + extraHeight, 0f);
+            label.transform.position = FigurePleaPlacement.Above(figure, _pleaClearance + extraHeight);
             label.text = InkMarkup.ToRichText(Localization.Localize(line));
             yield return FadeText(label, 1f, _pleaFade);
         }
