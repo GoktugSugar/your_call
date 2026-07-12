@@ -25,6 +25,7 @@ namespace YourCall
         private bool _boil = true;
 
         private readonly List<LineRenderer> _strokes = new List<LineRenderer>();
+        private readonly List<Color> _strokeColors = new List<Color>();
         private bool _built;
 
         /// <summary>Build a doodle of <paramref name="kind"/> under a parent, ready to fade in.</summary>
@@ -118,6 +119,19 @@ namespace YourCall
                 case DoodleKind.Robot: return Palette.InkSky;         // cool metal
                 case DoodleKind.Ghost: return Palette.InkPurple;      // spectral
 
+                // Chapter 5 (Who Would Win) fighters: each matchup passes an explicit per-side colour so the
+                // two read apart (see MatchupBeat), so these are just sensible fallbacks.
+                case DoodleKind.Brawler: return Palette.Ink;          // a person; the side data recolours it
+                case DoodleKind.Gorilla: return Palette.Muted;        // a silverback, silver-grey
+                case DoodleKind.GorillaKnife: return Palette.Muted;   // the same silverback (the knife is red)
+                case DoodleKind.Chicken: return Palette.InkOrange;    // a hen
+                case DoodleKind.Lion: return Palette.InkOrange;       // a warm mane
+                case DoodleKind.HouseCat: return Palette.InkSky;      // a cat
+                case DoodleKind.Toddler: return Palette.InkOrange;    // little ones
+                case DoodleKind.Wasp: return Palette.InkOrange;       // yellow-black, warm
+                case DoodleKind.Grizzly: return Palette.InkBrown;     // a brown bear
+                case DoodleKind.Boxer: return Palette.InkRed;         // a fighter, aggressive
+
                 default: return Palette.Ink;
             }
         }
@@ -184,6 +198,18 @@ namespace YourCall
                 case DoodleKind.Car: Car(); break;
                 case DoodleKind.Robot: Robot(); break;
                 case DoodleKind.Ghost: Ghost(); break;
+
+                // Chapter 5 (Who Would Win) fighter doodles.
+                case DoodleKind.Brawler: Brawler(); break;
+                case DoodleKind.Gorilla: Gorilla(false); break;
+                case DoodleKind.GorillaKnife: Gorilla(true); break;
+                case DoodleKind.Chicken: Chicken(); break;
+                case DoodleKind.Lion: Lion(); break;
+                case DoodleKind.HouseCat: HouseCat(); break;
+                case DoodleKind.Toddler: Toddler(); break;
+                case DoodleKind.Wasp: Wasp(); break;
+                case DoodleKind.Grizzly: Grizzly(); break;
+                case DoodleKind.Boxer: Boxer(); break;
                 default: break;
             }
         }
@@ -191,11 +217,17 @@ namespace YourCall
         // ---------- drawing helpers ----------
 
         private LineRenderer Stroke(string name, List<Vector3> pts, float width = 0f)
+            => Stroke(name, pts, width, _color);
+
+        // A stroke in a colour other than the doodle's own (so a single doodle can carry a second colour,
+        // e.g. the red knife on the grey knife-gorilla). Its base colour is tracked so it fades correctly.
+        private LineRenderer Stroke(string name, List<Vector3> pts, float width, Color color)
         {
-            var lr = InkLine.Create(transform, name, _mat, width > 0f ? width : _width, _color, _sorting);
+            var lr = InkLine.Create(transform, name, _mat, width > 0f ? width : _width, color, _sorting);
             InkLine.SetPoints(lr, pts);
             if (_boil) lr.gameObject.AddComponent<LineBoil>().Capture();
             _strokes.Add(lr);
+            _strokeColors.Add(color);
             return lr;
         }
 
@@ -934,12 +966,231 @@ namespace YourCall
             Stroke("Mouth", Circle(new Vector2(0f, -0.06f), 0.06f, 10), _width * 0.8f);
         }
 
+        // ---------- Chapter 5 (Who Would Win) fighter doodles ----------
+        // Polished, stylized, on-model coloured ink fighters, readable at a glance at the side-by-side matchup
+        // size and (for the crowd units) still legible drawn small. Each matchup passes a per-side colour so
+        // the two contrast (see MatchupBeat). The many-of-something sides are drawn as a cluster of small
+        // copies of these units with the count labelled, never the literal count.
+
+        // A person in a fists-up fighting stance: "a man", "you", and the unit for the "N men" crowds.
+        private void Brawler()
+        {
+            Stroke("Head", Circle(new Vector2(0f, 0.6f), 0.17f));
+            Stroke("Body", Line(new Vector2(0f, 0.43f), new Vector2(0f, -0.14f)));
+            Stroke("LegL", Line(new Vector2(0f, -0.14f), new Vector2(-0.24f, -0.64f)));
+            Stroke("LegR", Line(new Vector2(0f, -0.14f), new Vector2(0.24f, -0.64f)));
+            // Arms up in a boxing guard, fists by the face.
+            Stroke("ArmL", Line(new Vector2(0f, 0.34f), new Vector2(-0.28f, 0.26f), new Vector2(-0.22f, 0.5f)));
+            Stroke("ArmR", Line(new Vector2(0f, 0.34f), new Vector2(0.28f, 0.26f), new Vector2(0.22f, 0.5f)));
+            Stroke("FistL", Circle(new Vector2(-0.22f, 0.53f), 0.075f, 12), _width * 0.9f);
+            Stroke("FistR", Circle(new Vector2(0.22f, 0.53f), 0.075f, 12), _width * 0.9f);
+        }
+
+        // A silverback gorilla: a small head with a heavy brow, huge shoulders, long knuckle arms, a barrel
+        // body, short legs. With a knife (the modifier gag) it holds a little RED ink knife in one hand.
+        private void Gorilla(bool knife)
+        {
+            // Barrel torso (a big rounded body).
+            var torso = new List<Vector3>
+            {
+                new Vector3(-0.46f, 0.24f, 0f), new Vector3(-0.44f, -0.18f, 0f), new Vector3(-0.34f, -0.52f, 0f),
+                new Vector3(0f, -0.64f, 0f), new Vector3(0.34f, -0.52f, 0f), new Vector3(0.44f, -0.18f, 0f),
+                new Vector3(0.46f, 0.24f, 0f)
+            };
+            Stroke("Torso", torso);
+            // Shoulders humping up either side of the neck.
+            var shoulders = new List<Vector3>();
+            InkLine.AddArc(shoulders, new Vector2(0f, 0.2f), 0.5f, 20f, 160f, 22);
+            Stroke("Shoulders", shoulders, _width * 0.95f);
+            // Small head with a heavy brow and minimal face.
+            Stroke("Head", Circle(new Vector2(0f, 0.46f), 0.19f));
+            Stroke("Brow", Line(new Vector2(-0.14f, 0.52f), new Vector2(0.14f, 0.52f)), _width * 1.1f);
+            Stroke("EyeL", Circle(new Vector2(-0.07f, 0.45f), 0.028f, 8), _width * 0.9f);
+            Stroke("EyeR", Circle(new Vector2(0.07f, 0.45f), 0.028f, 8), _width * 0.9f);
+            Stroke("Muzzle", Line(new Vector2(-0.08f, 0.34f), new Vector2(0f, 0.3f), new Vector2(0.08f, 0.34f)), _width * 0.8f);
+            // Long arms down the outside to big knuckle fists on the ground.
+            Stroke("ArmL", Line(new Vector2(-0.44f, 0.22f), new Vector2(-0.6f, -0.16f), new Vector2(-0.54f, -0.5f)));
+            Stroke("ArmR", Line(new Vector2(0.44f, 0.22f), new Vector2(0.6f, -0.16f), new Vector2(0.54f, -0.5f)));
+            Stroke("KnuckL", Circle(new Vector2(-0.54f, -0.56f), 0.1f, 12), _width * 0.9f);
+            Stroke("KnuckR", Circle(new Vector2(0.54f, -0.56f), 0.1f, 12), _width * 0.9f);
+            // Short planted feet.
+            Stroke("FootL", Line(new Vector2(-0.22f, -0.62f), new Vector2(-0.05f, -0.62f)), _width * 0.9f);
+            Stroke("FootR", Line(new Vector2(0.05f, -0.62f), new Vector2(0.22f, -0.62f)), _width * 0.9f);
+            if (knife)
+            {
+                // A little red ink knife in the right hand: a blade and a short handle. The whole joke of the
+                // matchup is that the two apes are identical except for this.
+                Stroke("KnifeBlade", Line(new Vector2(0.54f, -0.48f), new Vector2(0.9f, 0.02f), new Vector2(0.82f, -0.06f), new Vector2(0.86f, -0.16f)), _width * 0.95f, Palette.InkRed);
+                Stroke("KnifeGuard", Line(new Vector2(0.47f, -0.52f), new Vector2(0.61f, -0.44f)), _width * 1.0f, Palette.InkRed);
+                Stroke("KnifeGrip", Line(new Vector2(0.5f, -0.58f), new Vector2(0.58f, -0.46f)), _width * 1.3f, Palette.InkRed);
+            }
+        }
+
+        // A plump hen: a round body, a small head with a comb, wattle and beak, a fan tail, two scaly legs.
+        private void Chicken()
+        {
+            var body = new List<Vector3>();
+            for (int i = 0; i <= 30; i++) { float a = i / 30f * Mathf.PI * 2f; body.Add(new Vector3(-0.04f + Mathf.Cos(a) * 0.42f, -0.08f + Mathf.Sin(a) * 0.4f, 0f)); }
+            Stroke("Body", body);
+            Stroke("Head", Circle(new Vector2(0.32f, 0.4f), 0.17f));
+            Stroke("Comb", Line(new Vector2(0.2f, 0.54f), new Vector2(0.24f, 0.66f), new Vector2(0.32f, 0.56f), new Vector2(0.38f, 0.68f), new Vector2(0.44f, 0.56f)), _width * 0.8f);
+            Stroke("Beak", Line(new Vector2(0.47f, 0.42f), new Vector2(0.64f, 0.37f), new Vector2(0.47f, 0.32f)), _width * 0.85f);
+            Stroke("Wattle", Line(new Vector2(0.4f, 0.28f), new Vector2(0.4f, 0.16f)), _width * 0.8f);
+            Stroke("Eye", Circle(new Vector2(0.36f, 0.42f), 0.03f, 8), _width * 0.9f);
+            var wing = new List<Vector3>();
+            InkLine.AddArc(wing, new Vector2(-0.05f, 0.0f), 0.3f, 190f, 350f, 16);
+            Stroke("Wing", wing, _width * 0.8f);
+            Stroke("Tail", Line(new Vector2(-0.42f, 0.08f), new Vector2(-0.66f, 0.42f)), _width * 0.9f);
+            Stroke("Tail2", Line(new Vector2(-0.42f, -0.02f), new Vector2(-0.58f, 0.3f)), _width * 0.8f);
+            Stroke("LegL", Line(new Vector2(-0.08f, -0.44f), new Vector2(-0.08f, -0.66f)), _width * 0.75f);
+            Stroke("LegR", Line(new Vector2(0.12f, -0.44f), new Vector2(0.12f, -0.66f)), _width * 0.75f);
+            Stroke("FootL", Line(new Vector2(-0.18f, -0.66f), new Vector2(-0.08f, -0.66f), new Vector2(0.0f, -0.66f)), _width * 0.6f);
+            Stroke("FootR", Line(new Vector2(0.02f, -0.66f), new Vector2(0.12f, -0.66f), new Vector2(0.22f, -0.66f)), _width * 0.6f);
+        }
+
+        // A lion: a big spiky mane ring around a broad head, a minimal face, two front paws and a tufted tail.
+        private void Lion()
+        {
+            Vector2 c = new Vector2(0f, 0.22f);
+            var mane = new List<Vector3>();
+            int pts = 24;
+            for (int i = 0; i <= pts; i++)
+            {
+                float a = i / (float)pts * Mathf.PI * 2f;
+                float r = (i % 2 == 0) ? 0.6f : 0.44f;
+                mane.Add(new Vector3(c.x + Mathf.Cos(a) * r, c.y + Mathf.Sin(a) * r, 0f));
+            }
+            Stroke("Mane", mane);
+            Stroke("Head", Circle(c, 0.34f));
+            Stroke("EyeL", Circle(new Vector2(-0.12f, 0.28f), 0.035f, 8), _width * 0.9f);
+            Stroke("EyeR", Circle(new Vector2(0.12f, 0.28f), 0.035f, 8), _width * 0.9f);
+            Stroke("Nose", Line(new Vector2(-0.06f, 0.14f), new Vector2(0.06f, 0.14f), new Vector2(0f, 0.06f), new Vector2(-0.06f, 0.14f)), _width * 0.8f);
+            Stroke("Muzzle", Line(new Vector2(0f, 0.06f), new Vector2(0f, -0.02f)), _width * 0.7f);
+            Stroke("MouthL", Line(new Vector2(0f, -0.02f), new Vector2(-0.1f, -0.08f)), _width * 0.7f);
+            Stroke("MouthR", Line(new Vector2(0f, -0.02f), new Vector2(0.1f, -0.08f)), _width * 0.7f);
+            // A hint of body below the mane: two front paws and a tufted tail.
+            Stroke("PawL", Line(new Vector2(-0.2f, -0.5f), new Vector2(-0.2f, -0.66f)), _width * 0.9f);
+            Stroke("PawR", Line(new Vector2(0.1f, -0.5f), new Vector2(0.1f, -0.66f)), _width * 0.9f);
+            Stroke("PawBase", Line(new Vector2(-0.28f, -0.66f), new Vector2(0.18f, -0.66f)), _width * 0.8f);
+            Stroke("Tail", Line(new Vector2(0.5f, -0.5f), new Vector2(0.7f, -0.32f), new Vector2(0.64f, -0.08f)), _width * 0.85f);
+            Stroke("Tuft", Line(new Vector2(0.64f, -0.08f), new Vector2(0.56f, 0.04f), new Vector2(0.72f, 0.04f), new Vector2(0.64f, -0.08f)), _width * 0.8f);
+        }
+
+        // A sitting house cat: a rounded seated body, a head with pointy ears, a curled tail, front paws.
+        private void HouseCat()
+        {
+            // Seated body: a teardrop widening to a base.
+            var body = new List<Vector3>
+            {
+                new Vector3(-0.02f, 0.5f, 0f), new Vector3(-0.34f, 0.2f, 0f), new Vector3(-0.4f, -0.4f, 0f),
+                new Vector3(-0.3f, -0.6f, 0f), new Vector3(0.3f, -0.6f, 0f), new Vector3(0.4f, -0.4f, 0f),
+                new Vector3(0.34f, 0.2f, 0f), new Vector3(0.02f, 0.5f, 0f)
+            };
+            Stroke("Body", body);
+            Stroke("Head", Circle(new Vector2(0f, 0.44f), 0.22f));
+            Stroke("EarL", Line(new Vector2(-0.18f, 0.56f), new Vector2(-0.26f, 0.8f), new Vector2(-0.02f, 0.62f)), _width * 0.9f);
+            Stroke("EarR", Line(new Vector2(0.18f, 0.56f), new Vector2(0.26f, 0.8f), new Vector2(0.02f, 0.62f)), _width * 0.9f);
+            Stroke("EyeL", Circle(new Vector2(-0.09f, 0.46f), 0.03f, 8), _width * 0.9f);
+            Stroke("EyeR", Circle(new Vector2(0.09f, 0.46f), 0.03f, 8), _width * 0.9f);
+            Stroke("Nose", Line(new Vector2(-0.03f, 0.37f), new Vector2(0.03f, 0.37f), new Vector2(0f, 0.32f), new Vector2(-0.03f, 0.37f)), _width * 0.7f);
+            Stroke("WhL", Line(new Vector2(-0.12f, 0.38f), new Vector2(-0.4f, 0.4f)), _width * 0.5f);
+            Stroke("WhR", Line(new Vector2(0.12f, 0.38f), new Vector2(0.4f, 0.4f)), _width * 0.5f);
+            // A curled tail wrapping up the right side.
+            Stroke("Tail", Line(new Vector2(0.3f, -0.56f), new Vector2(0.56f, -0.4f), new Vector2(0.56f, -0.02f), new Vector2(0.4f, 0.1f)), _width * 0.9f);
+            // Two front paws at the base.
+            Stroke("PawL", Circle(new Vector2(-0.14f, -0.58f), 0.07f, 10), _width * 0.7f);
+            Stroke("PawR", Circle(new Vector2(0.14f, -0.58f), 0.07f, 10), _width * 0.7f);
+        }
+
+        // A toddler: an oversized head with a hair curl, a small body, stubby arms and legs.
+        private void Toddler()
+        {
+            Stroke("Head", Circle(new Vector2(0f, 0.36f), 0.32f));
+            Stroke("Curl", Line(new Vector2(0.02f, 0.68f), new Vector2(0.1f, 0.8f), new Vector2(-0.04f, 0.82f)), _width * 0.75f);
+            Stroke("EyeL", Circle(new Vector2(-0.1f, 0.38f), 0.035f, 8), _width * 0.9f);
+            Stroke("EyeR", Circle(new Vector2(0.1f, 0.38f), 0.035f, 8), _width * 0.9f);
+            var smile = new List<Vector3>(); InkLine.AddArc(smile, new Vector2(0f, 0.3f), 0.1f, 200f, 340f, 10); Stroke("Smile", smile, _width * 0.75f);
+            Stroke("Body", Line(new Vector2(0f, 0.04f), new Vector2(0f, -0.22f)));
+            Stroke("ArmL", Line(new Vector2(0f, -0.02f), new Vector2(-0.22f, 0.06f)), _width * 0.85f);
+            Stroke("ArmR", Line(new Vector2(0f, -0.02f), new Vector2(0.22f, 0.06f)), _width * 0.85f);
+            Stroke("LegL", Line(new Vector2(0f, -0.22f), new Vector2(-0.15f, -0.52f)), _width * 0.9f);
+            Stroke("LegR", Line(new Vector2(0f, -0.22f), new Vector2(0.15f, -0.52f)), _width * 0.9f);
+        }
+
+        // A wasp: a striped pointed abdomen, a thorax and head with antennae, two wings, a stinger.
+        private void Wasp()
+        {
+            var abdomen = new List<Vector3>
+            {
+                new Vector3(0f, 0.16f, 0f), new Vector3(0.2f, 0.06f, 0f), new Vector3(0.16f, -0.28f, 0f),
+                new Vector3(0f, -0.52f, 0f), new Vector3(-0.16f, -0.28f, 0f), new Vector3(-0.2f, 0.06f, 0f),
+                new Vector3(0f, 0.16f, 0f)
+            };
+            Stroke("Abdomen", abdomen);
+            Stroke("Stripe1", Line(new Vector2(-0.17f, -0.04f), new Vector2(0.17f, -0.04f)), _width * 0.75f);
+            Stroke("Stripe2", Line(new Vector2(-0.14f, -0.2f), new Vector2(0.14f, -0.2f)), _width * 0.75f);
+            Stroke("Thorax", Circle(new Vector2(0f, 0.26f), 0.13f, 14));
+            Stroke("Head", Circle(new Vector2(0f, 0.46f), 0.1f, 12));
+            Stroke("AntL", Line(new Vector2(-0.05f, 0.54f), new Vector2(-0.14f, 0.68f)), _width * 0.6f);
+            Stroke("AntR", Line(new Vector2(0.05f, 0.54f), new Vector2(0.14f, 0.68f)), _width * 0.6f);
+            var wingL = new List<Vector3>(); InkLine.AddArc(wingL, new Vector2(-0.28f, 0.34f), 0.22f, 300f, 120f, 14); Stroke("WingL", wingL, _width * 0.7f);
+            var wingR = new List<Vector3>(); InkLine.AddArc(wingR, new Vector2(0.28f, 0.34f), 0.22f, 60f, 240f, 14); Stroke("WingR", wingR, _width * 0.7f);
+            Stroke("Stinger", Line(new Vector2(0f, -0.52f), new Vector2(0f, -0.66f)), _width * 0.8f);
+        }
+
+        // A reared grizzly bear: a shoulder hump, a big head with a snout, raised clawed arms, planted legs.
+        private void Grizzly()
+        {
+            var torso = new List<Vector3>
+            {
+                new Vector3(-0.4f, 0.2f, 0f), new Vector3(-0.42f, -0.24f, 0f), new Vector3(-0.3f, -0.54f, 0f),
+                new Vector3(0f, -0.64f, 0f), new Vector3(0.3f, -0.54f, 0f), new Vector3(0.42f, -0.24f, 0f),
+                new Vector3(0.4f, 0.2f, 0f)
+            };
+            Stroke("Torso", torso);
+            // A shoulder hump behind the neck (the grizzly cue), and the head.
+            var hump = new List<Vector3>();
+            InkLine.AddArc(hump, new Vector2(-0.18f, 0.24f), 0.28f, 30f, 160f, 16);
+            Stroke("Hump", hump, _width * 0.9f);
+            Stroke("Head", Circle(new Vector2(0.08f, 0.42f), 0.22f));
+            Stroke("EarL", Circle(new Vector2(-0.06f, 0.6f), 0.07f, 10), _width * 0.85f);
+            Stroke("EarR", Circle(new Vector2(0.22f, 0.6f), 0.07f, 10), _width * 0.85f);
+            Stroke("Snout", Line(new Vector2(0.24f, 0.42f), new Vector2(0.42f, 0.38f), new Vector2(0.4f, 0.28f), new Vector2(0.24f, 0.3f)), _width * 0.85f);
+            Stroke("Nose", Circle(new Vector2(0.4f, 0.36f), 0.035f, 8), _width * 1.1f);
+            Stroke("Eye", Circle(new Vector2(0.14f, 0.46f), 0.03f, 8), _width * 0.9f);
+            // Raised clawed arms, reared and menacing.
+            Stroke("ArmL", Line(new Vector2(-0.36f, 0.14f), new Vector2(-0.56f, 0.34f), new Vector2(-0.52f, 0.52f)));
+            Stroke("ArmR", Line(new Vector2(0.34f, 0.16f), new Vector2(0.5f, 0.36f), new Vector2(0.46f, 0.54f)));
+            Stroke("ClawL", Line(new Vector2(-0.58f, 0.5f), new Vector2(-0.62f, 0.6f)), _width * 0.6f);
+            Stroke("ClawL2", Line(new Vector2(-0.5f, 0.54f), new Vector2(-0.52f, 0.64f)), _width * 0.6f);
+            Stroke("ClawR", Line(new Vector2(0.44f, 0.56f), new Vector2(0.46f, 0.66f)), _width * 0.6f);
+            Stroke("ClawR2", Line(new Vector2(0.52f, 0.52f), new Vector2(0.56f, 0.62f)), _width * 0.6f);
+            Stroke("FootL", Line(new Vector2(-0.28f, -0.62f), new Vector2(-0.06f, -0.62f)), _width * 0.9f);
+            Stroke("FootR", Line(new Vector2(0.06f, -0.62f), new Vector2(0.28f, -0.62f)), _width * 0.9f);
+        }
+
+        // A professional fighter: a staggered stance with big round boxing gloves up in a guard, one jabbing.
+        private void Boxer()
+        {
+            Stroke("Head", Circle(new Vector2(0f, 0.58f), 0.16f));
+            Stroke("Body", Line(new Vector2(0f, 0.42f), new Vector2(0f, -0.12f)));
+            Stroke("LegL", Line(new Vector2(0f, -0.12f), new Vector2(-0.28f, -0.62f)));
+            Stroke("LegR", Line(new Vector2(0f, -0.12f), new Vector2(0.22f, -0.6f)));
+            // Rear guard glove up by the chin; lead glove out in a jab.
+            Stroke("ArmR", Line(new Vector2(0f, 0.32f), new Vector2(0.2f, 0.28f), new Vector2(0.28f, 0.42f)));
+            Stroke("GloveR", Circle(new Vector2(0.3f, 0.46f), 0.13f, 16));
+            Stroke("ArmL", Line(new Vector2(0f, 0.3f), new Vector2(-0.3f, 0.24f), new Vector2(-0.46f, 0.16f)));
+            Stroke("GloveL", Circle(new Vector2(-0.52f, 0.12f), 0.14f, 16));
+            Stroke("GloveLWrap", Line(new Vector2(-0.42f, 0.02f), new Vector2(-0.4f, 0.22f)), _width * 0.7f);
+        }
+
         // ---------- fade ----------
 
         public void SetAlpha(float a)
         {
             for (int i = 0; i < _strokes.Count; i++)
-                if (_strokes[i] != null) InkLine.SetAlpha(_strokes[i], _color, Mathf.Clamp01(a));
+                if (_strokes[i] != null)
+                    InkLine.SetAlpha(_strokes[i], i < _strokeColors.Count ? _strokeColors[i] : _color, Mathf.Clamp01(a));
         }
 
         public IEnumerator FadeIn(float dur) { yield return Fade(0f, 1f, dur); }

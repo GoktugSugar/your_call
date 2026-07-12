@@ -52,6 +52,7 @@ namespace YourCall.Dev
             new ChapterEntry("Chapter 2: The Buttons (blue/red, offer, timer)", "ChapterTwo"),
             new ChapterEntry("Chapter 3: The Money (finite pot, priceable things, cigarette auction)", "ChapterThree"),
             new ChapterEntry("Chapter 4: The Gun (bear opener + aim-and-fire beats)", "ChapterFour"),
+            new ChapterEntry("Chapter 5: Who Would Win (ten barroom matchups)", "ChapterFive"),
             new ChapterEntry("Standalone: Trolley", "Dilemma"),
             new ChapterEntry("Standalone: Blue/Red Button", "BlueRedButton"),
             new ChapterEntry("Standalone: The Last Bear (+ shoot the imp)", "BearDilemma"),

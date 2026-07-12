@@ -879,7 +879,7 @@ MonoBehaviour:
   - {fileID: 5100000000000000172}
   _fadeToBlackAtEnd: 1
   _endFade: 1.6
-  _nextScene: 
+  _nextScene: ChapterFive
   _logBeats: 0
 --- !u!4 &1626293926
 Transform:

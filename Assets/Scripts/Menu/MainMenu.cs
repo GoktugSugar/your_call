@@ -172,6 +172,7 @@ namespace YourCall
             var s = SaveService.Instance != null ? SaveService.Instance : SaveService.Ensure();
             if (s != null) { s.Delete(); s.SetRealRun(true); }
             if (Profile.Instance != null) Profile.Instance.ResetState();
+            if (KillLog.Instance != null) KillLog.Instance.Clear();   // a fresh run's kill tally starts empty (Chapter 5 finale)
             SceneManager.LoadScene(_newGameScene);
         }
 

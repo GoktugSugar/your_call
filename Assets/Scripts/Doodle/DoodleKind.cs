@@ -66,6 +66,21 @@ namespace YourCall
         House,          // a house that walks (walls, roof, chimney, little legs), orange
         Car,            // a car that swims (a side-profile car with two wheels), blue
         Robot,          // a robot butler (a boxy figure with an antenna), sky
-        Ghost           // a ghost flatmate (a sheet ghost with eyes), purple
+        Ghost,          // a ghost flatmate (a sheet ghost with eyes), purple
+
+        // ---- Chapter 5 (Who Would Win): the polished coloured fighter doodles ----
+        // Each is a clean, stylized, on-model coloured ink doodle readable at a glance at the side-by-side
+        // matchup size. Where a matchup has many of something, the beat draws a cluster of small copies of
+        // the unit doodle (a stylised crowd with the count labelled), not the literal count (see MatchupBeat).
+        Brawler,        // a person in a fists-up fighting stance (a "man", the crowd unit for "100 men", and "you")
+        Gorilla,        // a silverback gorilla (hunched shoulders, long knuckle arms, small head), grey
+        GorillaKnife,   // the same gorilla, holding a little red ink knife (the modifier gag)
+        Chicken,        // a plump hen (body, comb, wattle, beak, tail), the unit for "100 chickens"
+        Lion,           // a lion with a full mane (the apex), warm
+        HouseCat,       // a sitting house cat (full body, pointy ears, curled tail), the unit for "1000 cats"
+        Toddler,        // a tiny stubby toddler (big head, little body), the unit for "100 toddlers"
+        Wasp,           // a wasp (striped abdomen, wings, stinger), the unit for the swarm
+        Grizzly,        // a reared grizzly bear (hump, snout, claws) as a fierce fighter, brown
+        Boxer           // a professional fighter (boxing gloves, guard stance), red
     }
 }

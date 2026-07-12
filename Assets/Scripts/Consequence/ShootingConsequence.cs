@@ -167,8 +167,16 @@ namespace YourCall
 
             // The death is only the fold-and-fall, no strike lines: the man, or the bear, folds
             // and fades as one. The extinction weight lives in the imp's line.
-            if (outcome.Strikes(_manParty) && _man != null) _man.Strike(_foldDuration);
-            if (outcome.Strikes(_bearParty) && _bear != null) _bear.Strike(_foldDuration);
+            if (outcome.Strikes(_manParty) && _man != null)
+            {
+                _man.Strike(_foldDuration);
+                KillLog.Ensure().Record("a man", DoodleKind.Brawler, 1);       // Chapter 5's finale reads this
+            }
+            if (outcome.Strikes(_bearParty) && _bear != null)
+            {
+                _bear.Strike(_foldDuration);
+                KillLog.Ensure().Record("the last bear", DoodleKind.Grizzly, 1);
+            }
 
             yield return new WaitForSeconds(_foldDuration + _foldSettle);
         }
