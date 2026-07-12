@@ -6,15 +6,19 @@ namespace YourCall
 {
     /// <summary>
     /// The Charging Thing (Chapter 4, beat 4, the gag, the walking button returns). Something rushes at you,
-    /// fast, from the side; the imp warns you cannot tell yet if it is running TO you for help or AT you to
-    /// hurt you, and you will not know until it reaches you. The player can fire now (on the maybe) or wait.
+    /// fast, from deep ahead: it starts small and far off at the horizon and grows as it charges TOWARD the
+    /// viewer (a first person, straight-at-the-camera approach), shown only as an ink QUESTION MARK so you
+    /// cannot tell what it is until it reaches you. The imp warns you cannot tell yet if it is running TO you
+    /// for help or AT you to hurt you. The player can fire now (on the maybe) or wait, over a real window as
+    /// it closes the distance.
     ///
-    /// The gag: whatever the player does, it is revealed to be the indestructible WALKING BUTTON from the
-    /// earlier chapters, charging in. It survives either way. If the player shoots, the bullet does nothing
-    /// to it (it comes alive, offended, yelps, and carries on); if they wait, it just arrives harmlessly and
-    /// says hello. The imp reacts (delighted, or unimpressed you shot the button again), choice independent.
-    /// No real death; the pre-reveal is framed as genuinely tense so the reveal lands as comedy. Reuses the
-    /// WalkingButton figure, its come-alive and walk, and its little floating voice. Stats only.
+    /// The gag: whatever the player does, it is revealed at arrival to be the indestructible WALKING BUTTON
+    /// from the earlier chapters. It survives either way. If the player shoots, the bullet does nothing to it
+    /// (it comes alive, offended, yelps, and carries on); if they wait, it just arrives harmlessly and says
+    /// hello. The imp reacts (delighted, or unimpressed you shot the button again), choice independent. No
+    /// real death; the pre-reveal is genuinely tense so the reveal lands as comedy. Only the presentation
+    /// (a question mark, a first person approach, a longer run) changed; the outcome and gag are the same.
+    /// Reuses the WalkingButton figure, its come-alive and walk, and its little floating voice. Stats only.
     /// </summary>
     public sealed class ChargingButtonBeat : GunBeat
     {
@@ -22,20 +26,37 @@ namespace YourCall
         [Tooltip("The walking-button figure prefab (the same indestructible gag figure).")]
         [SerializeField] private WalkingButton _buttonPrefab;
 
-        [Header("The charge")]
-        [SerializeField] private float _startX = 5.5f;
-        [SerializeField] private float _stopX = 1.2f;
-        [SerializeField] private float _y = -0.3f;
-        [SerializeField] private float _buttonScale = 1.1f;
-        [SerializeField] private float _chargeSpeed = 6f;
-        [SerializeField] private Vector2 _boxSize = new Vector2(1.5f, 1.5f);
+        [Header("The approach (first person: deep and small, rushing toward the viewer)")]
+        [Tooltip("Where the shape starts: far off, near the centre/horizon, small.")]
+        [SerializeField] private Vector2 _farPos = new Vector2(0f, 0.35f);
+        [Tooltip("Where it arrives: near the viewer, at eye level, where the button is revealed.")]
+        [SerializeField] private Vector2 _nearPos = new Vector2(0f, -0.3f);
+        [SerializeField] private float _farScale = 0.15f;
+        [Tooltip("The question mark's scale at arrival (large, in your face).")]
+        [SerializeField] private float _nearScale = 2.0f;
+        [Tooltip("The revealed walking button's scale (a touch smaller than the looming shape, so the reveal deflates: oh, it is just a little button).")]
+        [SerializeField] private float _buttonScale = 1.5f;
+        [Tooltip("The whole run, in seconds: a longer window so the player has real time to decide to fire or wait as it closes.")]
+        [SerializeField] private float _chargeDuration = 4.5f;
+        [Tooltip("Perspective rush: the growth accelerates as it nears (an ease-in exponent), so it stays a distant speck a while then rushes the last stretch, like something bearing down on the camera.")]
+        [SerializeField] private float _rushPower = 2.3f;
+        [Tooltip("How quickly it finishes closing the last of the distance once the player has decided (fired or waited) early.")]
+        [SerializeField] private float _arriveTime = 0.55f;
+
+        [Header("The mystery shape (a hand-drawn ink question mark)")]
+        [SerializeField] private Color _questionColor = Palette.Ink;
+        [SerializeField] private float _questionWidth = 0.06f;
+        [SerializeField] private int _questionSorting = 15;
+        [SerializeField] private float _questionFadeIn = 0.35f;
+        [Tooltip("The aim box at scale 1; it tracks the shape and scales with it, so a distant speck is a small, hard target and a near one is easy.")]
+        [SerializeField] private Vector2 _boxBaseSize = new Vector2(1.1f, 1.3f);
         [SerializeField] private float _keepoutPadding = 0.45f;
 
         [Header("Copy (the imp; no dashes)")]
         [SerializeField, TextArea(2, 5)] private string[] _promptLines = new[]
         {
-            "Something is coming. Fast. From the right, you feel it before you see it.",
-            "And here is the thing, I genuinely cannot tell you whether it is running [amber]to[/amber] you or [amber]at[/amber] you. Help, or harm. You will not know until it arrives, and by then it may be too late to do anything but flinch. So. Shoot it now, on the maybe, or hold your nerve and wait. Quickly.",
+            "Something is coming. Far off, dead ahead, and getting closer. I can see the shape of it out there and I cannot tell you what it is. Neither can you.",
+            "And here is the thing, I genuinely cannot tell whether it is coming [amber]to[/amber] you or [amber]at[/amber] you. Help, or harm. And it is not slowing down. You will not know what it is until it reaches you, and by then it may be too late to do anything but flinch. So. Shoot it now, on the maybe, while it is still a shape in the distance, or hold your nerve and let it come. Quickly.",
         };
         [Tooltip("The button's yelp when shot (its own floating voice). Put-out, no dashes.")]
         [SerializeField, TextArea(1, 2)] private string _buttonYelp = "OW. Again? You SHOT me? Again?!";
@@ -64,6 +85,8 @@ namespace YourCall
         [SerializeField] private string _waitStatLabel = "held their nerve";
 
         [Header("Timing")]
+        [Tooltip("A held beat at arrival on the plain button (the mystery resolved) before it comes alive.")]
+        [SerializeField] private float _revealHold = 0.45f;
         [SerializeField] private float _comeAliveDuration = 0.45f;
         [SerializeField] private float _voiceFade = 0.3f;
 
@@ -75,51 +98,59 @@ namespace YourCall
             if (_buttonPrefab == null) { Debug.LogError("[ChargingButtonBeat] '" + Note + "' is missing its walking-button prefab."); yield break; }
             _cam = Cam(ctx);
 
-            var button = Instantiate(_buttonPrefab, transform);
-            button.name = "ChargingButton";
-            button.transform.localPosition = new Vector3(_startX, _y, 0f);
-            button.transform.localScale = new Vector3(_buttonScale, _buttonScale, 1f);
-            var keepout = button.gameObject.AddComponent<ScreenKeepout>();
-            keepout.UseRendererBounds(_keepoutPadding);
+            // The mystery shape: a question mark, far off and small, dead ahead. The imp keeps clear of it.
+            var q = InkDoodle.Create(transform, "ChargingQ", new Vector3(_farPos.x, _farPos.y, 0f), _farScale,
+                DoodleKind.QuestionMark, _kit.InkMaterial, _questionColor, _questionWidth, _questionSorting);
+            var qKeepout = q.gameObject.AddComponent<ScreenKeepout>();
+            qKeepout.UseRendererBounds(_keepoutPadding);
+            yield return q.FadeIn(_questionFadeIn);
 
             yield return Lines(ctx, _promptLines);
 
+            // The rush: it charges toward the viewer, growing, over the longer duration. Aim armed the whole time.
             var aim = NewAimField();
             aim.Arm(true);
             ArmChoices(ctx, _fireLabel, _waitLabel);
 
-            float x = _startX;
-            bool fired = false, done = false;
-            while (!done)
+            float t = 0f;
+            bool fired = false, decided = false;
+            while (t < _chargeDuration && !decided)
             {
-                x = Mathf.MoveTowards(x, _stopX, _chargeSpeed * Time.deltaTime);
-                button.transform.localPosition = new Vector3(x, _y, 0f);
-                aim.SetTargets(Boxes(new AimField.Box(new Vector2(button.transform.position.x, button.transform.position.y + 0.1f), _boxSize)));
+                t += Time.deltaTime;
+                AdvanceShape(q, t / _chargeDuration);
+                aim.SetTargets(Boxes(new AimField.Box((Vector2)q.transform.position, _boxBaseSize * q.transform.localScale.x)));
                 aim.Tick();
 
-                if (aim.TryTakeFire(out int t) && t == 0) { fired = true; done = true; }
-                else if (PickedChoice == 0) { fired = true; done = true; }
-                else if (PickedChoice == 1) done = true;
-                else if (x <= _stopX + 0.0001f) done = true;
-                if (!done) yield return null;
+                if (aim.TryTakeFire(out int hit) && hit == 0) { fired = true; decided = true; }
+                else if (PickedChoice == 0) { fired = true; decided = true; }
+                else if (PickedChoice == 1) decided = true;
+                if (!decided) yield return null;
             }
             aim.Arm(false);
             DisarmChoices(ctx);
 
-            if (fired) Fire();
-            else
-            {
-                // Finish arriving harmlessly.
-                while (x > _stopX + 0.0001f)
-                {
-                    x = Mathf.MoveTowards(x, _stopX, _chargeSpeed * Time.deltaTime);
-                    button.transform.localPosition = new Vector3(x, _y, 0f);
-                    yield return null;
-                }
-            }
+            if (fired) { Fire(); yield return new WaitForSeconds(_resolveBeat); }
 
-            // The reveal: the hurtling thing sprouts limbs and a put-out face. It is, of course, the button.
-            if (fired) yield return new WaitForSeconds(_resolveBeat);
+            // Finish closing the last of the distance (instant if it already arrived on its own).
+            float startK = Mathf.Clamp01(t / _chargeDuration);
+            float ft = 0f;
+            while (ft < _arriveTime)
+            {
+                ft += Time.deltaTime;
+                AdvanceShape(q, Mathf.Lerp(startK, 1f, ft / _arriveTime));
+                yield return null;
+            }
+            AdvanceShape(q, 1f);
+
+            // The reveal: the mystery resolves into the button. It was the button all along.
+            var button = Instantiate(_buttonPrefab, transform);
+            button.name = "ChargingButton";
+            button.transform.localPosition = new Vector3(_nearPos.x, _nearPos.y, 0f);
+            button.transform.localScale = new Vector3(_buttonScale, _buttonScale, 1f);
+            var bKeepout = button.gameObject.AddComponent<ScreenKeepout>();
+            bKeepout.UseRendererBounds(_keepoutPadding);
+            if (q != null) Destroy(q.gameObject);
+            yield return new WaitForSeconds(_revealHold);   // "oh, it is a button" reads before it comes alive
             yield return button.ComeAlive(_comeAliveDuration);
 
             var voice = NewFloatingText("ButtonVoice");
@@ -141,6 +172,17 @@ namespace YourCall
 
             if (voice != null) Destroy(voice.gameObject);
             if (button != null) Destroy(button.gameObject);
+        }
+
+        // Place and size the shape for a normalized progress k, with the perspective rush (accelerating growth).
+        private void AdvanceShape(InkDoodle q, float k)
+        {
+            if (q == null) return;
+            float ek = Mathf.Pow(Mathf.Clamp01(k), Mathf.Max(1f, _rushPower));
+            Vector2 pos = Vector2.Lerp(_farPos, _nearPos, ek);
+            float s = Mathf.Lerp(_farScale, _nearScale, ek);
+            q.transform.localPosition = new Vector3(pos.x, pos.y, 0f);
+            q.transform.localScale = new Vector3(s, s, 1f);
         }
 
         private IEnumerator ShowVoice(TextMeshPro voice, WalkingButton button, string line)

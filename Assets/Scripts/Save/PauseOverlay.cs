@@ -151,6 +151,7 @@ namespace YourCall
         private void QuitToMenu()
         {
             if (_player != null) _player.SaveNow();                 // best-effort: keep the latest progress
+            if (_player != null) _player.HideSharedUiNow();         // tear down any beat's stats/choices so nothing leaks onto the menu
             if (SaveService.Instance != null) SaveService.Instance.SetRealRun(false);
             Unfreeze();
             _open = false;

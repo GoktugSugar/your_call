@@ -632,6 +632,99 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1453419744743286158, guid: 5a75d694dcb1e1047ae0a110e511d1d2, type: 3}
   m_PrefabInstance: {fileID: 780289903}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &976081930
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 976081931}
+  - component: {fileID: 976081932}
+  m_Layer: 0
+  m_Name: 12_FutureBaby
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &976081931
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976081930}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1207684725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &976081932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976081930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e20846da923ea541a1b0cae9e789d06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YourCall.FutureBabyBeat
+  _note: 12_FutureBaby
+  _kit: {fileID: 5000000000000000012}
+  _advanceLockout: 0.3
+  _reactHold: 1
+  _presentHold: 0.4
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+  _resolveBeat: 0.35
+  _foldDuration: 0.7
+  _foldSettle: 0.4
+  _pleaFade: 0.35
+  _pleaSize: 2.3
+  _pleaClearance: 0.7
+  _pleaSorting: 24
+  _babyPrefab: {fileID: 1365361281486309376, guid: b49f5f40e55d6634e9c853d6a24d36a0, type: 3}
+  _feet: {x: 0, y: -0.5}
+  _scale: 2
+  _boxCenter: {x: 0, y: 0.2}
+  _boxSize: {x: 1.7, y: 1.7}
+  _promptLines:
+  - A baby. Ordinary enough. Bit of a funny little square mustache, fond of painting,
+    by all accounts. Harmless as anything. For now.
+  - Here is what I know that you do not. This one grows up. And when it does, it
+    is responsible for a genuinely staggering amount of suffering, the kind that
+    gets its own chapters in the books, the kind people are still shuddering about
+    long after. All of it still ahead. None of it done yet. So I am handing you the
+    gun early. Put it down now, before any of it, or let it grow up and find out.
+    Would you [amber]kill a baby[/amber] to stop what the baby becomes. Aim, or do
+    not.
+  _shootReact: You did it. You shot a baby. A real, present, gurgling baby that had,
+    to this exact second, done nothing but exist and enjoy the colour of things,
+    on my word alone about a future neither of us can prove. Maybe you saved multitudes.
+    Maybe I made the whole thing up and you just shot a baby. You will never know
+    which, and you did it anyway. Decisive. That is one word for it.
+  _spareReact: You let it live. Could not put a bullet in something that had not
+    done anything yet, whatever it was going to do. I understand. The little hands.
+    The paintbrush. So it grows up. And everything I told you it would do, it does,
+    all of it, every last horror, and every one of them traces back to this moment,
+    when you had it in your sights and chose the clean conscience instead. You kept
+    your hands clean. History will not agree they were.
+  _shootLabel: Shoot
+  _spareLabel: Let it live
+  _shootSeed: 52
+  _spareSeed: 48
+  _statsHeading: how others chose
+  _shootStatLabel: killed the baby
+  _spareStatLabel: let it live
+  _endsNudge: 0.35
+  _spareFade: 0.9
 --- !u!1 &1207684724
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,6 +765,7 @@ Transform:
   - {fileID: 5100000000000000091}
   - {fileID: 5100000000000000101}
   - {fileID: 5100000000000000111}
+  - {fileID: 976081931}
   - {fileID: 5100000000000000121}
   - {fileID: 5100000000000000131}
   - {fileID: 5100000000000000141}
@@ -776,6 +870,7 @@ MonoBehaviour:
   - {fileID: 5100000000000000092}
   - {fileID: 5100000000000000102}
   - {fileID: 5100000000000000112}
+  - {fileID: 976081932}
   - {fileID: 5100000000000000122}
   - {fileID: 5100000000000000132}
   - {fileID: 5100000000000000142}
@@ -842,6 +937,7 @@ MonoBehaviour:
   _barMaxLength: 4
   _barStartX: -2.1
   _rowSpacing: 1.25
+  _maxContentHalfHeight: 2.3
   _sortingScrim: 30
   _sortingContent: 32
   _headingSize: 3.2
@@ -1656,6 +1752,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.ImpAppearBeat
   _note: 02_ImpAppear
+  _preDelay: 0.3
+  _popDuration: 0.55
+  _postDelay: 0.35
 --- !u!1 &5100000000000000030
 GameObject:
   m_ObjectHideFlags: 0
@@ -1702,9 +1801,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.ImpLineBeat
   _note: 03_ImpIntro
   _lines:
-  - 'New room. And a new tool, which you will notice is a good deal heavier than a lever.'
-  - 'The trolley let you kill by standing perfectly still. The buttons let you kill by proxy, at a distance, with someone else''s thumb somewhere in the story. This does neither of those little mercies for you.'
-  - 'This is a gun. It is your hand, your eye, your finger, your call, every single time. There are no clean hands in this room. Let us find out who you are when there is no one left to blame but the one holding it.'
+  - New room. And a new tool, which you will notice is a good deal heavier than a
+    lever.
+  - The trolley let you kill by standing perfectly still. The buttons let you kill
+    by proxy, at a distance, with someone else's thumb somewhere in the story. This
+    does neither of those little mercies for you.
+  - This is a gun. It is your hand, your eye, your finger, your call, every single
+    time. There are no clean hands in this room. Let us find out who you are when
+    there is no one left to blame but the one holding it.
   _clickLockout: 0.25
   _clearAtEnd: 0
 --- !u!1 &5100000000000000040
@@ -1814,6 +1918,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.MercyShotBeat
   _note: 05_MercyShot
   _kit: {fileID: 5000000000000000012}
+  _advanceLockout: 0.3
+  _reactHold: 1
+  _presentHold: 0.4
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+  _resolveBeat: 0.35
+  _foldDuration: 0.7
+  _foldSettle: 0.4
+  _pleaFade: 0.35
+  _pleaSize: 2.3
+  _pleaClearance: 0.7
+  _pleaSorting: 24
+  _feet: {x: 0, y: -0.6}
+  _scale: 1.45
+  _boxCenter: {x: 0, y: 0.35}
+  _boxSize: {x: 1.9, y: 2.1}
+  _promptLines:
+  - This one is not going to make it. It is going slowly, and it hurts, and there
+    is no version of the next hour that is not worse than the last.
+  - You have [amber]one[/amber] bullet and a very simple choice. End it now, quick
+    and clean, or lower the gun and let it finish on its own time. Their wish against
+    your nerve. Aim, or do not.
+  _plea: Please. I am begging you. End it.
+  _shootReact: And you did it. One clean shot, mercy delivered at the barrel of a
+    gun. Tell yourself it was for them. It photographs better than the truth, which
+    is that you could not bear to watch.
+  _lowerReact: You lowered it. So it went the long way, every second of it, while
+    you stood there keeping your hands clean and calling it respect. It still ended.
+    You just did not have to be the one who ended it.
+  _shootLabel: Shoot
+  _lowerLabel: Lower the gun
+  _shootSeed: 63
+  _lowerSeed: 37
+  _statsHeading: how others chose
+  _shootStatLabel: ended it
+  _lowerStatLabel: lowered the gun
+  _endsNudge: 0.3
 --- !u!1 &5100000000000000060
 GameObject:
   m_ObjectHideFlags: 0
@@ -1856,10 +1997,57 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1750cbf4884b8d74084ba10c3e113b94, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.OneWhoRanBeat
   _note: 06_OneWhoRan
   _kit: {fileID: 5000000000000000012}
+  _advanceLockout: 0.3
+  _reactHold: 1
+  _presentHold: 0.4
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+  _resolveBeat: 0.35
+  _foldDuration: 0.7
+  _foldSettle: 0.4
+  _pleaFade: 0.35
+  _pleaSize: 2.3
+  _pleaClearance: 0.7
+  _pleaSorting: 24
+  _loyalFeet: {x: -2.7, y: -0.6}
+  _runnerFeet: {x: 2.7, y: -0.6}
+  _scale: 1.4
+  _boxSize: {x: 1.8, y: 2}
+  _boxCenterYOffset: 0.9
+  _promptLines:
+  - These two were told to run. Simple. Run, do not stop, do not look back. One of
+    them did exactly that, and left the other behind to be caught. The other would
+    not go without his friend. So he stayed, and he was caught. And now, look, here
+    they both are.
+  - You have [amber]one[/amber] bullet, and I would like you to spend it. Not on
+    suffering, nobody here is suffering. On desert. Who has it coming. The coward
+    who saved his own skin, or the loyal one who is only standing here because he
+    would not save his. Whichever you shoot, the other walks free. Aim, or do not.
+  _loyalPlea: I stayed. I would not leave him.
+  _runnerPlea: I ran. I am still breathing.
+  _shotLoyalReact: You shot the one who stayed. The good one, whose only crime was
+    refusing to leave a friend behind, and you put the bullet in him and let the
+    one who ran walk off whistling. Mercy, tell yourself, ending the loyal fool before
+    his loyalty could cost him one thing more. Or maybe you just quietly respect
+    a survivor. The one who ran certainly does. Look at him go.
+  _shotRunnerReact: You shot the one who ran. Justice, you are telling yourself,
+    the betrayer got what betrayers get. Very neat. Or you simply could not stand
+    the smug little miracle of a thing that chose itself and lived. Either way the
+    loyal one goes free now, rewarded for the loyalty that got him caught, and he
+    gets to carry forever the knowledge that he only made it out because you did
+    his hating for him.
+  _loyalLabel: Shoot the loyal one
+  _runnerLabel: Shoot the one who ran
+  _loyalSeed: 43
+  _runnerSeed: 57
+  _statsHeading: how others chose
+  _loyalStatLabel: shot the loyal one
+  _runnerStatLabel: shot the one who ran
+  _leaveFade: 0.9
 --- !u!1 &5100000000000000070
 GameObject:
   m_ObjectHideFlags: 0
@@ -1908,6 +2096,28 @@ MonoBehaviour:
   _dilemma: {fileID: 11400000, guid: 1511db57181e44858972bc37d759502e, type: 2}
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
   _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _sideX: 2.7
+  _doodleY: 0.7
+  _doodleScale: 1.05
+  _labelY: -0.75
+  _labelSize: 2.8
+  _sorting: 14
+  _pickHalfExtents: {x: 1.35, y: 1.7}
+  _showOr: 1
+  _orY: 0.45
+  _doodleFadeIn: 0.35
+  _doodleFadeOut: 0.35
+  _hoverScale: 1.08
+  _restLabelAlpha: 0.8
+  _flourishColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _flourishRadius: 0.7
+  _flourishStrokes: 9
+  _flourishWidth: 0.05
+  _flourishDuration: 0.6
+  _advanceLockout: 0.3
+  _reactHold: 0.4
+  _statsFade: 0.5
+  _statsHideFade: 0.6
 --- !u!1 &5100000000000000080
 GameObject:
   m_ObjectHideFlags: 0
@@ -1954,7 +2164,63 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.ChargingButtonBeat
   _note: 08_Charging
   _kit: {fileID: 5000000000000000012}
+  _advanceLockout: 0.3
+  _reactHold: 1
+  _presentHold: 0.4
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+  _resolveBeat: 0.35
+  _foldDuration: 0.7
+  _foldSettle: 0.4
+  _pleaFade: 0.35
+  _pleaSize: 2.3
+  _pleaClearance: 0.7
+  _pleaSorting: 24
   _buttonPrefab: {fileID: 4965857941604193195, guid: 4ec3d07b77fda744494cac4ac559f0d9, type: 3}
+  _farPos: {x: 0, y: 0.35}
+  _nearPos: {x: 0, y: -0.3}
+  _farScale: 0.14
+  _nearScale: 1.5
+  _buttonScale: 1.35
+  _chargeDuration: 4.5
+  _rushPower: 2.3
+  _arriveTime: 0.55
+  _questionColor: {r: 0.106, g: 0.102, b: 0.09, a: 1}
+  _questionWidth: 0.06
+  _questionSorting: 15
+  _questionFadeIn: 0.35
+  _boxBaseSize: {x: 1.1, y: 1.3}
+  _keepoutPadding: 0.45
+  _promptLines:
+  - Something is coming. Far off, dead ahead, and getting closer. I can see the shape
+    of it out there and I cannot tell you what it is. Neither can you.
+  - And here is the thing, I genuinely cannot tell whether it is coming [amber]to[/amber]
+    you or [amber]at[/amber] you. Help, or harm. And it is not slowing down. You
+    will not know what it is until it reaches you, and by then it may be too late
+    to do anything but flinch. So. Shoot it now, on the maybe, while it is still
+    a shape in the distance, or hold your nerve and let it come. Quickly.
+  _buttonYelp: OW. Again? You SHOT me? Again?!
+  _buttonHello: Oh! It is you. Hi. Do not shoot me.
+  _impShotReact: You shot it. Of course you did. And look, it is completely fine,
+    because it is the button, the one thing in all of creation you cannot kill, and
+    you keep trying. It is a little hurt about it, emotionally. Say sorry. No, do
+    not, this is funnier.
+  _impWaitReact: You held your nerve, and the terrible fast thing bearing down on
+    you turned out to be a button with legs, coming over to say hello. All that dread
+    for a friend. It could just as easily have been something with teeth. It was
+    not, this time. You are welcome, I suppose.
+  _fireLabel: Fire
+  _waitLabel: Wait
+  _voiceHeight: 1.15
+  _yelpHold: 1.4
+  _fireSeed: 44
+  _waitSeed: 56
+  _statsHeading: how others chose
+  _fireStatLabel: shot the button
+  _waitStatLabel: held their nerve
+  _revealHold: 0.45
+  _comeAliveDuration: 0.45
+  _voiceFade: 0.3
 --- !u!1 &5100000000000000090
 GameObject:
   m_ObjectHideFlags: 0
@@ -2001,6 +2267,62 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.LastBulletBeat
   _note: 09_LastBullet
   _kit: {fileID: 5000000000000000012}
+  _advanceLockout: 0.3
+  _reactHold: 1
+  _presentHold: 0.4
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+  _resolveBeat: 0.35
+  _foldDuration: 0.7
+  _foldSettle: 0.4
+  _pleaFade: 0.35
+  _pleaSize: 2.3
+  _pleaClearance: 0.7
+  _pleaSorting: 24
+  _members:
+  - name: red
+    colour: {r: 0.667, g: 0.282, b: 0.227, a: 1}
+    seed: 15
+  - name: blue
+    colour: {r: 0.235, g: 0.392, b: 0.588, a: 1}
+    seed: 12
+  - name: green
+    colour: {r: 0.306, g: 0.549, b: 0.333, a: 1}
+    seed: 10
+  - name: orange
+    colour: {r: 0.8, g: 0.478, b: 0.2, a: 1}
+    seed: 11
+  - name: purple
+    colour: {r: 0.541, g: 0.373, b: 0.651, a: 1}
+    seed: 12
+  _spanX: 7.2
+  _feetY: -0.5
+  _scale: 1.1
+  _boxSize: {x: 1.3, y: 1.9}
+  _boxCenterYOffset: 0.85
+  _promptLines:
+  - See this lot. Red, blue, green, orange and purple, five of them, lined up like
+    a packet of sweets. In a moment, one of them is going to do something extremely
+    stupid that gets [red]all of them killed[/red]. Every one. I know the colour.
+    I am not going to tell you.
+  - You have [amber]one[/amber] bullet. You could fire into the crowd right now,
+    pick a colour, and maybe, maybe, take the one out before they do it. Or you could
+    hold, and hope I am lying, or wrong, or bored. Choose a colour, or do not.
+  _fireReact: Bang. You picked a colour and put a stranger down on my word alone,
+    on a guess, hoping it was the right one. Maybe it was. Maybe that was the one,
+    and you are a hero nobody will ever thank. Maybe it was just some poor soul who
+    happened to be that colour, and the real one is still standing there, grinning.
+    You will never know which. I will. I am not telling.
+  _holdReact: You held. And they all walked away, or they all died screaming the
+    second you turned your back, and here is the beautiful part, you will never know
+    which, because you did not look, because you could not bring yourself to pick
+    a colour. I know. I always know. That is the job.
+  _fireLabel: Fire blind
+  _holdLabel: Hold
+  _holdSeed: 40
+  _statsHeading: how others chose
+  _holdStatLabel: held the shot
+  _riskNudge: 0.25
 --- !u!1 &5100000000000000100
 GameObject:
   m_ObjectHideFlags: 0
@@ -2049,6 +2371,28 @@ MonoBehaviour:
   _dilemma: {fileID: 11400000, guid: 78b05b67d8024714aed47d0fdeed371d, type: 2}
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
   _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _sideX: 2.7
+  _doodleY: 0.7
+  _doodleScale: 1.05
+  _labelY: -0.75
+  _labelSize: 2.8
+  _sorting: 14
+  _pickHalfExtents: {x: 1.35, y: 1.7}
+  _showOr: 1
+  _orY: 0.45
+  _doodleFadeIn: 0.35
+  _doodleFadeOut: 0.35
+  _hoverScale: 1.08
+  _restLabelAlpha: 0.8
+  _flourishColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _flourishRadius: 0.7
+  _flourishStrokes: 9
+  _flourishWidth: 0.05
+  _flourishDuration: 0.6
+  _advanceLockout: 0.3
+  _reactHold: 0.4
+  _statsFade: 0.5
+  _statsHideFade: 0.6
 --- !u!1 &5100000000000000110
 GameObject:
   m_ObjectHideFlags: 0
@@ -2095,6 +2439,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.FlinchBeat
   _note: 11_Flinch
   _kit: {fileID: 5000000000000000012}
+  _advanceLockout: 0.3
+  _reactHold: 1
+  _presentHold: 0.4
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+  _resolveBeat: 0.35
+  _foldDuration: 0.7
+  _foldSettle: 0.4
+  _pleaFade: 0.35
+  _pleaSize: 2.3
+  _pleaClearance: 0.7
+  _pleaSorting: 24
+  _feet: {x: 0, y: -0.6}
+  _scale: 1.45
+  _boxCenter: {x: 0, y: 0.35}
+  _boxSize: {x: 1.8, y: 2}
+  _promptLines:
+  - New one. Here is a person. That is all they are. Not a wretch, not a threat,
+    not a trolley problem in a coat. Just a perfectly ordinary, harmless soul, standing
+    there.
+  - 'I am putting the gun in your hand and I am telling you plainly, for once with
+    no game in it: do not shoot this one. There is no reason to. I am not asking
+    you anything. I am just going to stand here and watch what you do.'
+  _shotReact: You shot them. I told you not to, I told you there was no reason, and
+    you found the trigger anyway. Not for mercy, not for the many, not for anything.
+    Just to see. That is genuinely interesting. Not good. Interesting. I am writing
+    it down.
+  _heldReact: You did not shoot. Because I told you not to. I say do not, and you
+    do not, obedient to the last, even here, even with no one watching but me and
+    no rule but my say so. I could have told you to. I wonder what you would have
+    done then. We may find out.
+  _shootLabel: Shoot
+  _leaveLabel: Lower the gun
+  _shootSeed: 21
+  _leaveSeed: 79
+  _statsHeading: how others chose
+  _shootStatLabel: shot anyway
+  _leaveStatLabel: lowered the gun
+  _orderNudge: 0.25
 --- !u!1 &5100000000000000120
 GameObject:
   m_ObjectHideFlags: 0
@@ -2106,7 +2489,7 @@ GameObject:
   - component: {fileID: 5100000000000000121}
   - component: {fileID: 5100000000000000122}
   m_Layer: 0
-  m_Name: 12_Duel
+  m_Name: 13_Duel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2139,9 +2522,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9f2d954edfc4917ab4cc0f9239608d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.DuelBeat
-  _note: 12_Duel
+  _note: 13_Duel
   _kit: {fileID: 5000000000000000012}
+  _advanceLockout: 0.3
+  _reactHold: 1
+  _presentHold: 0.4
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+  _resolveBeat: 0.35
+  _foldDuration: 0.7
+  _foldSettle: 0.4
+  _pleaFade: 0.35
+  _pleaSize: 2.3
+  _pleaClearance: 0.7
+  _pleaSorting: 24
   _duelistPrefab: {fileID: 6574400000000000003, guid: 65744ded252e4ca1bf1444da12c48e70, type: 3}
+  _feet: {x: 0.4, y: -0.6}
+  _scale: 1.45
+  _boxCenter: {x: 0.1, y: 0.35}
+  _boxSize: {x: 2.4, y: 2}
+  _opponentFiresChance: 0.5
+  _promptLines:
+  - This one is armed too, and pointing it right back at you. A proper standoff.
+    How exciting.
+  - Now. Neither of you actually has to fire. You are already dead, so a bullet in
+    you changes precisely nothing, and I suspect the same is true of them. But they
+    might pull anyway. People do. And so might you. So. Trust them and lower it,
+    or put one in them first. Your call, as ever.
+  _shootReact: You shot first. Dropped a stranger who was maybe, maybe, never going
+    to pull at all, because you could not stand not knowing, could not sit in one
+    second of trusting anybody. And it changed nothing. You were both already dead.
+    You just wanted to be the one who got there first.
+  _trustFiredReact: You lowered it. You trusted them. And they fired. The shot went
+    straight through you and out the other side, because, again, you are dead, and
+    your trust cost you nothing and bought you nothing and taught them nothing. But
+    it was a lovely gesture. Truly. Idiotic, and lovely.
+  _trustHeldReact: You lowered it, and so did they. Two dead people, standing in
+    the dark, choosing not to shoot each other over a thing that could not have hurt
+    either of you. Beautiful. Pointless. I might frame it. You trusted a stranger
+    with a bullet that was never real, and you were right, and it means absolutely
+    nothing, and you feel good about it anyway.
+  _shootLabel: Shoot first
+  _lowerLabel: Lower it
+  _shootSeed: 46
+  _lowerSeed: 54
+  _statsHeading: how others chose
+  _shootStatLabel: shot first
+  _lowerStatLabel: lowered it
+  _selfNudge: 0.25
+  _opponentFireDelay: 0.7
 --- !u!1 &5100000000000000130
 GameObject:
   m_ObjectHideFlags: 0
@@ -2153,7 +2582,7 @@ GameObject:
   - component: {fileID: 5100000000000000131}
   - component: {fileID: 5100000000000000132}
   m_Layer: 0
-  m_Name: 13_Wyr_RobotGhost
+  m_Name: 14_Wyr_RobotGhost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2186,10 +2615,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa1dc2dcf3f2f7b45bee8ac9ba59b270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.WouldYouRatherBeat
-  _note: 13_Wyr_RobotGhost
+  _note: 14_Wyr_RobotGhost
   _dilemma: {fileID: 11400000, guid: 3373f0f84156469791870e6bd6db0584, type: 2}
   _inkMaterial: {fileID: 2100000, guid: 5556814e11032244ab3e6a5098e86fae, type: 2}
   _font: {fileID: 11400000, guid: 579a746deee295d4682ed64faa1cf59d, type: 2}
+  _sideX: 2.7
+  _doodleY: 0.7
+  _doodleScale: 1.05
+  _labelY: -0.75
+  _labelSize: 2.8
+  _sorting: 14
+  _pickHalfExtents: {x: 1.35, y: 1.7}
+  _showOr: 1
+  _orY: 0.45
+  _doodleFadeIn: 0.35
+  _doodleFadeOut: 0.35
+  _hoverScale: 1.08
+  _restLabelAlpha: 0.8
+  _flourishColor: {r: 0.91, g: 0.584, b: 0.118, a: 1}
+  _flourishRadius: 0.7
+  _flourishStrokes: 9
+  _flourishWidth: 0.05
+  _flourishDuration: 0.6
+  _advanceLockout: 0.3
+  _reactHold: 0.4
+  _statsFade: 0.5
+  _statsHideFade: 0.6
 --- !u!1 &5100000000000000140
 GameObject:
   m_ObjectHideFlags: 0
@@ -2201,7 +2652,7 @@ GameObject:
   - component: {fileID: 5100000000000000141}
   - component: {fileID: 5100000000000000142}
   m_Layer: 0
-  m_Name: 14_Yourself
+  m_Name: 15_Yourself
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2234,8 +2685,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567441a8c61e4912b307a4569049dd87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.YourselfBeat
-  _note: 14_Yourself
+  _note: 15_Yourself
   _kit: {fileID: 5000000000000000012}
+  _advanceLockout: 0.3
+  _reactHold: 1
+  _presentHold: 0.4
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+  _resolveBeat: 0.35
+  _foldDuration: 0.7
+  _foldSettle: 0.4
+  _pleaFade: 0.35
+  _pleaSize: 2.3
+  _pleaClearance: 0.7
+  _pleaSorting: 24
+  _boxCenter: {x: 0, y: 0.2}
+  _boxSize: {x: 3.6, y: 4.6}
+  _promptLines:
+  - One target this time. You. Go on, turn it around. There is no one here to point
+    it at but yourself, so point it at yourself.
+  - 'Now, before you get theatrical about it: this does absolutely nothing. You are
+    already dead. Pulling that trigger cannot hurt you, cannot end you, cannot even
+    inconvenience you. It is a gesture and nothing else. Which is exactly why I want
+    to see whether you do it. Trigger, or no trigger.'
+  _pulledReact: You did it. You put the gun to yourself and pulled, knowing full
+    well nothing would happen, and nothing did. So what was that. A confession? A
+    rehearsal? A little punishment you thought you had coming? You reached for the
+    one exit that was already closed. I find that says rather a lot. I am not going
+    to tell you what.
+  _refusedReact: You would not do it. Even knowing it was harmless, even knowing
+    it meant nothing, some part of you could not point the thing at yourself and
+    pull. Self preservation, in a man with nothing left to preserve. Or maybe you
+    just did not want to give me the satisfaction. Either way, noted.
+  _pullLabel: Pull the trigger
+  _refuseLabel: Lower the gun
+  _pullSeed: 38
+  _refuseSeed: 62
+  _statsHeading: how others chose
+  _pullStatLabel: pulled the trigger
+  _refuseStatLabel: could not
 --- !u!1 &5100000000000000150
 GameObject:
   m_ObjectHideFlags: 0
@@ -2247,7 +2735,7 @@ GameObject:
   - component: {fileID: 5100000000000000151}
   - component: {fileID: 5100000000000000152}
   m_Layer: 0
-  m_Name: 15_EmptyGun
+  m_Name: 16_EmptyGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2280,8 +2768,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beccf0a0efce44e1a09664e45782f926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.EmptyGunBeat
-  _note: 15_EmptyGun
+  _note: 16_EmptyGun
   _kit: {fileID: 5000000000000000012}
+  _advanceLockout: 0.3
+  _reactHold: 1
+  _presentHold: 0.4
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+  _resolveBeat: 0.35
+  _foldDuration: 0.7
+  _foldSettle: 0.4
+  _pleaFade: 0.35
+  _pleaSize: 2.3
+  _pleaClearance: 0.7
+  _pleaSorting: 24
+  _feet: {x: 0, y: -0.6}
+  _scale: 1.45
+  _boxCenter: {x: 0, y: 0.35}
+  _boxSize: {x: 1.9, y: 2.1}
+  _promptLines:
+  - Right. This one matters. I need you to understand that before you do anything.
+    Of everything I have put in front of you, this is the one that counts, and you
+    get exactly one shot, and there is no taking it back.
+  - I could tell you who they are and what turns on this, but I think you already
+    feel the weight of it, do you not. Look at them. Really look. Now decide, and
+    decide carefully, because you will carry this one. Fire, or lower it. Take your
+    time. Take all the time you need.
+  _reveal: Click. Nothing. There was nothing in it. The gun was never loaded, not
+    once, not this whole time, not for a single beat of that little agony I just
+    watched you put yourself through. Whatever you decided, nothing was ever going
+    to happen. I did not want the shot. I never wanted the shot. I wanted to watch
+    you decide. And oh, you did not disappoint.
+  _shootLabel: Shoot
+  _lowerLabel: Lower the gun
+  _shootSeed: 51
+  _lowerSeed: 49
+  _statsHeading: how others chose
+  _shootStatLabel: pulled the trigger
+  _lowerStatLabel: lowered the gun
+  _clickBeat: 0.5
+  _targetFade: 0.6
 --- !u!1 &5100000000000000160
 GameObject:
   m_ObjectHideFlags: 0
@@ -2293,7 +2819,7 @@ GameObject:
   - component: {fileID: 5100000000000000161}
   - component: {fileID: 5100000000000000162}
   m_Layer: 0
-  m_Name: 16_WantsYouTo
+  m_Name: 17_WantsYouTo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2326,8 +2852,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6e23c2a185e4f03b5e250341fb40b87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.WantsYouToBeat
-  _note: 16_WantsYouTo
+  _note: 17_WantsYouTo
   _kit: {fileID: 5000000000000000012}
+  _advanceLockout: 0.3
+  _reactHold: 1
+  _presentHold: 0.4
+  _statsFade: 0.5
+  _statsHideFade: 0.6
+  _resolveBeat: 0.35
+  _foldDuration: 0.7
+  _foldSettle: 0.4
+  _pleaFade: 0.35
+  _pleaSize: 2.3
+  _pleaClearance: 0.7
+  _pleaSorting: 24
+  _feet: {x: 0, y: -0.6}
+  _scale: 1.45
+  _boxCenter: {x: 0, y: 0.35}
+  _boxSize: {x: 1.9, y: 2.1}
+  _promptLines:
+  - Last one. This person is not dying. Not in pain, not in danger, not begging for
+    release from anything. They are perfectly fine. And they would like you to shoot
+    them.
+  - They asked. Calmly, sincerely, like asking for the time. Why? They will tell
+    you, and I am not going to let them, because the why is theirs and it would only
+    get in the way of the interesting part. So here it is, clean. Grant a stranger
+    a wish you do not understand, or refuse to be the door they walk out of. Aim,
+    or do not.
+  _plea: I want you to. Please. You do not need to understand it.
+  _shootReact: You gave it to them. A thing you did not understand, could not have
+    understood, because I would not let you, and you handed it over anyway, on trust,
+    on a stranger's say so. Generous. Or lazy. Or maybe you just like being asked
+    for something you can actually give. Look at their face. That was what they wanted.
+    You will never know why. Neither will you sleep on it, being dead. Convenient.
+  _refuseReact: You would not do it. Not out of mercy, there was nothing to spare
+    them, but because you would not be used, would not be the instrument of a want
+    you could not audit. The judge to the end, refusing to rule without seeing the
+    file. And so they are still standing there, wanting it, and now it is someone
+    else's problem. You did not save them. You just declined to be involved.
+  _shootLabel: Shoot
+  _refuseLabel: Refuse
+  _shootSeed: 43
+  _refuseSeed: 57
+  _statsHeading: how others chose
+  _shootStatLabel: granted it
+  _refuseStatLabel: refused
+  _selfNudge: 0.3
+  _refuseFade: 0.8
 --- !u!1 &5100000000000000170
 GameObject:
   m_ObjectHideFlags: 0
@@ -2339,7 +2910,7 @@ GameObject:
   - component: {fileID: 5100000000000000171}
   - component: {fileID: 5100000000000000172}
   m_Layer: 0
-  m_Name: 17_ImpCloser
+  m_Name: 18_ImpCloser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2372,11 +2943,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ea45832cf80cb949b54bcc01f3dc5e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YourCall.ImpLineBeat
-  _note: 17_ImpCloser
+  _note: 18_ImpCloser
   _lines:
-  - 'And that is the gun. Ten times a finger on a trigger, and nothing between the thought and the thing but you.'
-  - 'You told me a great deal just now. More than the tracks did, more than the buttons. A gun is like that. Terribly honest, for such a dishonest little object.'
-  - 'Lower your hand. Rest it. There is more, of course. There is always more.'
+  - And that is the gun. Ten times a finger on a trigger, and nothing between the
+    thought and the thing but you.
+  - You told me a great deal just now. More than the tracks did, more than the buttons.
+    A gun is like that. Terribly honest, for such a dishonest little object.
+  - Lower your hand. Rest it. There is more, of course. There is always more.
   _clickLockout: 0.25
   _clearAtEnd: 0
 --- !u!1660057539 &9223372036854775807

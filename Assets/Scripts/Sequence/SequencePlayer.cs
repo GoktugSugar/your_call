@@ -158,7 +158,19 @@ namespace YourCall
         private void ResetSharedUiForBeat(SequenceContext ctx)
         {
             if (ctx.Choices != null) ctx.Choices.HideNow();
+            if (ctx.Stats != null) ctx.Stats.HideNow();   // never carry a prior beat's stats reveal into this one
             if (ctx.Narrator != null) ctx.Narrator.Clear();
+        }
+
+        /// <summary>Instantly tear down the shared choice, stats and narration UI, so no beat's affordances or
+        /// its stats reveal linger when the run is left for the menu (the pause overlay's Quit to Menu calls
+        /// this before loading the menu scene). Mirrors <see cref="ResetSharedUiForBeat"/> but is safe to call
+        /// from outside the beat loop.</summary>
+        public void HideSharedUiNow()
+        {
+            if (_choices != null) _choices.HideNow();
+            if (_stats != null) _stats.HideNow();
+            if (_narrator != null) _narrator.Clear();
         }
 
         // A minimal baseline for a mid-chapter dev entry: the crash/wake/imp-appear intro beats were

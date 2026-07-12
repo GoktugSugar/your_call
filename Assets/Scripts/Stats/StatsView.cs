@@ -196,6 +196,22 @@ namespace YourCall
             ClearRows();
         }
 
+        /// <summary>Instantly tear the tableau down with no fade: hide the keep-out and scrim, drop every
+        /// mark to zero, and destroy the rows. Used when entering a new beat and when leaving the run to the
+        /// menu, so a reveal from one beat can never linger into the next beat or a later scene (the same
+        /// guarantee <see cref="ChoiceButtons.HideNow"/> gives the choice affordances). Safe to call any time.</summary>
+        public void HideNow()
+        {
+            if (!_built) return;
+            if (_keepoutObject != null) _keepoutObject.SetActive(false);
+            SetAlpha(_scrim, 0f);
+            InkText.SetAlpha(_heading, 0f);
+            InkText.SetAlpha(_hint, 0f);
+            InkText.SetAlpha(_thresholdLabel, 0f);
+            InkLine.SetAlpha(_threshold, _ink, 0f);
+            ClearRows();
+        }
+
         private static void FadeLine(LineRenderer lr, float k)
         {
             if (lr == null) return;
