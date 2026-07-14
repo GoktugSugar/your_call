@@ -81,6 +81,20 @@ namespace YourCall
         Toddler,        // a tiny stubby toddler (big head, little body), the unit for "100 toddlers"
         Wasp,           // a wasp (striped abdomen, wings, stinger), the unit for the swarm
         Grizzly,        // a reared grizzly bear (hump, snout, claws) as a fierce fighter, brown
-        Boxer           // a professional fighter (boxing gloves, guard stance), red
+        Boxer,          // a professional fighter (boxing gloves, guard stance), red
+
+        // ---- Chapter 8 (The Campaign): the class doodles, the reason doodles, and the adventure props ----
+        // Each an iconic ink prop for its class or its quest reason, readable at the character-menu size.
+        Knight,         // the knight class: a sword over a heraldic shield, steel blue
+        Rogue,          // the rogue class: a dagger, green
+        Wizard,         // the wizard class: a pointed star-flecked hat, purple
+        Bard,           // the bard class: a lute, warm orange
+        Cleric,         // the cleric class: a chalice with a shine, gold
+        Coins,          // reason (for the gold): a small stack of coins, gold
+        Trophy,         // reason (for the glory): a two-handled trophy cup, orange
+        QuestHeart,     // reason (to save someone): a plain heart, pink
+        Signpost,       // reason (nowhere else to be): a crossroads signpost, muted
+        Companion,      // the hooded stranger who wants to join, purple
+        TreasureChest   // the barrow hoard: an open treasure chest, gold
     }
 }

@@ -132,6 +132,20 @@ namespace YourCall
                 case DoodleKind.Grizzly: return Palette.InkBrown;     // a brown bear
                 case DoodleKind.Boxer: return Palette.InkRed;         // a fighter, aggressive
 
+                // Chapter 8 (The Campaign): the class doodles, reasons, and props (each matchup / menu passes an
+                // explicit colour, so these are sensible fallbacks).
+                case DoodleKind.Knight: return Palette.InkBlue;       // steel
+                case DoodleKind.Rogue: return Palette.InkGreen;       // leather / poison
+                case DoodleKind.Wizard: return Palette.InkPurple;     // arcane
+                case DoodleKind.Bard: return Palette.InkOrange;       // warm song
+                case DoodleKind.Cleric: return Palette.InkGold;       // holy
+                case DoodleKind.Coins: return Palette.InkGold;        // gold
+                case DoodleKind.Trophy: return Palette.InkOrange;     // glory
+                case DoodleKind.QuestHeart: return Palette.InkPink;   // love / rescue
+                case DoodleKind.Signpost: return Palette.Muted;       // a plain post
+                case DoodleKind.Companion: return Palette.InkPurple;  // the hooded stranger
+                case DoodleKind.TreasureChest: return Palette.InkGold;// the hoard
+
                 default: return Palette.Ink;
             }
         }
@@ -210,6 +224,19 @@ namespace YourCall
                 case DoodleKind.Wasp: Wasp(); break;
                 case DoodleKind.Grizzly: Grizzly(); break;
                 case DoodleKind.Boxer: Boxer(); break;
+
+                // Chapter 8 (The Campaign) doodles.
+                case DoodleKind.Knight: Knight(); break;
+                case DoodleKind.Rogue: Rogue(); break;
+                case DoodleKind.Wizard: Wizard(); break;
+                case DoodleKind.Bard: Bard(); break;
+                case DoodleKind.Cleric: Cleric(); break;
+                case DoodleKind.Coins: Coins(); break;
+                case DoodleKind.Trophy: Trophy(); break;
+                case DoodleKind.QuestHeart: QuestHeart(); break;
+                case DoodleKind.Signpost: Signpost(); break;
+                case DoodleKind.Companion: Companion(); break;
+                case DoodleKind.TreasureChest: TreasureChest(); break;
                 default: break;
             }
         }
@@ -1182,6 +1209,137 @@ namespace YourCall
             Stroke("ArmL", Line(new Vector2(0f, 0.3f), new Vector2(-0.3f, 0.24f), new Vector2(-0.46f, 0.16f)));
             Stroke("GloveL", Circle(new Vector2(-0.52f, 0.12f), 0.14f, 16));
             Stroke("GloveLWrap", Line(new Vector2(-0.42f, 0.02f), new Vector2(-0.4f, 0.22f)), _width * 0.7f);
+        }
+
+        // ---------- Chapter 8 (The Campaign) doodles ----------
+
+        // a small four-point sparkle (shared by the hat, the chalice, the trophy and the hoard)
+        private void Star4(Vector2 c, float r)
+        {
+            Stroke("StarV", Line(c + new Vector2(0f, r), c + new Vector2(0f, -r)), _width * 0.7f);
+            Stroke("StarH", Line(c + new Vector2(-r, 0f), c + new Vector2(r, 0f)), _width * 0.7f);
+        }
+
+        // The knight: an upright sword laid over a heraldic shield.
+        private void Knight()
+        {
+            Stroke("Shield", Line(new Vector2(-0.36f, 0.46f), new Vector2(0.36f, 0.46f), new Vector2(0.38f, 0.06f),
+                new Vector2(0.2f, -0.32f), new Vector2(0f, -0.54f), new Vector2(-0.2f, -0.32f),
+                new Vector2(-0.38f, 0.06f), new Vector2(-0.36f, 0.46f)));
+            Stroke("CrossV", Line(new Vector2(0f, 0.46f), new Vector2(0f, -0.5f)), _width * 0.55f);
+            Stroke("CrossH", Line(new Vector2(-0.37f, 0.2f), new Vector2(0.37f, 0.2f)), _width * 0.55f);
+            Stroke("Blade", Line(new Vector2(0f, 0.66f), new Vector2(0f, -0.16f)), _width * 1.3f);
+            Stroke("Guard", Line(new Vector2(-0.18f, 0.5f), new Vector2(0.18f, 0.5f)), _width * 1.0f);
+            Stroke("Pommel", Circle(new Vector2(0f, 0.7f), 0.05f, 10), _width);
+        }
+
+        // The rogue: a leaf-bladed dagger, tip up.
+        private void Rogue()
+        {
+            Stroke("EdgeL", Line(new Vector2(0f, 0.62f), new Vector2(-0.11f, 0.06f)), _width * 0.9f);
+            Stroke("EdgeR", Line(new Vector2(0f, 0.62f), new Vector2(0.11f, 0.06f)), _width * 0.9f);
+            Stroke("Ricasso", Line(new Vector2(-0.11f, 0.06f), new Vector2(0.11f, 0.06f)), _width * 0.8f);
+            Stroke("Guard", Line(new Vector2(-0.26f, 0.02f), new Vector2(0.26f, 0.02f)), _width * 1.0f);
+            Stroke("Grip", Line(new Vector2(0f, 0.02f), new Vector2(0f, -0.34f)), _width * 1.2f);
+            Stroke("Pommel", Circle(new Vector2(0f, -0.4f), 0.06f, 10), _width);
+        }
+
+        // The wizard: a wide-brimmed pointed hat, tip flopping, a couple of stars.
+        private void Wizard()
+        {
+            var brim = new List<Vector3>();
+            for (int i = 0; i <= 28; i++) { float a = i / 28f * Mathf.PI * 2f; brim.Add(new Vector3(Mathf.Cos(a) * 0.5f, -0.3f + Mathf.Sin(a) * 0.12f, 0f)); }
+            Stroke("Brim", brim);
+            Stroke("Cone", Line(new Vector2(-0.3f, -0.22f), new Vector2(0.02f, 0.58f), new Vector2(0.17f, 0.5f), new Vector2(0.3f, -0.22f)));
+            Star4(new Vector2(-0.05f, 0.12f), 0.07f);
+            Star4(new Vector2(0.1f, -0.04f), 0.05f);
+        }
+
+        // The bard: a rounded lute with a neck and strings.
+        private void Bard()
+        {
+            var body = new List<Vector3>();
+            for (int i = 0; i <= 30; i++) { float a = i / 30f * Mathf.PI * 2f; body.Add(new Vector3(-0.08f + Mathf.Cos(a) * 0.34f, -0.18f + Mathf.Sin(a) * 0.36f, 0f)); }
+            Stroke("Body", body);
+            Stroke("Hole", Circle(new Vector2(-0.08f, -0.12f), 0.08f, 14), _width * 0.8f);
+            Stroke("Neck", Line(new Vector2(0.04f, 0.12f), new Vector2(0.44f, 0.56f)));
+            Stroke("Neck2", Line(new Vector2(-0.14f, 0.15f), new Vector2(0.26f, 0.6f)));
+            Stroke("Peg", Line(new Vector2(0.26f, 0.6f), new Vector2(0.5f, 0.62f), new Vector2(0.42f, 0.5f)));
+            Stroke("String", Line(new Vector2(-0.06f, 0.14f), new Vector2(0.35f, 0.58f)), _width * 0.5f);
+        }
+
+        // The cleric: a chalice with a foot and a shine.
+        private void Cleric()
+        {
+            Stroke("Bowl", Line(new Vector2(-0.28f, 0.34f), new Vector2(-0.2f, 0.02f), new Vector2(0.2f, 0.02f), new Vector2(0.28f, 0.34f)));
+            Stroke("Rim", Line(new Vector2(-0.28f, 0.34f), new Vector2(0.28f, 0.34f)));
+            Stroke("Stem", Line(new Vector2(0f, 0.02f), new Vector2(0f, -0.32f)), _width * 1.1f);
+            Stroke("Foot", Line(new Vector2(-0.24f, -0.42f), new Vector2(-0.16f, -0.32f), new Vector2(0.16f, -0.32f), new Vector2(0.24f, -0.42f)));
+            Stroke("FootBase", Line(new Vector2(-0.26f, -0.42f), new Vector2(0.26f, -0.42f)));
+            Star4(new Vector2(0.02f, 0.56f), 0.09f);
+        }
+
+        // Reason (for the gold): a small stack of three flat coins with a dollar hint.
+        private void Coins()
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                float y = -0.24f + k * 0.2f;
+                var e = new List<Vector3>();
+                for (int i = 0; i <= 22; i++) { float a = i / 22f * Mathf.PI * 2f; e.Add(new Vector3(Mathf.Cos(a) * 0.38f, y + Mathf.Sin(a) * 0.13f, 0f)); }
+                Stroke("Coin" + k, e);
+            }
+            Stroke("S", Line(new Vector2(0.08f, 0.24f), new Vector2(-0.06f, 0.26f), new Vector2(-0.1f, 0.17f), new Vector2(0.06f, 0.12f), new Vector2(0.05f, 0.04f), new Vector2(-0.1f, 0.05f)), _width * 0.7f);
+        }
+
+        // Reason (for the glory): a two-handled trophy cup with a star.
+        private void Trophy()
+        {
+            Stroke("Bowl", Line(new Vector2(-0.3f, 0.46f), new Vector2(-0.2f, 0.06f), new Vector2(0.2f, 0.06f), new Vector2(0.3f, 0.46f)));
+            Stroke("Rim", Line(new Vector2(-0.3f, 0.46f), new Vector2(0.3f, 0.46f)));
+            var hl = new List<Vector3>(); InkLine.AddArc(hl, new Vector2(-0.34f, 0.32f), 0.15f, -90f, 130f, 12); Stroke("HandleL", hl, _width * 0.85f);
+            var hr = new List<Vector3>(); InkLine.AddArc(hr, new Vector2(0.34f, 0.32f), 0.15f, 50f, 270f, 12); Stroke("HandleR", hr, _width * 0.85f);
+            Stroke("Stem", Line(new Vector2(0f, 0.06f), new Vector2(0f, -0.22f)), _width * 1.1f);
+            Stroke("Base", Line(new Vector2(-0.22f, -0.4f), new Vector2(-0.14f, -0.22f), new Vector2(0.14f, -0.22f), new Vector2(0.22f, -0.4f), new Vector2(-0.22f, -0.4f)));
+            Star4(new Vector2(0f, 0.26f), 0.09f);
+        }
+
+        // Reason (to save someone): a plain heart.
+        private void QuestHeart()
+        {
+            Stroke("Heart", Heart(new Vector2(0f, 0.02f), 0.62f), _width * 1.05f);
+        }
+
+        // Reason (nowhere else to be): a crossroads signpost, two boards pointing opposite ways.
+        private void Signpost()
+        {
+            Stroke("Post", Line(new Vector2(0f, 0.5f), new Vector2(0f, -0.56f)), _width * 1.1f);
+            Stroke("BoardL", Line(new Vector2(0.02f, 0.42f), new Vector2(-0.34f, 0.42f), new Vector2(-0.48f, 0.3f), new Vector2(-0.34f, 0.18f), new Vector2(0.02f, 0.18f)));
+            Stroke("BoardR", Line(new Vector2(-0.02f, 0.12f), new Vector2(0.32f, 0.12f), new Vector2(0.46f, 0f), new Vector2(0.32f, -0.12f), new Vector2(-0.02f, -0.12f)));
+            Stroke("Ground", Line(new Vector2(-0.16f, -0.56f), new Vector2(0.16f, -0.56f)), _width * 0.8f);
+        }
+
+        // The companion: a cloaked, hooded stranger with a hand held out.
+        private void Companion()
+        {
+            Stroke("Cloak", Line(new Vector2(-0.34f, -0.56f), new Vector2(-0.26f, 0.12f), new Vector2(-0.08f, 0.44f), new Vector2(0.08f, 0.46f), new Vector2(0.26f, 0.14f), new Vector2(0.34f, -0.56f)));
+            Stroke("Hem", Line(new Vector2(-0.34f, -0.56f), new Vector2(-0.1f, -0.5f), new Vector2(0.12f, -0.56f), new Vector2(0.34f, -0.5f)), _width * 0.85f);
+            var hood = new List<Vector3>(); InkLine.AddArc(hood, new Vector2(0f, 0.22f), 0.16f, -40f, 220f, 14); Stroke("Hood", hood, _width * 0.85f);
+            Stroke("EyeL", Circle(new Vector2(-0.06f, 0.22f), 0.02f, 6), _width);
+            Stroke("EyeR", Circle(new Vector2(0.06f, 0.22f), 0.02f, 6), _width);
+            Stroke("Arm", Line(new Vector2(0.2f, -0.02f), new Vector2(0.42f, -0.08f)), _width * 0.85f);
+        }
+
+        // The treasure: an open chest with a lock, spilling coins and a sparkle.
+        private void TreasureChest()
+        {
+            Stroke("Base", Line(new Vector2(-0.42f, -0.42f), new Vector2(-0.42f, 0.06f), new Vector2(0.42f, 0.06f), new Vector2(0.42f, -0.42f), new Vector2(-0.42f, -0.42f)));
+            Stroke("Band", Line(new Vector2(-0.42f, -0.2f), new Vector2(0.42f, -0.2f)), _width * 0.7f);
+            Stroke("Lock", Line(new Vector2(-0.08f, -0.06f), new Vector2(0.08f, -0.06f), new Vector2(0.08f, -0.24f), new Vector2(-0.08f, -0.24f), new Vector2(-0.08f, -0.06f)), _width * 0.8f);
+            Stroke("Lid", Line(new Vector2(-0.42f, 0.06f), new Vector2(-0.34f, 0.42f), new Vector2(0.06f, 0.5f), new Vector2(0.42f, 0.4f), new Vector2(0.42f, 0.06f)));
+            Stroke("CoinA", Circle(new Vector2(-0.12f, 0.14f), 0.07f, 10), _width * 0.7f);
+            Stroke("CoinB", Circle(new Vector2(0.12f, 0.12f), 0.06f, 10), _width * 0.7f);
+            Star4(new Vector2(0.24f, 0.3f), 0.07f);
         }
 
         // ---------- fade ----------
