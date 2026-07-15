@@ -89,6 +89,19 @@ def shot(slot, caption, wide=False):
             % (cls, inner, slot, caption, tag))
 
 
+def chapter_card(slot, tag, title, desc):
+    """A gallery card for one chapter: the shot, a chapter tag, a title, and a one-liner."""
+    png = os.path.join(SHOTS, slot + ".png")
+    if os.path.exists(png):
+        inner = '<img src="%s" alt="%s"/>' % (data_uri(png, "image/png"), title)
+    else:
+        inner = ('<div class="placeholder"><div class="ph-mark">screenshot</div>'
+                 '<div class="ph-name">screenshots/%s.png</div></div>' % slot)
+    return ('<figure class="chapcard"><div class="frame">%s</div>'
+            '<div class="ct"><span class="ctag">%s</span><span class="ctitle">%s</span>'
+            '<div class="cdesc">%s</div></div></figure>' % (inner, tag, title, desc))
+
+
 def swatch(hexv, name, meaning):
     return ('<div class="sw"><span class="chip" style="background:%s"></span>'
             '<div class="sw-t"><b>%s</b><code>%s</code><span>%s</span></div></div>'
@@ -199,6 +212,16 @@ figcaption{font-size:8.6pt;color:__INK__;margin-top:1.6mm;line-height:1.34}
 .tag{display:inline-block;font-size:8.5pt;font-family:'Consolas',monospace;background:rgba(0,0,0,0.05);
      border-radius:4px;padding:0 5px;color:__INK__}
 .mini{font-size:8.6pt;color:__MUTED__;margin-top:1mm}
+
+/* chapters gallery */
+.gallery{display:grid;grid-template-columns:1fr 1fr;gap:5mm;margin:3mm 0}
+.chapcard{page-break-inside:avoid;margin:0}
+.chapcard .frame{border:1.3px solid __INK__;border-radius:9px;overflow:hidden;background:__PAPER__;box-shadow:2px 3px 0 rgba(0,0,0,0.06)}
+.chapcard .frame img{width:100%;display:block}
+.chapcard .ct{margin-top:1.8mm}
+.chapcard .ctag{display:inline-block;font-size:7pt;letter-spacing:0.1em;text-transform:uppercase;color:__PAPER__;background:__AMBER__;border-radius:4px;padding:1px 6px;font-weight:700;vertical-align:middle}
+.chapcard .ctitle{font-family:'Caveat','Segoe UI',cursive;font-size:15pt;margin-left:6px;vertical-align:middle}
+.chapcard .cdesc{font-size:8.7pt;color:__INK__;margin-top:1mm;line-height:1.34}
 """
 
 CSS = (CSS.replace("__INK__", INK).replace("__PAPER__", PAPER).replace("__AMBER__", AMBER)
@@ -254,9 +277,36 @@ def build_body():
                  'busier screens to achieve character.</div>')
     parts.append('</div></section>')
 
-    # ---- 2 PALETTE
+    # ---- 2 CHAPTERS AT A GLANCE
     parts.append('<section class="sec pb"><div class="wrap">')
-    parts.append('<h2><span class="n">2</span>The palette</h2>')
+    parts.append('<h2><span class="n">2</span>The chapters at a glance</h2>')
+    parts.append('<p class="lead">One representative frame per chapter. The game is a single ordered run; '
+                 'the same conventions (ink on paper, deliberate colour, the imp, the dialogue box) carry '
+                 'every chapter, while each chapter changes the <em>verb</em> and the imp\'s register.</p>')
+    parts.append('<div class="gallery">')
+    parts.append(chapter_card("trolley-lever", "Chapter 1", "The Tracks",
+        "Trolley problems: the amber lever, the right-angle track, five against one. The clean teacher."))
+    parts.append(chapter_card("buttons-bluered", "Chapter 2", "The Buttons",
+        "Temptation by button. The blue/red coordination gamble, and the room whose vote decides a life."))
+    parts.append(chapter_card("money-priceable", "Chapter 3", "The Money",
+        "A finite balance (amber, top) spent on coloured item doodles at an amber price. What you value in cash."))
+    parts.append(chapter_card("gun-bear", "Chapter 4", "The Gun",
+        "First person, no avatar. The killing in your hands: the last bear against one ordinary man."))
+    parts.append(chapter_card("matchup", "Chapter 5", "Who Would Win",
+        "A change of pace. Barroom matchups of two coloured fighters; the crowd split is the whole payoff."))
+    parts.append(chapter_card("booth", "Chapter 7", "The Confession Booth",
+        "The dead judge does his job. A fixed ink confessional; souls file in for a three-verdict ruling."))
+    parts.append(chapter_card("campaign", "Chapter 8", "The Campaign",
+        "The imp runs a tabletop adventure as a bad, fantasy-breaking Dungeon Master. Class, dice, woven dilemmas."))
+    parts.append('</div>')
+    parts.append('<p class="mini">Chapter 6 is not yet built; Chapters 7 and 8 are reachable via the dev '
+                 'picker and slot into the run once it lands. The menu, the endings, and the illustrated '
+                 'would-you-rather breathers recur across chapters.</p>')
+    parts.append('</div></section>')
+
+    # ---- 3 PALETTE
+    parts.append('<section class="sec pb"><div class="wrap">')
+    parts.append('<h2><span class="n">3</span>The palette</h2>')
     parts.append('<p class="lead">The base identity is <b>black ink on a paper-white ground</b>. On top of '
                  'that base, colour is used deliberately as an accent for emphasis and meaning. There is '
                  '<b>no hard limit</b> on which colours or how many; the discipline is that every use of '
@@ -303,7 +353,7 @@ def build_body():
 
     # ---- 3 LINE & FIGURES
     parts.append('<section class="sec pb"><div class="wrap">')
-    parts.append('<h2><span class="n">3</span>The line &amp; the figures</h2>')
+    parts.append('<h2><span class="n">4</span>The line &amp; the figures</h2>')
     parts.append('<p class="lead">Everything is drawn from a handful of hand-drawn ink strokes with a '
                  '<b>living line</b>: variable weight, slightly rough, with a subtle <b>boil</b> (cycling two '
                  'or three near-identical frames) so it always feels drawn, never clean geometric vector. '
@@ -336,7 +386,7 @@ def build_body():
 
     # ---- 4 THE IMP
     parts.append('<section class="sec pb"><div class="wrap">')
-    parts.append('<h2><span class="n">4</span>The imp</h2>')
+    parts.append('<h2><span class="n">5</span>The imp</h2>')
     parts.append('<p class="lead">The narrator, embodied: a small hand-drawn devil in ink — little '
                  '<b>horns</b>, a curling <b>tail</b> with a spade tip, a mischievous <b>grin</b>, tiny '
                  'arms and legs. It scribbles into being (a scale-and-wobble pop-in) and delivers all of the '
@@ -357,7 +407,7 @@ def build_body():
 
     # ---- 5 TYPOGRAPHY
     parts.append('<section class="sec pb"><div class="wrap">')
-    parts.append('<h2><span class="n">5</span>Typography</h2>')
+    parts.append('<h2><span class="n">6</span>Typography</h2>')
     parts.append('<p class="lead">All narration and menu text is set in <b class="hand" style="font-size:1.25em">Caveat</b>, '
                  'a handwriting font (SemiBold, scoped to the narration), so the words carry voice rather '
                  'than reading as system UI. It is a dynamic TMP atlas; the full <b>Turkish</b> character set '
@@ -380,7 +430,7 @@ def build_body():
 
     # ---- 6 UI CONVENTIONS
     parts.append('<section class="sec pb"><div class="wrap">')
-    parts.append('<h2><span class="n">6</span>UI conventions</h2>')
+    parts.append('<h2><span class="n">7</span>UI conventions</h2>')
     parts.append('<p class="lead">The interface recedes so the void and the figures dominate. <b>No large '
                  'HUD</b> (the silent profile is never shown as a gauge), <b>no big menus</b>, <b>no '
                  'pop-ups or modal chrome</b>, minimal on-screen detail. Every UI element must justify its '
@@ -422,7 +472,7 @@ def build_body():
 
     # ---- 7 DOODLE CATALOGUE
     parts.append('<section class="sec pb"><div class="wrap">')
-    parts.append('<h2><span class="n">7</span>Doodle catalogue</h2>')
+    parts.append('<h2><span class="n">8</span>Doodle catalogue</h2>')
     parts.append('<p class="lead">Recurring on-model props, each built from the same ink strokes with the '
                  'living-line boil. Coloured props draw a coloured <b>outline</b> matched to what they depict, '
                  'never a fill. A “many of something” crowd is drawn as a stylised cluster of small '
@@ -453,14 +503,14 @@ def build_body():
     parts.append(shot("nuke-map", "The ink world map with a small red map pin on the chosen country; the population reads out in amber."))
     parts.append(shot("matchup", "The two-doodle matchup format (Who Would Win): two coloured fighters side by side with counts, a muted “vs”."))
     parts.append(shot("dice", "The DiceRoll set piece: a hand-drawn ink d6, the odds caption, an amber flash on the landed value."))
-    parts.append(shot("booth", "The confession booth: the fixed ink confessional, a confessor in the doorway, three verdict labels above the box."))
-    parts.append(shot("gun-bear", "The last bear (brown fill) framed by the first-person ink crosshair with its single amber corner-bracket lock."))
+    parts.append(shot("booth", "The confession booth: the fixed ink confessional (drawn once, held for the whole docket), a confessor filing into the doorway with a floating headline over them."))
+    parts.append(shot("gun-bear", "The last bear, her muted brown fill inside a black ink line, faced first-person (no avatar) against one ordinary man; the extinction stakes carried in amber."))
     parts.append('</div>')
     parts.append('</div></section>')
 
     # ---- 8 DOS & DON'TS
     parts.append('<section class="sec pb"><div class="wrap">')
-    parts.append('<h2><span class="n">8</span>Design do’s &amp; don’ts</h2>')
+    parts.append('<h2><span class="n">9</span>Design do’s &amp; don’ts</h2>')
     parts.append('<p class="lead">For anyone extending or tidying the visuals.</p>')
     parts.append('<div class="dd">')
     parts.append('<div class="col do"><h3>Do</h3><ul>'

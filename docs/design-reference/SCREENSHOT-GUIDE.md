@@ -54,28 +54,33 @@ fine; the guide scales each shot to fit.
 | `trolley-fulltrack.png` | Three-track tableau: children (scaled rig), pregnant, three adults | Chapter 1 → `21_FullTrack` |
 | `buttons-bluered.png` | The blue/red crayon-wash buttons, the crowd, the coordination gamble | Chapter 2 → `C2_BlueRed` |
 | `buttons-crowned.png` | Gold = the best life: the golden crowned figure | Chapter 2 → `C2_Better` |
+| `money-priceable.png` | Chapter 3: coloured item doodle (blue Rewind arrow) + amber price + amber balance + buy/pass | Chapter 3 → `C3_Rewind` |
+| `gun-bear.png` | Chapter 4: the brown last bear vs one man, first person, no avatar | Chapter 4 → `04_Bear` |
+| `matchup.png` | Chapter 5: the two-doodle matchup (blue crowd of men vs the grey gorilla) + the imp's banter | Chapter 5 → `02_MenGorilla` |
+| `booth.png` | Chapter 7: the fixed ink confessional + a confessor in the doorway with a floating headline | Chapter 7 → `C7_01_Recliner` |
+| `campaign.png` | Chapter 8: the imp launching the tabletop campaign (the DM register) | Chapter 8 → `C8_03_Class` (intro) |
+
+Together these give **1 to 2 shots per chapter** (Chapter 6 is not yet built), plus the extra Chapter 1
+trolleys, embedded in the PDF's "Chapters at a glance" gallery and its convention sections.
 
 ### ◻️ To capture (the PDF shows a labelled placeholder until these exist)
+
+These four are the **live-timed / interactive** moments that need playing a beat to an exact instant,
+so they were left for a focused editor (where hover and timing behave normally):
 
 | File | Shows | How to reach it (F1 dev picker) |
 |---|---|---|
 | `nuke-map.png` | The hand-drawn ink **world map** with the small red **map pin** on a country, population in amber | **Chapter 2 → `C2_Nuke`**. Advance the imp's setup, then **press the red button**; capture once the pin has dropped and the name/population read out. |
-| `gun-bear.png` | The **bear** (brown fill) framed by the first-person **ink crosshair** with its single **amber** corner-bracket lock | **Chapter 4 → the Bear opener** (beat `01`). Move the mouse so the amber lock sits on the bear, then capture (before firing). |
-| `matchup.png` | The **two-doodle matchup** format: two coloured fighters side by side with counts and a muted "vs" (e.g. **100 men vs 1 gorilla**) | **Chapter 5 → the first matchup**. Capture once both fighters + labels are inked in. |
-| `booth.png` | The fixed **confession booth**, a confessor in the doorway, and the **three verdict** labels in a row above the box | **Chapter 7 → any case** (e.g. `The Recliner`). Advance to where the three verdicts are presented. |
-| `campaign-class.png` *(optional)* | The five **class doodles** (sword+shield, dagger, wizard hat, lute, chalice), each a coloured outline | **Chapter 8 → `Your Class`** (beat `01`). Capture the class-pick menu. |
-| `dice.png` | The **DiceRoll** set piece: the hand-drawn ink **d6**, the odds caption, an **amber** flash on the landed value | **Chapter 8 → The First Roll** (or the finale roll). Capture during/just after the tumble lands. |
-| `money-priceable.png` | A money-chapter **offer**: a coloured-outline item **doodle**, the amber **price tag**, the amber **balance** up top, plain buy/pass text | **Chapter 3 → any priceable beat** (e.g. `End Poverty`, or `Rewind` for the blue back-arrow). |
+| `dice.png` | The **DiceRoll** set piece: the hand-drawn ink **d6**, the odds caption, an **amber** flash on the landed value | **Chapter 8 → The First Roll** (`C8_05_FirstRoll`). Advance to the roll and capture just as the tumble lands. |
 | `stats-reveal.png` | The **"how others chose"** crowd reveal: the reflective **bars**, the player's own pick picked out in amber | **Any dilemma** (e.g. Chapter 1 `07_Lever`): play it, **make a choice**, click through the consequence, and capture when the stat bars present on their own. |
 | `imp-closeup.png` *(optional)* | A clean close-up of the **imp** — horns, tail, grin, the amber tint, an expression | Grab from the **Main Menu** or any dialogue beat and crop tight to the imp. |
 
 If a live moment refuses to sit still for a clean grab, capture the nearest clean frame and note it;
 the placeholder caption in the PDF already describes exactly what the shot should contain.
 
-> **Note on this pass:** the seven captured shots were grabbed via the Unity screenshot tool while
-> driving the beats from script. Live-timed moments (the pressed nuke button, the stat-bar reveal, an
-> aimed crosshair, a landed die) are the ones left for a focused-editor pass, since they depend on
-> playing the beat to an exact instant. Everything else is in.
+> **Note on this pass:** twelve shots were grabbed via the Unity screenshot tool while driving the
+> beats from script (at least one per chapter). The four remaining are the genuinely live-timed
+> moments (a pressed nuke button, a landed die, the stat-bar reveal), best grabbed in a focused editor. Everything else is in.
 
 ---
 
