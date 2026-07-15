@@ -10,6 +10,7 @@ These files are the authoritative design for the game. They exist so anyone (hum
 - `tech.md` — engine, stats system & backend, data model, git workflow, build plan.
 - `decisions.md` — dated log of design decisions and any changes to them.
 - `open-questions.md` — things not yet decided.
+- `design-reference/` — a **visual style reference pack for Claude Design** (a hand-off, not a spec): a polished PDF (`your-call-style-guide.pdf`) documenting how the game *looks* and the design rules (palette + exact hex values, the line and figures, the imp, typography, UI conventions, the doodle catalogue, dos and don'ts), assembled from the docs plus in-engine `screenshots/`. `build-style-guide.py` regenerates the PDF (embedding whatever screenshots are present, placeholders otherwise); `SCREENSHOT-GUIDE.md` is the shot list and capture how-to. It reflects the docs, which stay authoritative — when they change, regenerate it.
 
 ## Maintenance rules (keep this real)
 1. **Docs before drift.** When a decision changes, update the relevant file **and** log it in `decisions.md` in the same commit. Never let the docs lag behind the actual game.
