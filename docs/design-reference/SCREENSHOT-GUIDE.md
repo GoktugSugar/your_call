@@ -63,24 +63,25 @@ fine; the guide scales each shot to fit.
 Together these give **1 to 2 shots per chapter** (Chapter 6 is not yet built), plus the extra Chapter 1
 trolleys, embedded in the PDF's "Chapters at a glance" gallery and its convention sections.
 
+The **`stats-reveal.png`** ("how others chose", e.g. Do nothing 96 / Pull the lever 4) and
+**`imp-closeup.png`** were captured by hand and are now in the pack too.
+
 ### ◻️ To capture (the PDF shows a labelled placeholder until these exist)
 
-These four are the **live-timed / interactive** moments that need playing a beat to an exact instant,
-so they were left for a focused editor (where hover and timing behave normally):
+These two are the **live-timed** moments that need playing a beat to an exact instant, so they were
+left for a focused editor (where timing behaves normally):
 
 | File | Shows | How to reach it (F1 dev picker) |
 |---|---|---|
 | `nuke-map.png` | The hand-drawn ink **world map** with the small red **map pin** on a country, population in amber | **Chapter 2 → `C2_Nuke`**. Advance the imp's setup, then **press the red button**; capture once the pin has dropped and the name/population read out. |
 | `dice.png` | The **DiceRoll** set piece: the hand-drawn ink **d6**, the odds caption, an **amber** flash on the landed value | **Chapter 8 → The First Roll** (`C8_05_FirstRoll`). Advance to the roll and capture just as the tumble lands. |
-| `stats-reveal.png` | The **"how others chose"** crowd reveal: the reflective **bars**, the player's own pick picked out in amber | **Any dilemma** (e.g. Chapter 1 `07_Lever`): play it, **make a choice**, click through the consequence, and capture when the stat bars present on their own. |
-| `imp-closeup.png` *(optional)* | A clean close-up of the **imp** — horns, tail, grin, the amber tint, an expression | Grab from the **Main Menu** or any dialogue beat and crop tight to the imp. |
 
 If a live moment refuses to sit still for a clean grab, capture the nearest clean frame and note it;
 the placeholder caption in the PDF already describes exactly what the shot should contain.
 
-> **Note on this pass:** twelve shots were grabbed via the Unity screenshot tool while driving the
-> beats from script (at least one per chapter). The four remaining are the genuinely live-timed
-> moments (a pressed nuke button, a landed die, the stat-bar reveal), best grabbed in a focused editor. Everything else is in.
+> **Note on this pass:** fourteen shots are in (at least one per chapter, plus the imp close-up and
+> the stats reveal). The two remaining are the genuinely live-timed moments (a pressed nuke button,
+> a landed die), best grabbed in a focused editor. Everything else is in.
 
 ---
 
