@@ -38,12 +38,12 @@ signal folded
 		head_radius = value
 		queue_redraw()
 ## Shoulder to elbow.
-@export_range(5.0, 100.0, 0.5) var upper_arm_length := 19.0:
+@export_range(5.0, 100.0, 0.5) var upper_arm_length := 21.0:
 	set(value):
 		upper_arm_length = value
 		queue_redraw()
 ## Elbow to hand.
-@export_range(5.0, 100.0, 0.5) var forearm_length := 18.0:
+@export_range(5.0, 100.0, 0.5) var forearm_length := 20.0:
 	set(value):
 		forearm_length = value
 		queue_redraw()

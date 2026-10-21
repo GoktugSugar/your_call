@@ -40,11 +40,15 @@ enum Face { GRIN, SMUG, GLARE, SURPRISED }
 	set(value):
 		tail_swing = value
 		queue_redraw()
-## Where his line is in its wavering, in shapes: between two whole numbers his line melts from one
-## shape to the next. [Imp] moves it along smoothly.
+## Where his line is in its jitter, counted in shapes. [Imp] moves it along.
 @export var jitter_phase := 0.0:
 	set(value):
 		jitter_phase = value
+		queue_redraw()
+## Off, his line jumps from shape to shape like hand-drawn ink. On, it melts smoothly between them.
+@export var smooth_jitter := false:
+	set(value):
+		smooth_jitter = value
 		queue_redraw()
 ## Palette role of his ink.
 @export var tint_role: StringName = &"imp":
@@ -80,16 +84,16 @@ const _SLY_RIGHT_EYE := [Vector2(16.1, -109.2), Vector2(4.2, -101.5)]
 const _HOODED_RIGHT_EYE := [Vector2(4.0, -103.0), Vector2(17.0, -104.5)]
 const _GLARE_LEFT_EYE := [Vector2(-17.5, -112.5), Vector2(-4.0, -100.5)]
 const _GLARE_RIGHT_EYE := [Vector2(17.5, -112.5), Vector2(4.0, -100.5)]
-const _GRIN := [Vector2(-18.9, -94.5), Vector2(-13.0, -86.0), Vector2(0.0, -81.0), Vector2(13.0, -86.0), Vector2(18.9, -94.5)]
-const _SMIRK := [Vector2(-14.0, -88.5), Vector2(0.0, -85.5), Vector2(12.0, -88.0), Vector2(19.0, -96.0)]
-const _FROWN := [Vector2(-15.0, -84.0), Vector2(0.0, -89.0), Vector2(15.0, -84.0)]
+const _GRIN := [Vector2(-13.0, -94.5), Vector2(-8.0, -88.5), Vector2(0.0, -86.0), Vector2(8.0, -88.5), Vector2(13.0, -94.5)]
+const _SMIRK := [Vector2(-10.0, -89.5), Vector2(0.0, -87.5), Vector2(9.0, -89.5), Vector2(14.0, -95.5)]
+const _FROWN := [Vector2(-11.0, -86.5), Vector2(0.0, -90.5), Vector2(11.0, -86.5)]
 const _SURPRISED_EYES := [Vector2(-10.0, -105.0), Vector2(10.0, -105.0)]
 const _SURPRISED_EYE_RADIUS := 5.0
 ## His eyes are bold marks, heavier than the rest of him, so they read at any size. His grin is finer.
 const _EYE_WIDTH := 1.35
 const _GLARE_EYE_WIDTH := 1.45
-const _MOUTH_WIDTH := 0.75
-const _SURPRISED_MOUTH := Vector2(0.0, -88.0)
+const _MOUTH_WIDTH := 0.95
+const _SURPRISED_MOUTH := Vector2(0.0, -88.5)
 const _SURPRISED_MOUTH_RADII := Vector2(5.0, 6.5)
 
 
@@ -98,7 +102,8 @@ func _init() -> void:
 
 
 func _variant() -> float:
-	return fposmod(jitter_phase, float(maxi(style_override.boil_variants if style_override != null else 1, 1)))
+	var phase := fposmod(jitter_phase, float(maxi(style_override.boil_variants if style_override != null else 1, 1)))
+	return phase if smooth_jitter else floorf(phase)
 
 
 func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:

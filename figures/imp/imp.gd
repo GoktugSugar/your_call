@@ -1,8 +1,8 @@
 class_name Imp
 extends Node2D
 ## The imp, who runs the game and narrates every word of it. He scribbles into being with a pop and
-## never quite keeps still: his line wavers, he drifts, his tail sways, and every few seconds he
-## fidgets. All of it is soft and eased, never snapping. He nods and gestures while he talks, and hops
+## never quite keeps still: his line jitters like boiling ink, his tail sways, and every few seconds he
+## fidgets. His body moves softly and eased, never snapping. He nods and gestures while he talks, and hops
 ## to a fresh spot for each new dialogue box. He keeps to the side wings and never stands on the stage.
 ## His origin is the ground between his feet.
 
@@ -47,14 +47,14 @@ enum Wing { LEFT, RIGHT }
 @export_range(0.1, 10.0, 0.05) var tail_period := 1.9
 
 @export_group("Jitter")
-## How many of his line's shapes he wavers through a second. His line melts from one shape to the next.
-@export_range(0.0, 12.0, 0.05) var jitter_rate := 2.5
-## How far he drifts off his spot, in pixels.
-@export_range(0.0, 6.0, 0.05) var drift := 1.2
+## How many times a second his line jumps to its next shape. The page boils at 5; he is a little livelier.
+@export_range(0.0, 24.0, 0.05) var jitter_rate := 8.0
+## How far he drifts off his spot, in pixels. Zero keeps him planted.
+@export_range(0.0, 6.0, 0.05) var drift := 0.0
 ## How quickly he drifts, in wanders a second.
 @export_range(0.0, 6.0, 0.05) var drift_rate := 1.1
 ## How far his head wavers on its own, in degrees.
-@export_range(0.0, 10.0, 0.1) var head_waver := 2.0
+@export_range(0.0, 10.0, 0.1) var head_waver := 0.0
 
 @export_group("Fidgets")
 ## Shortest and longest pause between fidgets, in seconds.

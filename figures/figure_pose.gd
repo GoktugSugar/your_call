@@ -12,13 +12,13 @@ extends Resource
 ## Tilt of the head on the spine. Positive tilts to the right.
 @export_range(-90.0, 90.0, 0.5) var head_tilt := 0.0
 ## Swing of the screen left arm away from hanging straight down. Positive swings it out to the side.
-@export_range(-180.0, 180.0, 0.5) var left_shoulder := 24.0
+@export_range(-180.0, 180.0, 0.5) var left_shoulder := 36.0
 ## Swing of the screen right arm away from hanging straight down. Positive swings it out to the side.
-@export_range(-180.0, 180.0, 0.5) var right_shoulder := 24.0
+@export_range(-180.0, 180.0, 0.5) var right_shoulder := 36.0
 ## Bend at the screen left elbow. Positive bends the forearm further out.
-@export_range(-170.0, 170.0, 0.5) var left_elbow := 12.0
+@export_range(-170.0, 170.0, 0.5) var left_elbow := -4.0
 ## Bend at the screen right elbow. Positive bends the forearm further out.
-@export_range(-170.0, 170.0, 0.5) var right_elbow := 12.0
+@export_range(-170.0, 170.0, 0.5) var right_elbow := -4.0
 ## Where the screen left foot is planted, relative to standing.
 @export var left_foot := Vector2.ZERO
 ## Where the screen right foot is planted, relative to standing.
