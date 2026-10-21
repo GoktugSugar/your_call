@@ -1,0 +1,47 @@
+{
+  "id": "ch1",
+  "title": "The Tracks",
+  "beats": [
+    {
+      "kind": "question",
+      "id": "lever",
+      "number": "1.02",
+      "title": "The Lever",
+      "verb": "binary",
+      "weight": "medium",
+      "stage": {
+        "type": "trolley",
+        "tracks": [
+          { "figures": ["stranger", "stranger", "stranger", "stranger", "stranger"] },
+          { "figures": ["stranger"] }
+        ]
+      },
+      "ask": [
+        "The classic, to break you in gently. [amber]Five[/amber] strangers on the straight track, too slow and too doomed to get clear. [amber]One[/amber] more soul on the branch, and a lever under your hand that decides whose morning stops here. You did so love deciding what people deserved, up on your nice high bench. And you did know your way around a moving vehicle. Your call."
+      ],
+      "options": [
+        {
+          "id": "pull",
+          "label": "Pull the lever",
+          "outcome": { "track": 1 },
+          "crowd": 87,
+          "profile": { "one_many": 1, "ends_rules": -1 },
+          "reaction": [
+            "You pulled. [amber]One[/amber] life swapped for [amber]five[/amber], and you barely blinked, quick as a man signing an order he stopped actually reading years ago. Tidy. Proportionate. So very sensible. I would not go looking for a gold star, though. They only get harder from here, and I only get ruder."
+          ]
+        },
+        {
+          "id": "nothing",
+          "label": "Do nothing",
+          "outcome": { "track": 0 },
+          "crowd": 13,
+          "profile": { "one_many": -1, "ends_rules": 1 },
+          "reaction": [
+            "Hands in your pockets, [amber]five[/amber] [red]folded[/red], and a clean conscience you have not remotely earned. Not my lever, not my fault, you tell yourself, the way you told yourself about the last machine you had the wheel of. Doing nothing is still a choice. It is only the one you get to pretend you never made."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    }
+  ]
+}
