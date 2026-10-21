@@ -47,6 +47,13 @@ The editor is the 4.7.2 standard build in `C:/Program Files/Godot/`. There is no
 - The game opens maximized. `--window=WxH` forces an exact window size, so check small windows (`--window=1600x900`) as well as large.
 - Keep screenshots and other scratch output out of the repo.
 
+Voice (Python 3, standard library only; the key comes from `.env`, which git ignores):
+
+- Design candidate voices: `python tools/voice/design_auditions.py` (previews land in `voice_auditions/`)
+- Save the chosen one for a speaker: `python tools/voice/save_voice.py imp <audition slug>`
+- Voice every new or changed line: `python tools/voice/voice_lines.py` (`--dry-run` first to see what it will spend)
+- Voice clips are committed through Git LFS.
+
 ## GodotPrompter
 
 This is a Godot project with GodotPrompter skills available. Before implementing any game system, you MUST check for a matching `godot-prompter:*` skill and invoke it. This applies to all agents, subagents, and sessions working in this repository.

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://ui/dialogue/dialogue_box.gd" id="1_box"]
 [ext_resource type="Script" path="res://ui/ink_frame.gd" id="2_frame"]
 
-[node name="DialogueBox" type="Control" node_paths=PackedStringArray("frame", "text_label", "measure_label")]
+[node name="DialogueBox" type="Control" node_paths=PackedStringArray("frame", "text_label", "measure_label", "voice_player")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,6 +15,7 @@ script = ExtResource("1_box")
 frame = NodePath("Frame")
 text_label = NodePath("Frame/Text")
 measure_label = NodePath("Measure")
+voice_player = NodePath("Voice")
 
 [node name="Frame" type="Control" parent="."]
 layout_mode = 0
@@ -50,3 +51,6 @@ fit_content = true
 scroll_active = false
 shortcut_keys_enabled = false
 horizontal_alignment = 1
+
+[node name="Voice" type="AudioStreamPlayer" parent="."]
+bus = &"Voice"
