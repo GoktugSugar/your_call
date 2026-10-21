@@ -118,8 +118,7 @@ def main() -> None:
         })
         print(f"{path.name}: {preview.get('duration_secs', '?')} s, model {model}")
     index["candidates"].sort(key=lambda c: c["number"])
-    index_path.write_text(json.dumps(index, indent=2), encoding="utf-8", newline="
-")
+    index_path.write_text(json.dumps(index, indent=2), encoding="utf-8", newline="\n")
     print(f"Saved to {args.out}")
 
 

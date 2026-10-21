@@ -50,8 +50,7 @@ def main() -> None:
         "description": candidate["description"],
         "designed_with": candidate["model"],
     }
-    VOICES.write_text(json.dumps(voices, indent=2) + "\n", encoding="utf-8", newline="
-")
+    VOICES.write_text(json.dumps(voices, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(f"Saved {body['voice_name']} as voice {voice['voice_id']}, recorded in {VOICES.name}")
 
 
