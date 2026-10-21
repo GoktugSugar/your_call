@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://dev/dev_tools.gd" id="1_tools"]
+
+[node name="DevTools" type="Node" node_paths=PackedStringArray("overlay")]
+script = ExtResource("1_tools")
+overlay = NodePath("Layer/Overlay")
+
+[node name="Layer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="Overlay" type="Label" parent="Layer"]
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 600.0
+offset_bottom = 300.0
+theme_override_colors/font_color = Color(0.6039216, 0.5882353, 0.54901963, 1)
+theme_override_font_sizes/font_size = 30
+text = "dev"
