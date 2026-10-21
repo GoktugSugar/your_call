@@ -19,7 +19,7 @@ These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus t
 - Whether allocation and self-sacrifice get dedicated beats, or the presentations in section 5 of `PREMISE.md` already cover that ground.
 - Guess the crowd: how often it happens, how it's presented, and whether a right or wrong guess gets a reaction.
 - The imp's name: does he ever give one, or keep refusing?
-- The imp's look: amber or black ink, and expressions everywhere or only at specific moments.
+- The imp's expressions: everywhere, or only at specific moments. (His ink is settled: amber.)
 - Replayability: should there be a New Game+? Do the endings and the imp's treatment change enough to make replays worth it?
 - The would-you-rather pool:
   - growing it
@@ -51,13 +51,3 @@ These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus t
 
 **Language**
 - Whether to localize again, and into which languages. If yes, the text and voice pipelines should be designed for it from the start.
-
-## Raised by the first slice
-
-Defaults are in place for each of these so the slice could be built. Settle them when tuning.
-
-- **Clicking while text inks on:** does a click finish the page (current), or does text always ink on at its own pace?
-- **The reveal and the tableau:** the tableau dissolves before the crowd reveal (current). Should it stay faintly behind the bars instead?
-- **Skipping a consequence:** consequences always play out in full (current). Should a click speed one up or skip it, perhaps only on a replay?
-- **The imp between wings:** he hops within one wing for a whole question (current). Should he ever cross to the other wing, and when?
-- **Souls on the tracks:** they stand on the rails (current), the way the premise draws figures on a ground line. Lying tied across the rails is the classic picture, but it would need a new pose set.

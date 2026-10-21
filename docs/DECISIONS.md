@@ -33,3 +33,13 @@ All dev decisions, made while building the slice. The look and pacing numbers ar
 - **New input action `pick`** (left click) for pointing at things on the stage and in the choice row, separate from `advance`.
 - **Testing with GUT 9.7.1**, the version the user already runs on Godot 4.7, vendored in `addons/gut`.
 - **Development tools are debug only.** Autoplay, screenshots, the overlay and F5 restart live in `dev/` and are added by `Main` only in debug builds. `dev/` will be excluded from release exports when the export presets are set up.
+
+## 2026-10-22: first tuning round on the slice
+
+- **Settled from the slice's open questions.** User. The imp stays amber. A click while text is inking finishes the page. The tableau dissolves before the crowd reveal. Consequences always play in full. The souls stand on the rails.
+- **The imp is redrawn after the old build's imp.** User, from a picture of the old imp. The clean smiley read wrong, so he is now crude and angular: long thin horns, a lumpy head, sly slanted eyes over a wide grin, a boxy body, floating bent arms, and a crooked tail with a square tip. His line is heavier than the rest of the page.
+- **The imp's jitter is soft, never sharp.** User. Random twitching read like an animatronic, so all his idle motion is now eased and continuous. His line melts smoothly from one shape to the next (dev: the brush can blend between boil variants). He drifts on smooth noise, and his fidgets (a shrug, a tail flick, a bounce, a cocked head) ease in and out. The rest of the page keeps its stepped 5 fps boil.
+- **Lines are heavier and never too thin on screen.** User reported thin lines in the 1600x900 window. Dev: the base line is 5.2 px (was 4.4), every line keeps at least 3 screen pixels at any window size, and a taper takes at most a fifth of a line, so short marks like the imp's eyes stay bold. The imp's eyes and mouth are drawn heavier still.
+- **The game opens maximized.** Dev. The 1600x900 window drew everything at 83 percent. The `--window=WxH` dev switch forces an exact size for checking.
+- **Stage tuning.** User. The stick figures are a fifth smaller, the lever sits lower, and the trolley's wheels tuck up under its body.
+- **Washes paint in line order.** Dev. Each line's wash goes down just before the line itself, so a drawing lists what is behind first. The trolley's body now hides the tops of its wheels.
