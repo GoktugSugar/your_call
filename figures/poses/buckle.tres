@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_pose")
-hip_offset = Vector2(0, 14)
+hip_offset = Vector2(0, 11)
 spine_angle = 5.0
 head_tilt = 8.0
 left_shoulder = 46.0

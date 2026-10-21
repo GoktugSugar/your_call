@@ -34,7 +34,7 @@ path_points = PackedVector2Array(330, 575, 760, 575)
 [node name="Figures" type="Node2D" parent="."]
 
 [node name="Lever" type="Node2D" parent="."]
-position = Vector2(694, 662)
+position = Vector2(694, 688)
 script = ExtResource("4_lever")
 handle_length = 72.0
 knob_radius = 8.5

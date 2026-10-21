@@ -18,42 +18,42 @@ signal folded
 
 @export_group("Body")
 ## Hips to ground when standing straight.
-@export_range(10.0, 200.0, 0.5) var leg_length := 64.0:
+@export_range(10.0, 200.0, 0.5) var leg_length := 51.0:
 	set(value):
 		leg_length = value
 		queue_redraw()
 ## Hips to neck.
-@export_range(10.0, 200.0, 0.5) var spine_length := 48.0:
+@export_range(10.0, 200.0, 0.5) var spine_length := 38.0:
 	set(value):
 		spine_length = value
 		queue_redraw()
 ## Neck to the bottom of the head.
-@export_range(0.0, 40.0, 0.5) var neck_length := 5.0:
+@export_range(0.0, 40.0, 0.5) var neck_length := 4.0:
 	set(value):
 		neck_length = value
 		queue_redraw()
 ## Radius of the head.
-@export_range(4.0, 60.0, 0.5) var head_radius := 14.0:
+@export_range(4.0, 60.0, 0.5) var head_radius := 11.5:
 	set(value):
 		head_radius = value
 		queue_redraw()
 ## Shoulder to elbow.
-@export_range(5.0, 100.0, 0.5) var upper_arm_length := 24.0:
+@export_range(5.0, 100.0, 0.5) var upper_arm_length := 19.0:
 	set(value):
 		upper_arm_length = value
 		queue_redraw()
 ## Elbow to hand.
-@export_range(5.0, 100.0, 0.5) var forearm_length := 22.0:
+@export_range(5.0, 100.0, 0.5) var forearm_length := 18.0:
 	set(value):
 		forearm_length = value
 		queue_redraw()
 ## How far below the neck the arms join the spine.
-@export_range(0.0, 60.0, 0.5) var shoulder_drop := 7.0:
+@export_range(0.0, 60.0, 0.5) var shoulder_drop := 5.5:
 	set(value):
 		shoulder_drop = value
 		queue_redraw()
 ## How far each foot stands from the middle.
-@export_range(0.0, 60.0, 0.5) var foot_spread := 12.0:
+@export_range(0.0, 60.0, 0.5) var foot_spread := 10.0:
 	set(value):
 		foot_spread = value
 		queue_redraw()
@@ -62,24 +62,24 @@ signal folded
 
 @export_group("Face")
 ## Radius of each dot eye.
-@export_range(0.5, 8.0, 0.1) var eye_radius := 3.0:
+@export_range(0.5, 8.0, 0.1) var eye_radius := 2.6:
 	set(value):
 		eye_radius = value
 		queue_redraw()
 ## How far each eye sits from the middle of the face.
-@export_range(0.0, 20.0, 0.1) var eye_spread := 5.0:
+@export_range(0.0, 20.0, 0.1) var eye_spread := 4.2:
 	set(value):
 		eye_spread = value
 		queue_redraw()
 ## How far above the middle of the head the eyes sit.
-@export_range(-20.0, 20.0, 0.1) var eye_height := 1.5:
+@export_range(-20.0, 20.0, 0.1) var eye_height := 1.2:
 	set(value):
 		eye_height = value
 		queue_redraw()
 
 @export_group("Breathing")
 ## How far the hips rise and fall with each breath, in pixels.
-@export_range(0.0, 6.0, 0.1) var breath_depth := 1.4
+@export_range(0.0, 6.0, 0.1) var breath_depth := 1.1
 ## Seconds per breath.
 @export_range(0.5, 10.0, 0.1) var breath_period := 3.4
 ## How far the arms sway with each breath, in degrees.

@@ -21,7 +21,7 @@ extends Stage
 ## Canvas x of the middle of each track's group of figures.
 @export var figures_center_x := 1320.0
 ## Distance between neighbouring figures on a track.
-@export_range(20.0, 300.0, 1.0) var figure_spacing := 82.0
+@export_range(20.0, 300.0, 1.0) var figure_spacing := 68.0
 
 @export_group("Trolley")
 ## How far along the approach the trolley waits.
