@@ -17,12 +17,12 @@ Godot 4.7, Forward+ renderer, GDScript with static typing. The base canvas is 19
 | `ui/` | The dialogue box, the choice row, the crowd reveal, and the theme. |
 | `game/` | The run: the main scene, the question flow, the content model and loader, the profile. |
 | `content/` | The game's content as data. Its format is in `content/README.md`. |
-| `assets/` | Imported files: fonts, and later audio. |
+| `assets/` | Imported files: fonts, and voice clips in `assets/voice/` (stored with Git LFS). |
 | `dev/` | Development-only tools and samplers. Main adds the dev tools in debug builds only, and `dev/` stays out of release exports. |
 | `tests/` | GUT tests. |
 | `addons/` | Third-party addons: GUT 9.7.1. |
 | `docs/` | Design docs, decision log, open questions. Hidden from Godot. |
-| `tools/` | Offline tooling such as the voice pipeline. Hidden from Godot. Not created yet. |
+| `tools/` | Offline tooling: the voice pipeline (`tools/voice/`, Python). Hidden from Godot. |
 
 A feature keeps its scene, script and resources together in its folder. Files and folders are `snake_case`.
 
@@ -78,6 +78,15 @@ A **`Stage`** is a question's presentation. The question player drives every sta
 
 Content is JSON, one file per chapter, read by **`ContentLoader`** into `ChapterData`, `QuestionData`, `NarrationData`, `OptionData` and `LineData`. The loader never stops on a problem: it keeps what it can and lists each problem with where it is, and the tests fail on any. Every line gets a stable id from where it sits, such as `ch1.lever.pull.1`. **`Markup`** handles the colour tags: stripping them, turning them into palette colours, and checking them; it also checks for dashes. The format is documented in `content/README.md`.
 
+## Voice (`tools/voice/`, `game/voice/`)
+
+Lines are voiced with ElevenLabs. Each line is one take, so its delivery flows across its sentences, and the game plays a page at a time out of it.
+
+- **Casting.** `design_auditions.py` designs candidate voices from written descriptions into `voice_auditions/` (ignored by git and Godot). `save_voice.py` saves the chosen one as a permanent ElevenLabs voice and records it per speaker in `tools/voice/voices.json`, with the TTS model and settings.
+- **Voicing.** `voice_lines.py` asks Godot for every line (`dev/export_voice_lines.gd`: id, speaker, spoken text, SHA-1), then voices each line whose speaker has a voice and whose clip is missing or out of date. It uses the with-timestamps endpoint, so every clip comes with the time each character is spoken. A clip is out of date when its text or its voice settings change. Clips go to `assets/voice/<speaker>/<line id>.mp3`, timings beside them as `.json`, and `assets/voice/manifest.json` records the text hash and voice signature of each.
+- **Playing.** `VoiceLibrary` looks a line's clip up by id and only returns it while the line's spoken text still hashes to what the clip was made from; recolouring a line keeps its voice, rewording it silences it until it is voiced again. `VoiceClip` gives the stretch of the take for a page's characters and when each character starts. `DialogueBox` plays that stretch on the Voice bus and inks the page on in time with it, reading the audio clock. The first click finishes the page while the voice plays on; the next moves on, fading the voice out on one of two players so it never cuts off the next take.
+- **The key** is read from `.env` or `ELEVENLABS_API_KEY` and never printed.
+
 ## Development tools (`dev/`)
 
 All of these run from the command line; see CLAUDE.md for the exact commands.
@@ -85,6 +94,7 @@ All of these run from the command line; see CLAUDE.md for the exact commands.
 - `check_scripts.gd` loads every script and fails if any does not compile (the headless import alone does not catch parse errors).
 - `dev_tools.tscn` (debug builds only): F5 restarts, F3 shows the phase and the profile. On the command line it can force a window size, autoplay a question (pick an option, or point at and click the lever with synthetic pointer events), speed the game up, save a screenshot before each click and a burst during the consequence, and quit after a number of questions.
 - `capture_runner.tscn` runs any scene and saves screenshots at set times.
+- `export_voice_lines.gd` writes every line's id, speaker, spoken text and hash for the voice tools.
 - `ink_sampler`, `figure_sampler` and `imp_sampler` show the line, the poses and fold, and the imp's faces and hops on their own.
 
 ## Tests (`tests/`)
