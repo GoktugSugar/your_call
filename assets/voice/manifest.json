@@ -1,0 +1,29 @@
+{
+  "ch1.lever.ask.1": {
+    "audio": "res://assets/voice/imp/ch1.lever.ask.1.mp3",
+    "model": "eleven_v3",
+    "seconds": 26.8,
+    "speaker": "imp",
+    "text_sha1": "91a658cd8895b897543e9f194a26bb5c295fcf9c",
+    "timing": "res://assets/voice/imp/ch1.lever.ask.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch1.lever.nothing.1": {
+    "audio": "res://assets/voice/imp/ch1.lever.nothing.1.mp3",
+    "model": "eleven_v3",
+    "seconds": 20.88,
+    "speaker": "imp",
+    "text_sha1": "cff6b27527df64ff53557e82685604bb80df4800",
+    "timing": "res://assets/voice/imp/ch1.lever.nothing.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch1.lever.pull.1": {
+    "audio": "res://assets/voice/imp/ch1.lever.pull.1.mp3",
+    "model": "eleven_v3",
+    "seconds": 19.12,
+    "speaker": "imp",
+    "text_sha1": "bc9227ffc3075d6a7403f7c0b917a75929c637de",
+    "timing": "res://assets/voice/imp/ch1.lever.pull.1.json",
+    "voice": "c95aad52ae0b"
+  }
+}

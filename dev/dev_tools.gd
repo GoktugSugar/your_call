@@ -9,6 +9,7 @@ extends Node
 ## --quit-after=N   quit once N questions have finished
 ## --burst=S        with --shots, also save a screenshot every S seconds while a consequence plays
 ## --window=WxH     a plain window of exactly that size, to check a resolution
+## --log-talk       print when each page starts, finishes inking on, and stops being spoken
 ## [/codeblock]
 
 ## Seconds autoplay waits before each click.
@@ -36,6 +37,15 @@ func _ready() -> void:
 	var player: QuestionPlayer = main.question_player
 	player.phase_changed.connect(_on_phase_changed)
 	_quit_after = int(args.get("quit-after", "0"))
+	if args.has("log-talk"):
+		var box := player.dialogue
+		box.page_shown.connect(func(line: LineData, page: int, count: int) -> void:
+			print("%7.2f s  page %d of %d of %s" % [_now(), page + 1, count, line.id]))
+		box.typing_changed.connect(func(typing: bool) -> void:
+			if not typing:
+				print("%7.2f s    text inked on" % _now()))
+		box.talking_changed.connect(func(talking: bool) -> void:
+			print("%7.2f s    %s" % [_now(), "talking" if talking else "quiet"]))
 	if args.has("autoplay"):
 		_shot_path = args.get("shots", "")
 		_burst = float(args.get("burst", "0"))
@@ -97,6 +107,10 @@ func _pull_lever() -> void:
 		click.position = at
 		click.global_position = at
 		Input.parse_input_event(click)
+
+
+func _now() -> float:
+	return Time.get_ticks_msec() / 1000.0
 
 
 func _act(action: StringName) -> void:

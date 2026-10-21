@@ -39,5 +39,16 @@ func schedule(from: int, to: int) -> PackedFloat32Array:
 	return times
 
 
+## When the next spoken character after [param to] starts, in seconds into the take, or INF when
+## nothing more is said. A page stops before it, so it never plays the start of the next page.
+func next_start(to: int) -> float:
+	if not _has_timings():
+		return INF
+	for i in range(to, text.length()):
+		if text[i] != " ":
+			return starts[i]
+	return INF
+
+
 func _has_timings() -> bool:
 	return not starts.is_empty() and starts.size() == text.length() and ends.size() == text.length()

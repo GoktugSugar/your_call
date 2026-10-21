@@ -49,8 +49,11 @@ signal advanced
 @export_group("Voice")
 ## Seconds the voice takes to fade out when the player moves on while it is still playing.
 @export_range(0.0, 1.0, 0.01) var voice_fade := 0.12
-## Seconds of sound kept after a page's last character, so the take is not clipped.
+## Seconds of sound kept after a page's last character, so the take is not clipped. It never runs
+## into the next page's first word.
 @export_range(0.0, 1.0, 0.01) var voice_tail := 0.3
+## Seconds a page's sound stops short of the next page's first word.
+@export_range(0.0, 0.5, 0.005) var next_word_margin := 0.04
 
 @export_group("Opening and closing")
 ## Seconds the frame takes to draw itself on when the box opens.
@@ -214,7 +217,7 @@ func _start_voice(clip: VoiceClip, from: int, length: int) -> void:
 	var stretch := clip.span(from, from + length)
 	_schedule = clip.schedule(from, from + length)
 	_voice_start = stretch.x
-	_voice_end = stretch.y + voice_tail
+	_voice_end = minf(stretch.y + voice_tail, clip.next_start(from + length) - next_word_margin)
 	var voice := _voice()
 	voice.stop()
 	voice.volume_db = 0.0

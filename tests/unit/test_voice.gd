@@ -30,6 +30,12 @@ func test_a_page_inks_on_to_the_timings_from_its_own_start() -> void:
 	assert_almost_eq(times[3], 0.3, 0.0001)
 
 
+func test_a_page_knows_when_the_next_word_starts() -> void:
+	var clip := _clip("You pulled. One life.")
+	assert_almost_eq(clip.next_start(11), 1.2, 0.0001)
+	assert_eq(clip.next_start(21), INF)
+
+
 func test_without_timings_the_take_is_shared_out_evenly() -> void:
 	var clip := VoiceClip.new()
 	clip.text = "abcd"
