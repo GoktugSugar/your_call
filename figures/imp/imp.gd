@@ -30,7 +30,7 @@ enum Wing { LEFT, RIGHT }
 
 @export_group("Idle")
 ## How far he bobs at the knees, in pixels.
-@export_range(0.0, 10.0, 0.1) var bob_depth := 2.0
+@export_range(0.0, 10.0, 0.1) var bob_depth := 0.6
 ## Seconds per bob.
 @export_range(0.1, 10.0, 0.05) var bob_period := 1.6
 ## How far he sways side to side, in degrees.
@@ -38,7 +38,7 @@ enum Wing { LEFT, RIGHT }
 ## Seconds per sway.
 @export_range(0.1, 10.0, 0.05) var sway_period := 4.2
 ## How much he swells with each breath, as a fraction of his height.
-@export_range(0.0, 0.1, 0.001) var breath_swell := 0.02
+@export_range(0.0, 0.1, 0.001) var breath_swell := 0.0
 ## Seconds per breath.
 @export_range(0.1, 10.0, 0.05) var breath_period := 2.8
 ## How far his tail sways, in degrees.
@@ -65,8 +65,8 @@ enum Wing { LEFT, RIGHT }
 @export_range(0.0, 60.0, 0.5) var shrug_lift := 24.0
 ## How far a tail flick swings, in degrees.
 @export_range(0.0, 45.0, 0.5) var flick_swing := 22.0
-## How deep a bounce dips, in pixels.
-@export_range(0.0, 10.0, 0.1) var bounce_dip := 5.0
+## How far a lean in tips him toward the stage, in degrees.
+@export_range(0.0, 30.0, 0.5) var lean_in := 8.0
 ## How far a head cock tips, in degrees.
 @export_range(0.0, 30.0, 0.5) var head_cock := 10.0
 
@@ -124,7 +124,7 @@ var _fidget: Tween
 ## What the fidget under way adds to his pose. Tweened by name.
 var _fidget_arms := 0.0
 var _fidget_tail := 0.0
-var _fidget_crouch := 0.0
+var _fidget_lean := 0.0
 var _fidget_head := 0.0
 
 
@@ -145,8 +145,8 @@ func _process(delta: float) -> void:
 	drawing.jitter_phase += delta * jitter_rate
 	var wander := _time * drift_rate
 	drawing.position = Vector2(InkBrush.noise(wander, _drift_seed), InkBrush.noise(wander + _DRIFT_Y_OFFSET, _drift_seed)) * drift
-	drawing.crouch = (0.5 - 0.5 * cos(_time * TAU / bob_period)) * bob_depth + _fidget_crouch
-	drawing.lean = sin(_time * TAU / sway_period) * sway
+	drawing.crouch = (0.5 - 0.5 * cos(_time * TAU / bob_period)) * bob_depth
+	drawing.lean = sin(_time * TAU / sway_period) * sway + _fidget_lean
 	var swell := sin(_time * TAU / breath_period) * breath_swell
 	drawing.scale = Vector2(1.0 - swell * 0.5, 1.0 + swell)
 	var talk := sin(_time * TAU * nod_rate) if _talking else 0.0
@@ -228,11 +228,11 @@ func _schedule_fidget() -> void:
 	_next_fidget_at = _time + _rng.randf_range(fidget_gap.x, fidget_gap.y)
 
 
-## One fidget, eased out and back: a shrug, a tail flick, a bounce or a cocked head.
+## One fidget, eased out and back: a shrug, a tail flick, a lean toward the stage or a cocked head.
 func _start_fidget() -> void:
 	_schedule_fidget()
 	var fidgets := [[^"_fidget_arms", shrug_lift], [^"_fidget_tail", flick_swing],
-			[^"_fidget_crouch", bounce_dip], [^"_fidget_head", head_cock * (1.0 if _rng.randf() < 0.5 else -1.0)]]
+			[^"_fidget_lean", lean_in * _toward_stage()], [^"_fidget_head", head_cock * (1.0 if _rng.randf() < 0.5 else -1.0)]]
 	var pick: Array = fidgets[_rng.randi_range(0, fidgets.size() - 1)]
 	if _fidget != null and _fidget.is_valid():
 		_fidget.kill()
@@ -241,6 +241,11 @@ func _start_fidget() -> void:
 	_fidget = create_tween()
 	_fidget.tween_property(self, pick[0], pick[1], fidget_duration * 0.45).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	_fidget.tween_property(self, pick[0], 0.0, fidget_duration * 0.55).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
+
+## 1 when the stage is to his right, -1 when it is to his left.
+func _toward_stage() -> float:
+	return 1.0 if wing == Wing.LEFT else -1.0
 
 
 func _arc(t: float, start: Vector2, control: Vector2, target: Vector2) -> void:

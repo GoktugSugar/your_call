@@ -5,6 +5,7 @@ extends InkDrawing
 ## sly slanted eyes over a wide grin, a boxy body, stubby bent arms that float beside it, and a
 ## crooked tail with a square tip. His line is heavier and jitters more than the rest of the page.
 ## Unlike every soul, he has a mouth and a few faces. His origin is the ground between his feet.
+## Both arms join the body at the shoulders.
 ## [Imp] animates the lean, the nod, the crouch, the arms, the tail and the jitter; this only draws them.
 
 enum Face { GRIN, SMUG, GLARE, SURPRISED }
@@ -66,8 +67,8 @@ const _BODY := [Vector2(-10.5, -72.8), Vector2(-28.0, -53.9), Vector2(-23.8, -25
 		Vector2(7.0, -12.6), Vector2(21.7, -23.8), Vector2(28.0, -51.1), Vector2(10.5, -72.8)]
 const _LEFT_HORN := [Vector2(-16.8, -123.9), Vector2(-25.0, -142.0), Vector2(-32.2, -158.9)]
 const _RIGHT_HORN := [Vector2(17.5, -123.9), Vector2(26.5, -141.0), Vector2(35.0, -157.5)]
-const _LEFT_ARM := [Vector2(-23.1, -65.8), Vector2(-43.4, -59.5), Vector2(-44.1, -47.6)]
-const _RIGHT_ARM := [Vector2(21.0, -65.1), Vector2(42.7, -58.1), Vector2(42.7, -45.5)]
+const _LEFT_ARM := [Vector2(-16.0, -66.0), Vector2(-43.4, -59.5), Vector2(-44.1, -47.6)]
+const _RIGHT_ARM := [Vector2(16.0, -66.0), Vector2(43.4, -59.5), Vector2(44.1, -47.6)]
 const _LEFT_LEG := [Vector2(-10.5, -12.6), Vector2(-16.1, -2.1), Vector2(-25.9, -0.7)]
 const _RIGHT_LEG := [Vector2(8.4, -12.6), Vector2(13.3, -2.8), Vector2(23.8, 0.0)]
 const _TAIL := [Vector2(22.4, -24.5), Vector2(33.6, -29.4), Vector2(38.5, -26.6), Vector2(52.5, -33.6),
@@ -84,10 +85,10 @@ const _SMIRK := [Vector2(-14.0, -88.5), Vector2(0.0, -85.5), Vector2(12.0, -88.0
 const _FROWN := [Vector2(-15.0, -84.0), Vector2(0.0, -89.0), Vector2(15.0, -84.0)]
 const _SURPRISED_EYES := [Vector2(-10.0, -105.0), Vector2(10.0, -105.0)]
 const _SURPRISED_EYE_RADIUS := 5.0
-## His eyes and mouth are bold marks, heavier than the rest of him, so they read at any size.
+## His eyes are bold marks, heavier than the rest of him, so they read at any size. His grin is finer.
 const _EYE_WIDTH := 1.35
 const _GLARE_EYE_WIDTH := 1.45
-const _MOUTH_WIDTH := 1.1
+const _MOUTH_WIDTH := 0.75
 const _SURPRISED_MOUTH := Vector2(0.0, -88.0)
 const _SURPRISED_MOUTH_RADII := Vector2(5.0, 6.5)
 

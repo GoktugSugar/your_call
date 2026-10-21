@@ -43,3 +43,4 @@ All dev decisions, made while building the slice. The look and pacing numbers ar
 - **The game opens maximized.** Dev. The 1600x900 window drew everything at 83 percent. The `--window=WxH` dev switch forces an exact size for checking.
 - **Stage tuning.** User. The stick figures are a fifth smaller, the lever sits lower, and the trolley's wheels tuck up under its body.
 - **Washes paint in line order.** Dev. Each line's wash goes down just before the line itself, so a drawing lists what is behind first. The trolley's body now hides the tops of its wheels.
+- **The imp, second pass.** User. His grin is finer than his eyes, and both arms join his body at the shoulders. His body no longer swells with each breath and barely bobs, and the bounce fidget is gone, because together they read as straining. A lean toward the stage takes the bounce's place among his fidgets.
