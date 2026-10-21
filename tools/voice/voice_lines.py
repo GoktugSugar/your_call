@@ -7,7 +7,9 @@
     python tools/voice/voice_lines.py --prune      also delete clips whose lines are gone
 
 Godot exports the lines from content (dev/export_voice_lines.gd), so line ids are built in one place.
-A line is voiced when its speaker has a voice in voices.json. Its clip goes to
+A line is voiced when its speaker has a voice in voices.json, which also sets the model, its settings,
+and an optional "direction": a v3 stage direction such as "[rapid-fire]" said before every line to
+shape the delivery. The direction is not spoken and its timings are dropped. Its clip goes to
 assets/voice/<speaker>/<line id>.mp3, with <line id>.json beside it holding the timings, and
 assets/voice/manifest.json records the text and voice settings each clip was made from. A clip is
 out of date when either changes. The game plays a clip only while its line's text still matches.
@@ -50,22 +52,25 @@ def export_lines() -> list[dict]:
         return json.loads(out.read_text(encoding="utf-8"))["lines"]
 
 
-def voice_setup(voice: dict) -> tuple[str, dict]:
+def voice_setup(voice: dict) -> tuple[str, dict, str]:
     model = voice.get("model_id", DEFAULT_MODEL)
-    return model, voice.get("voice_settings", DEFAULT_SETTINGS.get(model, {}))
+    return model, voice.get("voice_settings", DEFAULT_SETTINGS.get(model, {})), voice.get("direction", "")
 
 
 def signature(voice: dict) -> str:
-    """Changes whenever the voice or its settings change, so every clip made with it goes out of date."""
-    model, settings = voice_setup(voice)
-    recipe = json.dumps({"voice_id": voice["voice_id"], "model_id": model, "voice_settings": settings}, sort_keys=True)
+    """Changes whenever the voice, its settings or its direction change, so every clip made with it goes out of date."""
+    model, settings, direction = voice_setup(voice)
+    recipe = json.dumps({"voice_id": voice["voice_id"], "model_id": model, "voice_settings": settings,
+                         "direction": direction}, sort_keys=True)
     return hashlib.sha1(recipe.encode("utf-8")).hexdigest()[:12]
 
 
 def synthesize(text: str, voice: dict, key: str) -> tuple[bytes, dict, str]:
-    model, settings = voice_setup(voice)
+    model, settings, direction = voice_setup(voice)
     for attempt_model in dict.fromkeys([model, FALLBACK_MODEL]):
-        body = {"text": text, "model_id": attempt_model,
+        # Only v3 reads stage directions; another model would say them aloud.
+        prefix = f"{direction} " if direction and attempt_model == "eleven_v3" else ""
+        body = {"text": prefix + text, "model_id": attempt_model,
                 "voice_settings": settings if attempt_model == model else DEFAULT_SETTINGS[attempt_model]}
         path = f"/text-to-speech/{voice['voice_id']}/with-timestamps?output_format={OUTPUT_FORMAT}"
         try:
@@ -76,11 +81,12 @@ def synthesize(text: str, voice: dict, key: str) -> tuple[bytes, dict, str]:
                 continue
             raise
         alignment = response.get("alignment") or response.get("normalized_alignment") or {}
+        skip = len(prefix)
         timing = {
             "text": text,
-            "characters": "".join(alignment.get("characters", [])),
-            "starts": alignment.get("character_start_times_seconds", []),
-            "ends": alignment.get("character_end_times_seconds", []),
+            "characters": "".join(alignment.get("characters", [])[skip:]),
+            "starts": alignment.get("character_start_times_seconds", [])[skip:],
+            "ends": alignment.get("character_end_times_seconds", [])[skip:],
         }
         return base64.b64decode(response["audio_base64"]), timing, attempt_model
     raise RuntimeError("no model left to try")
