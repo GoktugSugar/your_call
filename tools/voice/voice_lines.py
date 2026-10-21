@@ -122,7 +122,8 @@ def main() -> None:
         folder = VOICE_DIR / line["speaker"]
         folder.mkdir(parents=True, exist_ok=True)
         (folder / f"{line['id']}.mp3").write_bytes(audio)
-        (folder / f"{line['id']}.json").write_text(json.dumps(timing), encoding="utf-8")
+        (folder / f"{line['id']}.json").write_text(json.dumps(timing), encoding="utf-8", newline="
+")
         if timing["characters"] != line["text"]:
             print(f"  note: {line['id']}'s timings cover slightly different characters; the game will spread them evenly")
         manifest[line["id"]] = {
@@ -134,7 +135,8 @@ def main() -> None:
             "model": model,
             "seconds": round(timing["ends"][-1], 3) if timing["ends"] else None,
         }
-        MANIFEST.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        MANIFEST.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="
+")
         print(f"  voiced {line['id']} ({model}, {manifest[line['id']]['seconds']} s)")
 
     gone = sorted(set(manifest) - {line["id"] for line in lines})
@@ -145,7 +147,8 @@ def main() -> None:
                 path = ROOT / resource.removeprefix("res://")
                 path.unlink(missing_ok=True)
                 pathlib.Path(str(path) + ".import").unlink(missing_ok=True)
-        MANIFEST.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        MANIFEST.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="
+")
         print(f"Pruned {len(gone)} clips whose lines are gone")
     elif gone:
         print(f"{len(gone)} clips belong to lines that are gone; run with --prune to delete them")
