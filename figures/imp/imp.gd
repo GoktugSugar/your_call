@@ -1,7 +1,8 @@
 class_name Imp
 extends Node2D
-## The imp, who runs the game and narrates every word of it. He scribbles into being with a pop,
-## keeps a small idle life, nods while he talks, and hops to a fresh spot for each new dialogue box.
+## The imp, who runs the game and narrates every word of it. He scribbles into being with a pop and
+## never quite keeps still: his line jitters, he twitches, his tail sways, and every few seconds he
+## fidgets. He nods and gestures while he talks, and hops to a fresh spot for each new dialogue box.
 ## He keeps to the side wings and never stands on the stage. His origin is the ground between his feet.
 
 ## Emitted when he has finished scribbling into being.
@@ -16,9 +17,9 @@ enum Wing { LEFT, RIGHT }
 
 @export_group("Wings")
 ## Where his feet may land left of the stage, in canvas pixels.
-@export var left_wing := Rect2(90.0, 380.0, 170.0, 260.0)
+@export var left_wing := Rect2(110.0, 380.0, 120.0, 260.0)
 ## Where his feet may land right of the stage, in canvas pixels.
-@export var right_wing := Rect2(1660.0, 380.0, 170.0, 260.0)
+@export var right_wing := Rect2(1690.0, 380.0, 120.0, 260.0)
 ## The shortest hop worth making, in pixels.
 @export_range(0.0, 400.0, 1.0) var min_hop := 70.0
 ## Seconds he stays put after arriving before he will hop again.
@@ -41,12 +42,38 @@ enum Wing { LEFT, RIGHT }
 @export_range(0.0, 0.1, 0.001) var breath_swell := 0.02
 ## Seconds per breath.
 @export_range(0.1, 10.0, 0.05) var breath_period := 2.8
+## How far his tail sways, in degrees.
+@export_range(0.0, 45.0, 0.5) var tail_sway := 6.0
+## Seconds per tail sway.
+@export_range(0.1, 10.0, 0.05) var tail_period := 1.9
+
+@export_group("Jitter")
+## How far he twitches off his spot each idle frame, in pixels.
+@export_range(0.0, 6.0, 0.05) var twitch := 0.7
+## How far his head twitches each idle frame, in degrees.
+@export_range(0.0, 10.0, 0.1) var head_twitch := 1.2
+
+@export_group("Fidgets")
+## Shortest and longest pause between fidgets, in seconds.
+@export var fidget_gap := Vector2(1.8, 4.5)
+## Seconds a fidget takes, out and back.
+@export_range(0.05, 2.0, 0.01) var fidget_duration := 0.32
+## How far a shrug lifts his arms, in degrees.
+@export_range(0.0, 60.0, 0.5) var shrug_lift := 28.0
+## How far a tail flick swings, in degrees.
+@export_range(0.0, 45.0, 0.5) var flick_swing := 26.0
+## How deep a bounce dips, in pixels.
+@export_range(0.0, 10.0, 0.1) var bounce_dip := 6.0
+## How far a head cock tips, in degrees.
+@export_range(0.0, 30.0, 0.5) var head_cock := 12.0
 
 @export_group("Talking")
 ## How far his head nods while he talks, in degrees.
 @export_range(0.0, 20.0, 0.1) var nod_angle := 5.0
 ## Nods a second while he talks.
 @export_range(0.1, 6.0, 0.05) var nod_rate := 2.2
+## How far his arms wave while he talks, in degrees.
+@export_range(0.0, 45.0, 0.5) var talk_gesture := 10.0
 
 @export_group("Hopping")
 ## Seconds from takeoff to landing.
@@ -85,6 +112,13 @@ var _arrived_at := 0.0
 var _since_step := 0.0
 var _rng := RandomNumberGenerator.new()
 var _hop: Tween
+var _next_fidget_at := 0.0
+var _fidget: Tween
+## What the fidget under way adds to his pose. Tweened by name.
+var _fidget_arms := 0.0
+var _fidget_tail := 0.0
+var _fidget_crouch := 0.0
+var _fidget_head := 0.0
 
 
 func _ready() -> void:
@@ -93,6 +127,7 @@ func _ready() -> void:
 	else:
 		_rng.randomize()
 	visible = false
+	_schedule_fidget()
 
 
 func _process(delta: float) -> void:
@@ -101,11 +136,18 @@ func _process(delta: float) -> void:
 	if _since_step < 1.0 / idle_fps:
 		return
 	_since_step = 0.0
-	drawing.crouch = (0.5 - 0.5 * cos(_time * TAU / bob_period)) * bob_depth
+	if _time >= _next_fidget_at and not is_hopping():
+		_start_fidget()
+	drawing.jitter_frame += 1
+	drawing.position = Vector2(_rng.randf_range(-twitch, twitch), _rng.randf_range(-twitch, twitch))
+	drawing.crouch = (0.5 - 0.5 * cos(_time * TAU / bob_period)) * bob_depth + _fidget_crouch
 	drawing.lean = sin(_time * TAU / sway_period) * sway
 	var swell := sin(_time * TAU / breath_period) * breath_swell
 	drawing.scale = Vector2(1.0 - swell * 0.5, 1.0 + swell)
-	drawing.head_tilt = sin(_time * TAU * nod_rate) * nod_angle if _talking else 0.0
+	var talk := sin(_time * TAU * nod_rate) if _talking else 0.0
+	drawing.head_tilt = talk * nod_angle + _rng.randf_range(-head_twitch, head_twitch) + _fidget_head
+	drawing.arm_lift = absf(talk) * talk_gesture + _fidget_arms
+	drawing.tail_swing = sin(_time * TAU / tail_period) * tail_sway + _fidget_tail
 
 
 ## Scribbles him into being at a fresh spot in [param in_wing]. Emits [signal appeared].
@@ -175,6 +217,25 @@ func set_face(face: ImpDrawing.Face) -> void:
 func vanish() -> void:
 	await drawing.dissolve_away(vanish_duration).finished
 	visible = false
+
+
+func _schedule_fidget() -> void:
+	_next_fidget_at = _time + _rng.randf_range(fidget_gap.x, fidget_gap.y)
+
+
+## One quick fidget, out and back: a shrug, a tail flick, a bounce or a cocked head.
+func _start_fidget() -> void:
+	_schedule_fidget()
+	var fidgets := [[^"_fidget_arms", shrug_lift], [^"_fidget_tail", flick_swing],
+			[^"_fidget_crouch", bounce_dip], [^"_fidget_head", head_cock * (1.0 if _rng.randf() < 0.5 else -1.0)]]
+	var pick: Array = fidgets[_rng.randi_range(0, fidgets.size() - 1)]
+	if _fidget != null and _fidget.is_valid():
+		_fidget.kill()
+		for each: Array in fidgets:
+			set(each[0], 0.0)
+	_fidget = create_tween()
+	_fidget.tween_property(self, pick[0], pick[1], fidget_duration * 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_fidget.tween_property(self, pick[0], 0.0, fidget_duration * 0.65).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
 func _arc(t: float, start: Vector2, control: Vector2, target: Vector2) -> void:

@@ -30,6 +30,12 @@ extends Node2D
 @export var constant_line_width := true
 ## Seed for the hand's wobble. Zero picks one from the node's place in its scene.
 @export var wobble_seed := 0
+## A line style of this drawing's own, for a drawing whose line differs from the rest of the page.
+## Leave empty to use the shared style.
+@export var style_override: InkStyle:
+	set(value):
+		style_override = value
+		queue_redraw()
 ## How much of the drawing is on the page, drawn in line order: 0 is blank, 1 is whole.
 @export_range(0.0, 1.0, 0.001) var reveal := 1.0:
 	set(value):
@@ -52,13 +58,18 @@ func _ready() -> void:
 
 
 func _draw() -> void:
-	var style := InkStyle.get_default()
+	var style := style_override if style_override != null else InkStyle.get_default()
 	var lines := _build_lines(style, InkPalette.get_default())
 	var recolor := Color.TRANSPARENT
 	if color_override != &"":
 		recolor = InkPalette.get_default().color(color_override)
 	InkPainter.paint(get_canvas_item(), lines, style.width * width_scale * _width_compensation(),
-			_seed, InkPainter.current_variant(), style, reveal, recolor)
+			_seed, _variant(), style, reveal, recolor)
+
+
+## Which boil variant to draw. The default follows the page's boil clock.
+func _variant() -> int:
+	return InkPainter.current_variant()
 
 
 ## The lines to draw, in local space and in drawing order. The default draws the authored strokes.
