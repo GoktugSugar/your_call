@@ -39,13 +39,12 @@ enum Face { GRIN, SMUG, GLARE, SURPRISED }
 	set(value):
 		tail_swing = value
 		queue_redraw()
-## Which of his jitter variants is showing. [Imp] steps it faster than the page boils.
-@export var jitter_frame := 0:
+## Where his line is in its wavering, in shapes: between two whole numbers his line melts from one
+## shape to the next. [Imp] moves it along smoothly.
+@export var jitter_phase := 0.0:
 	set(value):
-		jitter_frame = value
+		jitter_phase = value
 		queue_redraw()
-## How many jitter variants his line cycles through.
-@export_range(1, 8) var jitter_variants := 4
 ## Palette role of his ink.
 @export var tint_role: StringName = &"imp":
 	set(value):
@@ -85,6 +84,10 @@ const _SMIRK := [Vector2(-14.0, -88.5), Vector2(0.0, -85.5), Vector2(12.0, -88.0
 const _FROWN := [Vector2(-15.0, -84.0), Vector2(0.0, -89.0), Vector2(15.0, -84.0)]
 const _SURPRISED_EYES := [Vector2(-10.0, -105.0), Vector2(10.0, -105.0)]
 const _SURPRISED_EYE_RADIUS := 5.0
+## His eyes and mouth are bold marks, heavier than the rest of him, so they read at any size.
+const _EYE_WIDTH := 1.35
+const _GLARE_EYE_WIDTH := 1.45
+const _MOUTH_WIDTH := 1.1
 const _SURPRISED_MOUTH := Vector2(0.0, -88.0)
 const _SURPRISED_MOUTH_RADII := Vector2(5.0, 6.5)
 
@@ -93,8 +96,8 @@ func _init() -> void:
 	style_override = LINE_STYLE
 
 
-func _variant() -> int:
-	return posmod(jitter_frame, maxi(jitter_variants, 1))
+func _variant() -> float:
+	return fposmod(jitter_phase, float(maxi(style_override.boil_variants if style_override != null else 1, 1)))
 
 
 func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
@@ -125,16 +128,16 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 func _add_face(lines: Array[InkLine], head: Transform2D, tint: Color, spacing: float) -> void:
 	match face:
 		Face.GRIN:
-			lines.append(_line(head, _SLY_LEFT_EYE, tint, spacing, 0.85))
-			lines.append(_line(head, _SLY_RIGHT_EYE, tint, spacing, 0.85))
+			lines.append(_line(head, _SLY_LEFT_EYE, tint, spacing, _EYE_WIDTH))
+			lines.append(_line(head, _SLY_RIGHT_EYE, tint, spacing, _EYE_WIDTH))
 			lines.append(_smooth_line(head, _GRIN, tint, spacing))
 		Face.SMUG:
-			lines.append(_line(head, _SLY_LEFT_EYE, tint, spacing, 0.85))
-			lines.append(_line(head, _HOODED_RIGHT_EYE, tint, spacing, 0.85))
+			lines.append(_line(head, _SLY_LEFT_EYE, tint, spacing, _EYE_WIDTH))
+			lines.append(_line(head, _HOODED_RIGHT_EYE, tint, spacing, _EYE_WIDTH))
 			lines.append(_smooth_line(head, _SMIRK, tint, spacing))
 		Face.GLARE:
-			lines.append(_line(head, _GLARE_LEFT_EYE, tint, spacing, 0.9))
-			lines.append(_line(head, _GLARE_RIGHT_EYE, tint, spacing, 0.9))
+			lines.append(_line(head, _GLARE_LEFT_EYE, tint, spacing, _GLARE_EYE_WIDTH))
+			lines.append(_line(head, _GLARE_RIGHT_EYE, tint, spacing, _GLARE_EYE_WIDTH))
 			lines.append(_smooth_line(head, _FROWN, tint, spacing))
 		Face.SURPRISED:
 			for eye: Vector2 in _SURPRISED_EYES:
@@ -155,7 +158,7 @@ static func _closed_line(xform: Transform2D, points: Array, tint: Color, spacing
 
 
 static func _smooth_line(xform: Transform2D, points: Array, tint: Color, spacing: float) -> InkLine:
-	return InkLine.along(InkBrush.resample_smooth(_transformed(xform, points), false, spacing), tint, 0.9)
+	return InkLine.along(InkBrush.resample_smooth(_transformed(xform, points), false, spacing), tint, _MOUTH_WIDTH)
 
 
 static func _transformed(xform: Transform2D, points: Array) -> PackedVector2Array:

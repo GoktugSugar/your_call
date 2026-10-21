@@ -4,12 +4,13 @@
 
 [resource]
 script = ExtResource("1_style")
-boil_amplitude = 1.5
-boil_wavelength = 14.0
+boil_variants = 4
+boil_amplitude = 1.1
+boil_wavelength = 16.0
 wobble_amplitude = 1.4
 wobble_wavelength = 40.0
-small_line_wobble = 0.55
-width = 5.0
+small_line_wobble = 0.5
+width = 6.0
 width_jitter = 0.1
 taper_length = 5.0
 taper_tip = 0.75
