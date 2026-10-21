@@ -2,7 +2,7 @@ extends Node2D
 ## Development only: the imp in each expression, and one live imp that appears, talks and hops.
 
 @export var imp: Imp
-@export var spacing := 220.0
+@export var spacing := 260.0
 
 
 func _ready() -> void:
