@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://ui/reveal/crowd_reveal.gd" id="1_reveal"]
+[ext_resource type="PackedScene" path="res://ui/reveal/crowd_row.tscn" id="2_row"]
+
+[node name="CrowdReveal" type="Control" node_paths=PackedStringArray("content", "heading")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_reveal")
+content = NodePath("Content")
+heading = NodePath("Content/Heading")
+row_scene = ExtResource("2_row")
+
+[node name="Content" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 550.0
+offset_top = 300.0
+offset_right = 1370.0
+offset_bottom = 540.0
+mouse_filter = 2
+theme_override_constants/separation = 18
+
+[node name="Heading" type="Label" parent="Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "how others chose"
