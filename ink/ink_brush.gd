@@ -116,8 +116,10 @@ static func rounded_rect(rect: Rect2, radius: float, spacing: float) -> PackedVe
 ## Draws a hand-drawn line along [param path], which should already be densely sampled.
 ## A closed path is drawn as a loop that runs a little past its own start, as a hand would.
 ## [param reveal] draws only the first part of the line, for drawing it on.
+## [param variant] picks the boil shape. A fraction between two variants blends smoothly from one shape
+## to the next, for a line that wavers softly instead of stepping.
 static func stroke(item: RID, path: PackedVector2Array, closed: bool, width: float, color: Color,
-		seed: int, variant: int, style: InkStyle, reveal := 1.0) -> void:
+		seed: int, variant: float, style: InkStyle, reveal := 1.0) -> void:
 	var points := path
 	if closed:
 		points = _loop_with_overlap(path, style.loop_overlap)
@@ -142,9 +144,9 @@ static func fill(item: RID, outline: PackedVector2Array, color: Color) -> void:
 
 
 ## A small round dot of ink, like an eye. It boils with the page.
-static func dot(item: RID, center: Vector2, radius: float, color: Color, seed: int, variant: int, style: InkStyle) -> void:
-	var boil_seed := _channel(seed, _CHANNEL_BOIL + variant)
-	var jitter := Vector2(noise(0.5, boil_seed), noise(7.5, boil_seed)) * style.boil_amplitude * 0.5
+static func dot(item: RID, center: Vector2, radius: float, color: Color, seed: int, variant: float, style: InkStyle) -> void:
+	var jitter := Vector2(_boil(0.5, seed, variant, style.boil_variants), _boil(7.5, seed, variant, style.boil_variants)) \
+			* style.boil_amplitude * 0.5
 	var c := center + jitter
 	var segments := maxi(8, ceili(TAU * radius / 1.5))
 	var points := PackedVector2Array([c])
@@ -171,14 +173,14 @@ static func path_length(points: PackedVector2Array) -> float:
 
 
 static func _stroke_open(item: RID, path: PackedVector2Array, width: float, color: Color,
-		seed: int, variant: int, style: InkStyle, reveal: float) -> void:
+		seed: int, variant: float, style: InkStyle, reveal: float) -> void:
 	var n := path.size()
 	if n < 2 or reveal <= 0.0:
 		return
 	var points := path.duplicate()
-	var ends_seed := _channel(seed, _CHANNEL_ENDS + variant)
-	var start_overshoot := style.overshoot * (0.75 + 0.25 * noise(0.5, ends_seed))
-	var end_overshoot := style.overshoot * (0.75 + 0.25 * noise(3.5, ends_seed))
+	var ends_seed := _channel(seed, _CHANNEL_ENDS)
+	var start_overshoot := style.overshoot * (0.75 + 0.25 * _boil(0.5, ends_seed, variant, style.boil_variants))
+	var end_overshoot := style.overshoot * (0.75 + 0.25 * _boil(3.5, ends_seed, variant, style.boil_variants))
 	points[0] += (points[0] - points[1]).normalized() * start_overshoot
 	points[n - 1] += (points[n - 1] - points[n - 2]).normalized() * end_overshoot
 
@@ -205,11 +207,11 @@ static func _stroke_open(item: RID, path: PackedVector2Array, width: float, colo
 		return
 
 	var wobble_seed := _channel(seed, _CHANNEL_WOBBLE)
-	var boil_seed := _channel(seed, _CHANNEL_BOIL + variant)
 	var width_seed := _channel(seed, _CHANNEL_WIDTH)
 	var steadiness := clampf(total / style.wobble_wavelength, style.small_line_wobble, 1.0)
 	var wobble := style.wobble_amplitude * steadiness
 	var boil := style.boil_amplitude * steadiness
+	var taper := minf(style.taper_length, visible * style.max_taper_share)
 	var vertices := PackedVector2Array()
 	vertices.resize(n * 2)
 	var uvs := PackedVector2Array()
@@ -232,10 +234,10 @@ static func _stroke_open(item: RID, path: PackedVector2Array, width: float, colo
 
 		var s := lengths[i]
 		var offset := wobble * noise(s / style.wobble_wavelength, wobble_seed) \
-				+ boil * noise(s / style.boil_wavelength, boil_seed)
+				+ boil * _boil(s / style.boil_wavelength, seed, variant, style.boil_variants)
 		var w := width * (1.0 + style.width_jitter * noise(s / style.width_wavelength, width_seed))
-		if style.taper_length > 0.0:
-			var t := clampf(minf(s, visible - s) / style.taper_length, 0.0, 1.0)
+		if taper > 0.0:
+			var t := clampf(minf(s, visible - s) / taper, 0.0, 1.0)
 			w *= lerpf(style.taper_tip, 1.0, t * t * (3.0 - 2.0 * t))
 		var center := points[i] + normal * offset
 		var half := normal * (w * 0.5 * miter)
@@ -279,6 +281,19 @@ static func _loop_with_overlap(path: PackedVector2Array, overlap: float) -> Pack
 		extra -= step
 		i += 1
 	return loop
+
+
+## Boil noise at [param x]. A [param variant] between two whole variants blends their shapes, eased,
+## wrapping round after [param variants].
+static func _boil(x: float, seed: int, variant: float, variants: int) -> float:
+	var count := maxi(variants, 1)
+	var from := floori(variant)
+	var a := noise(x, _channel(seed, _CHANNEL_BOIL + posmod(from, count)))
+	var weight := variant - from
+	if weight <= 0.0:
+		return a
+	var b := noise(x, _channel(seed, _CHANNEL_BOIL + posmod(from + 1, count)))
+	return lerpf(a, b, weight * weight * (3.0 - 2.0 * weight))
 
 
 static func _channel(seed: int, channel: int) -> int:

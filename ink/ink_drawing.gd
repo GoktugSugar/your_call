@@ -63,12 +63,13 @@ func _draw() -> void:
 	var recolor := Color.TRANSPARENT
 	if color_override != &"":
 		recolor = InkPalette.get_default().color(color_override)
-	InkPainter.paint(get_canvas_item(), lines, style.width * width_scale * _width_compensation(),
+	InkPainter.paint(self, lines, style.width * width_scale * _width_compensation(),
 			_seed, _variant(), style, reveal, recolor)
 
 
-## Which boil variant to draw. The default follows the page's boil clock.
-func _variant() -> int:
+## Which boil variant to draw. The default follows the page's boil clock. A fraction between two
+## variants blends their shapes, for a line that wavers softly.
+func _variant() -> float:
 	return InkPainter.current_variant()
 
 

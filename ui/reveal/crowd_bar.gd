@@ -58,7 +58,7 @@ func _draw() -> void:
 	var edge := InkLine.along(outline, color, 0.8, true)
 	edge.fill = color
 	var lines: Array[InkLine] = [edge]
-	InkPainter.paint(get_canvas_item(), lines, style.width, _seed, InkPainter.current_variant(), style)
+	InkPainter.paint(self, lines, style.width, _seed, InkPainter.current_variant(), style)
 
 
 func _get_minimum_size() -> Vector2:

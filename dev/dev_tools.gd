@@ -8,6 +8,7 @@ extends Node
 ## --shots=PATH     save a screenshot just before each autoplay click, as PATH_01.png and on
 ## --quit-after=N   quit once N questions have finished
 ## --burst=S        with --shots, also save a screenshot every S seconds while a consequence plays
+## --window=WxH     a plain window of exactly that size, to check a resolution
 ## [/codeblock]
 
 ## Seconds autoplay waits before each click.
@@ -29,6 +30,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	overlay.visible = false
 	var args := DevArgs.parse()
+	DevArgs.apply_window(get_window(), args)
 	if args.has("speed"):
 		Engine.time_scale = float(args["speed"])
 	var player: QuestionPlayer = main.question_player

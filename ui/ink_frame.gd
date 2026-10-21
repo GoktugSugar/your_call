@@ -55,4 +55,4 @@ func _draw() -> void:
 	var turn := second.size() / 3
 	second = second.slice(turn) + second.slice(0, turn)
 	lines.append(InkLine.along(second, palette.ink, 0.7, true))
-	InkPainter.paint(get_canvas_item(), lines, style.width * width_scale, _seed, InkPainter.current_variant(), style, reveal)
+	InkPainter.paint(self, lines, style.width * width_scale, _seed, InkPainter.current_variant(), style, reveal)

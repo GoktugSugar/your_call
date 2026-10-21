@@ -29,7 +29,9 @@ static var _default: InkStyle
 
 @export_group("Width")
 ## Width of a line at scale 1, in pixels.
-@export_range(0.5, 20.0, 0.1) var width := 4.4
+@export_range(0.5, 20.0, 0.1) var width := 5.2
+## The thinnest any line may get on screen, in screen pixels, however small the window.
+@export_range(0.0, 10.0, 0.1) var min_screen_width := 3.0
 ## How much the width swells and thins along a line, as a fraction of it.
 @export_range(0.0, 0.8, 0.01) var width_jitter := 0.18
 ## Distance along a line between swells, in pixels.
@@ -38,6 +40,8 @@ static var _default: InkStyle
 @export_range(0.0, 60.0, 0.5) var taper_length := 14.0
 ## Width at the very tip of a loose end, as a fraction of the line's width.
 @export_range(0.0, 1.0, 0.01) var taper_tip := 0.3
+## The most of a line each taper may take, as a fraction of its length, so short marks stay bold.
+@export_range(0.0, 0.5, 0.01) var max_taper_share := 0.2
 ## How far a loose end runs past where it was aimed, in pixels.
 @export_range(0.0, 12.0, 0.1) var overshoot := 2.5
 ## How far a closed shape runs past its own start, as a fraction of its length, as if the pen lifted late.

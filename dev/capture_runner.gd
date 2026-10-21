@@ -15,6 +15,7 @@ extends Node
 
 func _ready() -> void:
 	var args := DevArgs.parse()
+	DevArgs.apply_window(get_window(), args)
 	var scene_path: String = args.get("scene", default_scene)
 	var out: String = args.get("out", OS.get_user_data_dir().path_join("capture"))
 	var times := default_times
