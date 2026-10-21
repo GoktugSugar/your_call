@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://stages/trolley/trolley_stage.gd" id="1_stage"]
+[ext_resource type="Script" path="res://stages/trolley/track.gd" id="2_track"]
+[ext_resource type="Script" path="res://stages/trolley/trolley_cart.gd" id="3_cart"]
+[ext_resource type="Script" path="res://stages/trolley/lever.gd" id="4_lever"]
+[ext_resource type="PackedScene" path="res://figures/stick_figure.tscn" id="5_figure"]
+
+[node name="TrolleyStage" type="Node2D" node_paths=PackedStringArray("approach", "routes", "trolley", "lever", "figure_layer")]
+script = ExtResource("1_stage")
+approach = NodePath("Tracks/Approach")
+routes = [NodePath("Tracks/Route0"), NodePath("Tracks/Route1")]
+trolley = NodePath("Trolley")
+lever = NodePath("Lever")
+figure_layer = NodePath("Figures")
+figure_scene = ExtResource("5_figure")
+
+[node name="Tracks" type="Node2D" parent="."]
+
+[node name="Route1" type="Node2D" parent="Tracks"]
+script = ExtResource("2_track")
+path_points = PackedVector2Array(760, 575, 820, 573, 900, 540, 980, 465, 1060, 404, 1160, 381, 1600, 380)
+bare_start = 34.0
+
+[node name="Route0" type="Node2D" parent="Tracks"]
+script = ExtResource("2_track")
+path_points = PackedVector2Array(760, 575, 1600, 575)
+bare_start = 34.0
+
+[node name="Approach" type="Node2D" parent="Tracks"]
+script = ExtResource("2_track")
+path_points = PackedVector2Array(330, 575, 760, 575)
+
+[node name="Figures" type="Node2D" parent="."]
+
+[node name="Lever" type="Node2D" parent="."]
+position = Vector2(694, 662)
+script = ExtResource("4_lever")
+handle_length = 72.0
+knob_radius = 8.5
+base_size = Vector2(52, 15)
+hit_area = Rect2(-56, -96, 112, 116)
+
+[node name="Trolley" type="Node2D" parent="."]
+script = ExtResource("3_cart")
