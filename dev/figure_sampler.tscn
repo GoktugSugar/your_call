@@ -1,0 +1,16 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="PackedScene" path="res://ink/paper/paper.tscn" id="1_paper"]
+[ext_resource type="Script" path="res://dev/figure_sampler.gd" id="2_sampler"]
+[ext_resource type="PackedScene" path="res://figures/stick_figure.tscn" id="3_figure"]
+[ext_resource type="Resource" path="res://figures/poses/stand.tres" id="4_stand"]
+[ext_resource type="Resource" path="res://figures/poses/buckle.tres" id="5_buckle"]
+[ext_resource type="Resource" path="res://figures/poses/collapse.tres" id="6_collapse"]
+[ext_resource type="Resource" path="res://figures/poses/down.tres" id="7_down"]
+
+[node name="FigureSampler" type="Node2D"]
+script = ExtResource("2_sampler")
+poses = Array[Resource]([ExtResource("4_stand"), ExtResource("5_buckle"), ExtResource("6_collapse"), ExtResource("7_down")])
+figure_scene = ExtResource("3_figure")
+
+[node name="Paper" parent="." instance=ExtResource("1_paper")]
