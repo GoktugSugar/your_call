@@ -49,7 +49,7 @@ signal advanced
 @export_group("Voice")
 ## How fast the voice plays: 1 is as recorded. The Voice bus shifts the pitch back, so a faster voice
 ## sounds like the same speaker talking faster rather than a higher one.
-@export_range(0.5, 2.0, 0.01) var voice_speed := 1.15:
+@export_range(0.5, 2.0, 0.01) var voice_speed := 1.0:
 	set(value):
 		voice_speed = value
 		if is_node_ready():
