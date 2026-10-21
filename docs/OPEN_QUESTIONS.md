@@ -19,7 +19,7 @@ These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus t
 - Whether allocation and self-sacrifice get dedicated beats, or the presentations in section 5 of `PREMISE.md` already cover that ground.
 - Guess the crowd: how often it happens, how it's presented, and whether a right or wrong guess gets a reaction.
 - The imp's name: does he ever give one, or keep refusing?
-- The imp's look: amber or black ink, and expressions everywhere or only at specific moments.
+- The imp's expressions: everywhere, or only at specific moments. (His ink is settled: amber.)
 - Replayability: should there be a New Game+? Do the endings and the imp's treatment change enough to make replays worth it?
 - The would-you-rather pool:
   - growing it

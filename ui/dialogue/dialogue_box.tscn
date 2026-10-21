@@ -1,0 +1,52 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://ui/dialogue/dialogue_box.gd" id="1_box"]
+[ext_resource type="Script" path="res://ui/ink_frame.gd" id="2_frame"]
+
+[node name="DialogueBox" type="Control" node_paths=PackedStringArray("frame", "text_label", "measure_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_box")
+frame = NodePath("Frame")
+text_label = NodePath("Frame/Text")
+measure_label = NodePath("Measure")
+
+[node name="Frame" type="Control" parent="."]
+layout_mode = 0
+offset_left = 370.0
+offset_top = 880.0
+offset_right = 1550.0
+offset_bottom = 1046.0
+mouse_filter = 2
+script = ExtResource("2_frame")
+
+[node name="Text" type="RichTextLabel" parent="Frame"]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 22.0
+offset_right = 1134.0
+offset_bottom = 144.0
+mouse_filter = 2
+clip_contents = false
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+
+[node name="Measure" type="RichTextLabel" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 1180.0
+offset_bottom = 60.0
+mouse_filter = 2
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1

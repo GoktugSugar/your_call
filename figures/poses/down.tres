@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="FigurePose" format=3]
+
+[ext_resource type="Script" path="res://figures/figure_pose.gd" id="1_pose"]
+
+[resource]
+script = ExtResource("1_pose")
+hip_offset = Vector2(18, 46)
+spine_angle = 80.0
+head_tilt = 6.0
+left_shoulder = 160.0
+right_shoulder = -10.0
+left_elbow = 12.0
+right_elbow = 20.0
+left_foot = Vector2(-37, 0)
+right_foot = Vector2(-24, -2)
+arrive_duration = 0.14
+arrive_transition = 1
+arrive_ease = 1
+hold = 0.3

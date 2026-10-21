@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://ink/paper/paper.tscn" id="1_paper"]
+[ext_resource type="Script" path="res://dev/ink_sampler.gd" id="2_sampler"]
+
+[node name="InkSampler" type="Node2D"]
+
+[node name="Paper" parent="." instance=ExtResource("1_paper")]
+
+[node name="Sample" type="Node2D" parent="."]
+script = ExtResource("2_sampler")

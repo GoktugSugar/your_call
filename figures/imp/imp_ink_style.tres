@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="InkStyle" format=3]
+
+[ext_resource type="Script" path="res://ink/ink_style.gd" id="1_style"]
+
+[resource]
+script = ExtResource("1_style")
+boil_variants = 4
+boil_amplitude = 1.25
+boil_wavelength = 16.0
+wobble_amplitude = 1.4
+wobble_wavelength = 40.0
+small_line_wobble = 0.5
+width = 6.0
+width_jitter = 0.1
+taper_length = 5.0
+taper_tip = 0.75
+overshoot = 1.5
+loop_overlap = 0.02

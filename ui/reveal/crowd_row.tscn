@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://ui/reveal/crowd_row.gd" id="1_row"]
+[ext_resource type="Script" path="res://ui/reveal/crowd_bar.gd" id="2_bar"]
+
+[node name="CrowdRow" type="VBoxContainer" node_paths=PackedStringArray("label", "bar")]
+offset_right = 820.0
+offset_bottom = 100.0
+mouse_filter = 2
+theme_override_constants/separation = 0
+script = ExtResource("1_row")
+label = NodePath("Label")
+bar = NodePath("Bar")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme_override_font_sizes/font_size = 38
+text = "Pull the lever"
+
+[node name="Bar" type="Control" parent="." node_paths=PackedStringArray("number_label")]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_bar")
+number_label = NodePath("Number")
+
+[node name="Number" type="Label" parent="Bar"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 46.0
+theme_override_font_sizes/font_size = 38
+text = "87"

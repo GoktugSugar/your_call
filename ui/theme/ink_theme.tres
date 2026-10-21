@@ -1,0 +1,10 @@
+[gd_resource type="Theme" format=3]
+
+[ext_resource type="FontVariation" path="res://ui/theme/caveat_semibold.tres" id="1_eb0b2"]
+
+[resource]
+default_font = ExtResource("1_eb0b2")
+default_font_size = 44
+Label/colors/font_color = Color(0.105882354, 0.101960786, 0.09019608, 1)
+RichTextLabel/colors/default_color = Color(0.105882354, 0.101960786, 0.09019608, 1)
+RichTextLabel/constants/line_separation = 0

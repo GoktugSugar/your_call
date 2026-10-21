@@ -1,0 +1,11 @@
+{
+  "note": "First pass axes from the earlier build. The final list is an open question. A nudge's sign leans toward the first pole when negative and the second when positive.",
+  "axes": [
+    { "id": "one_many", "poles": ["the one", "the many"] },
+    { "id": "mercy_justice", "poles": ["mercy", "justice"] },
+    { "id": "ends_rules", "poles": ["ends", "rules"] },
+    { "id": "order_freedom", "poles": ["order", "freedom"] },
+    { "id": "self_others", "poles": ["self", "others"] },
+    { "id": "risk_safety", "poles": ["risk", "safety"] }
+  ]
+}

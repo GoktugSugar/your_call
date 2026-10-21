@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://figures/imp/imp.gd" id="1_imp"]
+[ext_resource type="Script" path="res://figures/imp/imp_drawing.gd" id="2_drawing"]
+
+[node name="Imp" type="Node2D" node_paths=PackedStringArray("drawing")]
+script = ExtResource("1_imp")
+drawing = NodePath("Drawing")
+
+[node name="Drawing" type="Node2D" parent="."]
+script = ExtResource("2_drawing")
