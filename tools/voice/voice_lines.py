@@ -60,9 +60,10 @@ def voice_setup(voice: dict) -> tuple[str, dict, str]:
 def signature(voice: dict) -> str:
     """Changes whenever the voice, its settings or its direction change, so every clip made with it goes out of date."""
     model, settings, direction = voice_setup(voice)
-    recipe = json.dumps({"voice_id": voice["voice_id"], "model_id": model, "voice_settings": settings,
-                         "direction": direction}, sort_keys=True)
-    return hashlib.sha1(recipe.encode("utf-8")).hexdigest()[:12]
+    recipe = {"voice_id": voice["voice_id"], "model_id": model, "voice_settings": settings}
+    if direction:
+        recipe["direction"] = direction
+    return hashlib.sha1(json.dumps(recipe, sort_keys=True).encode("utf-8")).hexdigest()[:12]
 
 
 def synthesize(text: str, voice: dict, key: str) -> tuple[bytes, dict, str]:

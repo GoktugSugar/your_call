@@ -7,7 +7,6 @@
     "model_id": "eleven_v3",
     "voice_settings": {
       "stability": 0.5
-    },
-    "direction": "[rapid-fire, fast-talking]"
+    }
   }
 }
