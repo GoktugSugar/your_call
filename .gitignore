@@ -23,3 +23,7 @@ Thumbs.db
 
 # Voice auditions are scratch audio for choosing voices, not game assets
 /voice_auditions/
+
+# Placeholder music of unknown licence: played locally, never published
+/assets/audio/music/bgm_placeholder.mp3
+/assets/audio/music/bgm_placeholder.mp3.import

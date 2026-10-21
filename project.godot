@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Ink="*res://ink/ink.gd"
+Music="*res://game/audio/music.tscn"
 
 [display]
 

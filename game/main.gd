@@ -35,6 +35,7 @@ func _ready() -> void:
 		return
 	dialogue.page_shown.connect(_on_page_shown)
 	dialogue.talking_changed.connect(imp.set_talking)
+	dialogue.talking_changed.connect(Music.duck)
 	await imp.appear(Imp.Wing.RIGHT)
 	while is_inside_tree():
 		await question_player.play(beat, profile)

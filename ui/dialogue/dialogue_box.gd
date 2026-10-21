@@ -47,6 +47,15 @@ signal advanced
 @export_range(0.0, 20.0, 0.1) var ink_edge := 3.0
 
 @export_group("Voice")
+## How fast the voice plays: 1 is as recorded. The Voice bus shifts the pitch back, so a faster voice
+## sounds like the same speaker talking faster rather than a higher one.
+@export_range(0.5, 2.0, 0.01) var voice_speed := 1.15:
+	set(value):
+		voice_speed = value
+		if is_node_ready():
+			_apply_voice_speed()
+## The bus the voice plays on. Its first effect must be the pitch shift that keeps the speaker's pitch.
+@export var voice_bus := &"Voice"
 ## Seconds the voice takes to fade out when the player moves on while it is still playing.
 @export_range(0.0, 1.0, 0.01) var voice_fade := 0.12
 ## Seconds of sound kept after a page's last character, so the take is not clipped. It never runs
@@ -91,6 +100,7 @@ func _ready() -> void:
 	var second := voice_player.duplicate() as AudioStreamPlayer
 	add_child(second)
 	_players = [voice_player, second]
+	_apply_voice_speed()
 	modulate.a = 0.0
 	set_process(false)
 
@@ -98,8 +108,9 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	var voice := _voice()
 	if _voiced and voice.playing:
-		_elapsed = voice.get_playback_position() + AudioServer.get_time_since_last_mix() \
-				- AudioServer.get_output_latency() - _voice_start
+		# The playback position is in the take's own time; the mixer's lag is in real time.
+		var lag := AudioServer.get_time_since_last_mix() - AudioServer.get_output_latency()
+		_elapsed = voice.get_playback_position() + lag * voice.pitch_scale - _voice_start
 		if _voice_start + _elapsed >= _voice_end:
 			voice.stop()
 	else:
@@ -238,6 +249,19 @@ func _stop_voice(fade: float) -> void:
 	tween.tween_property(voice, ^"volume_db", _SILENT_DB, fade)
 	tween.tween_callback(voice.stop)
 	_update_talking()
+
+
+## Plays the voice at [member voice_speed], with the bus shifting its pitch back down.
+func _apply_voice_speed() -> void:
+	for player in _players:
+		player.pitch_scale = voice_speed
+	var bus := AudioServer.get_bus_index(voice_bus)
+	if bus < 0 or AudioServer.get_bus_effect_count(bus) == 0:
+		return
+	var shift := AudioServer.get_bus_effect(bus, 0) as AudioEffectPitchShift
+	if shift != null:
+		shift.pitch_scale = 1.0 / voice_speed
+		AudioServer.set_bus_effect_enabled(bus, 0, not is_equal_approx(voice_speed, 1.0))
 
 
 func _voice() -> AudioStreamPlayer:

@@ -17,7 +17,7 @@ Godot 4.7, Forward+ renderer, GDScript with static typing. The base canvas is 19
 | `ui/` | The dialogue box, the choice row, the crowd reveal, and the theme. |
 | `game/` | The run: the main scene, the question flow, the content model and loader, the profile. |
 | `content/` | The game's content as data. Its format is in `content/README.md`. |
-| `assets/` | Imported files: fonts, and voice clips in `assets/voice/` (stored with Git LFS). |
+| `assets/` | Imported files: fonts, music in `assets/audio/music/`, and voice clips in `assets/voice/` (stored with Git LFS). |
 | `dev/` | Development-only tools and samplers. Main adds the dev tools in debug builds only, and `dev/` stays out of release exports. |
 | `tests/` | GUT tests. |
 | `addons/` | Third-party addons: GUT 9.7.1. |
@@ -86,6 +86,10 @@ Lines are voiced with ElevenLabs. Each line is one take, so its delivery flows a
 - **Voicing.** `voice_lines.py` asks Godot for every line (`dev/export_voice_lines.gd`: id, speaker, spoken text, SHA-1), then voices each line whose speaker has a voice and whose clip is missing or out of date. It uses the with-timestamps endpoint, so every clip comes with the time each character is spoken. A clip is out of date when its text or its voice settings change. Clips go to `assets/voice/<speaker>/<line id>.mp3`, timings beside them as `.json`, and `assets/voice/manifest.json` records the text hash and voice signature of each.
 - **Playing.** `VoiceLibrary` looks a line's clip up by id and only returns it while the line's spoken text still hashes to what the clip was made from; recolouring a line keeps its voice, rewording it silences it until it is voiced again. `VoiceClip` gives the stretch of the take for a page's characters and when each character starts. `DialogueBox` plays that stretch on the Voice bus and inks the page on in time with it, reading the audio clock. The first click finishes the page while the voice plays on; the next moves on, fading the voice out on one of two players so it never cuts off the next take.
 - **The key** is read from `.env` or `ELEVENLABS_API_KEY` and never printed.
+
+## Audio (`game/audio/`, `default_bus_layout.tres`)
+
+Buses: Master, with Music, SFX and Voice under it. The Voice bus starts with a pitch shift, which the dialogue box sets so a voice played faster keeps its pitch (`voice_speed`). The `Music` autoload loops one quiet track under everything, carried across scene changes, fading it in and dipping it while someone talks. A missing track is silence.
 
 ## Development tools (`dev/`)
 
