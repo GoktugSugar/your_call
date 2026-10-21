@@ -35,9 +35,16 @@ A narrative dark comedy for PC and Steam, remade from scratch in Godot 4.7 with 
 
 The editor is the 4.7.2 standard build in `C:/Program Files/Godot/`. There is no Godot MCP server: run and check everything from the command line.
 
-- Import and parse every script: `"C:/Program Files/Godot/Godot_Console.exe" --headless --path . --import`
-- Run the game: `"C:/Program Files/Godot/Godot.exe" --path .`
-- Look before you claim a visual change works: capture frames and read them.
+`G` below stands for `"C:/Program Files/Godot/Godot_Console.exe"`.
+
+- Import (also refreshes the class cache after adding a `class_name`): `G --headless --path . --import`
+- Check every script compiles (import alone misses parse errors): `G --headless --path . -s res://dev/check_scripts.gd`
+- Run the tests: `G --headless --path . -s addons/gut/gut_cmdln.gd`
+- Run the game: `"C:/Program Files/Godot/Godot.exe" --path .` (F5 restarts, F3 shows the phase and the silent profile)
+- Look before you claim a visual change works. Autoplay a question and save a screenshot before each click, plus a burst during the consequence:
+  `G --path . --resolution 1920x1080 -- --autoplay=1 --speed=2 --shots=<scratch>/run --burst=0.25 --quit-after=1`
+  (`--autoplay=lever` clicks the stage's lever instead of a choice word.) Any other scene: `G --path . --resolution 1920x1080 res://dev/capture_runner.tscn -- --scene=res://... --out=<scratch>/shot --times=0.5,2`
+- Keep screenshots and other scratch output out of the repo.
 
 ## GodotPrompter
 

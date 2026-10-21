@@ -51,3 +51,13 @@ These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus t
 
 **Language**
 - Whether to localize again, and into which languages. If yes, the text and voice pipelines should be designed for it from the start.
+
+## Raised by the first slice
+
+Defaults are in place for each of these so the slice could be built. Settle them when tuning.
+
+- **Clicking while text inks on:** does a click finish the page (current), or does text always ink on at its own pace?
+- **The reveal and the tableau:** the tableau dissolves before the crowd reveal (current). Should it stay faintly behind the bars instead?
+- **Skipping a consequence:** consequences always play out in full (current). Should a click speed one up or skip it, perhaps only on a replay?
+- **The imp between wings:** he hops within one wing for a whole question (current). Should he ever cross to the other wing, and when?
+- **Souls on the tracks:** they stand on the rails (current), the way the premise draws figures on a ground line. Lying tied across the rails is the classic picture, but it would need a new pose set.

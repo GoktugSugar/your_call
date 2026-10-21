@@ -16,3 +16,20 @@ A dated record of every decision, newest at the bottom. Append an entry whenever
 - **Input.** Dev. Everything goes through Input Map actions: `advance` (left click, Space, Enter), `choose_1` to `choose_6` (number keys), `pause` (Esc), plus `dev_restart` (F5) and `dev_overlay` (F3), which only act in development builds.
 - **Project layout by feature.** Dev. Folders are `ink/`, `figures/`, `doodles/`, `stages/`, `ui/`, `game/` and `content/`, with `docs/` and `tools/` hidden from Godot. Details are in `ARCHITECTURE.md`.
 - **CLAUDE.md carries a GodotPrompter section.** User. Agents, subagents included, must check for a matching `godot-prompter` skill before building a Godot system.
+
+## 2026-10-22: the first slice, 1.02 The Lever
+
+All dev decisions, made while building the slice. The look and pacing numbers are starting points to tune with the user.
+
+- **Content is JSON, one file per chapter.** Lines are plain strings, or objects when they need a speaker or a face. JSON is plain text that diffs cleanly and that the voice tooling can read without a parser of its own. `ContentLoader` reports every malformed or unknown field with its location, and the content tests fail on any problem. The format is in `content/README.md`.
+- **Line ids come from where a line sits** (`ch1.lever.pull.1`), so nobody types or maintains them. The voice pipeline will also track each clip by its text, so a copy change marks exactly that clip for regeneration.
+- **How the ink is drawn.** Every line is a triangle strip built in GDScript and drawn through `RenderingServer`, with a shader that softens edges from screen-space derivatives. Wobble and boil come from cheap 1D value noise. The whole page boils together on one clock: 5 fps, 3 variants. Static drawings only redraw on the boil; moving ones redraw every frame.
+- **Idle motion steps like hand-drawn animation.** Figures breathe in step with the boil, and the imp idles at 12 fps. Big motion, such as the trolley, a fall or a hop, runs at full frame rate.
+- **The stick figure rig.** Arms use forward kinematics and legs use two-bone IK to planted feet, all from pose resources that blend and mirror. Death is the shared fold: buckle, collapse, down, then an ink dissolve. There are no strike marks or impact effects.
+- **The imp is drawn in code too**, with four faces (grin, smug, glare, surprised). He uses the palette's `imp` tint, the last build's amber, until the open question is settled; one palette change switches him to black ink. He keeps to one wing for a whole question.
+- **Stages are data-driven scenes behind one contract.** A question's `stage.type` picks `stages/<type>/<type>_stage.tscn`, and the stage builds itself from the question's data. The trolley stage handles any number of tracks and figures, and the lever stands for the option that leaves the straight track.
+- **The loop is one chain of awaits** in `QuestionPlayer`. Each component listens for input only while the loop is waiting on it, so the reaction and the reveal never share a click.
+- **UX defaults in place, to confirm at tuning.** A click while text is inking finishes the page. The tableau dissolves before the crowd reveal, so the reveal stands alone. Consequences cannot be skipped. Pages hold up to 3 lines, and text inks on at 42 characters a second with short breaths after punctuation.
+- **New input action `pick`** (left click) for pointing at things on the stage and in the choice row, separate from `advance`.
+- **Testing with GUT 9.7.1**, the version the user already runs on Godot 4.7, vendored in `addons/gut`.
+- **Development tools are debug only.** Autoplay, screenshots, the overlay and F5 restart live in `dev/` and are added by `Main` only in debug builds. `dev/` will be excluded from release exports when the export presets are set up.
