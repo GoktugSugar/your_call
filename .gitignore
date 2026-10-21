@@ -1,0 +1,22 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Exports
+/export/
+/builds/
+
+# Secrets and local config. The ElevenLabs key lives in the environment or in .env, never in git.
+.env
+.env.*
+/secrets/
+
+# Python tooling
+__pycache__/
+.venv/
+
+# OS and editor clutter
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
