@@ -69,7 +69,7 @@ enum Face { GRIN, SMUG, GLARE, SURPRISED }
 		lips_part_at = value
 		queue_redraw()
 ## How far his lips part at the least, as a share of how far they go, so a parted mouth always shows
-## the dark inside it rather than a thickened line.
+## its inside rather than a thickened line.
 @export_range(0.0, 1.0, 0.01) var least_parting := 0.45:
 	set(value):
 		least_parting = value
@@ -79,8 +79,8 @@ enum Face { GRIN, SMUG, GLARE, SURPRISED }
 	set(value):
 		mouth_wash_role = value
 		queue_redraw()
-## How strongly the wash inside his open mouth takes its colour over the paper.
-@export_range(0.0, 1.0, 0.01) var mouth_wash := 0.8:
+## How strongly the wash inside his open mouth takes its colour over the paper. Zero leaves it blank.
+@export_range(0.0, 1.0, 0.01) var mouth_wash := 0.0:
 	set(value):
 		mouth_wash = value
 		queue_redraw()
