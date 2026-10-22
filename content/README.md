@@ -4,6 +4,7 @@ The game's questions and narration live here as data. Adding a question means ad
 
 - `chapters/*.json`: one file per chapter, its beats in play order.
 - `profile_axes.json`: the silent profile's axes.
+- `countries.json`: the countries the pin in 2.10 can land on: name, ISO code, people, and where on the map.
 
 The tests in `tests/content/` load every chapter and fail on any problem, so run them after editing.
 
@@ -52,6 +53,8 @@ or a question:
 - `verb` is one of `binary`, `multiple_choice`, `coordination_gamble`, `allocation`, `self_sacrifice`.
 - `weight` is `light`, `medium` or `heavy`.
 - `stage.type` names the stage scene, `stages/<type>/<type>_stage.tscn`. The rest of `stage` is read by that stage.
+- `lines` (optional) holds named sets of the imp's lines that the stage says at moments of its own, such as the needling over the timer's countdown: `"lines": { "countdown": [ "...", "..." ] }`. A set's lines get ids like `ch2.timer.countdown.1`, so a set may not be called `ask`, `stage` or the id of an option.
+- `reveal.heading` is the reveal's heading. `reveal.labels` (optional) puts other words over the bars than the option labels, one per option, such as "took the money" for "Press it". `reveal.mark` (optional) names the line a coordination gamble's crowd had to cross, such as "half".
 
 ## The trolley stage
 
@@ -101,8 +104,20 @@ or a question:
 - `label` is the words in the choice row: plain text, no colour tags.
 - `outcome` is read by the stage. The trolley stage reads `track`.
 - `crowd` is the seeded share who chose it. For binary and multiple choice questions the shares add up to 100. Every number so far is a placeholder chosen to divide people.
-- `profile` nudges axes from `profile_axes.json`. Negative leans toward the axis's first pole, positive toward its second. Leave it out for questions that feed no axis.
+- `profile` nudges axes from `profile_axes.json`. Negative leans toward the axis's first pole, positive toward its second. Leave it out for questions that feed no axis. An option picked again and again, as on an offer ladder, nudges every time.
 - `ending` names a secret ending the option fires; leave it out otherwise.
+
+When how the consequence comes out decides what the imp says, `reaction` is an object keyed by the outcome the stage reports, and `ending` can be keyed the same way to fire only on some outcomes:
+
+```json
+"reaction": {
+  "lives": [ "Blue, and the room held." ],
+  "dies": [ "Blue, and the room came up short." ]
+},
+"ending": { "dies": "some_ending" }
+```
+
+Keyed lines get ids like `ch2.red_blue.blue.lives.1`. An outcome with no lines of its own gets no reaction. Each stage below lists the outcomes it reports.
 
 ## A line
 
@@ -124,6 +139,16 @@ or an object, when someone else says it or the imp's face should change:
 - `direction` is a delivery note for the voice, such as `"[furious]"`, sent ahead of the line when it is voiced. It is never shown.
 - Each line becomes one or more dialogue boxes: long lines are paged by whole sentences.
 - Every line gets an id from where it sits, `<chapter>.<beat>.<part>.<number>`, such as `ch1.lever.pull.1`.
+
+### Placeholders
+
+A line can carry placeholders the stage fills in when it is shown, such as the amount the player turned down: `"[amber]{amount}[/amber] was the number you would not go below."` Names are lowercase in curly brackets, and each stage lists the ones it fills (below). Every way a stage can fill a line is a variant with an id of its own, the line's id plus the variant, such as `ch2.price.refuse.1.3125`, so each can be voiced as its own clip. The tests check every variant against the text rules and the dialogue box.
+
+### Words on the stage
+
+Stage data can hold words the player reads on the stage. They follow the text rules too, but they are not lines:
+- `says` anywhere in stage data is a line floating over something on the stage: plain text is a plea, a line object can name its speaker (`{ "text": "Ow!", "speaker": "button" }`), and a list holds several. They get ids like `ch2.walks_away.stage.1`.
+- `text`, `caption` and `label` keys hold readouts, captions and labels, such as `"{count} dead"`. They may carry placeholders, never colour tags.
 
 ## The text rules
 

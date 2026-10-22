@@ -1,6 +1,7 @@
 extends GutTest
 ## Every page of every line in content/ fits the dialogue box: shown at the size the box gives it,
-## it wraps onto exactly the lines it was measured on, and no more than the box holds.
+## it wraps onto exactly the lines it was measured on, and no more than the box holds. A line with
+## placeholders is checked once for every way its stage fills it.
 
 const CHAPTERS_DIR := "res://content/chapters"
 const BOX_SCENE := "res://ui/dialogue/dialogue_box.tscn"
@@ -21,9 +22,11 @@ func before_all() -> void:
 			if beat is NarrationData:
 				_lines.append_array((beat as NarrationData).lines)
 			elif beat is QuestionData:
-				_lines.append_array((beat as QuestionData).ask)
-				for option in (beat as QuestionData).options:
-					_lines.append_array(option.reaction)
+				var question := beat as QuestionData
+				# Words floating over the stage are not shown in the box.
+				for line in question.all_lines():
+					if not line in question.stage_lines:
+						_lines.append_array(StageFills.filled_lines(question, line))
 
 
 func before_each() -> void:

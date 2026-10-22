@@ -1,7 +1,8 @@
 class_name Markup
 extends RefCounted
-## The colour tags narration carries, such as [code][amber]five[/amber][/code], and the mechanical
-## text rules every player-facing line follows. What each tag means is in PREMISE.md section 9.
+## The colour tags narration carries, such as [code][amber]five[/amber][/code], the placeholders a
+## stage fills in, such as [code]{amount}[/code], and the mechanical text rules every player-facing
+## line follows. What each tag means is in PREMISE.md section 9.
 
 ## The tag vocabulary. Each tag is also the name of its palette colour.
 const TAGS: PackedStringArray = ["red", "amber", "pink", "gold", "blue"]
@@ -9,6 +10,7 @@ const TAGS: PackedStringArray = ["red", "amber", "pink", "gold", "blue"]
 const DASHES := "-\u2010\u2011\u2012\u2013\u2014\u2015\u2212"
 
 static var _tag_regex: RegEx
+static var _placeholder_regex: RegEx
 
 
 ## The text with its tags taken out, as it is read aloud.
@@ -19,6 +21,20 @@ static func strip(text: String) -> String:
 ## Whether the text carries any tags.
 static func has_tags(text: String) -> bool:
 	return _tags().search(text) != null
+
+
+## The names of the placeholders in the text, in order, such as [code]amount[/code] for [code]{amount}[/code].
+static func placeholders(text: String) -> PackedStringArray:
+	var names := PackedStringArray()
+	for found in _placeholder().search_all(text):
+		names.append(found.get_string(1))
+	return names
+
+
+## Whether the text has a curly bracket that does not frame a placeholder.
+static func has_stray_brace(text: String) -> bool:
+	var bare := _placeholder().sub(text, "", true)
+	return bare.contains("{") or bare.contains("}")
 
 
 ## The text as BBCode for a RichTextLabel: known tags become their palette colours, anything else is shown literally.
@@ -77,3 +93,9 @@ static func _tags() -> RegEx:
 	if _tag_regex == null:
 		_tag_regex = RegEx.create_from_string("\\[(/?)([a-zA-Z_]+)\\]")
 	return _tag_regex
+
+
+static func _placeholder() -> RegEx:
+	if _placeholder_regex == null:
+		_placeholder_regex = RegEx.create_from_string("\\{([a-z_]+)\\}")
+	return _placeholder_regex

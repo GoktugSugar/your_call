@@ -4,3 +4,7 @@ extends BeatData
 
 ## What is said, in order.
 var lines: Array[LineData] = []
+
+
+func all_lines() -> Array[LineData]:
+	return lines.duplicate()
