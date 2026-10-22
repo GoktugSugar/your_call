@@ -1,8 +1,9 @@
 @tool
 class_name MuzzleFlash
 extends InkDrawing
-## The flash at a gun's muzzle as it fires: a handful of short amber rays bursting out of a point, drawn
-## on in an instant and gone just as fast. It marks the gun, never the one it hits. Its origin is the muzzle.
+## The flash at a gun's muzzle as it fires, or the burst where a shot lands: a handful of short rays
+## bursting out of a point, drawn on in an instant and gone just as fast. Its origin is the muzzle, or
+## the hit.
 
 ## How many rays burst out.
 @export_range(3, 16) var rays := 7:

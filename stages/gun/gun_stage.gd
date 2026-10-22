@@ -2,8 +2,10 @@ class_name GunStage
 extends Stage
 ## The gun chapter, first person: one to five targets stand before the player, an ink sight follows the
 ## pointer, and amber brackets lock on to whatever it is over; a click fires at it. The choice row offers
-## the same shots in words, and lowering the gun. There is no gun on screen: a shot is the page flashing,
-## the view jolting and the sight kicking, and the one hit folds; lowering the gun drops the sight away.
+## the same shots in words, and lowering the gun. There is no gun on screen: a shot is heard, the page
+## flashes, the view jolts, the sight kicks and fades away, and the one hit folds; lowering the gun drops
+## the sight away. A shot at the imp lands harder: the sight is gone at once, ink bursts where he is hit,
+## and the world holds still for a heartbeat before he rounds on the camera.
 ## Stage data:
 ## [codeblock]
 ## {"type": "gun", "imp": true, "survivors": "leave",
@@ -24,7 +26,7 @@ extends Stage
 ## [code]"alone": {"seconds": 8}[/code]: nothing is asked and there is no choice row; the gun lowers by
 ## itself when time runs out. [code]"charge": {"seconds": 6}[/code]: the doodle target charges at the
 ## player while they choose, arriving when time runs out (which holds), and turns out to be the walking
-## button, shot or not.
+## button, shot or not; shot, it stops where it was hit.
 ## Outcomes: the id of the target shot, or [code]imp[/code] or [code]self[/code]; [code]click[/code] for
 ## an empty gun; [code]held[/code] for lowering it, or [code]fired[/code] and [code]lowered[/code] for an
 ## armed target's answer. A charging thing reports [code]shot[/code], [code]shot_again[/code] (when the
@@ -52,6 +54,10 @@ const AIM_ANY := "any"
 @export var flash: ColorRect
 ## The flash at an armed target's muzzle.
 @export var muzzle: MuzzleFlash
+## The burst of ink where a shot at the imp lands.
+@export var impact: MuzzleFlash
+## Plays the gunshot.
+@export var gunshot: AudioStreamPlayer
 ## The words floating over a target that pleads.
 @export var plea_scene: PackedScene
 ## The walking button, which a charging thing turns out to be.
@@ -82,6 +88,10 @@ const AIM_ANY := "any"
 @export_range(0.0, 60.0, 0.5) var jolt := 10.0
 ## Seconds the jolt takes.
 @export_range(0.01, 2.0, 0.01) var jolt_time := 0.24
+## Seconds the sight takes to fade away once the gun has gone off.
+@export_range(0.0, 2.0, 0.01) var sight_fade_time := 0.3
+## How far each gunshot's pitch strays either way, so no two sound quite alike.
+@export_range(0.0, 0.5, 0.01) var gunshot_pitch_spread := 0.05
 ## How far the sight twitches on a dry click.
 @export_range(0.0, 60.0, 0.5) var dry_twitch := 8.0
 ## Seconds the sight takes to move onto a target picked in the row.
@@ -102,6 +112,18 @@ const AIM_ANY := "any"
 @export_range(0.0, 10.0, 0.05) var slow_death := 2.2
 ## Seed for picking a target blind and for whether an armed one fires back. Zero picks a new one every play.
 @export var aim_seed := 0
+
+@export_group("Imp shot")
+## How bright the page flashes when the imp is shot, from 0 to 1.
+@export_range(0.0, 1.0, 0.01) var imp_flash_alpha := 0.8
+## Seconds that flash takes to fade.
+@export_range(0.01, 2.0, 0.01) var imp_flash_time := 0.5
+## How far the view jolts when the imp is shot.
+@export_range(0.0, 120.0, 0.5) var imp_jolt := 28.0
+## Seconds that jolt takes.
+@export_range(0.01, 2.0, 0.01) var imp_jolt_time := 0.45
+## Seconds of real time the world holds still the moment the shot lands.
+@export_range(0.0, 1.0, 0.01) var hit_stop := 0.14
 
 @export_group("Charging")
 ## Where the charging thing starts, far off, and where it arrives, close: its base on the page.
@@ -160,6 +182,8 @@ var _charge := 0.0
 var _charging := false
 var _walker: WalkingButton
 var _sight_home := Vector2.ZERO
+## The time scale to go back to once a shot stops holding the world still, or below zero when nothing holds.
+var _held_time_scale := -1.0
 
 
 func setup(for_question: QuestionData) -> void:
@@ -267,11 +291,10 @@ func play_consequence(index: int) -> StringName:
 		await _dry_fire()
 		await _settle()
 		return &"click"
-	await _fire()
 	if id == AIM_IMP:
-		if imp != null:
-			await imp.round_on_camera()
+		await _shoot_imp()
 		return &"imp"
+	await _fire()
 	if id == AIM_SELF:
 		await _settle()
 		return &"self"
@@ -499,22 +522,63 @@ func _aim_at(id: String) -> void:
 	await get_tree().create_timer(aim_hold, false).timeout
 
 
-## The gun goes off: the page flashes, the view jolts and the sight kicks.
+## The gun goes off: it is heard, the page flashes, the view jolts, and the sight kicks and fades away.
 func _fire() -> void:
-	fired.emit()
-	flash.modulate.a = flash_alpha
-	var tween := create_tween().set_parallel(true)
-	tween.tween_property(flash, ^"modulate:a", 0.0, flash_time)
-	var home := position
-	var shake := create_tween()
-	for i in 3:
-		shake.tween_property(self, ^"position", home + Vector2(_rng.randf_range(-jolt, jolt), _rng.randf_range(-jolt, jolt)), jolt_time / 4.0)
-	shake.tween_property(self, ^"position", home, jolt_time / 4.0)
 	var aim := sight.position
 	var recoil := create_tween()
 	recoil.tween_property(sight, ^"position", aim + Vector2.UP * kick, kick_time * 0.25).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	recoil.tween_property(sight, ^"position", aim, kick_time * 0.75).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	await shake.finished
+	create_tween().tween_property(sight, ^"modulate:a", 0.0, sight_fade_time)
+	await _bang(flash_alpha, flash_time, jolt, jolt_time)
+
+
+## The shot at the imp lands harder than any other: the sight is gone the moment the gun goes off, ink
+## bursts where he is hit, the page flashes and the world holds still for a heartbeat, then the view jolts
+## hard and he rounds on the camera.
+func _shoot_imp() -> void:
+	sight.visible = false
+	if impact != null:
+		impact.global_position = sight.global_position
+		impact.burst()
+	_bang(imp_flash_alpha, imp_flash_time, imp_jolt, imp_jolt_time)
+	await _hold_still(hit_stop)
+	if imp != null:
+		await imp.round_on_camera()
+
+
+## A gun goes off: the gunshot is heard, the page flashes to [param flash_to] and fades in
+## [param fade_time] seconds, and the view jolts by up to [param shake] pixels for [param shake_time]
+## seconds.
+func _bang(flash_to: float, fade_time: float, shake: float, shake_time: float) -> void:
+	fired.emit()
+	if gunshot != null and gunshot.stream != null:
+		gunshot.pitch_scale = 1.0 + randf_range(-gunshot_pitch_spread, gunshot_pitch_spread)
+		gunshot.play()
+	flash.modulate.a = flash_to
+	create_tween().tween_property(flash, ^"modulate:a", 0.0, fade_time)
+	var home := position
+	var jolting := create_tween()
+	for i in 3:
+		jolting.tween_property(self, ^"position", home + Vector2(_rng.randf_range(-shake, shake), _rng.randf_range(-shake, shake)), shake_time / 4.0)
+	jolting.tween_property(self, ^"position", home, shake_time / 4.0)
+	await jolting.finished
+
+
+## The world holds still for [param seconds] of real time, the moment a shot lands.
+func _hold_still(seconds: float) -> void:
+	if seconds <= 0.0:
+		return
+	_held_time_scale = Engine.time_scale
+	Engine.time_scale = 0.0
+	await get_tree().create_timer(seconds, true, false, true).timeout
+	_release_hold()
+
+
+## Lets the world move again, at the pace it had before a shot held it still.
+func _release_hold() -> void:
+	if _held_time_scale >= 0.0:
+		Engine.time_scale = _held_time_scale
+		_held_time_scale = -1.0
 
 
 ## The gun is empty: the trigger clicks, the sight twitches, and nothing else happens.
@@ -598,12 +662,11 @@ func _place_thing(share: float) -> void:
 		_thing.scale = Vector2.ONE * size
 
 
-## Shot, the charging thing keeps coming all the same, and turns out to be the walking button, unhurt
-## and offended.
+## Shot, the charging thing stops where it was hit and turns out to be the walking button, unhurt and
+## offended.
 func _thing_shot() -> StringName:
 	var again := run.remembers(RunState.BUTTON_WOKE)
 	run.remember(RunState.BUTTON_SHOT)
-	await _finish_charge()
 	await _turn_into_button(&"hurt_again" if again else &"hurt", hurt_arms)
 	return &"shot_again" if again else &"shot"
 
@@ -644,6 +707,7 @@ func _turn_into_button(said: StringName, arms: ButtonArmPose) -> void:
 	_walker.scale = Vector2.ONE * size * button_size
 	targets_root.add_child(_walker)
 	_walker.alive = true
+	_walker.words_keep_size = true
 	_walker.modulate.a = 0.0
 	var swap := create_tween().set_parallel(true)
 	swap.tween_property(_thing, ^"dissolve", 1.0, reveal_time)
@@ -666,3 +730,7 @@ func _page_middle() -> float:
 func _settle() -> void:
 	if settle > 0.0:
 		await get_tree().create_timer(settle, false).timeout
+
+
+func _exit_tree() -> void:
+	_release_hold()

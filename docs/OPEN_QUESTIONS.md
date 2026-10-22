@@ -26,7 +26,7 @@ Creative calls made overnight on 2026-10-22, while the user slept. Each is provi
 - The trimmed copy, 21% shorter.
 - 4.02: lowered, the dying one dies anyway a moment later. Alternative: it stays alive, pleading, while the imp speaks.
 - 4.03: no hold option, and "Aim, or do not" cut. Alternative: add a "Lower the gun" option.
-- 4.05: a six second charge; shot, it keeps coming. Alternatives: a shorter or longer charge; shot, it stops where it is.
+- 4.05: a six second charge. Alternative: a shorter or longer one. (Shot, it now stops where it was hit: the user's call.)
 - 4.05: the button's "Again?" only if it woke in 2.11. Alternative: always "Again?" (the button remembers the player either way).
 - 4.06: "Fire blind" in the row fires at random. Alternative: list the five colours in the row.
 - 4.08: no choice row, eight seconds, then the gun lowers itself. Alternatives: a choice row after all, or a different wait.

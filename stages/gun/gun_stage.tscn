@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://stages/gun/gun_stage.gd" id="1_stage"]
 [ext_resource type="Script" path="res://stages/gun/crosshair.gd" id="2_sight"]
@@ -9,14 +9,17 @@
 [ext_resource type="Resource" path="res://figures/walking_button/arms/fist.tres" id="7_fist"]
 [ext_resource type="Resource" path="res://figures/walking_button/arms/shrug.tres" id="8_shrug"]
 [ext_resource type="Resource" path="res://figures/poses/aim_lowered.tres" id="9_lowered"]
+[ext_resource type="AudioStream" path="res://assets/sfx/gunshot.mp3" id="10_gunshot"]
 
-[node name="GunStage" type="Node2D" node_paths=PackedStringArray("targets_root", "sight", "lock", "flash", "muzzle")]
+[node name="GunStage" type="Node2D" node_paths=PackedStringArray("targets_root", "sight", "lock", "flash", "muzzle", "impact", "gunshot")]
 script = ExtResource("1_stage")
 targets_root = NodePath("Targets")
 sight = NodePath("Sight")
 lock = NodePath("Lock")
 flash = NodePath("Flash")
 muzzle = NodePath("Muzzle")
+impact = NodePath("Impact")
+gunshot = NodePath("Gunshot")
 plea_scene = ExtResource("5_plea")
 walker_scene = ExtResource("6_walker")
 hurt_arms = ExtResource("7_fist")
@@ -44,3 +47,16 @@ offset_right = 1980.0
 offset_bottom = 1140.0
 mouse_filter = 2
 color = Color(1, 1, 0.98, 1)
+
+[node name="Impact" type="Node2D" parent="."]
+visible = false
+script = ExtResource("4_muzzle")
+rays = 9
+ray_span = Vector2(22, 96)
+ray_width = 1.8
+role = &"red"
+flash_time = 0.3
+
+[node name="Gunshot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_gunshot")
+bus = &"SFX"

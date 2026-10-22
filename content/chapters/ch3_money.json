@@ -320,7 +320,13 @@
               "With what? You cannot even afford the [amber]cigarettes[/amber], let alone a war over them."
             ],
             "cursed": [
-              { "text": "It did not even cost you a penny. Your money is right there, untouched, and you STILL could not walk away. Right. Fine. I give you [red]cancer[/red]. The worst, slowest kind. Wait. No. You are already [red]dead[/red], you idiot, that does nothing. Hold on. New plan. I drag you out of the grave, I stitch you back together, I give you a pulse, and the second you are breathing again, I give you [red]lung cancer[/red]. There. Now it counts. Get out of my void.", "face": "glare", "direction": "[exasperated]" }
+              { "text": "It did not even cost you a penny. Your money is right there, untouched, and you STILL could not walk away.", "face": "glare", "direction": "[exasperated]" },
+              { "text": "Right. Fine. I give you [red]cancer[/red]. The worst, slowest kind.", "face": "glare", "direction": "[exasperated]" },
+              { "text": "Wait. No. You are already [red]dead[/red], you idiot, that does nothing.", "face": "glare", "direction": "[exasperated]" },
+              { "text": "Hold on. New plan.", "face": "glare", "direction": "[exasperated]" },
+              { "text": "I drag you out of the grave, I stitch you back together, I give you a pulse, and the second you are breathing again, I give you [red]lung cancer[/red].", "face": "glare", "direction": "[exasperated]" },
+              { "text": "There. Now it counts.", "face": "glare", "direction": "[exasperated]" },
+              { "text": "Get out of my void.", "face": "glare", "direction": "[exasperated]" }
             ]
           },
           "ending": { "cursed": "cigarettes" }
