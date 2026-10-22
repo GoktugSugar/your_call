@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ButtonLook" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://stages/controls/button_look.gd" id="1_look"]
+
+[resource]
+script = ExtResource("1_look")
+cap_role = &"red"
+mark = 2
