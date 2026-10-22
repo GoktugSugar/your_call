@@ -33,10 +33,12 @@ extends Stage
 @export_range(0.0, 45.0, 0.5) var glance_tilt := 14.0
 ## Seconds each glance takes.
 @export_range(0.05, 2.0, 0.01) var glance_time := 0.35
-## Canvas x the soul walks out to when it lives.
-@export var exit_x := -120.0
-## How fast the soul walks out, in pixels a second.
-@export_range(10.0, 2000.0, 5.0) var walk_speed := 260.0
+## How far the soul walks out when it lives, to the left, fading as it goes.
+@export_range(0.0, 2000.0, 5.0) var walk_distance := 420.0
+## How fast the soul walks out, in pixels a second. Much over twice its own pace reads as scurrying.
+@export_range(10.0, 400.0, 5.0) var walk_speed := 160.0
+## Seconds over which the soul fades at the end of its walk.
+@export_range(0.0, 3.0, 0.05) var walk_fade := 0.7
 ## Seconds the stage holds after the soul has gone.
 @export_range(0.0, 3.0, 0.05) var after_hold := 0.4
 
@@ -142,10 +144,10 @@ func _glance_about() -> void:
 	await figure.blend_to(rest, glance_time).finished
 
 
-## The soul walks out of the room, off the side of the page.
+## The soul walks out of the room, fading as it goes.
 func _walk_out() -> void:
 	var figure := _soul as StickFigure
-	if figure != null and figure.has_method(&"walk_to"):
-		await figure.call(&"walk_to", exit_x, walk_speed)
-	else:
-		await _soul.dissolve_away(leave_duration).finished
+	if figure != null:
+		figure.walk_to(figure.position.x - walk_distance, walk_speed)
+		await get_tree().create_timer(maxf(walk_distance / walk_speed - walk_fade, 0.0), false).timeout
+	await _soul.dissolve_away(walk_fade).finished

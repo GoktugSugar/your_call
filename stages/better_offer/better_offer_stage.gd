@@ -26,10 +26,12 @@ extends Stage
 @export_range(0.05, 2.0, 0.01) var joy_time := 0.32
 ## How many times it hops.
 @export_range(0, 6) var joy_hops := 2
-## Canvas x the soul strolls off to.
-@export var exit_x := -160.0
-## How fast it strolls, in pixels a second.
-@export_range(10.0, 2000.0, 5.0) var stroll_speed := 220.0
+## How far the soul strolls off, to the left, fading as it goes.
+@export_range(0.0, 2000.0, 5.0) var stroll_distance := 380.0
+## How fast it strolls, in pixels a second. Much over twice its own pace reads as scurrying.
+@export_range(10.0, 400.0, 5.0) var stroll_speed := 150.0
+## Seconds over which it fades at the end of its stroll.
+@export_range(0.0, 3.0, 0.05) var stroll_fade := 0.9
 
 @export_group("Keeping your own")
 ## Seconds the soul takes to fade once it has turned away.
@@ -125,13 +127,13 @@ func _hop_for_joy() -> void:
 		await hop.finished
 
 
-## The happy soul strolls off the page.
+## The happy soul strolls off, fading as it goes.
 func _stroll_off() -> void:
 	var figure := _figure as StickFigure
-	if figure != null and figure.has_method(&"walk_to"):
-		await figure.call(&"walk_to", exit_x, stroll_speed)
-	else:
-		await _figure.dissolve_away(fade_time).finished
+	if figure != null:
+		figure.walk_to(figure.position.x - stroll_distance, stroll_speed)
+		await get_tree().create_timer(maxf(stroll_distance / stroll_speed - stroll_fade, 0.0), false).timeout
+	await _figure.dissolve_away(stroll_fade).finished
 
 
 ## The soul turns its back and fades.
