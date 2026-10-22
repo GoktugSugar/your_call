@@ -3,8 +3,9 @@ extends RefCounted
 ## What a stage fills into its question's placeholders, such as [code]{amount}[/code]. A stage that
 ## fills placeholders names them in [code]const FILLS: PackedStringArray[/code] on its script, and lists
 ## every filling its lines can take in [code]static func fill_variants(question) -> Dictionary[/code]:
-## each line id with placeholders maps to an array of [code]{"variant": String, "fills": Dictionary}[/code].
-## The tests check every filling, and the voice tools voice each one as a clip of its own.
+## each line id with placeholders maps to an array of [code]{"fills": Dictionary, "keys": Dictionary}[/code],
+## the same two the stage hands [method LineData.filled] while it plays. The tests check every filling,
+## and the voice tools voice each one as a clip of its own.
 
 ## Path pattern of a stage's script, filled with the stage type twice.
 const STAGE_SCRIPT := "res://stages/%s/%s_stage.gd"
@@ -38,7 +39,7 @@ static func filled_lines(question: QuestionData, line: LineData) -> Array[LineDa
 		out.append(line)
 		return out
 	for each: Dictionary in variants(question).get(line.id, []):
-		out.append(line.filled(each["fills"], str(each["variant"])))
+		out.append(line.filled(each.get("fills", {}), each.get("keys", {})))
 	return out
 
 

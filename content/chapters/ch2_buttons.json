@@ -321,7 +321,7 @@
           "crowd": 22,
           "reaction": {
             "high": [
-              "And you stop. [amber]{amount}[/amber] a head to every stranger alive, for nothing back. A saint, on a timer. Noted."
+              "And you stop. [amber]{given}[/amber] a head to every stranger alive, for nothing back. A saint, on a timer. Noted."
             ],
             "low": [
               "And you are done already. Barely [amber]a dollar[/amber] for the entire living world, when it would have cost you nothing at all. Why would you. There was nothing in it for you."

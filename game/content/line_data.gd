@@ -30,19 +30,36 @@ func placeholders() -> PackedStringArray:
 	return Markup.placeholders(text)
 
 
-## A copy with its placeholders filled from [param fills], ready to show. [param variant] names this
-## filling, such as the amount or the country, and ends the copy's id, so every filling can have a
-## voice clip of its own. An empty variant keeps the id.
-func filled(fills: Dictionary, variant := "") -> LineData:
-	var copy := LineData.make(id if variant.is_empty() else "%s.%s" % [id, variant], text.format(fills), speaker, face)
+## A copy with its placeholders filled from [param fills], ready to show. [param keys] gives each
+## placeholder's value a short name, such as an amount in digits or a country's code; the names of the
+## values this line uses end the copy's id, so every filling can have a voice clip of its own. A line
+## without placeholders comes back as it is.
+func filled(fills: Dictionary, keys := {}) -> LineData:
+	var names := placeholders()
+	if names.is_empty():
+		return self
+	var variant := PackedStringArray()
+	for name in names:
+		var key := _key_of(str(keys.get(name, fills.get(name, ""))))
+		if not key in variant:
+			variant.append(key)
+	var copy := LineData.make("%s.%s" % [id, "_".join(variant)], text.format(fills), speaker, face)
 	copy.direction = direction
 	return copy
 
 
-## [param lines] with their placeholders filled from [param fills], under [param variant]. Lines
-## without placeholders come back as they are.
-static func fill_all(lines: Array[LineData], fills: Dictionary, variant := "") -> Array[LineData]:
+## [param lines] with their placeholders filled from [param fills] and [param keys].
+static func fill_all(lines: Array[LineData], fills: Dictionary, keys := {}) -> Array[LineData]:
 	var out: Array[LineData] = []
 	for line in lines:
-		out.append(line.filled(fills, variant) if not line.placeholders().is_empty() else line)
+		out.append(line.filled(fills, keys))
 	return out
+
+
+## A value's key as it goes into an id: letters and digits only.
+static func _key_of(value: String) -> String:
+	var key := ""
+	for character in value:
+		if character.is_valid_identifier() or character.is_valid_int():
+			key += character
+	return key
