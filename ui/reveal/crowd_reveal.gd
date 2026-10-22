@@ -77,6 +77,8 @@ func present(split: RevealSplit) -> void:
 		_rows.append(row)
 	content.reset_size()
 	content.position = center - content.get_combined_minimum_size() * 0.5
+	# Shown before it fades in, since a container only lays out what is visible.
+	visible = true
 	mark.visible = false
 	if split.mark >= 0.0 and not _rows.is_empty():
 		# The line runs down across the bars, so lay them out now rather than at the end of the frame.
@@ -88,7 +90,6 @@ func present(split: RevealSplit) -> void:
 		mark.place(Vector2(top.position.x + _rows[0].bar.full_length * split.mark / 100.0, top.position.y),
 				bottom.end.y - top.position.y, split.mark_label)
 		mark.visible = true
-	visible = true
 	_live = true
 	var appear := create_tween()
 	appear.tween_property(self, ^"modulate:a", 1.0, fade_in_duration)

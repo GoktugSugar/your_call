@@ -41,6 +41,8 @@ const FILLS: PackedStringArray = ["amount", "given", "total", "count", "grand"]
 @export_range(0.0, 200.0, 1.0) var price_gap := 18.0
 ## Size of the readouts.
 @export_range(8, 120) var readout_size := 36
+## Gap between the bottom of the button's base and the top of the readouts, which sit centred under it.
+@export_range(0.0, 200.0, 1.0) var readout_gap := 14.0
 ## Seconds the words take to fade in or out.
 @export_range(0.0, 3.0, 0.01) var words_fade := 0.4
 
@@ -242,6 +244,7 @@ func _place_stranger(kind: StringName) -> Soul:
 func _add_readout(template: String, role: StringName) -> void:
 	var label := Label.new()
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.add_theme_font_size_override(&"font_size", readout_size)
 	label.add_theme_color_override(&"font_color", InkPalette.get_default().color(role))
 	readouts.add_child(label)
@@ -249,7 +252,7 @@ func _add_readout(template: String, role: StringName) -> void:
 	_readout_texts.append(template)
 
 
-## Shows the amount on offer over the button and the readouts as they stand.
+## Shows the amount on offer over the button and the readouts under it, as they stand.
 func _refresh() -> void:
 	price.text = Numbers.money(_offer())
 	price.reset_size()
@@ -258,3 +261,5 @@ func _refresh() -> void:
 	var values := fills()
 	for i in _readout_labels.size():
 		_readout_labels[i].text = _readout_texts[i].format(values)
+	readouts.reset_size()
+	readouts.position = button.position + Vector2(-readouts.size.x * 0.5, readout_gap)
