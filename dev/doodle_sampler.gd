@@ -10,13 +10,14 @@ extends Node2D
 
 ## The doodles on the page, in order.
 @export var ids: PackedStringArray = ["winged_figure", "flexing_figure", "sweet_poop", "foul_ice_cream",
-		"giant_duck", "tiny_horses", "rewind_button", "pause_button"]
+		"giant_duck", "tiny_horses", "rewind_button", "pause_button", "snowflake", "sun", "third_arm_figure",
+		"two_headed_figure"]
 ## How many doodles stand in each row.
 @export_range(1, 8) var columns := 4
 ## Where the first doodle stands.
-@export var first_spot := Vector2(300.0, 400.0)
+@export var first_spot := Vector2(300.0, 270.0)
 ## Distance between neighbouring doodles, across and down.
-@export var spacing := Vector2(440.0, 440.0)
+@export var spacing := Vector2(440.0, 340.0)
 ## Height of the guide line over each doodle: the tallest a doodle should stand.
 @export_range(0.0, 600.0, 1.0) var tallest := 230.0
 ## Gap between a doodle's baseline and its id.
@@ -35,6 +36,8 @@ extends Node2D
 	PackedStringArray(["sweet_poop", "foul_ice_cream", "The delicious shit", "The vile ice cream"]),
 	PackedStringArray(["giant_duck", "tiny_horses", "The giant duck", "The tiny horses"]),
 	PackedStringArray(["rewind_button", "pause_button", "The rewind button", "The pause button"]),
+	PackedStringArray(["snowflake", "sun", "Always too cold", "Always too hot"]),
+	PackedStringArray(["third_arm_figure", "two_headed_figure", "A third arm", "A second head"]),
 ]
 ## Seconds between the stage being drawn on and the pointer moving onto a doodle.
 @export_range(0.0, 5.0, 0.05) var point_delay := 0.6
