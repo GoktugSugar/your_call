@@ -2,14 +2,17 @@
 
 [ext_resource type="Script" path="res://dev/dev_menu.gd" id="1_menu"]
 
-[node name="DevMenu" type="CanvasLayer" node_paths=PackedStringArray("panel", "scroll", "columns", "auto_skip")]
+[node name="DevMenu" type="CanvasLayer" node_paths=PackedStringArray("panel", "stack", "body", "chapter_list", "scroll", "pages", "auto_skip")]
 process_mode = 3
 layer = 110
 visible = false
 script = ExtResource("1_menu")
 panel = NodePath("Screen/Center/Panel")
-scroll = NodePath("Screen/Center/Panel/Margin/Stack/Scroll")
-columns = NodePath("Screen/Center/Panel/Margin/Stack/Scroll/Columns")
+stack = NodePath("Screen/Center/Panel/Margin/Stack")
+body = NodePath("Screen/Center/Panel/Margin/Stack/Body")
+chapter_list = NodePath("Screen/Center/Panel/Margin/Stack/Body/Chapters")
+scroll = NodePath("Screen/Center/Panel/Margin/Stack/Body/Scroll")
+pages = NodePath("Screen/Center/Panel/Margin/Stack/Body/Scroll/Pages")
 auto_skip = NodePath("Screen/Center/Panel/Margin/Stack/AutoSkip")
 
 [node name="Screen" type="Control" parent="."]
@@ -54,9 +57,16 @@ text = "Jump to   (F2 or Esc closes, F5 restarts at the last jump)"
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="Scroll" type="ScrollContainer" parent="Screen/Center/Panel/Margin/Stack"]
-layout_mode = 2
-
-[node name="Columns" type="HBoxContainer" parent="Screen/Center/Panel/Margin/Stack/Scroll"]
+[node name="Body" type="HBoxContainer" parent="Screen/Center/Panel/Margin/Stack"]
 layout_mode = 2
 theme_override_constants/separation = 72
+
+[node name="Chapters" type="VBoxContainer" parent="Screen/Center/Panel/Margin/Stack/Body"]
+layout_mode = 2
+
+[node name="Scroll" type="ScrollContainer" parent="Screen/Center/Panel/Margin/Stack/Body"]
+layout_mode = 2
+follow_focus = true
+
+[node name="Pages" type="MarginContainer" parent="Screen/Center/Panel/Margin/Stack/Body/Scroll"]
+layout_mode = 2

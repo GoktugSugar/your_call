@@ -196,3 +196,7 @@ Built unattended like Chapters 3 and 4, on top of them. Technical calls are the 
 - **5.10 counts the run.** Provisional, made overnight. The old ask always named the bear and "that man, or the other one". It now names nothing the player might not have done and points at the label instead: "all 13 you killed", counting every kill in the run, a nuked country's people included. The last bear stands in the red mob only if she was shot.
 - **Colours for the sides.** Provisional, made overnight. "You" is green in both 5.06 and 5.10, and the walking button's bar is green too, its own colour.
 - **Chapter 5 is voiced.** Dev, as approved for the overnight run: 45 takes, 6,955 characters, all the imp's, with `eleven_v3`. None failed or fell back, and none was plainly broken.
+
+## 2026-10-22: the dev menu for more chapters
+
+- **The dev menu lists the chapters, with the picked chapter's questions beside them.** Dev, asked for by the user in the morning: with three chapters or more, a column per chapter ran off the screen. The chapters are now a list on the left, and clicking or reaching one shows its questions on the right, a long chapter in even columns of at most sixteen. The menu is sized for its biggest page, so it keeps still from chapter to chapter, and it opens on the chapter being played.
