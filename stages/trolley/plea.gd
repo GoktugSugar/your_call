@@ -44,8 +44,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if voice_player.playing:
 		# The playback position runs ahead of what has been heard by the mixer's lag.
-		_elapsed = voice_player.get_playback_position() + AudioServer.get_time_since_last_mix() \
-				- AudioServer.get_output_latency()
+		_elapsed = voice_player.get_playback_position() + VoiceClip.mixer_lag()
 	else:
 		_elapsed += delta
 	var whole := float(_schedule.size() - 1) + ink_edge

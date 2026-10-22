@@ -31,3 +31,8 @@ Thumbs.db
 
 # Helper worktrees made while developing; Godot is kept out of them by .claude/.gdignore
 /.claude/worktrees/
+
+# The trailer's recordings and encodes (tools/trailer/render_trailer.py), and the window override it writes while recording
+/trailer_renders/
+/override.cfg
+/music_auditions/
