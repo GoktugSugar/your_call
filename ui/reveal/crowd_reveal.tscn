@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://ui/reveal/crowd_reveal.gd" id="1_reveal"]
 [ext_resource type="PackedScene" path="res://ui/reveal/crowd_row.tscn" id="2_row"]
+[ext_resource type="Script" path="res://ui/reveal/crowd_mark.gd" id="3_mark"]
 
-[node name="CrowdReveal" type="Control" node_paths=PackedStringArray("content", "heading")]
+[node name="CrowdReveal" type="Control" node_paths=PackedStringArray("content", "heading", "mark")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,6 +16,7 @@ script = ExtResource("1_reveal")
 content = NodePath("Content")
 heading = NodePath("Content/Heading")
 row_scene = ExtResource("2_row")
+mark = NodePath("Mark")
 
 [node name="Content" type="VBoxContainer" parent="."]
 layout_mode = 0
@@ -29,3 +31,17 @@ theme_override_constants/separation = 18
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "how others chose"
+
+[node name="Mark" type="Control" parent="." node_paths=PackedStringArray("word")]
+visible = false
+layout_mode = 0
+mouse_filter = 2
+script = ExtResource("3_mark")
+word = NodePath("Word")
+
+[node name="Word" type="Label" parent="Mark"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+mouse_filter = 2

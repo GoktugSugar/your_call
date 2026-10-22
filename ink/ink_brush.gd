@@ -116,6 +116,36 @@ static func rounded_rect(rect: Rect2, radius: float, spacing: float) -> PackedVe
 	return out
 
 
+## A crayon scribble colouring in an ellipse: strokes at [param angle] (radians), [param spacing]
+## apart and kept [param inset] inside the edge, joined end to end into one zigzag, the way a hand
+## colours in back and forth. Resample it before drawing it.
+static func hatch_ellipse(center: Vector2, radii: Vector2, angle: float, spacing: float, inset := 0.0) -> PackedVector2Array:
+	var points := PackedVector2Array()
+	var r := radii - Vector2.ONE * inset
+	if r.x <= 0.0 or r.y <= 0.0 or spacing <= 0.0:
+		return points
+	var along := Vector2.from_angle(angle)
+	var across := along.orthogonal()
+	var reach := sqrt(pow(across.x * r.x, 2.0) + pow(across.y * r.y, 2.0))
+	# Each stroke is the chord of the ellipse along `along`, offset `d` across it from the middle.
+	var a := pow(along.x / r.x, 2.0) + pow(along.y / r.y, 2.0)
+	var backwards := false
+	var d := -reach + spacing * 0.5
+	while d < reach:
+		var b := 2.0 * d * (across.x * along.x / (r.x * r.x) + across.y * along.y / (r.y * r.y))
+		var c := pow(across.x * d / r.x, 2.0) + pow(across.y * d / r.y, 2.0) - 1.0
+		var disc := b * b - 4.0 * a * c
+		if disc > 0.0:
+			var root := sqrt(disc)
+			var start := center + across * d + along * ((-b - root) / (2.0 * a))
+			var end := center + across * d + along * ((-b + root) / (2.0 * a))
+			points.append(end if backwards else start)
+			points.append(start if backwards else end)
+			backwards = not backwards
+		d += spacing
+	return points
+
+
 ## Draws a hand-drawn line along [param path], which should already be densely sampled.
 ## A closed path is drawn as a loop that runs a little past its own start, as a hand would.
 ## [param reveal] draws only the first part of the line, for drawing it on.

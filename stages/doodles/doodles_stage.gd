@@ -144,10 +144,10 @@ func highlight_option(index: int) -> void:
 	_refresh()
 
 
-func play_consequence(index: int) -> void:
+func play_consequence(index: int) -> StringName:
 	set_choosing(false)
 	if index < 0 or index >= slots.size():
-		return
+		return &""
 	_highlighted = -1
 	words[index].look = ChoiceWord.Look.PICKED
 	var fade := create_tween().set_parallel(true)
@@ -164,6 +164,7 @@ func play_consequence(index: int) -> void:
 	if fade.is_running():
 		await fade.finished
 	await get_tree().create_timer(hold_duration, false).timeout
+	return &""
 
 
 func leave() -> void:

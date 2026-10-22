@@ -1,0 +1,17 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://stages/button/button_stage.gd" id="1_stage"]
+[ext_resource type="PackedScene" path="res://stages/controls/push_button.tscn" id="2_button"]
+[ext_resource type="PackedScene" path="res://figures/walking_button/walking_button.tscn" id="3_walker"]
+[ext_resource type="Resource" path="res://figures/walking_button/arms/fist.tres" id="4_fist"]
+[ext_resource type="Resource" path="res://figures/walking_button/arms/rest.tres" id="5_rest"]
+
+[node name="ButtonStage" type="Node2D" node_paths=PackedStringArray("button")]
+script = ExtResource("1_stage")
+button = NodePath("Button")
+walker_scene = ExtResource("3_walker")
+swear_arms = ExtResource("4_fist")
+stomp_arms = ExtResource("5_rest")
+
+[node name="Button" parent="." instance=ExtResource("2_button")]
+position = Vector2(960, 650)

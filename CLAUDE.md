@@ -40,7 +40,7 @@ The editor is the 4.7.2 standard build in `C:/Program Files/Godot/`. There is no
 - Import (also refreshes the class cache after adding a `class_name`): `G --headless --path . --import`
 - Check every script compiles (import alone misses parse errors): `G --headless --path . -s res://dev/check_scripts.gd`
 - Run the tests: `G --headless --path . -s addons/gut/gut_cmdln.gd`
-- Run the game: `"C:/Program Files/Godot/Godot.exe" --path .` (F5 restarts, F3 shows the phase and the silent profile)
+- Run the game: `"C:/Program Files/Godot/Godot.exe" --path .` (F2 jumps to any chapter or question, F5 restarts, F3 shows the phase and the silent profile)
 - Look before you claim a visual change works. Autoplay a question and save a screenshot before each click, plus a burst during the consequence:
   `G --path . -- --window=1920x1080 --autoplay=1 --speed=2 --shots=<scratch>/run --burst=0.25 --quit-after=1`
   (`--autoplay=lever` clicks the stage's lever instead of a choice word, `--point` clicks option N where the stage shows it, a track or a doodle, and `--every=S` adds a screenshot every S seconds, for beats nobody clicks through such as the crash and the credits.) Any other scene: `G --path . res://dev/capture_runner.tscn -- --window=1920x1080 --scene=res://... --out=<scratch>/shot --times=0.5,2`
@@ -49,8 +49,8 @@ The editor is the 4.7.2 standard build in `C:/Program Files/Godot/`. There is no
 
 Voice (Python 3, standard library only; the key comes from `.env`, which git ignores):
 
-- Design candidate voices: `python tools/voice/design_auditions.py` (previews land in `voice_auditions/`)
-- Save the chosen one for a speaker: `python tools/voice/save_voice.py imp <audition slug>`
+- Design candidate voices: `python tools/voice/design_auditions.py --speaker <speaker>` (`--dry-run` first to see what it will spend; takes land in `voice_auditions/`)
+- Save the chosen one for a speaker: `python tools/voice/save_voice.py <speaker> <audition slug>`
 - Voice every new or changed line: `python tools/voice/voice_lines.py` (`--dry-run` first to see what it will spend)
 - Voice clips are committed through Git LFS.
 

@@ -2,8 +2,10 @@ class_name CrowdReveal
 extends Control
 ## How others chose: a muted lowercase heading, then one solid ink bar per option, in option order.
 ## The bars ink in from the left while their bare numbers count up past their ends. The player's pick
-## is amber and the crowd is darker ink. No container, no flash, no bounce. While the reveal is up,
-## it is the only thing listening: the first input finishes the inking, the next dismisses it.
+## is amber and the crowd is darker ink; bars that carry a meaning, such as the blue and red buttons,
+## keep their colours and only the pick's label goes amber. A coordination gamble also shows the line
+## the crowd had to cross. No container, no flash, no bounce. While the reveal is up, it is the only
+## thing listening: the first input finishes the inking, the next dismisses it.
 
 ## Emitted when the player dismisses the reveal.
 signal dismissed
@@ -15,6 +17,8 @@ signal settled
 @export var heading: Label
 ## The row each option is shown with.
 @export var row_scene: PackedScene
+## The line a coordination gamble's crowd had to cross.
+@export var mark: CrowdMark
 ## Where the middle of the reveal sits on the canvas.
 @export var center := Vector2(960.0, 420.0)
 ## Palette role of the player's pick.
@@ -55,22 +59,37 @@ func _unhandled_input(event: InputEvent) -> void:
 		dismiss()
 
 
-## Shows the split: [param labels] and [param shares] in option order, with [param pick] as the player's.
-## Returns once the player has dismissed it.
-func present(heading_text: String, labels: PackedStringArray, shares: PackedFloat32Array, pick: int) -> void:
+## Shows [param split]: its bars in option order, the player's pick among them, and any line the crowd
+## had to cross. Returns once the player has dismissed it.
+func present(split: RevealSplit) -> void:
 	for row in _rows:
 		row.queue_free()
 	_rows.clear()
-	heading.text = heading_text
+	heading.text = split.heading
 	heading.add_theme_color_override(&"font_color", InkPalette.get_default().heading)
-	for i in labels.size():
+	for i in split.labels.size():
 		var row := row_scene.instantiate() as CrowdRow
 		content.add_child(row)
-		row.setup(labels[i], shares[i] if i < shares.size() else 0.0, pick_role if i == pick else crowd_role)
+		var meaning: StringName = split.roles[i] if i < split.roles.size() else &""
+		var bar_role := meaning if meaning != &"" else (pick_role if i == split.pick else crowd_role)
+		var label_role := pick_role if i == split.pick else bar_role
+		row.setup(split.labels[i], split.shares[i] if i < split.shares.size() else 0.0, bar_role, label_role)
 		_rows.append(row)
 	content.reset_size()
 	content.position = center - content.get_combined_minimum_size() * 0.5
+	# Shown before it fades in, since a container only lays out what is visible.
 	visible = true
+	mark.visible = false
+	if split.mark >= 0.0 and not _rows.is_empty():
+		# The line runs down across the bars, so lay them out now rather than at the end of the frame.
+		content.notification(Container.NOTIFICATION_SORT_CHILDREN)
+		for row in _rows:
+			row.notification(Container.NOTIFICATION_SORT_CHILDREN)
+		var top := _rows[0].bar.get_global_rect()
+		var bottom := _rows[_rows.size() - 1].bar.get_global_rect()
+		mark.place(Vector2(top.position.x + _rows[0].bar.full_length * split.mark / 100.0, top.position.y),
+				bottom.end.y - top.position.y, split.mark_label)
+		mark.visible = true
 	_live = true
 	var appear := create_tween()
 	appear.tween_property(self, ^"modulate:a", 1.0, fade_in_duration)

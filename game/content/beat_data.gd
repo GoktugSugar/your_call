@@ -6,3 +6,8 @@ extends RefCounted
 var id := &""
 ## The chapter it belongs to, such as [code]ch1[/code].
 var chapter := &""
+
+
+## Every line the beat can show, in the order it sits in the content.
+func all_lines() -> Array[LineData]:
+	return []

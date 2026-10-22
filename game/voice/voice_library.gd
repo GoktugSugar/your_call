@@ -10,8 +10,10 @@ static var _manifest: Dictionary = {}
 static var _loaded := false
 
 
-## The clip for [param line], or null when it has none or its text has changed since.
+## The clip for [param line], or null when it is kept silent, has none, or its text has changed since.
 static func clip_for(line: LineData) -> VoiceClip:
+	if not line.voiced:
+		return null
 	var entry := find_entry(_loaded_manifest(), line)
 	var audio := str(entry.get("audio", ""))
 	if entry.is_empty() or not ResourceLoader.exists(audio):

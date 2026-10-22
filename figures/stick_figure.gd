@@ -3,11 +3,16 @@ class_name StickFigure
 extends Soul
 ## A soul: the androgynous stick figure every person in the game is drawn with. Dot eyes, no other face.
 ## The body is a jointed rig posed by a [FigurePose]. Its legs bend at the knee to keep the feet planted,
-## it breathes, and it folds down dead. Kinds of soul differ by small details, never new art: closed or
-## hidden eyes, a pregnant belly, a cane and sparse hair, a beating heart, z marks drifting up from a sleeper.
-## Its origin is the ground between its feet.
+## it breathes, it can turn and walk along the ground, and it folds down dead. Kinds of soul differ by
+## small details, never new art: closed or hidden eyes, a pregnant belly, a cane and sparse hair, a beating
+## heart, z marks drifting up from a sleeper, a small crown. Its origin is the ground between its feet.
+
+## Emitted once a walk has ended, with the figure standing in its pose where it was going.
+signal arrived
 
 enum Eyes { OPEN, CLOSED, HIDDEN }
+## Which way a figure faces: toward the player, or turned to the screen left or right.
+enum Facing { FRONT, LEFT, RIGHT }
 
 ## The pose the figure holds. Setting it snaps the figure into it.
 @export var pose: FigurePose:
@@ -15,6 +20,12 @@ enum Eyes { OPEN, CLOSED, HIDDEN }
 		pose = value
 		_kill_motion()
 		_shown = value.duplicate() as FigurePose if value != null else FigurePose.new()
+		queue_redraw()
+## Which way the figure faces. Turned left or right, its eyes slide that way and its knees bend that way.
+## A walk turns it the way it goes.
+@export var facing := Facing.FRONT:
+	set(value):
+		facing = value
 		queue_redraw()
 
 @export_group("Body")
@@ -77,6 +88,16 @@ enum Eyes { OPEN, CLOSED, HIDDEN }
 	set(value):
 		eye_height = value
 		queue_redraw()
+## How far each eye sits from the middle of the pair once the figure is turned left or right.
+@export_range(0.0, 20.0, 0.1) var turned_eye_spread := 3.3:
+	set(value):
+		turned_eye_spread = value
+		queue_redraw()
+## How far the eyes slide toward the side a turned figure faces.
+@export_range(0.0, 20.0, 0.1) var turned_eye_shift := 2.3:
+	set(value):
+		turned_eye_shift = value
+		queue_redraw()
 
 @export_group("Breathing")
 ## How far the hips rise and fall with each breath, in pixels.
@@ -85,6 +106,29 @@ enum Eyes { OPEN, CLOSED, HIDDEN }
 @export_range(0.5, 10.0, 0.1) var breath_period := 3.4
 ## How far the arms sway with each breath, in degrees.
 @export_range(0.0, 10.0, 0.1) var breath_arm_sway := 2.5
+
+@export_group("Walking")
+## How far each step carries the figure, in pixels.
+@export_range(4.0, 120.0, 0.5) var stride := 36.0
+## Seconds each step takes at the figure's own pace.
+@export_range(0.05, 2.0, 0.01) var step_time := 0.4
+## How high the stepping foot lifts, in pixels.
+@export_range(0.0, 40.0, 0.5) var foot_lift := 9.0
+## How far the hips dip after each foot lands, in pixels.
+@export_range(0.0, 20.0, 0.1) var hip_bob := 4.0
+## How long after a foot lands the hips are at their lowest, as a share of a step. The legs stay straight
+## as the foot reaches the ground, and the knees give as the weight comes onto it.
+@export_range(0.0, 1.0, 0.01) var bob_lag := 0.2
+## How far the hips sink below standing for the whole walk, so the knees stay soft, in pixels.
+@export_range(0.0, 20.0, 0.1) var walk_crouch := 0.0
+## How far the arms swing forward and back, in degrees.
+@export_range(0.0, 90.0, 0.5) var arm_swing := 30.0
+## How far forward the arms hang at the middle of their swing, in degrees, so they stay clear of the body.
+@export_range(-45.0, 45.0, 0.5) var arm_carry := 8.0
+## How far the forearms bend forward while walking, in degrees.
+@export_range(-90.0, 150.0, 0.5) var walk_elbow := 25.0
+## How far the body leans into the walk, in degrees.
+@export_range(-30.0, 30.0, 0.5) var walk_lean := 5.0
 
 @export_group("Details")
 ## Open dot eyes, eyes closed in sleep, or none at all for a figure turned away.
@@ -117,6 +161,11 @@ enum Eyes { OPEN, CLOSED, HIDDEN }
 	set(value):
 		snoring = value
 		queue_redraw()
+## A small crown sits on the head, for the best life.
+@export var crown := false:
+	set(value):
+		crown = value
+		queue_redraw()
 ## Palette role of the heart.
 @export var heart_role := &"pink"
 ## Width of the heart, in pixels.
@@ -135,6 +184,17 @@ enum Eyes { OPEN, CLOSED, HIDDEN }
 @export var snore_size := Vector2(7.0, 13.0)
 ## Palette role of the z marks.
 @export var snore_role := &"ink"
+## Width of the crown across its points, and how far its points rise above the top of the head, in pixels.
+@export var crown_size := Vector2(20.0, 11.0)
+## How wide the crown is where it rests on the head, as a share of its width across the points. Under 1,
+## it flares out toward the points. It rests on the outline of the head, clear of the eyes.
+@export_range(0.1, 1.5, 0.01) var crown_base := 0.7
+## How many points the crown has.
+@export_range(2, 7) var crown_points := 3
+## How deep the notches between the points cut, as a share of the crown's height.
+@export_range(0.0, 1.0, 0.01) var crown_notch := 0.5
+## Width of the crown's line, as a multiple of the figure's line.
+@export_range(0.1, 2.0, 0.05) var crown_line := 0.8
 
 @export_group("Dying")
 ## The steps of the fold, in order: each pose says how long the figure takes to reach it.
@@ -174,13 +234,41 @@ func fold(direction := 1.0) -> void:
 	folded.emit()
 
 
-## Where something floating over the figure sits, such as a plea: just above the top of its head,
-## in the figure's own space.
+## Walks along the ground to [param x], in the parent's space, turned the way it goes, and stands back in
+## its pose there. The feet take turns to step and stay planted while they bear the weight, the knees
+## bend, the hips bob, the arms swing against the legs and the body leans into the walk. It walks at its
+## own pace, a [member stride] every [member step_time] seconds, unless [param speed] asks for so many
+## pixels a second in the parent's space: each step still covers a stride, only quicker or slower. Like a
+## fall, a walk moves at the full frame rate. Await it, or wait for [signal arrived] at the end.
+func walk_to(x: float, speed := 0.0) -> void:
+	_kill_motion()
+	var from_x := position.x
+	if is_equal_approx(x, from_x):
+		arrived.emit()
+		return
+	var way := signf(x - from_x)
+	facing = Facing.RIGHT if way > 0.0 else Facing.LEFT
+	var own_scale := maxf(absf(scale.x), 0.0001)
+	var end_pose := pose if pose != null else FigurePose.new()
+	var walk := FigureWalk.new(self, _shown.duplicate() as FigurePose, end_pose, absf(x - from_x) / own_scale, way)
+	var seconds_per_step := step_time if speed <= 0.0 else stride * own_scale / speed
+	_motion = create_tween()
+	_motion.tween_method(_walk_step.bind(walk, from_x, own_scale), 0.0, float(walk.steps),
+			walk.steps * seconds_per_step)
+	await _motion.finished
+	position.x = x
+	_shown.blend(end_pose, end_pose, 1.0)
+	queue_redraw()
+	arrived.emit()
+
+
+## Where something floating over the figure sits, such as a plea: just above the top of its head, or
+## of its crown, in the figure's own space.
 func head_top() -> Vector2:
 	var hips := Vector2(0.0, -leg_length) + _shown.hip_offset
 	var neck := hips + Vector2.UP.rotated(deg_to_rad(_shown.spine_angle)) * spine_length
 	var head_dir := Vector2.UP.rotated(deg_to_rad(_shown.spine_angle + _shown.head_tilt))
-	return neck + head_dir * (neck_length + head_radius * 2.0) + Vector2.UP * float_gap
+	return neck + head_dir * (neck_length + head_radius * 2.0 + _crown_rise()) + Vector2.UP * float_gap
 
 
 func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
@@ -214,12 +302,17 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 	lines.append(InkLine.along(InkBrush.resample_polyline(PackedVector2Array([shoulders, left_elbow, left_hand]), spacing), ink))
 	lines.append(InkLine.along(InkBrush.resample_polyline(PackedVector2Array([shoulders, right_elbow, right_hand]), spacing), ink))
 	var lying := absf(shown.spine_angle) > knee_lift_lean
+	# Facing the player, the knees bend outward. Turned, both bend the way the figure faces.
+	var turn := _turn()
+	var left_knee := 1.0 if turn == 0.0 else -turn
+	var right_knee := -1.0 if turn == 0.0 else -turn
 	lines.append(InkLine.along(InkBrush.resample_polyline(
-			PackedVector2Array([hips, _knee(hips, left_foot, 1.0, lying), left_foot]), spacing), ink))
+			PackedVector2Array([hips, _knee(hips, left_foot, left_knee, lying), left_foot]), spacing), ink))
 	lines.append(InkLine.along(InkBrush.resample_polyline(
-			PackedVector2Array([hips, _knee(hips, right_foot, -1.0, lying), right_foot]), spacing), ink))
+			PackedVector2Array([hips, _knee(hips, right_foot, right_knee, lying), right_foot]), spacing), ink))
+	var eye_gap := lerpf(eye_spread, turned_eye_spread, absf(turn))
 	for side: float in [-1.0, 1.0]:
-		var eye := head + Vector2(eye_spread * side, -eye_height).rotated(head_angle)
+		var eye := head + Vector2(turned_eye_shift * turn + eye_gap * side, -eye_height).rotated(head_angle)
 		match eyes:
 			Eyes.OPEN:
 				lines.append(InkLine.dot(eye, eye_radius, ink))
@@ -239,8 +332,11 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 			for i in tuft.size():
 				tuft[i] = head + (Vector2(tuft[i].x * side, tuft[i].y) * head_radius).rotated(head_angle)
 			lines.append(InkLine.along(InkBrush.resample_smooth(tuft, false, spacing * 0.5), ink, 0.55))
+	if crown:
+		lines.append(InkLine.along(_crown(head, head_angle, spacing * 0.5), ink, crown_line))
 	if heart:
-		lines.append(_heart(head + head_dir * (head_radius + float_gap), palette.color(heart_role), spacing))
+		lines.append(_heart(head + head_dir * (head_radius + _crown_rise() + float_gap), palette.color(heart_role),
+				spacing))
 	if snoring:
 		for i in 3:
 			_add_z(lines, head + Vector2(head_radius * 0.8, -head_radius), _clock() / snore_period + i / 3.0,
@@ -248,13 +344,14 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 	return lines
 
 
-## A pregnant belly: a round bulge out from the lower spine, toward the screen right.
+## A pregnant belly: a round bulge out from the lower spine, toward the screen right, or the left for a
+## figure turned that way.
 func _belly(hips: Vector2, neck: Vector2, spine_dir: Vector2, spacing: float) -> PackedVector2Array:
 	var low := hips.lerp(neck, 0.02)
 	var high := hips.lerp(neck, 0.6)
 	var middle := low.lerp(high, 0.5)
 	var half := low.distance_to(high) * 0.5
-	var out := -spine_dir.orthogonal()
+	var out := -spine_dir.orthogonal() * (-1.0 if facing == Facing.LEFT else 1.0)
 	var points := PackedVector2Array()
 	var steps := maxi(6, ceili(PI * maxf(half, belly) / spacing))
 	for i in steps + 1:
@@ -271,6 +368,31 @@ func _cane(hand: Vector2, spacing: float) -> PackedVector2Array:
 			top + Vector2(-7.0, 3.0)]), false, spacing * 0.5)
 	shaft.append_array(hook.slice(1))
 	return shaft
+
+
+## A small crown resting on the head and tilted with it, drawn as one line the way a hand doodles it:
+## up from the outline of the head, over the points and back down to the outline.
+func _crown(head: Vector2, head_angle: float, spacing: float) -> PackedVector2Array:
+	var half := crown_size.x * 0.5
+	var rest_x := minf(half * crown_base, head_radius)
+	var rest_y := sqrt(head_radius * head_radius - rest_x * rest_x)
+	var top := head_radius + crown_size.y
+	var notch := top - crown_size.y * crown_notch
+	var gap := crown_size.x / maxi(crown_points - 1, 1)
+	var outline := PackedVector2Array([Vector2(-rest_x, rest_y)])
+	for i in crown_points:
+		if i > 0:
+			outline.append(Vector2(-half + gap * (i - 0.5), notch))
+		outline.append(Vector2(-half + gap * i, top))
+	outline.append(Vector2(rest_x, rest_y))
+	for i in outline.size():
+		outline[i] = head + Vector2(outline[i].x, -outline[i].y).rotated(head_angle)
+	return InkBrush.resample_polyline(outline, spacing)
+
+
+## How far the crown's points stand above the top of the head. Zero without a crown.
+func _crown_rise() -> float:
+	return crown_size.y if crown else 0.0
 
 
 ## A small heart centred above [param top], washed in its own colour, swelling on each beat.
@@ -297,6 +419,16 @@ func _add_z(lines: Array[InkLine], start: Vector2, phase: float, color: Color, s
 	var corners := PackedVector2Array([centre + Vector2(-half, -half), centre + Vector2(half, -half),
 			centre + Vector2(-half, half), centre + Vector2(half, half)])
 	lines.append(InkLine.along(InkBrush.resample_polyline(corners, spacing * 0.5), Color(color, sin(t * PI)), 0.6))
+
+
+## Which way the figure is turned: -1 to the screen left, 1 to the right, 0 facing the player.
+func _turn() -> float:
+	match facing:
+		Facing.LEFT:
+			return -1.0
+		Facing.RIGHT:
+			return 1.0
+	return 0.0
 
 
 ## Seconds on the page clock, for details that move. The editor holds still.
@@ -331,6 +463,12 @@ func _breath() -> float:
 
 func _blend_step(weight: float, from: FigurePose, target: FigurePose) -> void:
 	_shown.blend(from, target, weight)
+	queue_redraw()
+
+
+func _walk_step(progress: float, walk: FigureWalk, from_x: float, own_scale: float) -> void:
+	position.x = from_x + walk.way * walk.travel_at(progress) * own_scale
+	walk.pose_at(progress, _shown)
 	queue_redraw()
 
 

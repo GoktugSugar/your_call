@@ -1,11 +1,17 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://figures/imp/imp.gd" id="1_imp"]
 [ext_resource type="Script" path="res://figures/imp/imp_drawing.gd" id="2_drawing"]
+[ext_resource type="Script" path="res://figures/imp/imp_mouth.gd" id="3_mouth"]
 
-[node name="Imp" type="Node2D" node_paths=PackedStringArray("drawing")]
+[node name="Imp" type="Node2D" node_paths=PackedStringArray("drawing", "mouth")]
 script = ExtResource("1_imp")
 drawing = NodePath("Drawing")
+mouth = NodePath("Mouth")
 
 [node name="Drawing" type="Node2D" parent="."]
 script = ExtResource("2_drawing")
+
+[node name="Mouth" type="Node" parent="." node_paths=PackedStringArray("drawing")]
+script = ExtResource("3_mouth")
+drawing = NodePath("../Drawing")

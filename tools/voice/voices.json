@@ -8,5 +8,11 @@
     "voice_settings": {
       "stability": 0.5
     }
+  },
+  "button": {
+    "voice_id": "NiClIDeWANnsRRlZHWAE",
+    "name": "Your Call: button (wounded_whiner_3)",
+    "description": "A small, whiny, deeply wounded voice. Young adult male, high but never childlike, wobbling with outrage and close to tears. Melodramatic and sniffy, feels terribly hard done by. Neutral American accent. Perfect audio quality.",
+    "designed_with": "eleven_ttv_v3"
   }
 }

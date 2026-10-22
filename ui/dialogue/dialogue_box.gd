@@ -4,7 +4,8 @@ extends Control
 ## growing upward. Lines ink on in it in the hand-lettered face, a page of whole sentences at a time.
 ## A voiced line inks on in time with its voice, and each page plays only its own stretch of the take.
 ## The first click finishes the page while the voice plays on; the next click moves on, fading the
-## voice out if it is still going. It listens for input only while it waits on the player.
+## voice out if it is still going. It listens for input only while it waits on the player. It always
+## knows which character is being said, for a speaker whose mouth moves with the words.
 
 ## Emitted when a page appears.
 signal page_shown(line: LineData, page: int, page_count: int)
@@ -70,6 +71,10 @@ signal advanced
 ## Seconds the box takes to fade away when it closes.
 @export_range(0.0, 2.0, 0.01) var close_duration := 0.22
 
+@export_group("Moving on by itself")
+## Seconds a page that moves on by itself stays up once it has inked on and its voice has finished.
+@export_range(0.0, 5.0, 0.05) var auto_hold := 0.9
+
 ## Extra width given to a measured page on top of a space, so rounding never wraps a line the measure
 ## kept whole. A line only stays whole with room for the space it broke at, which its measured width leaves out.
 const _WRAP_SLACK := 2.0
@@ -77,6 +82,8 @@ const _WRAP_SLACK := 2.0
 const _SILENT_DB := -60.0
 
 var _effect := InkOnEffect.new()
+## The page's text without markup: the characters whose times [member _schedule] holds.
+var _plain := ""
 var _schedule := PackedFloat32Array()
 var _elapsed := 0.0
 var _typing := false
@@ -90,6 +97,10 @@ var _current := 0
 var _voiced := false
 var _voice_start := 0.0
 var _voice_end := 0.0
+## Counts the pages shown, so a page that moves on by itself never moves a later one on.
+var _page_count := 0
+## Whether the line up was thrown in over something else, such as a countdown: it takes no clicks.
+var _interjecting := false
 
 
 func _ready() -> void:
@@ -126,14 +137,16 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if (_typing or _waiting) and event.is_action_pressed(&"advance"):
+	if (_typing or _waiting) and not _interjecting and event.is_action_pressed(&"advance"):
 		get_viewport().set_input_as_handled()
 		advance()
 
 
 ## Shows [param lines] in turn, a page at a time, waiting for the player after each page.
 ## With [param hold_last], the last page stays up and this returns as soon as it has inked on.
-func say(lines: Array[LineData], hold_last := false) -> void:
+## With [param auto], each page moves on by itself once it has been said, unless the player moves it first.
+func say(lines: Array[LineData], hold_last := false, auto := false) -> void:
+	_interjecting = false
 	for line_index in lines.size():
 		var line := lines[line_index]
 		var clip := VoiceLibrary.clip_for(line)
@@ -147,11 +160,26 @@ func say(lines: Array[LineData], hold_last := false) -> void:
 			await _show_page(line, pages[page_index], page_index, pages.size(), clip if from >= 0 else null, from)
 			if hold_last and line_index == lines.size() - 1 and page_index == pages.size() - 1:
 				return
-			await _wait_for_player()
+			await _wait_for_player(auto)
+
+
+## Shows the first page of [param line] at once, in place of whatever is up, without waiting for the
+## player, the way the imp needles over a countdown. Its voice plays, it takes no clicks, and it stays
+## up until the next line or [method close].
+func interject(line: LineData) -> void:
+	_interjecting = true
+	_waiting = false
+	_stop_voice(voice_fade)
+	_end_typing()
+	var pages := paginate(line.text)
+	var clip := VoiceLibrary.clip_for(line)
+	# Not awaited: the page inks on while whatever threw it in carries on.
+	_show_page(line, pages[0], 0, pages.size(), clip, 0 if clip != null else -1)
 
 
 ## Fades the box away, and the voice with it.
 func close() -> void:
+	_interjecting = false
 	if not _open:
 		return
 	_open = false
@@ -179,6 +207,27 @@ func is_waiting() -> bool:
 	return _waiting
 
 
+## The character being said now, or [param lead] seconds from now. A voiced page is read off the voice's
+## own clock, so it keeps following the voice after a click has finished showing the page; an unvoiced
+## one is read off its typing. Spaces and punctuation count, as the pauses they are. Empty when nothing
+## is being said.
+func spoken_character(lead := 0.0) -> String:
+	if not _talking:
+		return ""
+	# The voice's clock runs at the take's own speed.
+	return character_at(_plain, _schedule, _elapsed + lead * (voice_speed if _voiced else 1.0))
+
+
+## The character of [param text] being said [param time] seconds in, by [param schedule]: when each of
+## its characters starts, with one more entry for when the last one ends. Empty before the first starts
+## and once the last has ended.
+static func character_at(text: String, schedule: PackedFloat32Array, time: float) -> String:
+	var count := mini(text.length(), schedule.size() - 1)
+	if count <= 0 or time < schedule[0] or time >= schedule[count]:
+		return ""
+	return text[clampi(schedule.bsearch(time, false) - 1, 0, count - 1)]
+
+
 ## The frame's rect on the canvas.
 func frame_rect() -> Rect2:
 	return frame.get_global_rect()
@@ -199,6 +248,7 @@ func _show_page(line: LineData, page: String, index: int, count: int, clip: Voic
 	text_label.size = text_size
 	text_label.text = "[inkon]%s[/inkon]" % markup
 	var plain := text_label.get_parsed_text()
+	_plain = plain
 	_start_voice(clip, from, plain.length())
 	if not _voiced:
 		_build_schedule(plain)
@@ -210,6 +260,7 @@ func _show_page(line: LineData, page: String, index: int, count: int, clip: Voic
 		tween.tween_property(self, ^"modulate:a", 1.0, open_duration * 0.5)
 		tween.tween_property(frame, ^"reveal", 1.0, open_duration)
 	page_shown.emit(line, index, count)
+	_page_count += 1
 	_elapsed = 0.0
 	_typing = true
 	set_process(true)
@@ -275,10 +326,27 @@ func _update_talking() -> void:
 		talking_changed.emit(talking)
 
 
-func _wait_for_player() -> void:
+func _wait_for_player(auto := false) -> void:
 	_waiting = true
 	waiting_changed.emit(true)
+	_move_on_by_itself(_page_count, auto)
 	await advanced
+
+
+## Moves on from page number [param page] once its voice has finished and it has stayed up for
+## [member auto_hold], when [param auto] asks for it or the player has [member PlayerSettings.auto_advance]
+## on, unless the player has moved on already. The setting is watched while the page waits, so turning
+## it on takes the page along.
+func _move_on_by_itself(page: int, auto: bool) -> void:
+	while not (auto or PlayerSettings.auto_advance):
+		if not _waiting or page != _page_count:
+			return
+		await get_tree().process_frame
+	while _voiced and _voice().playing and page == _page_count:
+		await get_tree().process_frame
+	await get_tree().create_timer(auto_hold, false).timeout
+	if _waiting and page == _page_count and (auto or PlayerSettings.auto_advance):
+		advance()
 
 
 func _end_typing() -> void:
@@ -325,8 +393,4 @@ func _build_schedule(plain: String) -> void:
 
 ## How many characters are on the page [param time] seconds in, counting the one being inked as a fraction.
 func _progress_at(time: float) -> float:
-	var last := _schedule.size() - 1
-	if time >= _schedule[last]:
-		return last + (time - _schedule[last]) * characters_per_second
-	var i := clampi(_schedule.bsearch(time, false) - 1, 0, last - 1)
-	return i + (time - _schedule[i]) / maxf(_schedule[i + 1] - _schedule[i], 0.0001)
+	return InkOnEffect.progress_at(_schedule, time, characters_per_second)

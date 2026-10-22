@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://stages/better_offer/better_offer_stage.gd" id="1_stage"]
+[ext_resource type="PackedScene" path="res://stages/controls/push_button.tscn" id="2_button"]
+
+[node name="BetterOfferStage" type="Node2D" node_paths=PackedStringArray("button")]
+script = ExtResource("1_stage")
+button = NodePath("Button")
+
+[node name="Button" parent="." instance=ExtResource("2_button")]
+position = Vector2(1160, 650)

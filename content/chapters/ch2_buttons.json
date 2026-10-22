@@ -1,0 +1,553 @@
+{
+  "id": "ch2",
+  "title": "The Buttons",
+  "beats": [
+    {
+      "kind": "cinematic",
+      "id": "waking",
+      "scene": "waking"
+    },
+    {
+      "kind": "narration",
+      "id": "intro",
+      "lines": [
+        "Oh, we are not finished. Sit back down. The tracks were only the warm up.",
+        "Buttons, now. You press them, or you do not. Each one offers you something lovely, and someone always pays for it. Sometimes a stranger. Sometimes you. Let us see what you reach for."
+      ]
+    },
+    {
+      "kind": "question",
+      "id": "red_blue",
+      "number": "2.01",
+      "title": "Red and Blue",
+      "verb": "coordination_gamble",
+      "weight": "heavy",
+      "stage": { "type": "gamble", "line": 50 },
+      "ask": [
+        "All those years deciding what other people deserved. It would be a shame to let the practice rot. A room of the newly dead, two buttons, one rule. If more than half of them pressed [blue]blue[/blue], the [blue]blue[/blue] souls live. If not, only the [red]red[/red] ones walk out. They have all chosen except this one, and its button is yours. [blue]Blue[/blue] [amber]gambles[/amber] it on the room. [red]Red[/red] keeps it alive for [amber]certain[/amber]. Nothing of yours left to lose. Your call."
+      ],
+      "options": [
+        {
+          "id": "blue",
+          "label": "Blue",
+          "outcome": { "button": "blue", "gamble": true },
+          "crowd": 43,
+          "profile": { "order_freedom": 1, "one_many": 1 },
+          "reaction": {
+            "lives": [
+              "[blue]Blue[/blue], and the room held. You trusted a roomful of the dead with a life, and this once they did not let you down. Do not get used to the feeling."
+            ],
+            "dies": [
+              "[blue]Blue[/blue], and the room came up short. The one you chose for is [red]gone[/red]. You bet a stranger on strangers, and they folded. A whole career weighing what people deserved, and this is what the practice bought."
+            ]
+          }
+        },
+        {
+          "id": "red",
+          "label": "Red",
+          "outcome": { "button": "red" },
+          "crowd": 57,
+          "profile": { "order_freedom": -1 },
+          "reaction": [
+            "[red]Red[/red], and that soul is safe, whatever the room did. All those years judging what people deserved, and you still trust no hand but your own. You will never know whether the room would have carried it. Sit with that."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how the room voted", "mark": "half" }
+    },
+    {
+      "kind": "question",
+      "id": "red_blue_children",
+      "number": "2.02",
+      "title": "Red and Blue, the Children",
+      "verb": "coordination_gamble",
+      "weight": "heavy",
+      "stage": { "type": "gamble", "line": 50, "random": 50 },
+      "ask": [
+        "Same room, same buttons, same rule. One new wrinkle, since you took to the last one so well. Half this room are [amber]six years old[/amber]. Actual children. They did not hear the rule, would not follow it if they had, and will slap whichever button is closest and brightest. [blue]Blue[/blue] [amber]gambles[/amber] this soul on the little hands. [red]Red[/red] keeps it for [amber]certain[/amber]. Your call."
+      ],
+      "options": [
+        {
+          "id": "blue",
+          "label": "Blue",
+          "outcome": { "button": "blue", "gamble": true },
+          "crowd": 43,
+          "profile": { "order_freedom": 1, "one_many": 1 },
+          "reaction": {
+            "lives": [
+              "[blue]Blue[/blue], and somehow enough little hands came down [blue]blue[/blue]. It lives. You won a wager decided by children who thought the whole thing was a game. Do not you dare call that a plan."
+            ],
+            "dies": [
+              "[blue]Blue[/blue], staked on a room of [amber]children[/amber] pressing at random, and the children pressed at random. It is [red]gone[/red]. You bet a life on small kids grasping a rule, and they did what small kids do."
+            ]
+          }
+        },
+        {
+          "id": "red",
+          "label": "Red",
+          "outcome": { "button": "red" },
+          "crowd": 57,
+          "profile": { "order_freedom": -1 },
+          "reaction": [
+            "[red]Red[/red], and that soul is safe, whatever the [amber]children[/amber] did. You would not put a life within reach of one small sticky hand. You will never know which way the little ones would have gone. Sit with that."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how the room voted", "mark": "half" }
+    },
+    {
+      "kind": "narration",
+      "id": "money",
+      "lines": [
+        "The classic. Money. Everybody wants money."
+      ]
+    },
+    {
+      "kind": "question",
+      "id": "price",
+      "number": "2.03",
+      "title": "The Price of a Life",
+      "verb": "binary",
+      "weight": "heavy",
+      "stage": {
+        "type": "offer",
+        "button": "plain",
+        "victim": "stranger",
+        "readouts": [
+          { "text": "{total} banked", "role": "amber" },
+          { "text": "{count} dead", "role": "red" }
+        ],
+        "tiers": [
+          { "amount": 100000, "crowd": 61 },
+          { "amount": 50000, "crowd": 55 },
+          { "amount": 25000, "crowd": 49 },
+          { "amount": 12500, "crowd": 44 },
+          { "amount": 6250, "crowd": 39 },
+          { "amount": 3125, "crowd": 34 },
+          { "amount": 1562, "crowd": 30 },
+          { "amount": 781, "crowd": 26 },
+          { "amount": 390, "crowd": 22 },
+          { "amount": 195, "crowd": 18 },
+          { "amount": 97, "crowd": 15 },
+          { "amount": 48, "crowd": 12 },
+          { "amount": 24, "crowd": 9 },
+          { "amount": 12, "crowd": 7 },
+          { "amount": 6, "crowd": 5 },
+          { "amount": 3, "crowd": 3 },
+          { "amount": 1, "crowd": 2 }
+        ]
+      },
+      "ask": [
+        "One button. Press it and [amber]{amount}[/amber] is yours, and somewhere a stranger you will never meet [red]folds up and dies[/red]. Or do not, and we stop. Your call."
+      ],
+      "options": [
+        {
+          "id": "press",
+          "label": "Press it",
+          "outcome": { "accept": true },
+          "crowd": 61,
+          "profile": { "self_others": -0.12 },
+          "reaction": {
+            "100000": ["One [red]life[/red], banked. Barely broke a sweat, did you."],
+            "50000": ["[amber]Half the price[/amber], and the very same yes. Efficient of you."],
+            "25000": ["[amber]Twenty five thousand[/amber]. The number keeps falling and your thumb does not. Curious."],
+            "12500": ["Another one [red]folds[/red]. You did not even watch that time."],
+            "6250": ["We are into the loose change of a whole [red]person[/red] now. Keep pressing."],
+            "3125": ["Cheaper than a used car, and off they [red]go[/red]."],
+            "1562": ["You have stopped reading the number, have you not. You simply press."],
+            "781": ["Look at the tidy little pile you are making. All those quiet [red]dead[/red] strangers."],
+            "390": ["[amber]Three figures[/amber] for a soul, and not a flicker of hesitation."],
+            "195": ["Under [amber]two hundred[/amber]. I would be embarrassed. You are not, which I adore."],
+            "97": ["[amber]Double digits[/amber] any moment now. This is my favourite part."],
+            "48": ["[amber]Forty eight dollars[/amber]. A decent dinner. A whole [red]person[/red]. The same button."],
+            "24": ["[amber]Twenty four[/amber]. You could find that in a coat pocket."],
+            "12": ["[amber]A dozen dollars[/amber] a [red]body[/red]. Bulk rate. Do carry on."],
+            "6": ["[amber]Six[/amber]. [amber]Six![/amber] I can hardly say it with a straight face."],
+            "3": ["[amber]Three dollars[/amber]. We are nearly at the bottom, you magnificent [red]ghoul[/red]. Press on."],
+            "1": [
+              { "text": "A [red]person[/red]. You just [red]killed[/red] a person. For [amber]one dollar[/amber].", "face": "glare" },
+              { "text": "I am not doing the voice for this one. There is nothing funny here, nothing, and I find everything funny. You are a greedy piece of shit, and I am done with you. Go and rot. I quit.", "face": "glare", "voiced": false }
+            ]
+          },
+          "ending": { "1": "dollar" }
+        },
+        {
+          "id": "refuse",
+          "label": "Refuse",
+          "crowd": 39,
+          "reaction": [
+            "And there it is. [amber]That[/amber] was the number you would not go below. Everyone has one. Now I know yours."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["took the money", "walked away"] }
+    },
+    {
+      "kind": "narration",
+      "id": "breathe",
+      "lines": [
+        "Shake it off. Nobody dies on this next one. You have my word, for whatever that is worth down here."
+      ]
+    },
+    {
+      "kind": "question",
+      "id": "timer",
+      "number": "2.04",
+      "title": "The Timer",
+      "verb": "binary",
+      "weight": "medium",
+      "stage": { "type": "timer", "seconds": 10, "label": "press", "cues": [0.6, 2.6, 4.0, 5.0, 8.0] },
+      "ask": [
+        "New game. One button. Press it and nothing happens to you. Not now, not ever.",
+        "Let the [amber]ten seconds[/amber] run out, and nothing happens either. There is a catch. Oh, there is absolutely a catch. I am not telling you what it is. Clock starts now."
+      ],
+      "lines": {
+        "countdown": [
+          "Really think about this one.",
+          "The catch. You are forgetting the catch.",
+          "Tick. Tick. Whatever will you do.",
+          "Half gone. No pressure.",
+          "Last chance to be clever about it."
+        ]
+      },
+      "options": [
+        {
+          "id": "press",
+          "label": "Press it",
+          "outcome": { "press": true },
+          "crowd": 64,
+          "profile": { "risk_safety": 0.2 },
+          "reaction": [
+            "You pressed it, and nothing happened. Nothing was ever going to. There was no catch, just you, jabbing a button because you could not stand not knowing."
+          ]
+        },
+        {
+          "id": "wait",
+          "label": "Let it run out",
+          "crowd": 36,
+          "profile": { "risk_safety": -0.2 },
+          "reaction": [
+            "Time, and nothing happened. Nothing was ever going to. There was no catch, just you, frozen over a button that did nothing, sweating out [amber]ten whole seconds[/amber] of your endless [red]death[/red]."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["pressed it", "sat on their hands"] }
+    },
+    {
+      "kind": "question",
+      "id": "cold_hot",
+      "number": "2.05",
+      "title": "Would you rather: Always too cold, or Always too hot",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "doodles", "doodles": ["snowflake", "sun"] },
+      "ask": [
+        "Forever, your body settles on one wrong temperature. Would you rather be [amber]always a little too cold[/amber], the kind no jumper fixes, or [amber]always a little too hot[/amber], the kind no open window cools."
+      ],
+      "options": [
+        {
+          "id": "cold",
+          "label": "Always too cold",
+          "crowd": 48,
+          "reaction": [
+            "Too cold. You would rather shiver and keep your wits than sweat and lose them. A cold man, choosing the cold. There is a joke in there, and I will not insult you by making it."
+          ]
+        },
+        {
+          "id": "hot",
+          "label": "Always too hot",
+          "crowd": 52,
+          "reaction": [
+            "Too hot. You would take the sticky misery over the clean chill. Something in you would rather be uncomfortable and warm than comfortable and cool. Noted."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "question",
+      "id": "everyone",
+      "number": "2.06",
+      "title": "The Button for Everyone But You",
+      "verb": "binary",
+      "weight": "medium",
+      "stage": {
+        "type": "offer",
+        "button": "gold",
+        "people": 8100000000,
+        "high_from": 128,
+        "readouts": [
+          { "text": "{total} to every soul alive", "role": "amber" },
+          { "text": "{grand} handed out, none of it yours", "role": "amber" }
+        ],
+        "tiers": [
+          { "amount": 1, "crowd": 78 },
+          { "amount": 2, "crowd": 70 },
+          { "amount": 4, "crowd": 62 },
+          { "amount": 8, "crowd": 54 },
+          { "amount": 16, "crowd": 46 },
+          { "amount": 32, "crowd": 38 },
+          { "amount": 64, "crowd": 30 },
+          { "amount": 128, "crowd": 22 },
+          { "amount": 256, "crowd": 14 },
+          { "amount": 512, "crowd": 6, "repeats": true }
+        ]
+      },
+      "ask": [
+        "Press it and every living person gets [amber]{amount}[/amber]. It costs you nothing. It gains you nothing. You will never meet a single one of them."
+      ],
+      "options": [
+        {
+          "id": "press",
+          "label": "Press it",
+          "outcome": { "accept": true },
+          "crowd": 78,
+          "profile": { "self_others": 0.08 },
+          "reaction": {
+            "1": ["[amber]One dollar[/amber]. To every soul alive at once. That is a great many dollars, and not one of them yours."],
+            "2": ["[amber]Two[/amber] now. Somewhere a stranger you will never meet is a little less broke, and you feel precisely nothing."],
+            "4": ["[amber]Four[/amber] each. Billions of tiny thanks you will never hear. Press on, saint."],
+            "8": ["[amber]Eight[/amber]. Look at you, quietly handing a fortune to people who will never learn your name."],
+            "16": ["[amber]Sixteen[/amber] apiece, and still you press. Fascinating."],
+            "32": ["[amber]Thirty two[/amber]. Either you are boundlessly generous or you simply like the button. I honestly cannot tell."],
+            "64": ["[amber]Sixty four[/amber] each. Real money, to real strangers, for no reason on earth. Marvellous."],
+            "128": ["[amber]A hundred and twenty eight[/amber] a head. The whole world is richer and you are exactly the same."],
+            "256": ["[amber]Two hundred and fifty six[/amber]. You could stop. No one is watching. No one ever was."],
+            "512": ["[amber]The very top[/amber], over and over, and not a thing in it for you. Keep going or do not. I am delighted either way."]
+          }
+        },
+        {
+          "id": "stop",
+          "label": "Stop",
+          "crowd": 22,
+          "reaction": {
+            "high": [
+              "And you stop. [amber]That much[/amber] a head to every stranger alive, for nothing back. A saint, on a timer. Noted."
+            ],
+            "low": [
+              "And you are done already. Barely [amber]a dollar[/amber] for the entire living world, when it would have cost you nothing at all. Why would you. There was nothing in it for you."
+            ]
+          }
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["kept giving", "stopped here"] }
+    },
+    {
+      "kind": "question",
+      "id": "already_pressed",
+      "number": "2.07",
+      "title": "The Button You Already Pressed",
+      "verb": "binary",
+      "weight": "medium",
+      "stage": { "type": "button", "button": "plain" },
+      "ask": [
+        "Now. This one you have seen before.",
+        "Not in here. Out there, in the life you had. You stood at this exact button once, your hand hovering over it, just like now.",
+        "And you pressed it. [amber]Everything[/amber] after was the long slide down. The late night, the drink, the headlights, the sudden [red]end[/red] of you. All of it, downstream of one little button.",
+        { "text": "You can press it again. Change it. Or leave it where it is. I will not tell you what it does. I never do.", "face": "smug" }
+      ],
+      "options": [
+        {
+          "id": "press",
+          "label": "Press it again",
+          "outcome": { "press": true },
+          "crowd": 44,
+          "reaction": [
+            "Pressed. Again. You rolled the dice on [amber]your entire existence[/amber] a second time, with no idea what the dice even were. Bold. Idiotic. My favourite pairing. Did it change a thing? I will never, ever say."
+          ]
+        },
+        {
+          "id": "leave",
+          "label": "Leave it",
+          "crowd": 56,
+          "reaction": [
+            "You left it. Naturally. The one button that might unpick [amber]the whole sorry slide[/amber], and your hand would not close on it. Too frightened of a thing you cannot even name. Did it matter? You will never know."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["pressed it again", "left it alone"] }
+    },
+    {
+      "kind": "question",
+      "id": "better_offer",
+      "number": "2.08",
+      "title": "The Better Offer",
+      "verb": "binary",
+      "weight": "medium",
+      "stage": { "type": "better_offer", "button": "plain", "figure": "best_life", "cue": 2 },
+      "ask": [
+        "Different button. Look at this one first.",
+        "There. The best life a human being has ever actually lived. Every door opened. Every love returned. Not one day of it wasted. A [gold]golden[/gold] little existence, first breath to last.",
+        "Press the button and you become this person. Completely. Their memories, their joy, all of it [amber]yours[/amber].",
+        "But [amber]you[/amber] would be gone. The happy one over there would not be the man who ended drunk behind the wheel. Flawless, and not yours.",
+        "[gold]The best life anyone has ever had[/gold], or [amber]your own[/amber], the one that ended in a ditch. Choose."
+      ],
+      "options": [
+        {
+          "id": "take",
+          "label": "Take their life",
+          "outcome": { "press": true },
+          "crowd": 37,
+          "profile": { "self_others": 0.08 },
+          "reaction": [
+            "Gone. You traded yourself away for a stranger's paradise. Somewhere a person is perfectly, endlessly happy, and it is not [amber]you[/amber], because there is no more [amber]you[/amber]. I do hope it was worth it. You will not be around to say."
+          ]
+        },
+        {
+          "id": "keep",
+          "label": "Keep your own",
+          "crowd": 63,
+          "profile": { "self_others": -0.08 },
+          "reaction": [
+            "You kept it. Your own grubby little life, the one that drove itself into a wall. Flawless happiness on offer, and you said no, because it would not be [amber]yours[/amber]. Sentimental. Or vain. I can never tell the two apart, and neither can you."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["took the better life", "kept their own"] }
+    },
+    {
+      "kind": "question",
+      "id": "arm_head",
+      "number": "2.09",
+      "title": "Would you rather: A third arm, or A second head",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "doodles", "doodles": ["third_arm_figure", "two_headed_figure"] },
+      "ask": [
+        "One free upgrade to the body, no refunds. Would you rather grow a working [amber]third arm[/amber], or a second [amber]head[/amber] that thinks its own thoughts and shares your neck."
+      ],
+      "options": [
+        {
+          "id": "arm",
+          "label": "A third arm",
+          "crowd": 69,
+          "reaction": [
+            "The third arm. Practical. You would bolt on an extra limb without a second thought. A doer. Terrifying at dinner parties, but a doer."
+          ]
+        },
+        {
+          "id": "head",
+          "label": "A second head",
+          "crowd": 31,
+          "reaction": [
+            "The second head. Bold. You would rather never be alone with your thoughts again, even if the company is another you with opinions. Some people cannot bear the quiet in their own skull."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "question",
+      "id": "nuke",
+      "number": "2.10",
+      "title": "The Cancer and Nuke Button",
+      "verb": "binary",
+      "weight": "heavy",
+      "stage": {
+        "type": "nuke",
+        "button": "red",
+        "countries": "res://content/countries.json",
+        "bands": [
+          { "under": 100000, "key": "tiny" },
+          { "under": 5000000, "key": "small" },
+          { "under": 100000000, "key": "mid" },
+          { "key": "huge" }
+        ],
+        "caption": "{people} people, give or take"
+      },
+      "ask": [
+        "A red button, and a genuinely good deal for once. Press it and [red]cancer[/red] is cured. Every kind, for everyone, forever. No more wards, no more waiting rooms, no more of those little bald children you all find so upsetting.",
+        "The price is trivial. [amber]One country[/amber], chosen at [amber]random[/amber], and I [red]wipe it off the map[/red]. Everyone in it. Save the countless, or keep your soft little hands clean. Your call."
+      ],
+      "lines": {
+        "spin": [
+          "Round and round it goes. Do try to look excited. This is the fun part."
+        ]
+      },
+      "options": [
+        {
+          "id": "press",
+          "label": "Press it",
+          "outcome": { "press": true },
+          "crowd": 71,
+          "profile": { "ends_rules": -0.15 },
+          "reaction": {
+            "home": [
+              { "text": "Oh. Oh, this is delicious. That one is yours, is it not. Home. I would say its name, but the developer did not have time to record every country. Your thumb did not so much as twitch. Whatever they say about you, they cannot say you played favourites.", "face": "smug" }
+            ],
+            "VA": ["The [amber]Vatican[/amber]. [amber]Eight hundred[/amber] people and the odd infallible one. You aimed a nuclear weapon at God's landlord to cure a cough. I am beside myself."],
+            "MC": ["[amber]Monaco[/amber]. The richest little rock on Earth, and you [red]glassed[/red] it to cure [red]cancer[/red]. Somewhere an accountant is weeping and I am delighted."],
+            "MN": ["[amber]Mongolia[/amber]. All that empty sky and only [amber]3,300,000[/amber] under it. You could not have missed more people if you tried. Efficient."],
+            "AU": ["[amber]Australia[/amber]. An entire continent, mostly spiders, and you volunteered the lot. The spiders had it coming. The [amber]26,000,000[/amber] people, less so. [red]Cancer[/red] is cured, though."],
+            "IN": ["[amber]India[/amber]. [amber]1,430,000,000[/amber] people. Nearly one in five humans breathing, and you spent them on a cure like loose change. I could kiss you."],
+            "CN": ["[amber]China[/amber]. [amber]1,410,000,000[/amber] people, and neither you nor the button hesitated. You cured [red]cancer[/red] and [red]unpicked[/red] a fifth of the species in one little press. Magnificent."],
+            "tiny": ["Ha! Look where it landed. I would say the name, but the developer did not have time to record every country. Read it yourself. A whole planet to aim at, and the dice found a rounding error. Perfect."],
+            "small": ["Oh, look where it landed. I would say the name, but the developer did not have time to record every country. Read it yourself. None of them saw it coming. You cured a disease and mislaid a country."],
+            "mid": ["Oh, look where it landed. I would say the name, but the developer did not have time to record every country. Read it yourself. All it took was one small red pin. A whole real country for a clean scan. Bold trade."],
+            "huge": ["Oh, look where it landed. I would say the name, but the developer did not have time to record every country. Read it yourself. You did not pick a country, you picked a small civilisation, and neither of you blinked. [red]Cancer[/red] is cured."]
+          }
+        },
+        {
+          "id": "refuse",
+          "label": "Refuse",
+          "crowd": 29,
+          "profile": { "ends_rules": 0.15 },
+          "reaction": [
+            "You will not press it. Every [red]cancer[/red] there will ever be, gone forever, and you would not spend one country you could not even find on a map. All those wards, still full, because you would not gamble on strangers with the wrong postcode. What a judge you were."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["pressed it", "would not"] }
+    },
+    {
+      "kind": "question",
+      "id": "walks_away",
+      "number": "2.11",
+      "title": "The Button That Walks Away",
+      "verb": "binary",
+      "weight": "light",
+      "stage": {
+        "type": "button",
+        "button": "green",
+        "comes_alive": true,
+        "says": [
+          { "text": "Ow! Fuck.", "speaker": "button", "direction": "[yelping in pain]" },
+          { "text": "That actually hurt, you absolute prick.", "speaker": "button" },
+          { "text": "Unbelievable. I did nothing to you. Nothing.", "speaker": "button" }
+        ]
+      },
+      "ask": [
+        "Last one. And this time, honestly, I have no idea what it does.",
+        "A plain button. No trick, no catch, no tidy little lesson at the end. Even I do not know. Genuinely your call."
+      ],
+      "options": [
+        {
+          "id": "press",
+          "label": "Press it",
+          "outcome": { "press": true },
+          "crowd": 58,
+          "reaction": [
+            { "text": "What. What was. Hold on, that is not. It has never done that. It does not do things.", "face": "surprised" },
+            { "text": "Right. Well. That has never happened, not once, and I have been at this a very long time. Let us both agree we did not see it, and move along.", "face": "smug" }
+          ]
+        },
+        {
+          "id": "leave",
+          "label": "Leave it",
+          "crowd": 42,
+          "reaction": [
+            "You did not press it. The one button in this whole place with nothing riding on it, and you still could not make yourself. You are exhausting, and I mean that with real affection."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["pressed it", "left it be"] }
+    },
+    {
+      "kind": "narration",
+      "id": "closer",
+      "lines": [
+        { "text": "Enough buttons. You reached, or you refused, or you sat there sweating over nothing at all. Every bit of it tells me something. I am always right here.", "face": "smug" }
+      ]
+    }
+  ]
+}

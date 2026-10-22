@@ -10,14 +10,19 @@ const SPEAKERS: PackedStringArray = ["imp", "button", "plea", "headline", "confe
 const FACES: PackedStringArray = ["grin", "smug", "glare", "surprised"]
 
 const _CHAPTER_KEYS: PackedStringArray = ["id", "title", "beats"]
-const _QUESTION_KEYS: PackedStringArray = ["kind", "id", "number", "title", "verb", "weight", "stage", "ask", "options", "reveal"]
+const _QUESTION_KEYS: PackedStringArray = ["kind", "id", "number", "title", "verb", "weight", "stage", "ask", "lines",
+		"options", "reveal"]
 const _NARRATION_KEYS: PackedStringArray = ["kind", "id", "lines"]
 const _CINEMATIC_KEYS: PackedStringArray = ["kind", "id", "scene"]
 const _OPTION_KEYS: PackedStringArray = ["id", "label", "outcome", "crowd", "profile", "reaction", "ending"]
-const _LINE_KEYS: PackedStringArray = ["text", "speaker", "face", "direction"]
+const _LINE_KEYS: PackedStringArray = ["text", "speaker", "face", "direction", "voiced"]
 ## The key that marks a line inside stage data, such as a plea over a figure.
 const _STAGE_LINE_KEY := "says"
-const _REVEAL_KEYS: PackedStringArray = ["heading"]
+## Keys in stage data whose words the player reads on the stage, such as a readout or a caption.
+const _STAGE_TEXT_KEYS: PackedStringArray = ["text", "caption", "label"]
+const _REVEAL_KEYS: PackedStringArray = ["heading", "labels", "mark"]
+## Parts of a line id that a set of lines may not be named, since lines with those ids exist already.
+const _RESERVED_SET_NAMES: PackedStringArray = ["ask", "stage"]
 
 ## Problems found so far, one line each, saying where.
 var problems := PackedStringArray()
@@ -108,6 +113,7 @@ func _question(data: Dictionary, chapter_id: StringName, id: StringName, where: 
 	if stage is Dictionary and str(stage.get("type", "")) != "":
 		question.stage = stage
 		_collect_stage_lines(stage, question.stage_lines, "%s.%s.stage" % [chapter_id, id])
+		_collect_stage_texts(stage, question.stage_texts)
 	else:
 		problems.append("%s: stage needs an object with a type" % where)
 	question.ask = _lines(data, "ask", "%s.%s.ask" % [chapter_id, id], where)
@@ -122,10 +128,25 @@ func _question(data: Dictionary, chapter_id: StringName, id: StringName, where: 
 		question.options.append(option)
 	if question.options.size() < 2:
 		problems.append("%s: a question needs at least two options" % where)
+	var sets: Variant = data.get("lines", {})
+	if sets is Dictionary:
+		for set_name: Variant in sets:
+			if str(set_name) in _RESERVED_SET_NAMES or option_ids.has(StringName(str(set_name))):
+				problems.append("%s: a set of lines may not be called '%s'" % [where, set_name])
+			question.line_sets[StringName(str(set_name))] = _lines(sets, str(set_name),
+					"%s.%s.%s" % [chapter_id, id, set_name], where)
+	else:
+		problems.append("%s: lines needs an object of named lists" % where)
 	var reveal: Variant = data.get("reveal", {})
 	if reveal is Dictionary:
 		_check_keys(reveal, _REVEAL_KEYS, where + " reveal")
 		question.reveal_heading = str(reveal.get("heading", question.reveal_heading))
+		question.reveal_mark = _text(reveal, "mark", where + " reveal")
+		var labels := _list(reveal, "labels", where + " reveal")
+		for label: Variant in labels:
+			question.reveal_labels.append(str(label))
+		if not labels.is_empty() and labels.size() != question.options.size():
+			problems.append("%s: the reveal needs a label for each option" % where)
 	return question
 
 
@@ -161,8 +182,24 @@ func _option(raw: Variant, line_prefix: String, where: String) -> OptionData:
 				option.profile[StringName(axis)] = float(nudge)
 	else:
 		problems.append("%s: profile needs an object" % here)
-	option.reaction = _lines(data, "reaction", "%s.%s" % [line_prefix, option.id], here)
-	option.ending = StringName(str(data.get("ending", "")))
+	var reaction: Variant = data.get("reaction", [])
+	if reaction is Dictionary:
+		# Keyed by the outcome the stage reports: each outcome has its own lines.
+		for result: Variant in reaction:
+			option.reactions[StringName(str(result))] = _lines(reaction, str(result),
+					"%s.%s.%s" % [line_prefix, option.id, result], here)
+		if (reaction as Dictionary).is_empty():
+			problems.append("%s: reaction needs at least one outcome" % here)
+	else:
+		option.reaction = _lines(data, "reaction", "%s.%s" % [line_prefix, option.id], here)
+	var ending: Variant = data.get("ending", "")
+	if ending is String:
+		option.ending = StringName(ending)
+	elif ending is Dictionary:
+		for result: Variant in ending:
+			option.endings[StringName(str(result))] = StringName(str(ending[result]))
+	else:
+		problems.append("%s: ending needs a name, or an object of names by outcome" % here)
 	return option
 
 
@@ -170,40 +207,75 @@ func _lines(data: Dictionary, key: String, id_prefix: String, where: String) -> 
 	var lines: Array[LineData] = []
 	var raw_lines := _list(data, key, where)
 	for i in raw_lines.size():
-		var raw: Variant = raw_lines[i]
-		var line_id := "%s.%d" % [id_prefix, i + 1]
-		if raw is String:
-			lines.append(LineData.make(line_id, raw))
-		elif raw is Dictionary:
-			_check_keys(raw, _LINE_KEYS, line_id)
-			var speaker := str(raw.get("speaker", "imp"))
-			var face := str(raw.get("face", ""))
-			var direction := str(raw.get("direction", ""))
-			if not speaker in SPEAKERS:
-				problems.append("%s: unknown speaker '%s'" % [line_id, speaker])
-			if face != "" and not face in FACES:
-				problems.append("%s: unknown face '%s'" % [line_id, face])
-			var made := LineData.make(line_id, _text(raw, "text", line_id, true), StringName(speaker), StringName(face))
-			made.direction = direction
-			lines.append(made)
-		else:
-			problems.append("%s: a line must be text or an object" % line_id)
+		var line := _line(raw_lines[i], "%s.%d" % [id_prefix, i + 1])
+		if line != null:
+			lines.append(line)
 	if lines.is_empty():
 		problems.append("%s: %s needs at least one line" % [where, key])
 	return lines
 
 
-## Finds every [code]says[/code] in the stage data, depth first, and makes each a plea line.
+## One line, from text said by [param default_speaker] or from an object that can name its own speaker.
+func _line(raw: Variant, line_id: String, default_speaker := &"imp") -> LineData:
+	if raw is String:
+		return LineData.make(line_id, raw, default_speaker)
+	if not raw is Dictionary:
+		problems.append("%s: a line must be text or an object" % line_id)
+		return null
+	_check_keys(raw, _LINE_KEYS, line_id)
+	var speaker := str(raw.get("speaker", default_speaker))
+	var face := str(raw.get("face", ""))
+	if not speaker in SPEAKERS:
+		problems.append("%s: unknown speaker '%s'" % [line_id, speaker])
+	if face != "" and not face in FACES:
+		problems.append("%s: unknown face '%s'" % [line_id, face])
+	var made := LineData.make(line_id, _text(raw, "text", line_id, true), StringName(speaker), StringName(face))
+	made.direction = str(raw.get("direction", ""))
+	var voiced: Variant = raw.get("voiced", true)
+	if voiced is bool:
+		made.voiced = voiced
+	else:
+		problems.append("%s: voiced needs true or false" % line_id)
+	return made
+
+
+## Finds every [code]says[/code] in the stage data, depth first, and makes each a line: a plea for
+## plain text, or whoever a line object names. A [code]says[/code] can also hold a list of them.
 func _collect_stage_lines(value: Variant, into: Array[LineData], id_prefix: String) -> void:
 	if value is Dictionary:
-		if value.get(_STAGE_LINE_KEY) is String:
-			into.append(LineData.make("%s.%d" % [id_prefix, into.size() + 1], value[_STAGE_LINE_KEY], &"plea"))
+		if value.has(_STAGE_LINE_KEY):
+			_add_stage_lines(value[_STAGE_LINE_KEY], into, id_prefix)
 		for key: Variant in value:
 			if key != _STAGE_LINE_KEY:
 				_collect_stage_lines(value[key], into, id_prefix)
 	elif value is Array:
 		for item: Variant in value:
 			_collect_stage_lines(item, into, id_prefix)
+
+
+func _add_stage_lines(said: Variant, into: Array[LineData], id_prefix: String) -> void:
+	if said is Array:
+		for each: Variant in said:
+			_add_stage_lines(each, into, id_prefix)
+		return
+	var line := _line(said, "%s.%d" % [id_prefix, into.size() + 1], &"plea")
+	if line != null:
+		into.append(line)
+
+
+## Finds every readout, caption and label in the stage data, outside the lines it holds.
+func _collect_stage_texts(value: Variant, into: PackedStringArray) -> void:
+	if value is Dictionary:
+		for key: Variant in value:
+			if key == _STAGE_LINE_KEY:
+				continue
+			if str(key) in _STAGE_TEXT_KEYS and value[key] is String:
+				into.append(value[key])
+			else:
+				_collect_stage_texts(value[key], into)
+	elif value is Array:
+		for item: Variant in value:
+			_collect_stage_texts(item, into)
 
 
 func _list(data: Dictionary, key: String, where: String) -> Array:

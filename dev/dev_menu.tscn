@@ -1,0 +1,62 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://dev/dev_menu.gd" id="1_menu"]
+
+[node name="DevMenu" type="CanvasLayer" node_paths=PackedStringArray("panel", "scroll", "columns", "auto_skip")]
+process_mode = 3
+layer = 110
+visible = false
+script = ExtResource("1_menu")
+panel = NodePath("Screen/Center/Panel")
+scroll = NodePath("Screen/Center/Panel/Margin/Stack/Scroll")
+columns = NodePath("Screen/Center/Panel/Margin/Stack/Scroll/Columns")
+auto_skip = NodePath("Screen/Center/Panel/Margin/Stack/AutoSkip")
+
+[node name="Screen" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Center" type="CenterContainer" parent="Screen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="Screen/Center"]
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="Screen/Center/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 26
+
+[node name="Stack" type="VBoxContainer" parent="Screen/Center/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Screen/Center/Panel/Margin/Stack"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6039216, 0.5882353, 0.54901963, 1)
+theme_override_font_sizes/font_size = 28
+text = "Jump to   (F2 or Esc closes, F5 restarts at the last jump)"
+
+[node name="AutoSkip" type="CheckButton" parent="Screen/Center/Panel/Margin/Stack"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Scroll" type="ScrollContainer" parent="Screen/Center/Panel/Margin/Stack"]
+layout_mode = 2
+
+[node name="Columns" type="HBoxContainer" parent="Screen/Center/Panel/Margin/Stack/Scroll"]
+layout_mode = 2
+theme_override_constants/separation = 72

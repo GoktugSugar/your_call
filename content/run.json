@@ -1,0 +1,7 @@
+{
+  "note": "The chapters of a run, in play order, by file name in chapters/.",
+  "chapters": [
+    "ch1_tracks.json",
+    "ch2_buttons.json"
+  ]
+}

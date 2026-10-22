@@ -2,9 +2,10 @@
 
 [ext_resource type="Script" path="res://stages/trolley/plea.gd" id="1_plea"]
 
-[node name="Plea" type="Node2D" node_paths=PackedStringArray("label")]
+[node name="Plea" type="Node2D" node_paths=PackedStringArray("label", "voice_player")]
 script = ExtResource("1_plea")
 label = NodePath("Words")
+voice_player = NodePath("Voice")
 
 [node name="Words" type="RichTextLabel" parent="."]
 offset_left = -230.0
@@ -20,3 +21,6 @@ autowrap_mode = 3
 shortcut_keys_enabled = false
 horizontal_alignment = 1
 clip_contents = false
+
+[node name="Voice" type="AudioStreamPlayer" parent="."]
+bus = &"Voice"
