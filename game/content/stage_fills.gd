@@ -1,8 +1,10 @@
 class_name StageFills
 extends RefCounted
 ## What a stage fills into its question's placeholders, such as [code]{amount}[/code]. A stage that
-## fills placeholders names them in [code]const FILLS: PackedStringArray[/code] on its script, and lists
-## every filling its lines can take in [code]static func fill_variants(question) -> Dictionary[/code]:
+## fills placeholders names them in [code]const FILLS: PackedStringArray[/code] on its script, or in
+## [code]static func fill_names() -> PackedStringArray[/code] when it extends another stage that has
+## its own, and lists every filling its lines can take in
+## [code]static func fill_variants(question) -> Dictionary[/code]:
 ## each line id with placeholders maps to an array of [code]{"fills": Dictionary, "keys": Dictionary}[/code],
 ## the same two the stage hands [method LineData.filled] while it plays. The tests check every filling,
 ## and the voice tools voice each one as a clip of its own.
@@ -10,6 +12,7 @@ extends RefCounted
 ## Path pattern of a stage's script, filled with the stage type twice.
 const STAGE_SCRIPT := "res://stages/%s/%s_stage.gd"
 const _NAMES := "FILLS"
+const _NAMES_METHOD := "fill_names"
 const _VARIANTS := "fill_variants"
 
 
@@ -18,18 +21,17 @@ static func names(question: QuestionData) -> PackedStringArray:
 	var script := _script(question)
 	if script == null:
 		return PackedStringArray()
+	if _has_method(script, _NAMES_METHOD):
+		return PackedStringArray(script.call(_NAMES_METHOD))
 	return PackedStringArray(script.get_script_constant_map().get(_NAMES, PackedStringArray()))
 
 
 ## Every filling of every line of [param question] that has placeholders, by line id.
 static func variants(question: QuestionData) -> Dictionary:
 	var script := _script(question)
-	if script == null:
+	if script == null or not _has_method(script, _VARIANTS):
 		return {}
-	for method in script.get_script_method_list():
-		if method["name"] == _VARIANTS:
-			return script.call(_VARIANTS, question)
-	return {}
+	return script.call(_VARIANTS, question)
 
 
 ## [param line] filled every way its stage can fill it, or the line itself when it has no placeholders.
@@ -41,6 +43,13 @@ static func filled_lines(question: QuestionData, line: LineData) -> Array[LineDa
 	for each: Dictionary in variants(question).get(line.id, []):
 		out.append(line.filled(each.get("fills", {}), each.get("keys", {})))
 	return out
+
+
+static func _has_method(script: GDScript, method_name: String) -> bool:
+	for method in script.get_script_method_list():
+		if method["name"] == method_name:
+			return true
+	return false
 
 
 static func _script(question: QuestionData) -> GDScript:
