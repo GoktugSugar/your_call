@@ -12,9 +12,10 @@ Godot 4.7, Forward+ renderer, GDScript with static typing. The base canvas is 19
 |---|---|
 | `ink/` | The ink look: the brush that turns paths into hand-drawn lines, the boil clock, the shared style and palette, the paper ground. |
 | `figures/` | The reusable rigs drawn in ink: the souls (the stick figure, its poses and kinds, the baby) and the imp. |
-| `doodles/` | Ink drawings of things (props, controls) that more than one stage uses. Empty so far. |
+| `doodles/` | The doodles a would you rather shows, one script each, named by id (`doodles/<id>.gd`). |
+| `cinematics/` | Cinematic beats, one folder each (`cinematics/<name>/<name>_cinematic.tscn`): the opening crash so far. |
 | `stages/` | Question presentations, one folder each. A stage stages any question that uses it, from that question's data. |
-| `ui/` | The dialogue box, the choice row, the crowd reveal, and the theme. |
+| `ui/` | The dialogue box, the choice row, the crowd reveal, the credits, and the theme. |
 | `game/` | The run: the main scene, the question flow, the content model and loader, the profile. |
 | `content/` | The game's content as data. Its format is in `content/README.md`. |
 | `assets/` | Imported files: fonts, music in `assets/audio/music/`, and voice clips in `assets/voice/` (stored with Git LFS). |
@@ -50,7 +51,7 @@ Everything on screen is ink drawn in code. Nothing is a sprite.
 
 ## Stages (`stages/`)
 
-A **`Stage`** is a question's presentation. The question player drives every stage through the same calls: `setup(question)`, `enter()`, `set_choosing(active)`, `highlight_option(index)`, `play_consequence(index)` and `leave()`. A stage reports its in-scene controls through `option_hovered` and `option_committed`. By default `enter` draws every ink drawing on and `leave` dissolves them. Stage scenes live at `stages/<type>/<type>_stage.tscn`, where `<type>` is the question's `stage.type`.
+A **`Stage`** is a question's presentation. The question player drives every stage through the same calls: `setup(question)`, `enter()`, `set_choosing(active)`, `highlight_option(index)`, `play_consequence(index)` and `leave()`. A stage reports its in-scene controls through `option_hovered` and `option_committed`, and `option_point(index)` says where on the canvas an option can be picked in the scene, if it can. By default `enter` draws every ink drawing on and `leave` dissolves them. Stage scenes live at `stages/<type>/<type>_stage.tscn`, where `<type>` is the question's `stage.type`.
 
 **The trolley stage** builds itself from `stage.tracks`, a list of tracks each with its souls, named by kind. It shows the `TrackLayout` with as many routes as there are tracks:
 
@@ -67,11 +68,20 @@ The trolley speeds up all the way. Each soul folds as the trolley's front reache
 
 `Track` draws two rails and sleepers along a smooth path and answers positions by distance along it. `TrolleyCart` is the tram, filled with paper so it hides what it passes. `Lever` lifts when pointed at and throws when clicked.
 
+**The doodles stage** is the quick would you rather: two small ink doodles side by side, each over its option's label, with a muted "or" between them. `stage.doodles` names them, left then right, and `DoodlesStage.make_doodle(id)` builds each from its script in `doodles/`. Pointing at a doodle lifts it and lights its label, and clicking it picks it; the choice row lifts the same doodle. On the pick an amber loop draws itself around the chosen doodle while the other one, its label and the "or" dissolve, and the pick hops once. A doodle is an `InkDrawing` built in code, standing on its origin.
+
+## Cinematics (`cinematics/`)
+
+A cinematic is a CanvasLayer over everything with a `play()` the run player awaits. An advance press skips it, but not in its first moments, so the click that focuses the window does not throw it away.
+
+- **The crash** (`cinematics/crash/`) opens the game. `CrashView` is the memory in pale ink on black: a night road, its centre line streaming by, and two headlights bearing down, their glow on a canvas item of its own without the ink material so it falls off smoothly. `CrashCinematic` flickers it at a low frame rate with frames lost to black, swerves the view, lands the hit with a white flash and a shake (emitting `hit`, for its sound), cuts to black, then wakes: `waking.gdshader`, on a ColorRect, clears the dark in uneven blotches that blink, drift and sharpen as the eyes focus.
+
 ## UI (`ui/`)
 
 - **`DialogueBox`**: the hand-drawn `InkFrame` (gone over twice, on box paper) sized to its text and growing upward from just above the bottom edge. `Pager` splits each line into pages of whole sentences, as few as fit in three lines and as even as possible, closing and reopening a colour tag across a break. Text inks on through `InkOnEffect`, a rich text effect that fades characters in by a schedule: a steady pace with breaths after punctuation. The page is laid out in full first, so nothing shifts. A click or key finishes the page, then moves on. The schedule is the hook for voice: it can come from audio timings instead.
 - **`ChoiceRow`**: the options as muted hand-lettered `ChoiceWord`s above the box. Pointing lifts a word to amber and draws an `InkUnderline`; picking keeps the pick amber and fades the rest. Mouse or number keys. A stage control (the lever) lights and picks options through the same calls.
 - **`CrowdReveal`**: the lowercase muted heading, then a `CrowdRow` per option, each a label over a `CrowdBar` that inks in from the left while its bare number counts up past its end. The pick is amber, the crowd darker ink. While it is up it is the only thing listening: the first input finishes the inking, the next dismisses it.
+- **`Credits`**: a clean paper page over everything; the title and each credit (the role in amber over the name in ink) scroll up from `content/credits.json`, and the page fades. A press hurries them along.
 - **Theme** (`ui/theme/ink_theme.tres`, set as the project theme): Caveat at weight 600 (`caveat_semibold.tres`), 44 px, warm ink colour.
 
 ## The question loop (`game/`)
@@ -116,11 +126,11 @@ Buses: Master, with Music, SFX and Voice under it. The Voice bus starts with a p
 All of these run from the command line; see CLAUDE.md for the exact commands.
 
 - `check_scripts.gd` loads every script and fails if any does not compile (the headless import alone does not catch parse errors).
-- `dev_tools.tscn` (debug builds only): F5 restarts, F3 shows the phase and the profile. On the command line it can force a window size, start the run at a named beat, autoplay a question (pick an option, or point at and click the lever with synthetic pointer events), speed the game up, save a screenshot before each click and a burst during the consequence, and quit after a number of questions.
+- `dev_tools.tscn` (debug builds only): F5 restarts, F3 shows the phase and the profile. On the command line it can force a window size, start the run at a named beat, autoplay a question (pick an option in the choice row, or point at it on the stage and click it there with synthetic pointer events: the lever, a track, a doodle), speed the game up, save a screenshot before each click, a burst during the consequence and one every few seconds throughout, and quit after a number of questions.
 - `capture_runner.tscn` runs any scene and saves screenshots at set times.
 - `export_voice_lines.gd` writes every line's id, speaker, spoken text and hash for the voice tools.
-- `ink_sampler`, `figure_sampler` and `imp_sampler` show the line, the poses and fold, and the imp's faces and hops on their own. `soul_sampler` shows every soul kind side by side, with a plea, a roped pair, a soul turned away and a patch of the dark.
+- `ink_sampler`, `figure_sampler` and `imp_sampler` show the line, the poses and fold, and the imp's faces and hops on their own. `soul_sampler` shows every soul kind side by side, with a plea, a roped pair, a soul turned away and a patch of the dark. `doodle_sampler` shows every doodle and previews the doodles stage; `cinematic_sampler` plays the crash and the credits.
 
 ## Tests (`tests/`)
 
-GUT 9.7.1, run headless from the command line. `tests/unit/` covers the markup, paging, the profile and the content loader. `tests/content/` loads every chapter and enforces the text rules: no loader problems, no dashes in anything player-facing, well formed colour tags, no tags in labels or headings, display-only crowd splits that add up to 100, a stage scene for every question and a soul kind for every soul on a track. `test_dialogue_pages.gd` shows every page of every line at the size the dialogue box gives it and checks it keeps the lines it was measured on.
+GUT 9.7.1, run headless from the command line. `tests/unit/` covers the markup, paging, the profile, the content loader, and the doodles and their stage. `tests/content/` loads every chapter and enforces the text rules: no loader problems, no dashes in anything player-facing, well formed colour tags, no tags in labels or headings, display-only crowd splits that add up to 100, a stage scene for every question and a soul kind for every soul on a track. `test_credits.gd` checks the credits file the same way. `test_dialogue_pages.gd` shows every page of every line at the size the dialogue box gives it and checks it keeps the lines it was measured on.

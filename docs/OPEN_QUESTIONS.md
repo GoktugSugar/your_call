@@ -6,6 +6,7 @@ Creative questions are the user's to answer. Technical ones are the developer's,
 
 ## Chapter 1
 
+- The doodles' colours. Chosen in the build for now: sky blue wings on the flying figure; grey caps on the rewind and pause buttons, since blue and red belong to the blue and red buttons; a gold duck with an orange bill; brown horses and a brown poop; a pink scoop on an orange cone.
 - Sign off on the trimmed copy (31% shorter, reviewed line by line on 2026-10-22). It is voiced only once approved: 58 imp lines, about 11,100 characters. Until then the chapter plays unvoiced, 1.02 included, since its trimmed lines no longer match the old takes.
 
 ## Carried over from the earlier build

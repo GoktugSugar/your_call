@@ -74,6 +74,16 @@ or a question:
 - Two tracks are a fork: track 0 runs straight on, track 1 branches, and a lever throws the trolley across. Three are a fan, first to third from the top, and the player points at one.
 - An option's `outcome` is `{ "track": n }`.
 
+## The doodles stage
+
+```json
+"stage": { "type": "doodles", "doodles": [ "winged_figure", "flexing_figure" ] }
+```
+
+- A would you rather: two doodles side by side, the first on the left over the first option, the second on the right over the second.
+- Each id names a doodle's script, `doodles/<id>.gd`. A new doodle is a new script there.
+- Options need no `outcome`.
+
 ## An option
 
 ```json
