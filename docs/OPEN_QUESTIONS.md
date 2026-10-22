@@ -52,5 +52,14 @@ These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus t
 **Music**
 - The real background music. The current track is a placeholder of unknown licence, played locally and kept out of the public repository.
 
+## Chapter 2
+
+Raised while building The Buttons on 2026-10-22, to settle at the check-in.
+
+- How the imp's line after each press of an offer ladder (2.03, 2.06) plays before the offer comes back: held up while the player chooses again (the build now), played out and cleared on its own (the old build), or waiting for a click.
+- How many voice takes to pay for in the lines that name an amount, a country or its people: every filling, or fewer by rewording some lines so they no longer name it.
+- How the dollar break's "I am not doing the voice for this one" plays now that the imp is voiced.
+- Whether the pin in 2.10 can land on the player's own country when it is not in the bundled list. The list has no Turkey, for one.
+
 **Language**
 - Whether to localize again, and into which languages. If yes, the text and voice pipelines should be designed for it from the start.
