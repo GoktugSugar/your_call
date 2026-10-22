@@ -98,11 +98,13 @@ enum Wing { LEFT, RIGHT }
 
 @export_group("Shot")
 ## How far he is knocked back and forth when the player shoots him, in pixels.
-@export_range(0.0, 80.0, 0.5) var shot_jolt := 16.0
+@export_range(0.0, 80.0, 0.5) var shot_jolt := 26.0
 ## How many times he is knocked back and forth.
 @export_range(1, 8) var shot_jolts := 3
 ## Seconds the knocking takes.
 @export_range(0.01, 2.0, 0.01) var shot_jolt_time := 0.3
+## How he is squashed the instant the shot hits him, before he springs back into shape.
+@export var shot_squash := Vector2(1.25, 0.78)
 ## How much bigger he grows as he rounds on the camera, coming at it.
 @export_range(1.0, 3.0, 0.01) var round_scale := 1.45
 ## Seconds he takes to round on the camera.
@@ -202,13 +204,15 @@ func hop_if_settled() -> void:
 	await hop()
 
 
-## Shot: he is knocked back and forth, then glares and rounds on the camera, growing as he comes at it.
-## He stays like that until he next appears.
+## Shot: he is squashed and knocked back and forth, then glares and rounds on the camera, growing as he
+## comes at it. He stays like that until he next appears.
 func round_on_camera() -> void:
 	rounded = true
 	if _hop != null and _hop.is_valid():
 		_hop.kill()
 	var home := position
+	scale = shot_squash
+	create_tween().tween_property(self, ^"scale", Vector2.ONE, shot_jolt_time).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 	var knock := create_tween()
 	for i in shot_jolts:
 		knock.tween_property(self, ^"position:x", home.x + shot_jolt * (1.0 if i % 2 == 0 else -1.0),
