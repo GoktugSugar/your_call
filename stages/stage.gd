@@ -33,6 +33,9 @@ var dialogue: DialogueBox
 ## What the run remembers, handed over by the question player: the profile, the money chapter's wallet,
 ## facts such as the walking button having come alive. A stage on its own, as in a sampler, gets a fresh one.
 var run := RunState.new()
+## The imp, handed over by the question player, for a stage that does something to him, such as a gun
+## that can be aimed at him. Null on a stage on its own.
+var imp: Imp
 
 
 ## Builds the tableau for [param for_question]. Called once, after the stage is in the tree.

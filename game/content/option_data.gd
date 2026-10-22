@@ -7,6 +7,8 @@ extends RefCounted
 var id := &""
 ## The words in the choice row. Plain text, never colour tags.
 var label := ""
+## Left out of the choice row: picked only on the stage, such as shooting the imp.
+var hidden := false
 ## The seeded share of the crowd who chose it, shown on the reveal.
 var crowd := 0.0
 ## Silent nudges to the profile, by axis id. Negative leans toward the axis's first pole.

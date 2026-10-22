@@ -49,6 +49,15 @@ func ask_for(key: StringName) -> Array[LineData]:
 	return ask
 
 
+## The indices of the options the choice row shows, in order: all but the hidden ones.
+func shown_options() -> PackedInt32Array:
+	var shown := PackedInt32Array()
+	for i in options.size():
+		if not options[i].hidden:
+			shown.append(i)
+	return shown
+
+
 ## The option labels, in order.
 func option_labels() -> PackedStringArray:
 	var labels := PackedStringArray()

@@ -39,12 +39,13 @@ layer = 10
 
 [node name="DialogueBox" parent="UI" instance=ExtResource("6_dialogue")]
 
-[node name="QuestionPlayer" type="Node" parent="." node_paths=PackedStringArray("stage_root", "dialogue", "choices", "reveal")]
+[node name="QuestionPlayer" type="Node" parent="." node_paths=PackedStringArray("stage_root", "dialogue", "choices", "reveal", "imp")]
 script = ExtResource("7_player")
 stage_root = NodePath("../World/StageRoot")
 dialogue = NodePath("../UI/DialogueBox")
 choices = NodePath("../UI/ChoiceRow")
 reveal = NodePath("../UI/CrowdReveal")
+imp = NodePath("../World/Imp")
 
 [node name="Overlays" type="Node" parent="."]
 

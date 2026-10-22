@@ -86,6 +86,19 @@ func commit(index: int) -> void:
 	tween.tween_property(self, ^"modulate:a", 0.0, fade_out_duration)
 
 
+## Ends the offer with none of its words picked, for an option picked elsewhere that the row does not
+## show: every word fades and the row goes. The offer returns [code]-1[/code].
+func dismiss() -> void:
+	if not _live:
+		return
+	_live = false
+	for word in _words:
+		word.look = ChoiceWord.Look.PASSED
+	committed.emit(-1)
+	var tween := create_tween()
+	tween.tween_property(self, ^"modulate:a", 0.0, fade_out_duration)
+
+
 ## Whether the row is waiting for a pick.
 func is_offering() -> bool:
 	return _live

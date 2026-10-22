@@ -22,13 +22,16 @@ var mark := -1.0
 var mark_label := ""
 
 
-## The split as [param question]'s data has it, with [param picked] as the player's.
+## The split as [param question]'s data has it, with the option at [param picked] as the player's.
+## A hidden option, picked only on the stage, has no bar.
 static func of(question: QuestionData, picked: int) -> RevealSplit:
 	var split := RevealSplit.new()
 	split.heading = question.reveal_heading
-	split.labels = question.bar_labels()
-	for option in question.options:
-		split.shares.append(option.crowd)
-	split.pick = picked
+	var labels := question.bar_labels()
+	var shown := question.shown_options()
+	for i in shown:
+		split.labels.append(labels[i])
+		split.shares.append(question.options[i].crowd)
+	split.pick = shown.find(picked)
 	split.mark_label = question.reveal_mark
 	return split

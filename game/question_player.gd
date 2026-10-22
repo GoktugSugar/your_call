@@ -27,6 +27,8 @@ const STAGE_SCENE := "res://stages/%s/%s_stage.tscn"
 @export var dialogue: DialogueBox
 @export var choices: ChoiceRow
 @export var reveal: CrowdReveal
+## The imp, handed to every stage for those that do something to him.
+@export var imp: Imp
 
 @export_group("Pacing")
 ## Seconds between the pick and the consequence starting.
@@ -147,7 +149,8 @@ func _finish(leaving := true) -> void:
 
 
 ## Waits for the player's pick: in the choice row, with the stage's controls lit and picking in step,
-## or on the stage alone when it takes the choice by itself.
+## or on the stage alone when it takes the choice by itself. The row leaves out hidden options, which
+## only the stage can pick; picking one there ends the row's offer.
 func _choose(to_play: QuestionData) -> int:
 	choosing_started.emit()
 	if stage.chooses_alone():
@@ -155,16 +158,30 @@ func _choose(to_play: QuestionData) -> int:
 		var chosen := await stage.choose()
 		stage.set_choosing(false)
 		return chosen
-	stage.option_hovered.connect(choices.highlight)
-	stage.option_committed.connect(choices.commit)
-	choices.hovered.connect(stage.highlight_option)
+	var shown := to_play.shown_options()
+	var labels := PackedStringArray()
+	var all_labels := stage.option_labels()
+	for i in shown:
+		labels.append(all_labels[i])
+	var picked_on_stage := [-1]
+	var stage_hovered := func(index: int) -> void: choices.highlight(shown.find(index) if index >= 0 else -1)
+	var stage_committed := func(index: int) -> void:
+		if shown.has(index):
+			choices.commit(shown.find(index))
+		else:
+			picked_on_stage[0] = index
+			choices.dismiss()
+	var row_hovered := func(row_index: int) -> void: stage.highlight_option(shown[row_index] if row_index >= 0 else -1)
+	stage.option_hovered.connect(stage_hovered)
+	stage.option_committed.connect(stage_committed)
+	choices.hovered.connect(row_hovered)
 	stage.set_choosing(true)
-	var pick := await choices.offer(stage.option_labels(), dialogue.frame_rect())
+	var row_pick := await choices.offer(labels, dialogue.frame_rect())
 	stage.set_choosing(false)
-	choices.hovered.disconnect(stage.highlight_option)
-	stage.option_hovered.disconnect(choices.highlight)
-	stage.option_committed.disconnect(choices.commit)
-	return pick
+	choices.hovered.disconnect(row_hovered)
+	stage.option_hovered.disconnect(stage_hovered)
+	stage.option_committed.disconnect(stage_committed)
+	return shown[row_pick] if row_pick >= 0 else picked_on_stage[0]
 
 
 ## The imp's line after a round of an offer ladder, played the way [member round_lines] says.
@@ -192,6 +209,7 @@ func _make_stage(for_question: QuestionData, run: RunState) -> Stage:
 	var made := packed.instantiate() as Stage
 	made.dialogue = dialogue
 	made.run = run
+	made.imp = imp
 	made.imp_face_cued.connect(imp_face_cued.emit)
 	stage_root.add_child(made)
 	made.setup(for_question)
