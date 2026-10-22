@@ -1,0 +1,417 @@
+{
+  "id": "ch5",
+  "title": "Who Would Win",
+  "beats": [
+    {
+      "kind": "cinematic",
+      "id": "waking",
+      "scene": "waking"
+    },
+    {
+      "kind": "narration",
+      "id": "intro",
+      "lines": [
+        "[amber]Enough[/amber]. Enough tracks, buttons, guns and guilt. You have earned a breather. So, frankly, have I.",
+        "Something completely different. No stakes, nobody dies, nobody gets judged, and there is no [amber]right[/amber] answer. There never was. Just the oldest, stupidest, best argument there is.",
+        "Who would win a fight. I put two things in front of you, you tell me who wins, and then we find out whether the rest of the bar agrees with you or thinks you are an absolute idiot. Place your bets."
+      ]
+    },
+    {
+      "kind": "question",
+      "id": "men_gorilla",
+      "number": "5.01",
+      "title": "100 Men vs 1 Gorilla",
+      "verb": "binary",
+      "weight": "light",
+      "stage": {
+        "type": "matchup",
+        "sides": [
+          { "doodle": "brawler", "count": 100, "role": "blue" },
+          { "doodle": "gorilla", "role": "secondary" }
+        ]
+      },
+      "ask": [
+        "Right. THE argument. The one every group of idiots has had, usually at [amber]2[/amber] in the morning. [amber]100[/amber] men, unarmed, versus [amber]one[/amber] silverback gorilla. Open field, no weapons.",
+        "The men can make a plan. The gorilla can bench a small car and has never once felt fear. Where is your money?"
+      ],
+      "options": [
+        {
+          "id": "men",
+          "label": "100 men",
+          "crowd": 46,
+          "reaction": [
+            "The [amber]hundred[/amber]. Strength in numbers. You are picturing a coordinated swarm. I am picturing the first twenty learning what a gorilla does to a person, and the other eighty remembering they left the oven on."
+          ]
+        },
+        {
+          "id": "gorilla",
+          "label": "1 gorilla",
+          "crowd": 54,
+          "reaction": [
+            "The [amber]gorilla[/amber]. One furious ape against a small army, and you like the ape. I respect the sheer contempt you have just shown for your own species."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how the bar voted" }
+    },
+    {
+      "kind": "question",
+      "id": "man_chickens",
+      "number": "5.02",
+      "title": "1 Man vs 100 Chickens",
+      "verb": "binary",
+      "weight": "light",
+      "stage": {
+        "type": "matchup",
+        "sides": [
+          { "doodle": "brawler", "role": "blue" },
+          { "doodle": "chicken", "count": 100, "role": "orange" }
+        ]
+      },
+      "ask": [
+        "[amber]One[/amber] grown man versus [amber]100[/amber] chickens. Sounds like nothing. Then you picture a hundred chickens.",
+        "That is a lot of beaks. They come in low, with no plan, no leader and no concept of mercy."
+      ],
+      "options": [
+        {
+          "id": "man",
+          "label": "1 man",
+          "crowd": 57,
+          "reaction": [
+            "The [amber]man[/amber]. Big strong biped, opposable thumbs. Absolutely. Right up until chicken number forty is inside his coat and he is making a noise no man should make."
+          ]
+        },
+        {
+          "id": "chickens",
+          "label": "100 chickens",
+          "crowd": 43,
+          "reaction": [
+            "The [amber]chickens[/amber]. A hundred tiny dinosaurs against one soft, panicking man. You have clearly met a chicken up close. Genuinely deranged little animals."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how the bar voted" }
+    },
+    {
+      "kind": "question",
+      "id": "cats_lion",
+      "number": "5.03",
+      "title": "1000 House Cats vs 1 Lion",
+      "verb": "binary",
+      "weight": "light",
+      "stage": {
+        "type": "matchup",
+        "sides": [
+          { "doodle": "house_cat", "count": 1000, "role": "sky" },
+          { "doodle": "lion", "role": "orange" }
+        ]
+      },
+      "ask": [
+        "Escalation. [amber]1000[/amber] house cats versus [amber]one[/amber] lion. A thousand furious Mr Whiskers against the king of the beasts.",
+        "Somewhere between [amber]one[/amber] cat and [amber]a thousand[/amber], cute becomes a tide. Is a thousand past that line? Your gut."
+      ],
+      "options": [
+        {
+          "id": "cats",
+          "label": "1000 house cats",
+          "crowd": 51,
+          "profile": { "risk_safety": -0.3 },
+          "reaction": [
+            "The [amber]thousand[/amber] cats. A living carpet of teeth and spite. The lion kills forty, and then it is tired, bleeding and outnumbered [amber]nine hundred and sixty[/amber] to one. I could be talked into this."
+          ]
+        },
+        {
+          "id": "lion",
+          "label": "1 lion",
+          "crowd": 49,
+          "profile": { "risk_safety": 0.3 },
+          "reaction": [
+            "The [amber]lion[/amber]. One apex predator versus a thousand things that abandon a fight halfway through to stare at a moth. Fair. Cats are not exactly a disciplined army."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how the bar voted" }
+    },
+    {
+      "kind": "question",
+      "id": "grizzly_silverback",
+      "number": "5.04",
+      "title": "A Grizzly vs a Silverback",
+      "verb": "binary",
+      "weight": "light",
+      "stage": {
+        "type": "matchup",
+        "sides": [
+          { "doodle": "grizzly", "role": "brown" },
+          { "doodle": "gorilla", "role": "secondary" }
+        ]
+      },
+      "ask": [
+        "Two heavyweights. No numbers, no tricks. A [amber]grizzly bear[/amber] versus a [amber]silverback gorilla[/amber].",
+        "Pound for pound the gorilla is stronger. But the bear is twice the weight and comes with knives on every foot. This is the one that ends friendships."
+      ],
+      "options": [
+        {
+          "id": "grizzly",
+          "label": "grizzly bear",
+          "crowd": 63,
+          "reaction": [
+            "The [amber]bear[/amber]. Half a ton of muscle and claw that treats a wolf pack as a snack. Hard to argue with. The gorilla has never once fought something with blades on its hands."
+          ]
+        },
+        {
+          "id": "silverback",
+          "label": "silverback gorilla",
+          "crowd": 37,
+          "reaction": [
+            "The [amber]gorilla[/amber]. Speed, grip, and the raw power to end it before the bear even gets going. Bold. You are staking agility against an animal that shrugs off a charging moose."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how the bar voted" }
+    },
+    {
+      "kind": "question",
+      "id": "men_pro",
+      "number": "5.05",
+      "title": "5 Men vs 1 Professional Fighter",
+      "verb": "binary",
+      "weight": "light",
+      "stage": {
+        "type": "matchup",
+        "sides": [
+          { "doodle": "brawler", "count": 5, "role": "blue" },
+          { "doodle": "boxer", "role": "red" }
+        ]
+      },
+      "ask": [
+        "Skill against numbers. [amber]Five[/amber] ordinary blokes versus [amber]one[/amber] professional fighter. He does this for a living. They have never thrown a punch in anger.",
+        "But even a pro can only hit one man at a time. Do the numbers beat the technique?"
+      ],
+      "options": [
+        {
+          "id": "men",
+          "label": "5 men",
+          "crowd": 55,
+          "reaction": [
+            "The [amber]five[/amber]. You reckon they pile on before he can thin them out. Maybe. Or he drops the first two inside four seconds and the other three abruptly remember a prior engagement."
+          ]
+        },
+        {
+          "id": "pro",
+          "label": "1 pro fighter",
+          "crowd": 45,
+          "reaction": [
+            "The [amber]pro[/amber]. One trained fighter against five flailing amateurs. Reasonable. He also gets tired, and there is always exactly one lunatic in a group of five who does not feel pain and will not go down."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how the bar voted" }
+    },
+    {
+      "kind": "question",
+      "id": "you_button",
+      "number": "5.06",
+      "title": "You vs the Walking Button",
+      "verb": "binary",
+      "weight": "light",
+      "stage": {
+        "type": "matchup",
+        "asks": [ { "if": "button_shot", "ask": "shot" }, { "ask": "spared" } ],
+        "sides": [
+          { "doodle": "brawler", "role": "green" },
+          { "button": true, "role": "green" }
+        ]
+      },
+      "ask": {
+        "shot": [
+          "Now a personal one. [amber]You[/amber] versus the button. Yes, that button. The one you [red]shot[/red] as it came at you, that got up offended and carried on. A dead man with his fists up. [amber]You[/amber], or the one thing in all of creation you could not [red]kill[/red]."
+        ],
+        "spared": [
+          "Now a personal one. [amber]You[/amber] versus the button. Yes, that button. The one that came charging at you, that you let come. It never stays down, it only gets offended. A dead man with his fists up. [amber]You[/amber], or the one thing in all of creation nobody can [red]kill[/red]."
+        ]
+      },
+      "options": [
+        {
+          "id": "you",
+          "label": "You",
+          "crowd": 34,
+          "reaction": [
+            "[amber]You[/amber]. You backed yourself against the one thing that keeps proving it cannot die. Magnificent self belief, or you have learned nothing in here. It is watching you, by the way. It looks a touch hurt that you would even ask."
+          ]
+        },
+        {
+          "id": "button",
+          "label": "the button",
+          "crowd": 66,
+          "reaction": [
+            "The [amber]button[/amber]. Betting against yourself. Bleak. Also, honestly, the smart money. It has a far better survival record than anyone in this room, and one of us is already dead."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how the bar voted" }
+    },
+    {
+      "kind": "question",
+      "id": "toddlers_man",
+      "number": "5.07",
+      "title": "100 Toddlers vs 1 Adult Man",
+      "verb": "binary",
+      "weight": "light",
+      "stage": {
+        "type": "matchup",
+        "sides": [
+          { "doodle": "toddler", "count": 100, "role": "orange" },
+          { "doodle": "brawler", "role": "blue" }
+        ]
+      },
+      "ask": [
+        "Absurd, and yet here we are. [amber]100[/amber] toddlers versus [amber]one[/amber] grown man. A hundred furious, uncoordinated attackers, none taller than his knee, all of them biting.",
+        "He is strong. He is also deeply unwilling to punt a toddler across a field."
+      ],
+      "options": [
+        {
+          "id": "toddlers",
+          "label": "100 toddlers",
+          "crowd": 40,
+          "reaction": [
+            "The [amber]hundred[/amber] toddlers. A gurgling tide that feels no fear and respects no man. He can throw a few. He cannot throw a hundred, and they simply keep toddling back for more."
+          ]
+        },
+        {
+          "id": "man",
+          "label": "1 adult man",
+          "crowd": 60,
+          "reaction": [
+            "The [amber]man[/amber]. One adult versus a hundred tiny menaces. Sensible, if he is prepared to be an absolute monster about it. The instant he hesitates, and he will hesitate, they are all over him."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how the bar voted" }
+    },
+    {
+      "kind": "question",
+      "id": "gorilla_knife",
+      "number": "5.08",
+      "title": "1 Gorilla vs 1 Gorilla, but One Has a Knife",
+      "verb": "binary",
+      "weight": "light",
+      "stage": {
+        "type": "matchup",
+        "sides": [
+          { "doodle": "gorilla", "role": "secondary" },
+          { "doodle": "gorilla_knife", "role": "secondary" }
+        ]
+      },
+      "ask": [
+        "A control experiment. [amber]One[/amber] gorilla versus [amber]one[/amber] gorilla. Same weight, same reach, same profoundly bad mood.",
+        "Except this one has a [red]knife[/red]. Small knife. Little guy. How much does a knife matter when both of them can pull a door off a car?"
+      ],
+      "options": [
+        {
+          "id": "unarmed",
+          "label": "1 gorilla",
+          "crowd": 39,
+          "reaction": [
+            "The [amber]unarmed[/amber] one. You reckon a blade is a rounding error to something that strong, all raw power and no need for tools. Brave. Say that to the one holding the knife."
+          ]
+        },
+        {
+          "id": "knife",
+          "label": "1 gorilla, with a knife",
+          "crowd": 61,
+          "reaction": [
+            "The one with the [red]knife[/red]. Obviously, you say. A knife is a knife. Although do picture the precise moment the first gorilla realises it has been stabbed by the second gorilla. That is no longer a calm animal."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how the bar voted" }
+    },
+    {
+      "kind": "question",
+      "id": "wasps_cat",
+      "number": "5.09",
+      "title": "A Swarm of Wasps vs a House Cat",
+      "verb": "binary",
+      "weight": "light",
+      "stage": {
+        "type": "matchup",
+        "sides": [
+          { "doodle": "wasp", "count": 14, "role": "orange" },
+          { "doodle": "house_cat", "role": "sky" }
+        ]
+      },
+      "ask": [
+        "A real toss up. A [amber]swarm[/amber] of wasps versus [amber]one[/amber] house cat. The cat is fast, it swats, it has dealt with the odd fly and enjoyed it.",
+        "But this is the entire furious cloud, and every one of them can sting more than once and holds a grudge. Call it."
+      ],
+      "options": [
+        {
+          "id": "swarm",
+          "label": "a swarm of wasps",
+          "crowd": 49,
+          "profile": { "risk_safety": -0.3 },
+          "reaction": [
+            "The [amber]swarm[/amber]. Death by a thousand tiny needles. The cat gets maybe ten of them, and then the eyes, the nose and the ears all file a formal complaint and it becomes a very fast retreat under the sofa."
+          ]
+        },
+        {
+          "id": "cat",
+          "label": "1 house cat",
+          "crowd": 51,
+          "profile": { "risk_safety": 0.3 },
+          "reaction": [
+            "The [amber]cat[/amber]. Reflexes, murder instinct, and a real enthusiasm for killing small flying things. Fair. Right up until the moment it inhales one of them."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how the bar voted" }
+    },
+    {
+      "kind": "question",
+      "id": "everything_you",
+      "number": "5.10",
+      "title": "Everything You Have Killed vs You",
+      "verb": "binary",
+      "weight": "light",
+      "stage": {
+        "type": "matchup",
+        "sides": [
+          { "doodle": "brawler", "kills": true, "role": "red" },
+          { "doodle": "brawler", "role": "green" }
+        ]
+      },
+      "ask": [
+        "Last one, and it is personal, because I have been keeping count the whole time. The count is on the label. Whoever stood on those tracks. Whoever you put a [red]bullet[/red] in. Every soul you folded up for a number, or a laugh, or for nothing at all.",
+        "[red]Everything you have killed[/red], all at once, versus [amber]you[/amber]. They have been waiting, and they remember every detail. A great many of them against [amber]one[/amber] dead judge with his fists up. Who wins?"
+      ],
+      "options": [
+        {
+          "id": "dead",
+          "label": "all {kills} you killed",
+          "crowd": 58,
+          "reaction": [
+            "The [red]dead[/red]. You looked at everything you have ever killed, massing up and coming for you all at once, and you backed THEM. Honest, at least. A man who knows exactly what he has earned."
+          ]
+        },
+        {
+          "id": "you",
+          "label": "You",
+          "crowd": 42,
+          "reaction": [
+            "[amber]You[/amber]. Against everyone you killed. The sheer, magnificent nerve of it. They outnumber you enormously and each and every one of them has a deeply personal reason to be here. But sure. Fists up. Best of luck."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how the bar voted", "labels": ["everyone you killed", "You"] }
+    },
+    {
+      "kind": "narration",
+      "id": "closer",
+      "lines": [
+        "And that is the lot. A [red]dead[/red] man sizing up gorillas and wasps and [amber]a hundred[/amber] angry toddlers like his afterlife hung on it. It did not. Not one of those told me a single thing about your soul.",
+        { "text": "But it was fun. Admit it. Right. Back to work, both of us.", "face": "smug" }
+      ]
+    }
+  ]
+}
