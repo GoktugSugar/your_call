@@ -149,7 +149,7 @@ func say(lines: Array[LineData], hold_last := false, auto := false) -> void:
 	_interjecting = false
 	for line_index in lines.size():
 		var line := lines[line_index]
-		var clip := VoiceLibrary.clip_for(line) if line.voiced else null
+		var clip := VoiceLibrary.clip_for(line)
 		var spoken := Markup.strip(line.text)
 		var pages := paginate(line.text)
 		var cursor := 0
@@ -172,7 +172,7 @@ func interject(line: LineData) -> void:
 	_stop_voice(voice_fade)
 	_end_typing()
 	var pages := paginate(line.text)
-	var clip := VoiceLibrary.clip_for(line) if line.voiced else null
+	var clip := VoiceLibrary.clip_for(line)
 	# Not awaited: the page inks on while whatever threw it in carries on.
 	_show_page(line, pages[0], 0, pages.size(), clip, 0 if clip != null else -1)
 
@@ -388,8 +388,4 @@ func _build_schedule(plain: String) -> void:
 
 ## How many characters are on the page [param time] seconds in, counting the one being inked as a fraction.
 func _progress_at(time: float) -> float:
-	var last := _schedule.size() - 1
-	if time >= _schedule[last]:
-		return last + (time - _schedule[last]) * characters_per_second
-	var i := clampi(_schedule.bsearch(time, false) - 1, 0, last - 1)
-	return i + (time - _schedule[i]) / maxf(_schedule[i + 1] - _schedule[i], 0.0001)
+	return InkOnEffect.progress_at(_schedule, time, characters_per_second)

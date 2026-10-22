@@ -245,9 +245,10 @@ func stand_up() -> void:
 	_apply_rig()
 
 
-## Says [param text], in markup with colour tags allowed: the words ink on over it and float along with
-## it wherever it goes, until [method fade_words]. Anything it was still saying fades away.
-func say(text: String) -> void:
+## Says [param text], in markup with colour tags allowed, aloud in [param voice] when it has one: the
+## words ink on over it, in time with the voice, and float along with it wherever it goes, until
+## [method fade_words]. Anything it was still saying fades away. Returns once it has been said.
+func say(text: String, voice: VoiceClip = null) -> void:
 	if _words != null:
 		_let_go(_words)
 	_words = words_scene.instantiate() as Plea
@@ -255,7 +256,13 @@ func say(text: String) -> void:
 	_words.set_words(text)
 	_words_at = Vector2.INF
 	_place_words()
-	await _words.write_on()
+	await _words.write_on(voice)
+
+
+## Waits until it has said what it is saying, voice and all. Returns at once when it is quiet.
+func finish_saying() -> void:
+	if _words != null and _words.is_saying():
+		await _words.said
 
 
 ## Lets the words it is saying fade away.

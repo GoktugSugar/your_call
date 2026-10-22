@@ -113,3 +113,9 @@ All the user's calls, at the check-in on the playable chapter.
 - **The pin's draw stays the 39 countries.** The line for the player's own country fires only for players from one of them.
 - **The trimmed copy is signed off for voicing.**
 - **Swearing is voiced as written**, the imp's and the walking button's alike, as the imp's already is in Chapter 1.
+
+## 2026-10-22: voicing Chapter 2
+
+- **Chapter 2 is voiced.** Dev: the 93 signed-off imp lines in the wiseguy barker's voice with `eleven_v3`, 11,646 characters; every take came back from v3, none fell back. The dollar break's silent line is left out. Checked with the talk log: each page runs as long as its stretch of the take.
+- **Auditions cast any speaker.** Dev: `design_auditions.py` takes `--speaker` and `--dry-run`, and keeps all three takes a design returns, since a design is charged by the characters of the text it reads, not by the take. The button's five candidates (a prissy clerk, a scrappy tough, a wounded whiner, a prim auntie and a squeaky crank) read its two lines in 2.11 and one sentence more, as Voice Design reads no fewer than 100 characters: 725 characters for the round.
+- **Floating words can be said aloud.** Dev: a `Plea` given a voice clip plays it on the Voice bus and inks on in time with it, reading the audio clock as the dialogue box does, and counts as said once the take has played out. The walking button finishes each line before it gets up or leaves the stage, so a longer take is never cut off. A line kept silent never has a clip.

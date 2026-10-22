@@ -17,7 +17,7 @@ extends Stage
 @export var yelp_arms: ButtonArmPose
 ## The arm pose it stomps off with.
 @export var stomp_arms: ButtonArmPose
-## Seconds it holds its yelp before it gets up.
+## Seconds it holds its yelp before it gets up, at least: it finishes saying its line first.
 @export_range(0.0, 5.0, 0.05) var yelp_hold := 2.2
 ## Which way it stomps off: -1 left, 1 right. The imp stands to the right.
 @export_range(-1, 1) var exit_direction := -1
@@ -70,18 +70,21 @@ func option_point(index: int) -> Vector2:
 	return button.press_point() if index >= 0 and index == _press else Vector2.INF
 
 
-## The button wakes with a start, swears at the player, gets up and stomps off, muttering.
+## The button wakes with a start, swears at the player, gets up and stomps off, muttering. Its lines
+## are said aloud when they have been voiced, and it finishes each before it moves on.
 func _come_alive() -> void:
 	var said := question.stage_lines
 	await _walker.wake()
 	if said.size() > 0:
-		_walker.say(said[0].text)
+		_walker.say(said[0].text, VoiceLibrary.clip_for(said[0]))
 	if yelp_arms != null:
 		_walker.hold_arms(yelp_arms)
 	await get_tree().create_timer(yelp_hold, false).timeout
+	await _walker.finish_saying()
 	await _walker.stand_up()
 	if stomp_arms != null:
 		_walker.hold_arms(stomp_arms)
 	if said.size() > 1:
-		_walker.say(said[1].text)
+		_walker.say(said[1].text, VoiceLibrary.clip_for(said[1]))
 	await _walker.walk_off(exit_direction)
+	await _walker.finish_saying()
