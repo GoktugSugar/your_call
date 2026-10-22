@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://stages/menu/menu_stage.gd" id="1_stage"]
+[ext_resource type="PackedScene" path="res://ui/choices/choice_word.tscn" id="2_word"]
+[ext_resource type="Script" path="res://ink/ink_drawing.gd" id="3_ink"]
+
+[node name="MenuStage" type="Node2D" node_paths=PackedStringArray("or_label", "flourish")]
+script = ExtResource("1_stage")
+word_scene = ExtResource("2_word")
+or_label = NodePath("Or")
+flourish = NodePath("Flourish")
+
+[node name="Or" type="Label" parent="."]
+visible = false
+offset_right = 1.0
+offset_bottom = 1.0
+
+[node name="Flourish" type="Node2D" parent="."]
+visible = false
+script = ExtResource("3_ink")

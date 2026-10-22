@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://stages/vignette/vignette_stage.gd" id="1_stage"]
+
+[node name="VignetteStage" type="Node2D" node_paths=PackedStringArray("slot")]
+script = ExtResource("1_stage")
+slot = NodePath("Slot")
+
+[node name="Slot" type="Node2D" parent="."]
+position = Vector2(960, 620)

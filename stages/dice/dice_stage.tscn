@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://stages/dice/dice_stage.gd" id="1_stage"]
+[ext_resource type="Script" path="res://stages/dice/die.gd" id="2_die"]
+
+[node name="DiceStage" type="Node2D" node_paths=PackedStringArray("die", "caption")]
+script = ExtResource("1_stage")
+die = NodePath("Die")
+caption = NodePath("Caption")
+
+[node name="Die" type="Node2D" parent="."]
+position = Vector2(960, 400)
+script = ExtResource("2_die")
+
+[node name="Caption" type="RichTextLabel" parent="."]
+offset_left = 510.0
+offset_top = 525.0
+offset_right = 1410.0
+offset_bottom = 580.0
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 42
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 3
+shortcut_keys_enabled = false
