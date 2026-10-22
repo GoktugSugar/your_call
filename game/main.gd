@@ -41,6 +41,7 @@ func _ready() -> void:
 	dialogue.page_shown.connect(_on_page_shown)
 	dialogue.talking_changed.connect(imp.set_talking)
 	dialogue.talking_changed.connect(Music.duck)
+	imp.set_speech(dialogue.spoken_character)
 	while is_inside_tree():
 		profile = Profile.new()
 		await run_player.play_run(chapters, profile, start_chapter, start_beat)

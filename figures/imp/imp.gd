@@ -2,9 +2,9 @@ class_name Imp
 extends Node2D
 ## The imp, who runs the game and narrates every word of it. He scribbles into being with a pop and
 ## never quite keeps still: his line jitters like boiling ink, his tail sways, and every few seconds he
-## fidgets. His body moves softly and eased, never snapping. He nods and gestures while he talks, and hops
-## to a fresh spot for each new dialogue box. He keeps to the side wings and never stands on the stage.
-## His origin is the ground between his feet.
+## fidgets. His body moves softly and eased, never snapping. He nods and gestures while he talks, his
+## mouth moving in time with his words, and hops to a fresh spot for each new dialogue box. He keeps to
+## the side wings and never stands on the stage. His origin is the ground between his feet.
 
 ## Emitted when he has finished scribbling into being.
 signal appeared
@@ -15,6 +15,8 @@ enum Wing { LEFT, RIGHT }
 
 ## His drawing, which the idle life and the talking animate.
 @export var drawing: ImpDrawing
+## Moves his mouth in time with what he says.
+@export var mouth: ImpMouth
 
 @export_group("Wings")
 ## Where his feet may land left of the stage, in canvas pixels.
@@ -208,9 +210,17 @@ func hop_to(target: Vector2) -> void:
 	landed.emit()
 
 
-## Starts or stops his nodding along with what he says.
+## Starts or stops his nodding along with what he says, and his mouth moving with it.
 func set_talking(talking: bool) -> void:
 	_talking = talking
+	mouth.talking = talking
+
+
+## Has his mouth follow [param speech] while he talks: called with seconds to look ahead, it returns the
+## character being said then, or an empty string when nothing is. [Main] hands him the dialogue box's
+## [method DialogueBox.spoken_character].
+func set_speech(speech: Callable) -> void:
+	mouth.speech = speech
 
 
 ## Sets his expression.

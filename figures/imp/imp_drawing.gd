@@ -4,9 +4,10 @@ extends InkDrawing
 ## The imp's body in ink: a crude little devil, all corners, with a lumpy head, long thin horns,
 ## sly slanted eyes over a wide grin, a boxy body, stubby bent arms that float beside it, and a
 ## crooked tail with a square tip. His line is heavier and jitters more than the rest of the page.
-## Unlike every soul, he has a mouth and a few faces. His origin is the ground between his feet.
-## Both arms join the body at the shoulders.
-## [Imp] animates the lean, the nod, the crouch, the arms, the tail and the jitter; this only draws them.
+## Unlike every soul, he has a mouth and a few faces, and each face opens its mouth its own way as he
+## talks. His origin is the ground between his feet. Both arms join the body at the shoulders.
+## [Imp] animates the lean, the nod, the crouch, the arms, the tail and the jitter, and [ImpMouth] the
+## mouth; this only draws them.
 
 enum Face { GRIN, SMUG, GLARE, SURPRISED }
 
@@ -56,6 +57,34 @@ enum Face { GRIN, SMUG, GLARE, SURPRISED }
 		tint_role = value
 		queue_redraw()
 
+@export_group("Mouth")
+## How far his mouth is open as he talks: 0 is his face's own mouth, 1 as wide as that face opens.
+@export_range(0.0, 1.0, 0.001) var mouth_open := 0.0:
+	set(value):
+		mouth_open = value
+		queue_redraw()
+## How open his mouth must be before his lips part. Below it, his mouth is drawn shut in his face's own shape.
+@export_range(0.0, 1.0, 0.01) var lips_part_at := 0.12:
+	set(value):
+		lips_part_at = value
+		queue_redraw()
+## How far his lips part at the least, as a share of how far they go, so a parted mouth always shows
+## the dark inside it rather than a thickened line.
+@export_range(0.0, 1.0, 0.01) var least_parting := 0.45:
+	set(value):
+		least_parting = value
+		queue_redraw()
+## Palette role of the wash inside his open mouth.
+@export var mouth_wash_role: StringName = &"ink":
+	set(value):
+		mouth_wash_role = value
+		queue_redraw()
+## How strongly the wash inside his open mouth takes its colour over the paper.
+@export_range(0.0, 1.0, 0.01) var mouth_wash := 0.8:
+	set(value):
+		mouth_wash = value
+		queue_redraw()
+
 ## His line: heavier and jitterier than the rest of the page.
 const LINE_STYLE := preload("res://figures/imp/imp_ink_style.tres")
 
@@ -95,6 +124,24 @@ const _GLARE_EYE_WIDTH := 1.45
 const _MOUTH_WIDTH := 0.95
 const _SURPRISED_MOUTH := Vector2(0.0, -88.5)
 const _SURPRISED_MOUTH_RADII := Vector2(5.0, 6.5)
+const _SURPRISED_MOUTH_WIDTH := 0.8
+
+## Each face's mouth open as wide as it goes while he talks, as its upper and lower lip, which share
+## their corners. Each fills the room between his eyes and his chin. The grin opens into a wide
+## grinning mouth, flat across the top.
+const _GRIN_OPEN_TOP := [Vector2(-15.0, -96.0), Vector2(-8.0, -94.0), Vector2(0.0, -93.5), Vector2(8.0, -94.0), Vector2(15.0, -96.0)]
+const _GRIN_OPEN_BOTTOM := [Vector2(-15.0, -96.0), Vector2(-10.0, -86.0), Vector2(0.0, -82.0), Vector2(10.0, -86.0), Vector2(15.0, -96.0)]
+## The smirk opens on its curled side and stays shut at the other corner.
+const _SMIRK_OPEN_TOP := [Vector2(-11.0, -89.5), Vector2(-2.0, -91.0), Vector2(7.0, -94.5), Vector2(15.0, -96.5)]
+const _SMIRK_OPEN_BOTTOM := [Vector2(-11.0, -89.5), Vector2(-2.0, -86.5), Vector2(8.0, -84.0), Vector2(15.0, -96.5)]
+## The frown opens into a squared snarl, its corners pulled down.
+const _SNARL_TOP := [Vector2(-12.5, -84.5), Vector2(-6.0, -93.5), Vector2(6.0, -93.5), Vector2(12.5, -84.5)]
+const _SNARL_BOTTOM := [Vector2(-12.5, -84.5), Vector2(-5.0, -82.0), Vector2(5.0, -82.0), Vector2(12.5, -84.5)]
+## The O grows from its middle as it opens, out to a wider, taller O than the one it rests in.
+const _SURPRISED_OPEN_MOUTH := Vector2(0.0, -90.5)
+const _SURPRISED_OPEN_RADII := Vector2(6.5, 8.5)
+## The open mouth's outline is finer than the closed one, so the dark inside shows at his size.
+const _OPEN_MOUTH_WIDTH := 0.75
 
 
 func _init() -> void:
@@ -127,30 +174,73 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 		lines.append(InkLine.along(InkBrush.resample_polyline(points, spacing), tint))
 	lines.append(_line(tail, _TAIL, tint, spacing))
 	lines.append(_closed_line(tail, _TAIL_TIP, tint, spacing, 0.85))
-	_add_face(lines, head, tint, spacing)
+	_add_face(lines, head, tint, palette.paper.lerp(palette.color(mouth_wash_role), mouth_wash), spacing)
 	return lines
 
 
-func _add_face(lines: Array[InkLine], head: Transform2D, tint: Color, spacing: float) -> void:
+func _add_face(lines: Array[InkLine], head: Transform2D, tint: Color, wash: Color, spacing: float) -> void:
+	var parted := mouth_open > 0.0 and mouth_open >= lips_part_at
 	match face:
 		Face.GRIN:
 			lines.append(_line(head, _SLY_LEFT_EYE, tint, spacing, _EYE_WIDTH))
 			lines.append(_line(head, _SLY_RIGHT_EYE, tint, spacing, _EYE_WIDTH))
-			lines.append(_smooth_line(head, _GRIN, tint, spacing))
+			lines.append(_open_mouth(head, _GRIN_OPEN_TOP, _GRIN_OPEN_BOTTOM, tint, wash, spacing, true) if parted
+					else _smooth_line(head, _GRIN, tint, spacing))
 		Face.SMUG:
 			lines.append(_line(head, _SLY_LEFT_EYE, tint, spacing, _EYE_WIDTH))
 			lines.append(_line(head, _HOODED_RIGHT_EYE, tint, spacing, _EYE_WIDTH))
-			lines.append(_smooth_line(head, _SMIRK, tint, spacing))
+			lines.append(_open_mouth(head, _SMIRK_OPEN_TOP, _SMIRK_OPEN_BOTTOM, tint, wash, spacing, true) if parted
+					else _smooth_line(head, _SMIRK, tint, spacing))
 		Face.GLARE:
 			lines.append(_line(head, _GLARE_LEFT_EYE, tint, spacing, _GLARE_EYE_WIDTH))
 			lines.append(_line(head, _GLARE_RIGHT_EYE, tint, spacing, _GLARE_EYE_WIDTH))
-			lines.append(_smooth_line(head, _FROWN, tint, spacing))
+			lines.append(_open_mouth(head, _SNARL_TOP, _SNARL_BOTTOM, tint, wash, spacing, false) if parted
+					else _smooth_line(head, _FROWN, tint, spacing))
 		Face.SURPRISED:
 			for eye: Vector2 in _SURPRISED_EYES:
 				lines.append(InkLine.along(InkBrush.ellipse(head * eye, Vector2.ONE * _SURPRISED_EYE_RADIUS, spacing * 0.5),
 						tint, 0.7, true))
-			lines.append(InkLine.along(InkBrush.ellipse(head * _SURPRISED_MOUTH, _SURPRISED_MOUTH_RADII, spacing * 0.5),
-					tint, 0.8, true))
+			if parted:
+				# Open, the O grows from its middle as the lips part, like every other mouth.
+				var o := InkLine.along(InkBrush.ellipse(head * _SURPRISED_OPEN_MOUTH, _SURPRISED_OPEN_RADII * _parting(),
+						spacing * 0.5), tint, _OPEN_MOUTH_WIDTH, true)
+				o.fill = wash
+				lines.append(o)
+			else:
+				lines.append(InkLine.along(InkBrush.ellipse(head * _SURPRISED_MOUTH, _SURPRISED_MOUTH_RADII, spacing * 0.5),
+						tint, _SURPRISED_MOUTH_WIDTH, true))
+
+
+## How far his lips are parted, from [member least_parting] as they first part to 1 at their widest.
+func _parting() -> float:
+	var share := clampf((mouth_open - lips_part_at) / maxf(1.0 - lips_part_at, 0.001), 0.0, 1.0)
+	return lerpf(least_parting, 1.0, share)
+
+
+## His mouth open: one ink outline round lips parted [method _parting] of the way from their shared
+## middle line to [param top] and [param bottom], with [param wash] inside. [param smooth] curves the
+## lips; otherwise they keep their corners.
+func _open_mouth(head: Transform2D, top: Array, bottom: Array, tint: Color, wash: Color, spacing: float, smooth: bool) -> InkLine:
+	var parting := _parting()
+	var upper := PackedVector2Array()
+	var lower := PackedVector2Array()
+	for i in top.size():
+		var top_point: Vector2 = top[i]
+		var bottom_point: Vector2 = bottom[i]
+		var middle := (top_point + bottom_point) * 0.5
+		upper.append(head * middle.lerp(top_point, parting))
+		lower.append(head * middle.lerp(bottom_point, parting))
+	lower.reverse()
+	# Round the upper lip from corner to corner, then back along the lower one to where it started.
+	var outline := _lip(upper, spacing, smooth)
+	outline.append_array(_lip(lower, spacing, smooth).slice(1))
+	var line := InkLine.along(outline, tint, _OPEN_MOUTH_WIDTH, true)
+	line.fill = wash
+	return line
+
+
+static func _lip(points: PackedVector2Array, spacing: float, smooth: bool) -> PackedVector2Array:
+	return InkBrush.resample_smooth(points, false, spacing) if smooth else InkBrush.resample_polyline(points, spacing)
 
 
 static func _line(xform: Transform2D, points: Array, tint: Color, spacing: float, width := 1.0) -> InkLine:
