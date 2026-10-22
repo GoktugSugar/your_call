@@ -3,13 +3,16 @@ extends SceneTree
 ## speaker, its plain text (colour tags stripped, as it is spoken) and that text's SHA-1. The game
 ## checks the same hash before it plays a clip, so a clip never plays over text it was not made from.
 ## A line with placeholders is written once for every way its stage fills it, each under its own id,
-## with [code]fills[/code] naming the line it fills. A line marked not voiced is left out.
+## with [code]fills[/code] naming the line it fills. A line marked not voiced is left out. The trailer's
+## lines, written in the same form as a chapter, are written too.
 ## [codeblock]
 ## Godot_Console --headless --path . -s res://dev/export_voice_lines.gd -- --out=C:/somewhere/lines.json
 ## [/codeblock]
 ## Exits with code 1 if the content has problems.
 
 const CHAPTERS_DIR := "res://content/chapters"
+## Files of lines outside the run, in the chapter form: the trailer's.
+const OTHER_LINES: PackedStringArray = ["res://trailer/trailer_lines.json"]
 
 
 func _initialize() -> void:
@@ -18,10 +21,13 @@ func _initialize() -> void:
 	var loader := ContentLoader.new(Profile.axis_ids())
 	var lines: Array[Dictionary] = []
 	var unfilled := PackedStringArray()
+	var files := PackedStringArray()
 	for file in DirAccess.get_files_at(CHAPTERS_DIR):
-		if file.get_extension() != "json":
-			continue
-		var chapter := loader.load_chapter(CHAPTERS_DIR.path_join(file))
+		if file.get_extension() == "json":
+			files.append(CHAPTERS_DIR.path_join(file))
+	files.append_array(OTHER_LINES)
+	for path in files:
+		var chapter := loader.load_chapter(path)
 		if chapter == null:
 			continue
 		for beat in chapter.beats:

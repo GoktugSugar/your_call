@@ -3848,5 +3848,125 @@
     "text_sha1": "8db0333df45428946e8d53f1ee14a227e7337e43",
     "timing": "res://assets/voice/imp/ch5.you_button.you.1.json",
     "voice": "c95aad52ae0b"
+  },
+  "trailer.burritos.lines.1": {
+    "audio": "res://assets/voice/imp/trailer.burritos.lines.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.36,
+    "speaker": "imp",
+    "text_sha1": "7de888c3b42b4dad040f6badaf1b8d2d471476a8",
+    "timing": "res://assets/voice/imp/trailer.burritos.lines.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "trailer.call.lines.1": {
+    "audio": "res://assets/voice/imp/trailer.call.lines.1.mp3",
+    "direction": "[smugly]",
+    "model": "eleven_v3",
+    "seconds": 1.44,
+    "speaker": "imp",
+    "text_sha1": "eb7f2d634a3a3250b332d4ca6ac4a8bfc5b705c4",
+    "timing": "res://assets/voice/imp/trailer.call.lines.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "trailer.crowd.lines.1": {
+    "audio": "res://assets/voice/imp/trailer.crowd.lines.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 2.72,
+    "speaker": "imp",
+    "text_sha1": "868ccfdf5aadd67ad856ac335e09d07ec9d2e52d",
+    "timing": "res://assets/voice/imp/trailer.crowd.lines.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "trailer.gun.lines.1": {
+    "audio": "res://assets/voice/imp/trailer.gun.lines.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 2.08,
+    "speaker": "imp",
+    "text_sha1": "25aafcfe04459bd110a7e21888da387fbefb97a9",
+    "timing": "res://assets/voice/imp/trailer.gun.lines.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "trailer.lever.lines.1": {
+    "audio": "res://assets/voice/imp/trailer.lever.lines.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 6.56,
+    "speaker": "imp",
+    "text_sha1": "c749e6638277cd341eba220548a33206ab8dd46c",
+    "timing": "res://assets/voice/imp/trailer.lever.lines.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "trailer.matter.lines.1": {
+    "audio": "res://assets/voice/imp/trailer.matter.lines.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 2.4,
+    "speaker": "imp",
+    "text_sha1": "370cc1cc8d13d3ded95b63cf5a42a471a8314623",
+    "timing": "res://assets/voice/imp/trailer.matter.lines.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "trailer.nuke.lines.1": {
+    "audio": "res://assets/voice/imp/trailer.nuke.lines.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.44,
+    "speaker": "imp",
+    "text_sha1": "1629e5dd7565c85d2cd34e7e31b95c8885cc34d9",
+    "timing": "res://assets/voice/imp/trailer.nuke.lines.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "trailer.questions.lines.1": {
+    "audio": "res://assets/voice/imp/trailer.questions.lines.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.52,
+    "speaker": "imp",
+    "text_sha1": "bc91d92f7c314d43b67c423bcc05947f76d2f563",
+    "timing": "res://assets/voice/imp/trailer.questions.lines.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "trailer.reading.lines.1": {
+    "audio": "res://assets/voice/imp/trailer.reading.lines.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.52,
+    "speaker": "imp",
+    "text_sha1": "8616b443e2876f97bcf54298e5816eefd0bec8ea",
+    "timing": "res://assets/voice/imp/trailer.reading.lines.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "trailer.wine.lines.1": {
+    "audio": "res://assets/voice/imp/trailer.wine.lines.1.mp3",
+    "direction": "[dryly]",
+    "model": "eleven_v3",
+    "seconds": 2.0,
+    "speaker": "imp",
+    "text_sha1": "2dbc7d0c70335cdda0978bff1f9ed835bbf509c4",
+    "timing": "res://assets/voice/imp/trailer.wine.lines.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "trailer.wishlist.lines.1": {
+    "audio": "res://assets/voice/imp/trailer.wishlist.lines.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.76,
+    "speaker": "imp",
+    "text_sha1": "9edc52fd1ce635fdf18b14d16680d128b53be40d",
+    "timing": "res://assets/voice/imp/trailer.wishlist.lines.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "trailer.wonder.lines.1": {
+    "audio": "res://assets/voice/imp/trailer.wonder.lines.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 2.24,
+    "speaker": "imp",
+    "text_sha1": "e1d0f101f05b61183233adaad263848e57b938c5",
+    "timing": "res://assets/voice/imp/trailer.wonder.lines.1.json",
+    "voice": "c95aad52ae0b"
   }
 }
