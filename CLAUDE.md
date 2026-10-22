@@ -49,8 +49,8 @@ The editor is the 4.7.2 standard build in `C:/Program Files/Godot/`. There is no
 
 Voice (Python 3, standard library only; the key comes from `.env`, which git ignores):
 
-- Design candidate voices: `python tools/voice/design_auditions.py` (previews land in `voice_auditions/`)
-- Save the chosen one for a speaker: `python tools/voice/save_voice.py imp <audition slug>`
+- Design candidate voices: `python tools/voice/design_auditions.py --speaker <speaker>` (`--dry-run` first to see what it will spend; takes land in `voice_auditions/`)
+- Save the chosen one for a speaker: `python tools/voice/save_voice.py <speaker> <audition slug>`
 - Voice every new or changed line: `python tools/voice/voice_lines.py` (`--dry-run` first to see what it will spend)
 - Voice clips are committed through Git LFS.
 

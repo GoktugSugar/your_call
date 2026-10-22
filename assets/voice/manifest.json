@@ -1508,5 +1508,25 @@
     "text_sha1": "c5e98b0d72cb3334ae9eb560b9c732e7f77b5d09",
     "timing": "res://assets/voice/imp/ch2.walks_away.press.2.json",
     "voice": "c95aad52ae0b"
+  },
+  "ch2.walks_away.stage.1": {
+    "audio": "res://assets/voice/button/ch2.walks_away.stage.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.36,
+    "speaker": "button",
+    "text_sha1": "a6111a7b67036b66663341f6ff848b21ef1275b9",
+    "timing": "res://assets/voice/button/ch2.walks_away.stage.1.json",
+    "voice": "c02aa7b55de3"
+  },
+  "ch2.walks_away.stage.2": {
+    "audio": "res://assets/voice/button/ch2.walks_away.stage.2.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.28,
+    "speaker": "button",
+    "text_sha1": "87b444db0b9d446a31262ef7987212aca8e8d8dd",
+    "timing": "res://assets/voice/button/ch2.walks_away.stage.2.json",
+    "voice": "c02aa7b55de3"
   }
 }
