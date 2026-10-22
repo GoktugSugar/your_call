@@ -3,7 +3,7 @@ extends SceneTree
 ## speaker, its plain text (colour tags stripped, as it is spoken) and that text's SHA-1. The game
 ## checks the same hash before it plays a clip, so a clip never plays over text it was not made from.
 ## A line with placeholders is written once for every way its stage fills it, each under its own id,
-## with [code]fills[/code] naming the line it fills.
+## with [code]fills[/code] naming the line it fills. A line marked not voiced is left out.
 ## [codeblock]
 ## Godot_Console --headless --path . -s res://dev/export_voice_lines.gd -- --out=C:/somewhere/lines.json
 ## [/codeblock]
@@ -32,6 +32,8 @@ func _initialize() -> void:
 				if spoken_lines.is_empty():
 					unfilled.append(line.id)
 				for spoken_line: LineData in spoken_lines:
+					if not spoken_line.voiced:
+						continue
 					var spoken := Markup.strip(spoken_line.text)
 					var entry := {"id": spoken_line.id, "speaker": String(spoken_line.speaker), "text": spoken,
 							"sha1": spoken.sha1_text(), "direction": spoken_line.direction}

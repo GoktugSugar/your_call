@@ -14,6 +14,8 @@ var face := &""
 ## A stage direction for the voice, such as [code][furious][/code], said before the line but not
 ## spoken or shown. Empty uses the speaker's own direction, if any.
 var direction := ""
+## Whether the line is spoken aloud. One that is not inks on in silence, and the voice tools skip it.
+var voiced := true
 
 
 static func make(line_id: String, line_text: String, line_speaker := &"imp", line_face := &"") -> LineData:
@@ -45,6 +47,7 @@ func filled(fills: Dictionary, keys := {}) -> LineData:
 			variant.append(key)
 	var copy := LineData.make("%s.%s" % [id, "_".join(variant)], text.format(fills), speaker, face)
 	copy.direction = direction
+	copy.voiced = voiced
 	return copy
 
 

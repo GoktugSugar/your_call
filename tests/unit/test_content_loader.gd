@@ -167,6 +167,24 @@ func test_the_reveal_needs_a_label_for_every_option() -> void:
 	assert_string_contains("\n".join(_load(question).problems), "a label for each option")
 
 
+func test_a_line_can_be_kept_silent() -> void:
+	var question := _question()
+	question.options[0].reaction = [{"text": "I quit.", "voiced": false}, "Spoken."]
+	var loader := ContentLoader.new(AXES)
+	var chapter := loader.load_chapter(_write({"id": "ch1", "title": "The Tracks", "beats": [question]}))
+	assert_eq(loader.problems, PackedStringArray())
+	var reaction := (chapter.find_beat(&"lever") as QuestionData).options[0].reaction
+	assert_false(reaction[0].voiced)
+	assert_true(reaction[1].voiced)
+
+
+func test_voiced_must_be_true_or_false() -> void:
+	var question := _question()
+	question.options[0].reaction = [{"text": "I quit.", "voiced": "no"}]
+	assert_string_contains("
+".join(_load(question).problems), "voiced needs true or false")
+
+
 func test_unknown_key_is_reported() -> void:
 	assert_eq(_load(_question({"wieght": "heavy"})).problems.size(), 1)
 

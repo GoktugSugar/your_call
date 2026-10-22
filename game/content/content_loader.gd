@@ -15,7 +15,7 @@ const _QUESTION_KEYS: PackedStringArray = ["kind", "id", "number", "title", "ver
 const _NARRATION_KEYS: PackedStringArray = ["kind", "id", "lines"]
 const _CINEMATIC_KEYS: PackedStringArray = ["kind", "id", "scene"]
 const _OPTION_KEYS: PackedStringArray = ["id", "label", "outcome", "crowd", "profile", "reaction", "ending"]
-const _LINE_KEYS: PackedStringArray = ["text", "speaker", "face", "direction"]
+const _LINE_KEYS: PackedStringArray = ["text", "speaker", "face", "direction", "voiced"]
 ## The key that marks a line inside stage data, such as a plea over a figure.
 const _STAGE_LINE_KEY := "says"
 ## Keys in stage data whose words the player reads on the stage, such as a readout or a caption.
@@ -231,6 +231,11 @@ func _line(raw: Variant, line_id: String, default_speaker := &"imp") -> LineData
 		problems.append("%s: unknown face '%s'" % [line_id, face])
 	var made := LineData.make(line_id, _text(raw, "text", line_id, true), StringName(speaker), StringName(face))
 	made.direction = str(raw.get("direction", ""))
+	var voiced: Variant = raw.get("voiced", true)
+	if voiced is bool:
+		made.voiced = voiced
+	else:
+		problems.append("%s: voiced needs true or false" % line_id)
 	return made
 
 

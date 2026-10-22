@@ -149,7 +149,7 @@ func say(lines: Array[LineData], hold_last := false, auto := false) -> void:
 	_interjecting = false
 	for line_index in lines.size():
 		var line := lines[line_index]
-		var clip := VoiceLibrary.clip_for(line)
+		var clip := VoiceLibrary.clip_for(line) if line.voiced else null
 		var spoken := Markup.strip(line.text)
 		var pages := paginate(line.text)
 		var cursor := 0
@@ -172,7 +172,7 @@ func interject(line: LineData) -> void:
 	_stop_voice(voice_fade)
 	_end_typing()
 	var pages := paginate(line.text)
-	var clip := VoiceLibrary.clip_for(line)
+	var clip := VoiceLibrary.clip_for(line) if line.voiced else null
 	# Not awaited: the page inks on while whatever threw it in carries on.
 	_show_page(line, pages[0], 0, pages.size(), clip, 0 if clip != null else -1)
 

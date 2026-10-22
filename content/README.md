@@ -203,6 +203,7 @@ or an object, when someone else says it or the imp's face should change:
 - `speaker` is `imp` (the default), `button`, `plea`, `headline` or `confessor`.
 - `face` is `grin`, `smug`, `glare` or `surprised`. A line without one shows his grin.
 - `direction` is a delivery note for the voice, such as `"[furious]"`, sent ahead of the line when it is voiced. It is never shown.
+- `"voiced": false` keeps a line silent: it inks on with no voice, and the voice tools leave it out. The dollar break uses it for the moment the imp stops doing the voice.
 - Each line becomes one or more dialogue boxes: long lines are paged by whole sentences.
 - Every line gets an id from where it sits, `<chapter>.<beat>.<part>.<number>`, such as `ch1.lever.pull.1`.
 
