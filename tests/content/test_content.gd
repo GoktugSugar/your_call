@@ -132,12 +132,25 @@ func test_every_doodle_a_stage_names_exists() -> void:
 		var named: Array = question.stage.get("doodles", []).duplicate()
 		if question.stage.has("item"):
 			named.append(question.stage["item"])
+		for key: String in ["sides", "targets"]:
+			for entry: Variant in question.stage.get(key, []):
+				if entry is Dictionary and entry.has("doodle"):
+					named.append(entry["doodle"])
 		for id: Variant in named:
 			var doodle := DoodlesStage.make_doodle(str(id))
 			if doodle == null:
 				offenders.append("%s: no doodle '%s'" % [question.id, id])
 			else:
 				doodle.free()
+	assert_eq(offenders, PackedStringArray(), "\n".join(offenders))
+
+
+func test_every_target_of_the_gun_is_a_known_kind() -> void:
+	var offenders := PackedStringArray()
+	for question in _questions():
+		for entry: Variant in question.stage.get("targets", []):
+			if entry is Dictionary and entry.has("kind") and not SoulKind.exists(StringName(str(entry["kind"]))):
+				offenders.append("%s: no soul kind '%s'" % [question.id, entry["kind"]])
 	assert_eq(offenders, PackedStringArray(), "\n".join(offenders))
 
 

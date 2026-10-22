@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SoulKind" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://figures/kinds/soul_kind.gd" id="1_kind"]
+[ext_resource type="PackedScene" path="res://figures/baby/future_baby.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_kind")
+scene = ExtResource("2_scene")
+size = 2.4

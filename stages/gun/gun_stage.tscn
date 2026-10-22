@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://stages/gun/gun_stage.gd" id="1_stage"]
 [ext_resource type="Script" path="res://stages/gun/crosshair.gd" id="2_sight"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" path="res://figures/walking_button/walking_button.tscn" id="6_walker"]
 [ext_resource type="Resource" path="res://figures/walking_button/arms/fist.tres" id="7_fist"]
 [ext_resource type="Resource" path="res://figures/walking_button/arms/shrug.tres" id="8_shrug"]
+[ext_resource type="Resource" path="res://figures/poses/aim_lowered.tres" id="9_lowered"]
 
 [node name="GunStage" type="Node2D" node_paths=PackedStringArray("targets_root", "sight", "lock", "flash", "muzzle")]
 script = ExtResource("1_stage")
@@ -20,6 +21,7 @@ plea_scene = ExtResource("5_plea")
 walker_scene = ExtResource("6_walker")
 hurt_arms = ExtResource("7_fist")
 hello_arms = ExtResource("8_shrug")
+lowered_pose = ExtResource("9_lowered")
 
 [node name="Targets" type="Node2D" parent="."]
 
