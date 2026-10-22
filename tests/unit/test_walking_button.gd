@@ -86,6 +86,18 @@ func test_walking_to_a_spot_ends_there_facing_the_way_it_went() -> void:
 	assert_signal_emitted(walker, "stepped")
 
 
+func test_a_new_walk_takes_over_from_one_under_way() -> void:
+	var walker := _walker()
+	walker.alive = true
+	var start := walker.position.x
+	walker.walk_to(start + 600.0)
+	await wait_process_frames(3)
+	await walker.walk_to(start - 200.0)
+	await wait_process_frames(3)
+	assert_almost_eq(walker.position.x, start - 200.0, 0.01, "it ends where it was last sent")
+	assert_eq(walker.facing, -1)
+
+
 func test_walking_off_left_takes_all_of_it_off_the_canvas() -> void:
 	var walker := _walker()
 	walker.alive = true

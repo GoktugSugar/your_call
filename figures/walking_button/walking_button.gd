@@ -267,8 +267,11 @@ func fade_words() -> void:
 	await _let_go(words)
 
 
-## Moves its arms into [param pose], the way the pose says to arrive. A shaking pose shakes on until the next one.
+## Moves its arms into [param pose], the way the pose says to arrive. A shaking pose shakes on until the
+## next one. No pose leaves the arms as they are.
 func hold_arms(pose: ButtonArmPose) -> void:
+	if pose == null:
+		return
 	if _arms_tween != null and _arms_tween.is_valid():
 		_arms_tween.kill()
 	var from := _arms.duplicate() as ButtonArmPose
@@ -297,12 +300,14 @@ func walk_to(x: float) -> void:
 	if not _alive or is_zero_approx(x - position.x):
 		return
 	var ticket: int = await _set_off(int(signf(x - position.x)))
+	if ticket != _walk_id:
+		return
 	var distance := absf(x - position.x) / absf(scale.x)
 	var count := maxi(1, roundi(distance / step_length))
 	var length := distance / count
 	# A half step to set off, whole steps, and a half step to pull up with the feet together.
 	await _step(length * 0.5, length * 0.5, 0.0, 1.0)
-	for i in count - 1:
+	for _step_number in count - 1:
 		if ticket != _walk_id:
 			return
 		await _step(length, length * 0.5, 1.0, 1.0)
@@ -322,6 +327,8 @@ func walk_off(direction: int) -> void:
 	if way == 0:
 		way = facing if facing != 0 else 1
 	var ticket: int = await _set_off(way)
+	if ticket != _walk_id:
+		return
 	await _step(step_length * 0.5, step_length * 0.5, 0.0, 1.0)
 	while not _out_of_sight(way):
 		if ticket != _walk_id:
