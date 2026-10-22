@@ -2,9 +2,11 @@
 class_name ThirdArmFigure
 extends InkDrawing
 ## A doodle: a soul with a fully working third arm. An ink stick figure with dot eyes, its two
-## ordinary arms hanging at its sides, and a third arm growing from the middle of its chest, raised
-## and waving, with a stroke of motion either side of its hand. It stands a little left of its origin,
-## so that it and its third arm together are centred on it. Its origin is the ground under it.
+## ordinary arms thrown up in a cheer, and a third arm growing from the middle of its chest, out to
+## the side and waving, with a stroke of motion either side of its hand. With the ordinary arms up
+## out of the way, nothing crosses the third one, so all three count at a glance. It stands a little
+## left of its origin, so that it and its third arm together are centred on it. Its origin is the
+## ground under it.
 
 ## Radius of its head.
 @export_range(4.0, 40.0, 0.5) var head_radius := 15.0:
@@ -28,13 +30,13 @@ const _HIPS := Vector2(0.0, -64.0)
 const _NECK := Vector2(0.0, -124.0)
 const _HEAD := Vector2(0.0, -142.0)
 const _EYES := [Vector2(-5.0, -144.0), Vector2(5.0, -144.0)]
-## The screen left arm, shoulder to elbow to hand, hanging at its side; the right mirrors it.
-const _ARM := [Vector2(0.0, -114.0), Vector2(-12.0, -90.0), Vector2(-24.0, -66.0)]
+## The screen left arm, shoulder to elbow to hand, thrown up beside the head; the right mirrors it.
+const _ARM := [Vector2(0.0, -114.0), Vector2(-27.0, -128.0), Vector2(-36.0, -158.0)]
 ## The screen left leg, hip to knee to foot; the right mirrors it.
 const _LEG := [Vector2(0.0, -64.0), Vector2(-11.0, -32.0), Vector2(-17.0, 0.0)]
-## The third arm, from the middle of the chest out to its elbow and up to its hand. It crosses in
-## front of the screen right arm close to the chest, so it plainly grows from there.
-const _THIRD_ARM := [Vector2(0.0, -93.0), Vector2(42.0, -102.0), Vector2(54.0, -146.0)]
+## The third arm, from the middle of the chest out to its elbow and up to its waving hand, below the
+## raised screen right arm.
+const _THIRD_ARM := [Vector2(0.0, -94.0), Vector2(40.0, -88.0), Vector2(56.0, -114.0)]
 ## A curved stroke of motion either side of the waving hand: where each starts and ends, in degrees
 ## round the hand from the way its forearm points, outward positive.
 const _WAVE := [[35.0, 105.0], [-35.0, -105.0]]
