@@ -19,6 +19,10 @@ The tests in `tests/content/` load every chapter and fail on any problem, so run
 }
 ```
 
+A chapter can say what a run started after it, from the dev menu, should take it to have left behind: `"if_skipped": { "remember": ["button_woke"], "kills": { "stranger": 1 } }`, the facts later beats look back on and the kills by kind. Later beats read the walking button's history (`button_woke`, `button_auctioned`, `button_shot`, `button_spared`) and the kill tally.
+
+A chapter that hands the player money, like The Money, has a `wallet`: `"wallet": { "start": 10000 }`. The wallet opens as the chapter's first words are said, its balance shows at the top of the screen until the chapter ends, and the shop, the auction, the buyback and the receipt spend from it and read it.
+
 ## A beat
 
 Either some narration from the imp:
@@ -55,7 +59,21 @@ or a question:
 - `weight` is `light`, `medium` or `heavy`.
 - `stage.type` names the stage scene, `stages/<type>/<type>_stage.tscn`. The rest of `stage` is read by that stage.
 - `lines` (optional) holds named sets of the imp's lines that the stage says at moments of its own, such as the needling over the timer's countdown: `"lines": { "countdown": [ "...", "..." ] }`. A set's lines get ids like `ch2.timer.countdown.1`, so a set may not be called `ask`, `stage` or the id of an option.
+- `ask` can also be an object of named asks, `"ask": { "items": [...], "nothing": [...] }`, when the stage picks how to pose the question, as the buyback does. Their lines get ids like `ch3.buyback.ask.items.1`.
 - `reveal.heading` is the reveal's heading. `reveal.labels` (optional) puts other words over the bars than the option labels, one per option, such as "took the money" for "Press it". `reveal.mark` (optional) names the line a coordination gamble's crowd had to cross, such as "half".
+
+A **tableau** is a stage the imp talks over with nothing to choose, like the receipt: no options, no verb and no reveal. The stage draws on, the imp says the `ask` if there is one, the stage plays out and reports an outcome, and the imp says the question's `lines` of that name, the click on the last page moving on:
+
+```json
+{
+  "kind": "tableau",
+  "id": "receipt",
+  "number": "3.23",
+  "title": "The Receipt",
+  "stage": { "type": "receipt", ... },
+  "lines": { "hoard": [ "..." ], "spend": [ "..." ], "middle": [ "..." ] }
+}
+```
 
 ## The trolley stage
 
@@ -87,6 +105,14 @@ or a question:
 - A would you rather: two doodles side by side, the first on the left over the first option, the second on the right over the second.
 - Each id names a doodle's script, `doodles/<id>.gd`. A new doodle is a new script there.
 - Options need no `outcome`.
+
+## The matchup stage
+
+```json
+"stage": { "type": "matchup", "sides": [ { "doodle": "brawler", "count": 100, "role": "blue" }, { "doodle": "gorilla", "role": "secondary" } ] }
+```
+
+Who Would Win: two sides with "vs" between them, each over its option's label; the reveal colours each bar by its side's `role`. A side names a `doodle`; with a `count` over one it is a crowd. `{ "button": true }` is the walking button itself, and `{ "doodle": "brawler", "kills": true, "role": "red" }` is everyone the player has killed in the run, with `{kills}` in the option's label filled with how many. `"asks": [ { "if": "button_shot", "ask": "shot" }, { "ask": "spared" } ]` picks the question's keyed ask by the first fact the run remembers.
 
 ## Buttons
 
@@ -155,6 +181,66 @@ Pressing the button inks a world map in; a pin goes round over it while the imp 
 - Outcomes, in this order: `"home"` when it is the player's own country, read from the system's region; the country's code, such as `"VA"`, when the pressing option has a reaction for it; otherwise the `key` of the first band its people fall `under` (a band with no `under` takes the rest).
 - Placeholders: `{country}` and `{people}`.
 
+## The gun stage
+
+```json
+"stage": { "type": "gun", "imp": true, "survivors": "leave",
+  "targets": [ { "id": "man", "kind": "stranger", "x": 640 }, { "id": "bear", "kind": "bear", "x": 1200 } ] }
+```
+
+First person: an ink sight follows the pointer, amber brackets lock on to the target under it, and a click fires. Each target names a soul `kind` (or a `doodle`), stands at `x` on the ground (or `y`), and can plead (`says`), be drawn in a palette `role`, and carry a `crowd` share and a `label` for a reveal by target.
+- An option's outcome is `{ "shoot": "<target id>" }`, `{ "shoot": "any" }` (the target clicked, or one at random when picked in the row), `{ "shoot": "imp" }`, `{ "shoot": "self" }`, or `{ "hold": true }` to lower the gun. An option with `"hidden": true` stays out of the choice row and the reveal, and only the stage picks it: the imp is shot this way.
+- `"imp": true` lets the sight lock on to the imp; `"survivors": "leave"` sends the figures left standing walking off; `"empty": true` makes every shot a dry click; `"dies_anyway": true` has the target die by itself once the gun is lowered; `"fires_back": 50` has an armed target fire back at a lowered gun that share of the time; `"alone": { "seconds": 8 }` asks nothing, shows no choice row, and lowers the gun when time runs out; `"charge": { "seconds": 6 }` sends the doodle target charging while the player chooses, arriving (which holds) when time runs out, and turning out to be the walking button, which says the question's `hurt_again`, `hurt` or `hello` line.
+- Outcomes: the id of the target shot, `imp`, `self`, `click` (an empty gun), `held`, `fired` and `lowered` (an armed target's answer), and for the charging thing `shot`, `shot_again` (the button woke in 2.11) or `waved`.
+- With targets that carry `crowd`, the reveal is a bar per target in its colour, then the holding option's.
+
+## The money chapter's stages
+
+These spend from and read the chapter's `wallet`. Amounts show in the money format, such as `$1,750`.
+
+### The shop stage
+
+```json
+"stage": { "type": "shop", "item": "burrito", "label": "Free food for life", "price": 1800 }
+```
+
+One thing for sale: `item` names its doodle, `label` is its name on the receipt, and `price` is what it costs, or `"everything"` for the whole balance. `"buyback": 100` gives the buyback's offer for it as a share of the price, in percent, when it differs from the buyback's own. The option whose outcome has `"buy": true` buys; the other keeps the money.
+- Outcomes: `bought`; `broke` when the money is not there, which shows in the reveal as keeping the money; `passed`.
+- Bought one at a time, with `"step": 100, "most": 40`, each one costs the step more than the last and the offer comes round again after every one, with `"tag": { "text": "{price} a year" }` on the price tag and `"tally": { "text": "{count} years taken", "one": { "text": "{count} year taken" } }` under it, shown from the first. Outcomes: `first` and `more` for each one bought, `broke` or `ran_out` when the money runs out before or after the first, and on stopping `some` or `none`.
+- Placeholders: `{price}` what one costs now, `{count}` how many were bought. Only the price the thing is offered at is voiced.
+
+### The auction stage
+
+```json
+"stage": { "type": "auction", "item": "cigarette_pack", "price": 20, "step": 10, "persist": 3,
+  "bid": { "label": "Bid {bid}" }, "drop": { "label": "Drop out" } }
+```
+
+A shop with a rival. Buying brings the walking button in to bid `step` over the player, and the choice row then shows the `bid` and `drop` labels; no money moves. `persist` counts the player's bids, the first included, that fire the buying option's ending. The question's line sets hold what is said: the button's `arrive`, `taunts` (one a round, in order), `won` (after a drop out) and `gloat` (at the ending), and the imp's `stop`, his cut in before the ending, which moves on by itself.
+- Outcomes: `auction` when the button comes in, `bid` for each bid it answers, `cursed` for the bid that reaches `persist`, `dropped`, `passed`, `broke`.
+- Placeholders: `{price}` the asking price, `{rival}` the button's bid now, `{bid}` what the player would bid over it.
+
+### The buyback stage
+
+```json
+"stage": { "type": "buyback", "share": 50, "round_to": 10, "least": 10 }
+```
+
+Everything owned, a row each, offered back one at a time in the order bought for `share` percent of what was paid, rounded to the nearest `round_to`, never under `least`. The option whose outcome has `"sell": true` sells. Its `ask` is keyed: `nothing` when nothing is owned (then there is no choice at all), the first thing's question id when there is an ask by that name (`poverty`, when End Poverty is all there is), and `items` otherwise.
+- Outcomes: the thing's question id, such as `poverty`, when the picked option has a reaction for it; on the last row `last`, or `none` for keeping it with nothing sold; otherwise `sold` and `kept` the first time each is picked, and `again` after, which has no line.
+
+### The receipt stage
+
+```json
+"stage": { "type": "receipt", "title": { "text": "the receipt" }, "many": { "text": "{name} x{units}" },
+  "more": { "text": "and {more} more" }, "empty": { "text": "you bought nothing at all" },
+  "started": { "text": "started with {start}" }, "spent": { "text": "spent {spent}" }, "left": { "text": "left with {left}" },
+  "passed": { "caption": "passed on" }, "most_rows": 6, "most_passed": 4,
+  "hoard_from": 80, "spend_upto": 20, "nudge": { "self_others": -0.2 } }
+```
+
+A tableau. It prints what is owned, the dearest `most_rows` when there are more, the money, and the dearest `most_passed` things passed on, then reports `hoard` (at least `hoard_from` percent of the pot left), `spend` (at most `spend_upto`) or `middle`, and nudges the profile by `nudge` times the share left.
+
 ## An option
 
 ```json
@@ -169,10 +255,10 @@ Pressing the button inks a world map in; a pin goes round over it while the imp 
 }
 ```
 
-- `label` is the words in the choice row: plain text, no colour tags.
+- `label` is the words in the choice row: plain text, no colour tags. It may carry a placeholder its stage fills, such as `Bid {bid}`.
 - `outcome` is read by the stage. The trolley stage reads `track`.
 - `crowd` is the seeded share who chose it. For binary and multiple choice questions the shares add up to 100. Every number so far is a placeholder chosen to divide people.
-- `profile` nudges axes from `profile_axes.json`. Negative leans toward the axis's first pole, positive toward its second. Leave it out for questions that feed no axis. An option picked again and again, as on an offer ladder, nudges every time.
+- `profile` nudges axes from `profile_axes.json`. Negative leans toward the axis's first pole, positive toward its second. Leave it out for questions that feed no axis. An option picked again and again, as on an offer ladder, nudges every time. An entry whose value is an object instead of a number replaces the nudges for one outcome: `{ "self_others": -0.05, "broke": {} }` nudges on buying and not at all on trying without the money.
 - `ending` names a secret ending the option fires; leave it out otherwise.
 
 When how the consequence comes out decides what the imp says, `reaction` is an object keyed by the outcome the stage reports, and `ending` can be keyed the same way to fire only on some outcomes:

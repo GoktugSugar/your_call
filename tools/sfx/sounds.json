@@ -1,0 +1,10 @@
+{
+  "note": "Sound effects made with ElevenLabs by sound_takes.py. prompt: what to ask for. seconds: how long each take is. influence: how closely a take follows the prompt, from 0 to 1. takes: how many to make in a batch. file: where the chosen take goes in the game.",
+  "gunshot": {
+    "prompt": "A single pistol gunshot fired close by: one sharp, dry, punchy crack with a short tail. No echo, no reverb, no shell casing, no music.",
+    "seconds": 1.0,
+    "influence": 0.5,
+    "takes": 4,
+    "file": "assets/sfx/gunshot.mp3"
+  }
+}

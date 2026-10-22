@@ -2,6 +2,9 @@
   "note": "The chapters of a run, in play order, by file name in chapters/.",
   "chapters": [
     "ch1_tracks.json",
-    "ch2_buttons.json"
+    "ch2_buttons.json",
+    "ch3_money.json",
+    "ch4_gun.json",
+    "ch5_who_would_win.json"
   ]
 }

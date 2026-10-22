@@ -4,6 +4,55 @@ Everything not yet settled. Park unknowns here instead of guessing, and decide t
 
 Creative questions are the user's to answer. Technical ones are the developer's, and they are only listed here while they wait on a creative answer.
 
+## To review in the morning
+
+Creative calls made overnight on 2026-10-22, while the user slept. Each is provisional and logged in `DECISIONS.md`; confirm or change them.
+
+**Chapter 3, The Money** (review page: https://claude.ai/artifact/QA5qDmmYa42PervaPb7Kaw)
+- The trimmed copy, 14% shorter. Alternatives: trim harder, or keep more of the original.
+- The teases about the end play as narration after the crowd reveal. Alternative: back after the reaction, before the reveal, as the old build had it.
+- 3.02's brand became burritos. Alternatives: another everyday food, or a placeholder per language later.
+- The 3.08 tease and 3.18 spike line reworded to hold whatever the player has spent. Alternative: two versions of each, picked by the wallet.
+- The cut DUI winks (3.10's ask, 3.16's purchase). Alternative: keep them all.
+- The auction's button comes in from the left. Alternative: from the right, as the script says, walking past the imp's wing.
+- Each auction round is one line from the imp (the needle and the prompt together). Alternative: the needle clears by itself first, then the prompt.
+- The rage's delivery: glaring, voiced with "[exasperated]". Alternative: another direction, or none.
+- The buyback points at the row instead of naming the thing and the amount; he reacts to the first sale and keep only. Alternative: voice each item's name and offer (a take per item and amount).
+- The years cost $100 more each ($700 up), with a line when the money runs out and one after the first year. Alternatives: a flat $700, or a steeper climb.
+- The colours of the items the script left uncoloured.
+- The weights given to Chapter 3's questions.
+
+**Chapter 4, The Gun** (review page: https://claude.ai/artifact/HDpDmK7RQpz8XC5v2dv4i9)
+- The trimmed copy, 21% shorter.
+- 4.02: lowered, the dying one dies anyway a moment later. Alternative: it stays alive, pleading, while the imp speaks.
+- 4.03: no hold option, and "Aim, or do not" cut. Alternative: add a "Lower the gun" option.
+- 4.05: a six second charge. Alternative: a shorter or longer one. (Shot, it now stops where it was hit: the user's call.)
+- 4.05: the button's "Again?" only if it woke in 2.11. Alternative: always "Again?" (the button remembers the player either way).
+- 4.06: "Fire blind" in the row fires at random. Alternative: list the five colours in the row.
+- 4.08: no choice row, eight seconds, then the gun lowers itself. Alternatives: a choice row after all, or a different wait.
+- 4.12: the brackets frame the whole view for the gun turned on the player. Alternative: another way to show it with no avatar.
+- 4.13: the reveal split into each option's reaction.
+- The imp's shot line voiced with "[outraged]".
+- The pleas (4.02, 4.03, 4.14) stay unvoiced: there are no free voice slots for new speakers.
+
+**Chapter 4's figures** (drawn by a helper on 2026-10-22, provisional, logged in `DECISIONS.md`)
+- The bear's tiny smile on a lighter muzzle, against the dot eyes only rule for faces. Alternatives: the smile without the muzzle, or dot eyes alone (both are switches).
+- The bear's outline in ink around the solid brown. Alternative: a brown outline, so she is a brown shape with no ink edge.
+- The future baby's mustache, a flat topped block high under the eyes, and the paintbrush on the ground beside the blanket with sky paint. Alternatives: another identification colour, or the brush propped against the bundle.
+- The future baby at 2.4 times the bundle. Alternatives: anywhere from 2.2 to 2.6.
+- The armed stranger's pistol in a muted grey wash, held at mid chest with the elbows out. Alternative: an outline only.
+- The dying soul's kneel with its shins splayed along the ground, reaching out and up with one hand. Alternatives: a lower slump propped on one hand, or both hands raised.
+
+**Chapter 5, Who Would Win** (review page: https://claude.ai/artifact/Pic5ATmJtsKUYSDBFJjnZi)
+- The trimmed copy, 13% shorter.
+- 5.03's corrected sum: nine hundred and sixty to one.
+- 5.06's two asks, by whether the button was shot in 4.05. Alternative: one ask that names none of its history.
+- 5.10 points at the count on the label instead of naming the bear and the man. Alternative: versions by what was killed.
+- 5.10 counts a nuked country's people, so the label can read in the billions. Alternative: count only the souls on screen.
+- 5.10's mob has the last bear in it only if she was shot in 4.01; the script always puts her there. Alternative: always the bear.
+- 5.10's lead in still says "whoever you put a bullet in" on a run that shot nothing in Chapter 4. Alternative: a version for a run with no shots.
+- Both "You" and the button in green in 5.06's reveal. Alternative: another colour for one of them.
+
 ## Carried over from the earlier build
 
 These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus the points sections 9 and 14 leave to the user.
@@ -42,7 +91,6 @@ These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus t
 - Why player-facing text has no dashes. The rule holds either way; the reason only matters if it ever needs bending.
 
 **Voice and pacing**
-- Whether narration should ever auto-advance once the imp finishes a box, perhaps as a setting. (Text now syncs with the voice and waits for a click.)
 - Whether the pleas and the confessors are voiced. (The walking button gets its own voice.)
 - Whether the gibberish blip voice survives for anyone (the walking button, perhaps).
 - Whether the imp's per-chapter register shifts are one voice or distinct takes.

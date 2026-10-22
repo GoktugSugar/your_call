@@ -1,19 +1,26 @@
 extends Node2D
-## Development only: every doodle on one page, each on a baseline over its id, under a guide line at
-## the tallest a doodle should stand. With [code]--stage=N[/code] it plays the doodles stage for the
-## Nth sample question instead: the stage draws on, the pointer moves onto the doodle given by
-## [code]--pick=N[/code] (counting from 1), clicks it, and the consequence plays.
+## Development only: the doodles on a page, each on a baseline over its id, under a guide line at the
+## tallest a doodle should stand. Every doodle in [code]res://doodles/[/code] is shown, a page of them at
+## a time: [code]--page=N[/code] picks the page (counting from 1), and [code]--ids=a,b,c[/code] shows
+## just those, and [code]--scale=S[/code] draws them at that size, to see how they read small. With
+## [code]--stage=N[/code] it plays the doodles stage for the Nth sample question
+## instead: the stage draws on, the pointer moves onto the doodle given by [code]--pick=N[/code]
+## (counting from 1), clicks it, and the consequence plays.
 ## [codeblock]
+## Godot --path . res://dev/capture_runner.tscn -- --scene=res://dev/doodle_sampler.tscn --page=2 \
+##     --out=C:/somewhere/shot --times=1
 ## Godot --path . res://dev/capture_runner.tscn -- --scene=res://dev/doodle_sampler.tscn \
 ##     --stage=3 --pick=2 --out=C:/somewhere/shot --times=1,2.5,4
 ## [/codeblock]
 
-## The doodles on the page, in order.
-@export var ids: PackedStringArray = ["winged_figure", "flexing_figure", "sweet_poop", "foul_ice_cream",
-		"giant_duck", "tiny_horses", "rewind_button", "pause_button", "snowflake", "sun", "third_arm_figure",
-		"two_headed_figure"]
+## The doodles on the page, in order. Empty shows every doodle there is, a page at a time.
+@export var ids: PackedStringArray = []
+## How many doodles a page holds, when it shows every doodle.
+@export_range(1, 40) var per_page := 12
 ## How many doodles stand in each row.
 @export_range(1, 8) var columns := 4
+## The size the doodles are drawn at, as a multiple of their natural size.
+@export_range(0.05, 4.0, 0.01) var doodle_scale := 1.0
 ## Where the first doodle stands.
 @export var first_spot := Vector2(300.0, 270.0)
 ## Distance between neighbouring doodles, across and down.
@@ -53,6 +60,13 @@ var _staging := false
 
 func _ready() -> void:
 	var args := DevArgs.parse()
+	if args.has("ids"):
+		ids = PackedStringArray(str(args["ids"]).split(","))
+	elif ids.is_empty():
+		var every := DoodlesStage.all_ids()
+		var start := (maxi(int(args.get("page", "1")), 1) - 1) * per_page
+		ids = every.slice(start, start + per_page)
+	doodle_scale = float(args.get("scale", str(doodle_scale)))
 	_staging = args.has("stage")
 	if _staging:
 		var sample := samples[clampi(int(args["stage"]) - 1, 0, samples.size() - 1)]
@@ -82,6 +96,7 @@ func _lay_out_page() -> void:
 			push_error("doodle sampler: no doodle '%s'" % ids[i])
 		else:
 			doodle.position = spot
+			doodle.scale = Vector2.ONE * doodle_scale
 			add_child(doodle)
 		var label := Label.new()
 		label.text = ids[i]

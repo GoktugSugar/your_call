@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://stages/receipt/receipt_stage.gd" id="1_stage"]
+[ext_resource type="Script" path="res://stages/receipt/receipt_slip.gd" id="2_slip"]
+
+[node name="ReceiptStage" type="Node2D" node_paths=PackedStringArray("slip", "content")]
+script = ExtResource("1_stage")
+slip = NodePath("Slip")
+content = NodePath("Slip/Content")
+
+[node name="Slip" type="Node2D" parent="."]
+position = Vector2(960, 128)
+script = ExtResource("2_slip")
+
+[node name="Content" type="Node2D" parent="Slip"]

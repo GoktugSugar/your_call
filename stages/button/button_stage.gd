@@ -79,6 +79,7 @@ func option_point(index: int) -> Vector2:
 ## swears at the player, gets up and stomps off, muttering. Its lines are said aloud when they have been
 ## voiced, and it finishes each before the next.
 func _come_alive() -> void:
+	run.remember(RunState.BUTTON_WOKE)
 	var said := question.stage_lines
 	_say(said, 0)
 	_take_imp_aback()

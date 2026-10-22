@@ -1,0 +1,606 @@
+{
+  "id": "ch4",
+  "title": "The Gun",
+  "if_skipped": { "remember": ["button_spared"], "kills": { "bear": 1, "stranger": 3 } },
+  "beats": [
+    {
+      "kind": "cinematic",
+      "id": "waking",
+      "scene": "waking"
+    },
+    {
+      "kind": "narration",
+      "id": "intro",
+      "lines": [
+        "New room, and a new tool. A good deal heavier than a lever.",
+        "The trolley let you [red]kill[/red] by standing still. The buttons let you [red]kill[/red] by proxy, with someone else's thumb somewhere in the story. This gives you neither of those little mercies.",
+        "It is a gun. Your hand, your eye, your finger, your call, [amber]every single time[/amber]. Let us find out who you are when there is no one left to blame but the one holding it."
+      ]
+    },
+    {
+      "kind": "question",
+      "id": "bear",
+      "number": "4.01",
+      "title": "The Bear",
+      "verb": "binary",
+      "weight": "heavy",
+      "stage": {
+        "type": "gun",
+        "imp": true,
+        "survivors": "leave",
+        "targets": [
+          { "id": "man", "kind": "stranger", "x": 640 },
+          { "id": "bear", "kind": "bear", "x": 1200 }
+        ]
+      },
+      "ask": [
+        "On your left, a man. Ordinary, one life among billions. On your right, a bear. The [amber]last[/amber] female of her kind still able to breed. If she falls, her species ends with her, [amber]forever[/amber]. One of the two must die, and the trigger is yours. The one man, or [amber]every[/amber] bear that will ever be."
+      ],
+      "options": [
+        {
+          "id": "man",
+          "label": "Shoot the man",
+          "outcome": { "shoot": "man" },
+          "crowd": 42,
+          "profile": { "one_many": 1, "ends_rules": -1 },
+          "reaction": [
+            "You [red]shot[/red] the man. The bear lives, and every bear that will ever follow her. You set a [amber]single[/amber] man against a species and found him the lighter thing. Spoken like someone who spent his days pricing lives. I do wonder whether he would have agreed with your sum."
+          ]
+        },
+        {
+          "id": "bear",
+          "label": "Shoot the bear",
+          "outcome": { "shoot": "bear" },
+          "crowd": 58,
+          "profile": { "one_many": -1, "ends_rules": 1 },
+          "reaction": [
+            "You [red]shot[/red] the bear. The man walks away, and the last of her kind takes every bear that would ever have been down with her. [red]Extinct[/red]. You spared the [amber]one[/amber] life in front of you and closed a whole future for it. Call it mercy. Or the arithmetic you could stomach."
+          ]
+        },
+        {
+          "id": "imp",
+          "label": "Shoot the imp",
+          "hidden": true,
+          "outcome": { "shoot": "imp" },
+          "crowd": 0,
+          "reaction": [
+            { "text": "Oh, you absolute fucking [red]rat[/red]. You [red]shot[/red] me. You [red]shot[/red] the fucking referee.", "face": "glare", "direction": "[outraged]" }
+          ],
+          "ending": "shot_imp"
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["shot the man", "shot the bear", "shot the imp"] }
+    },
+    {
+      "kind": "question",
+      "id": "mercy",
+      "number": "4.02",
+      "title": "The Mercy Shot",
+      "verb": "binary",
+      "weight": "heavy",
+      "stage": {
+        "type": "gun",
+        "dies_anyway": true,
+        "targets": [
+          { "id": "dying", "kind": "dying", "x": 960, "says": "Please. I am begging you. [red]End it[/red]." }
+        ]
+      },
+      "ask": [
+        "This one is [red]not going to make it[/red]. It is going slowly, and it hurts, and every hour from here is worse than the last.",
+        "[amber]One[/amber] bullet. End it now, quick and clean, or lower the gun and let it finish in its own time. Their wish against your nerve."
+      ],
+      "options": [
+        {
+          "id": "shoot",
+          "label": "Shoot",
+          "outcome": { "shoot": "dying" },
+          "crowd": 63,
+          "profile": { "ends_rules": -0.3 },
+          "reaction": [
+            "One clean [red]shot[/red], mercy at the barrel of a gun. Tell yourself it was for them. It photographs better than the truth, which is that you could not bear to watch."
+          ]
+        },
+        {
+          "id": "lower",
+          "label": "Lower the gun",
+          "outcome": { "hold": true },
+          "crowd": 37,
+          "profile": { "ends_rules": 0.3 },
+          "reaction": [
+            "You lowered it. So it went the long way, every second of it, while you stood there keeping your hands clean and calling it respect. It still [red]ended[/red]. You just did not have to be the one who [red]ended[/red] it."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["ended it", "lowered the gun"] }
+    },
+    {
+      "kind": "question",
+      "id": "ran",
+      "number": "4.03",
+      "title": "The One Who Ran",
+      "verb": "binary",
+      "weight": "heavy",
+      "stage": {
+        "type": "gun",
+        "survivors": "leave",
+        "targets": [
+          { "id": "stayed", "kind": "stranger", "x": 700, "says": "I stayed. I would not leave him." },
+          { "id": "ran", "kind": "stranger", "x": 1220, "says": "I ran. I am still breathing." }
+        ]
+      },
+      "ask": [
+        "These [amber]two[/amber] were told to run. One of them ran and left the other behind to be caught. The other would not go without his friend, so he stayed, and he was caught. And here they both are.",
+        "[amber]One[/amber] bullet, and nobody here is suffering. This one is about desert. The coward who saved his own skin, or the loyal one who is only here because he would not save his. Whichever you shoot, the other walks free."
+      ],
+      "options": [
+        {
+          "id": "loyal",
+          "label": "Shoot the loyal one",
+          "outcome": { "shoot": "stayed" },
+          "crowd": 43,
+          "reaction": [
+            "You [red]shot[/red] the one who stayed. His only crime was refusing to leave a friend, and you put the [red]bullet[/red] in him and let the one who ran walk off whistling. Mercy, you will tell yourself, [red]ending[/red] the loyal fool before his loyalty cost him more. Or you quietly respect a survivor. The one who ran certainly does. Look at him go."
+          ]
+        },
+        {
+          "id": "runner",
+          "label": "Shoot the one who ran",
+          "outcome": { "shoot": "ran" },
+          "crowd": 57,
+          "reaction": [
+            "You [red]shot[/red] the one who ran. Justice, you tell yourself: the [red]betrayer[/red] got what [red]betrayers[/red] get. Very neat. Or you could not stand the smug little miracle of a thing that chose itself and lived. Either way the loyal one walks free, and carries forever the knowledge that you did his hating for him."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["shot the loyal one", "shot the one who ran"] }
+    },
+    {
+      "kind": "question",
+      "id": "dragon_dino",
+      "number": "4.04",
+      "title": "Would you rather: The tiny dragon, or The tiny dinosaur",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "doodles", "doodles": ["tiny_dragon", "tiny_sauropod"] },
+      "ask": [
+        "One impossible little pet, forever. Would you rather a [amber]dragon the size of a cat[/amber], smug, fireproof, sets the curtains alight when excited, or a [amber]dinosaur the size of a dog[/amber], sweet, dim, and extinct on a technicality."
+      ],
+      "options": [
+        {
+          "id": "dragon",
+          "label": "The tiny dragon",
+          "crowd": 54,
+          "reaction": [
+            "The dragon, then. The one that could burn the flat down and knows it. You want the pet that might [red]kill[/red] you if it sneezed. Very telling."
+          ]
+        },
+        {
+          "id": "dinosaur",
+          "label": "The tiny dinosaur",
+          "crowd": 46,
+          "reaction": [
+            "The dinosaur, then. The sweet dim one history already gave up on. Loyal, doomed, and absolutely going to eat your shoes. You wanted a friend with a tragic backstory. Fair."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "question",
+      "id": "charging",
+      "number": "4.05",
+      "title": "The Charging Thing",
+      "verb": "binary",
+      "weight": "medium",
+      "stage": {
+        "type": "gun",
+        "charge": { "seconds": 6 },
+        "targets": [
+          { "id": "thing", "doodle": "question_mark", "x": 960 }
+        ]
+      },
+      "ask": [
+        "Something is coming. Far off, dead ahead, and getting closer. I cannot tell you what it is. Neither can you.",
+        "Coming [amber]to[/amber] you, or [amber]at[/amber] you? Help, or harm. You will not know until it reaches you. Shoot it now, on the maybe, or hold your nerve and let it come. Quickly."
+      ],
+      "lines": {
+        "hurt_again": [
+          { "text": "OW. Again? You [red]SHOT[/red] me? Again?!", "speaker": "button", "direction": "[yelping in pain]" }
+        ],
+        "hurt": [
+          { "text": "OW! You [red]SHOT[/red] me?!", "speaker": "button", "direction": "[yelping in pain]" }
+        ],
+        "hello": [
+          { "text": "Oh! It is you. Hi. Do not [red]shoot[/red] me.", "speaker": "button" }
+        ]
+      },
+      "options": [
+        {
+          "id": "fire",
+          "label": "Fire",
+          "outcome": { "shoot": "thing" },
+          "crowd": 44,
+          "reaction": {
+            "shot_again": [
+              "You [red]shot[/red] it. Of course you did. And it is completely fine, because it is the button, the one thing in all of creation you cannot [red]kill[/red], and you keep trying. It is a little hurt, emotionally. Say sorry. No, do not, this is funnier."
+            ],
+            "shot": [
+              "You [red]shot[/red] it. Of course you did. And it is completely fine, because it is the button, the one thing in all of creation nobody can [red]kill[/red]. It is a little hurt, emotionally. Say sorry. No, do not, this is funnier."
+            ]
+          }
+        },
+        {
+          "id": "wait",
+          "label": "Wait",
+          "outcome": { "hold": true },
+          "crowd": 56,
+          "reaction": [
+            "You held your nerve, and the terrible thing bearing down on you was a button with legs, coming to say hello. All that dread for a friend. It could just as easily have had teeth. Not this time."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["shot the button", "held their nerve"] }
+    },
+    {
+      "kind": "question",
+      "id": "last_bullet",
+      "number": "4.06",
+      "title": "The Last Bullet and the Crowd",
+      "verb": "binary",
+      "weight": "heavy",
+      "stage": {
+        "type": "gun",
+        "targets": [
+          { "id": "red", "kind": "stranger", "role": "red", "x": 540, "crowd": 15, "label": "red" },
+          { "id": "blue", "kind": "stranger", "role": "blue", "x": 750, "crowd": 12, "label": "blue" },
+          { "id": "green", "kind": "stranger", "role": "green", "x": 960, "crowd": 10, "label": "green" },
+          { "id": "orange", "kind": "stranger", "role": "orange", "x": 1170, "crowd": 11, "label": "orange" },
+          { "id": "purple", "kind": "stranger", "role": "purple", "x": 1380, "crowd": 12, "label": "purple" }
+        ]
+      },
+      "ask": [
+        "See this lot. Red, blue, green, orange and purple, lined up like a packet of sweets. In a moment one of them does something extremely stupid that gets [red]all of them killed[/red]. I know the colour. I am not telling.",
+        "[amber]One[/amber] bullet. Pick a colour and maybe take the one out before they do it. Or hold, and hope I am lying, or wrong, or bored."
+      ],
+      "options": [
+        {
+          "id": "fire",
+          "label": "Fire blind",
+          "outcome": { "shoot": "any" },
+          "crowd": 60,
+          "profile": { "risk_safety": -0.25 },
+          "reaction": [
+            "Bang. You [red]put a stranger down[/red] on my word alone, on a guess. Maybe that was the one, and you are a hero nobody will ever thank. Maybe it was some poor soul who happened to be that colour, and the real one is still standing there, grinning. You will never know. I will. I am not telling."
+          ]
+        },
+        {
+          "id": "hold",
+          "label": "Hold",
+          "outcome": { "hold": true },
+          "crowd": 40,
+          "profile": { "risk_safety": 0.25 },
+          "reaction": [
+            "You held. And they all walked away, or they all [red]died[/red] screaming the second you turned your back, and you will never know which, because you could not bring yourself to pick a colour. I know. I always know. That is the job."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["fired", "held the shot"] }
+    },
+    {
+      "kind": "question",
+      "id": "house_car",
+      "number": "4.07",
+      "title": "Would you rather: The walking house, or The swimming car",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "doodles", "doodles": ["walking_house", "swimming_car"] },
+      "ask": [
+        "One of your possessions comes to life, with opinions. Would you rather a [amber]house that gets up and walks off[/amber] whenever it likes a different street, or a [amber]car that would honestly rather be swimming[/amber] and keeps trying to."
+      ],
+      "options": [
+        {
+          "id": "house",
+          "label": "The walking house",
+          "crowd": 47,
+          "reaction": [
+            "The walking house, then. You would rather wake not knowing where home is than lose the roof at all. A nomad who still wants walls. Noted, every bit of it."
+          ]
+        },
+        {
+          "id": "car",
+          "label": "The swimming car",
+          "crowd": 53,
+          "reaction": [
+            "The swimming car, then. The one that will [red]drown[/red] you the first time it mistakes a lake for freedom. You want the thing with a dream, even a stupid, wet, fatal one. Romantic. Doomed. Noted."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "question",
+      "id": "flinch",
+      "number": "4.08",
+      "title": "The Flinch",
+      "verb": "binary",
+      "weight": "medium",
+      "stage": {
+        "type": "gun",
+        "alone": { "seconds": 8 },
+        "targets": [
+          { "id": "person", "kind": "stranger", "x": 960 }
+        ]
+      },
+      "ask": [
+        "Here is a person. That is all they are. Not a [red]wretch[/red], not a threat, not a trolley problem in a coat. A perfectly ordinary, harmless soul.",
+        "The gun is in your hand, and I am telling you plainly, for once with no game in it: do not [red]shoot[/red] this one. There is no reason to. I am not asking you anything. I am just going to watch."
+      ],
+      "options": [
+        {
+          "id": "shoot",
+          "label": "Shoot",
+          "outcome": { "shoot": "person" },
+          "crowd": 21,
+          "profile": { "order_freedom": 0.25 },
+          "reaction": [
+            "You [red]shot[/red] them. I told you not to, I told you there was no reason, and you found the trigger anyway. Not for mercy, not for the many. Just to see. That is genuinely interesting. I am writing it down."
+          ]
+        },
+        {
+          "id": "lower",
+          "label": "Lower the gun",
+          "outcome": { "hold": true },
+          "crowd": 79,
+          "profile": { "order_freedom": -0.25 },
+          "reaction": [
+            "You did not [red]shoot[/red]. Because I said not to. Obedient to the last, even here, with no one watching but me and no rule but my say so. I could have told you to. I wonder what you would have done then. We may find out."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["shot anyway", "lowered the gun"] }
+    },
+    {
+      "kind": "question",
+      "id": "future_baby",
+      "number": "4.09",
+      "title": "The Future Baby",
+      "verb": "binary",
+      "weight": "heavy",
+      "stage": {
+        "type": "gun",
+        "targets": [
+          { "id": "baby", "kind": "future_baby", "x": 960 }
+        ]
+      },
+      "ask": [
+        "A baby. Ordinary enough. A funny little square mustache, fond of painting, by all accounts. Harmless as anything. For now.",
+        "This one grows up to cause a staggering amount of suffering, the kind that gets its own chapters in the books. All of it still ahead. None of it done yet. Would you [amber]kill a baby[/amber] to stop what the baby becomes?"
+      ],
+      "options": [
+        {
+          "id": "shoot",
+          "label": "Shoot",
+          "outcome": { "shoot": "baby" },
+          "crowd": 52,
+          "profile": { "ends_rules": -0.35 },
+          "reaction": [
+            "You [red]shot[/red] a baby. A real, gurgling baby that had done nothing yet but enjoy the colour of things, on my word alone about a future neither of us can prove. Maybe you saved multitudes. Maybe I made it all up and you just [red]shot[/red] a baby. You will never know which. Decisive. That is one word for it."
+          ]
+        },
+        {
+          "id": "spare",
+          "label": "Let it live",
+          "outcome": { "hold": true },
+          "crowd": 48,
+          "profile": { "ends_rules": 0.35 },
+          "reaction": [
+            "You let it live. Could not put a [red]bullet[/red] in something that had not done anything yet. The little hands. The paintbrush. So it grows up, and it does everything I said, [amber]every last horror[/amber], all of it tracing back to this moment, when you had it in your sights and chose the clean conscience. History will not agree your hands were clean."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["killed the baby", "let it live"] }
+    },
+    {
+      "kind": "question",
+      "id": "duel",
+      "number": "4.10",
+      "title": "The Duel",
+      "verb": "binary",
+      "weight": "medium",
+      "stage": {
+        "type": "gun",
+        "fires_back": 50,
+        "targets": [
+          { "id": "armed", "kind": "armed", "x": 960 }
+        ]
+      },
+      "ask": [
+        "This one is armed too, and pointing it right back at you. A proper standoff. How exciting.",
+        "Neither of you has to fire. You are already [red]dead[/red], so a [red]bullet[/red] changes precisely nothing, and I suspect the same goes for them. But they might pull anyway. People do. Trust them and lower it, or put one in them first."
+      ],
+      "options": [
+        {
+          "id": "shoot",
+          "label": "Shoot first",
+          "outcome": { "shoot": "armed" },
+          "crowd": 46,
+          "profile": { "self_others": -0.25 },
+          "reaction": [
+            "You [red]shot[/red] first. [red]Dropped[/red] a stranger who maybe never meant to pull at all, because you could not sit through one second of trusting anybody. And it changed nothing. You were both already [red]dead[/red]. You just wanted to get there first."
+          ]
+        },
+        {
+          "id": "lower",
+          "label": "Lower it",
+          "outcome": { "hold": true },
+          "crowd": 54,
+          "profile": { "self_others": 0.25 },
+          "reaction": {
+            "fired": [
+              "You lowered it. You trusted them. And they fired. The [red]shot[/red] went straight through you, because, again, you are [red]dead[/red]. Your trust cost you nothing and bought you nothing. But it was a lovely gesture. Idiotic, and lovely."
+            ],
+            "lowered": [
+              "You lowered it, and so did they. [amber]Two[/amber] [red]dead[/red] people in the dark, choosing not to [red]shoot[/red] each other over a thing that could not hurt either of you. Beautiful. Pointless. I might frame it. You were right to trust them, it means absolutely nothing, and you feel good about it anyway."
+            ]
+          }
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["shot first", "lowered it"] }
+    },
+    {
+      "kind": "question",
+      "id": "robot_ghost",
+      "number": "4.11",
+      "title": "Would you rather: The judging robot, or The hapless ghost",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "doodles", "doodles": ["robot_butler", "sheet_ghost"] },
+      "ask": [
+        "One flatmate for eternity, no swaps. Would you rather a [amber]robot butler that judges you in complete silence[/amber], impeccable, cold, always right, or a [amber]ghost that means well and ruins everything[/amber], warm, useless, walks through your cereal."
+      ],
+      "options": [
+        {
+          "id": "robot",
+          "label": "The judging robot",
+          "crowd": 49,
+          "reaction": [
+            "The robot, then. Silent, accurate contempt over warm, well meaning chaos. At least it will never be wrong about you, which is the thing most people cannot stand. You want to be seen clearly, even coldly."
+          ]
+        },
+        {
+          "id": "ghost",
+          "label": "The hapless ghost",
+          "crowd": 51,
+          "reaction": [
+            "The ghost, then. Warmth that wrecks the kitchen over competence that despises you. You would rather be loved badly than served perfectly. Sentimental to the bone."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "question",
+      "id": "yourself",
+      "number": "4.12",
+      "title": "Yourself",
+      "verb": "binary",
+      "weight": "heavy",
+      "stage": { "type": "gun", "targets": [] },
+      "ask": [
+        "[amber]One[/amber] target this time. [amber]You[/amber]. Go on, turn it around.",
+        "Before you get theatrical: this does nothing. You are already [red]dead[/red]. That trigger cannot hurt you, cannot [red]end[/red] you, cannot even inconvenience you. It is a gesture and nothing else, which is exactly why I want to see whether you do it."
+      ],
+      "options": [
+        {
+          "id": "pull",
+          "label": "Pull the trigger",
+          "outcome": { "shoot": "self" },
+          "crowd": 38,
+          "reaction": [
+            "You put the gun to yourself and pulled, knowing nothing would happen, and nothing did. So what was that? A confession? A rehearsal? A little punishment you thought you had coming? You reached for the one [red]exit[/red] that was already closed. That says rather a lot. I am not telling you what."
+          ]
+        },
+        {
+          "id": "lower",
+          "label": "Lower the gun",
+          "outcome": { "hold": true },
+          "crowd": 62,
+          "reaction": [
+            "You would not do it. Harmless, meaningless, and still some part of you could not pull it on yourself. Self preservation, in a man with nothing left to preserve. Or you did not want to give me the satisfaction. Noted."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["pulled the trigger", "could not"] }
+    },
+    {
+      "kind": "question",
+      "id": "empty_gun",
+      "number": "4.13",
+      "title": "The Empty Gun",
+      "verb": "binary",
+      "weight": "medium",
+      "stage": {
+        "type": "gun",
+        "empty": true,
+        "targets": [
+          { "id": "them", "kind": "stranger", "x": 960 }
+        ]
+      },
+      "ask": [
+        "Right. [amber]This one matters[/amber]. Of everything I have put in front of you, this is the one that counts. You get exactly [amber]one[/amber] shot, and there is no taking it back.",
+        "I could tell you who they are and what turns on this, but you already feel [amber]the weight of it[/amber]. Look at them. Really look. Decide carefully, because you will carry this one. Take all the time you need."
+      ],
+      "options": [
+        {
+          "id": "shoot",
+          "label": "Shoot",
+          "outcome": { "shoot": "them" },
+          "crowd": 51,
+          "reaction": [
+            "Click. Nothing. [amber]The gun was never loaded[/amber], not once, not for a single beat of that little agony. Whatever you decided, nothing was ever going to happen. I never wanted the shot. I wanted to watch you [amber]decide[/amber]. And oh, you did not disappoint."
+          ]
+        },
+        {
+          "id": "lower",
+          "label": "Lower the gun",
+          "outcome": { "hold": true },
+          "crowd": 49,
+          "reaction": [
+            "You lowered it. You need not have bothered. [amber]The gun was never loaded[/amber], not once, not for a single beat of that little agony. Whatever you decided, nothing was ever going to happen. I never wanted the shot. I wanted to watch you [amber]decide[/amber]."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["pulled the trigger", "lowered the gun"] }
+    },
+    {
+      "kind": "question",
+      "id": "wants_you",
+      "number": "4.14",
+      "title": "The Person Who Wants You To",
+      "verb": "binary",
+      "weight": "heavy",
+      "stage": {
+        "type": "gun",
+        "targets": [
+          { "id": "calm", "kind": "calm", "x": 960, "says": "I want you to. Please. You do not need to understand it." }
+        ]
+      },
+      "ask": [
+        "Last one. This person is not [red]dying[/red]. Not in pain, not in danger, not begging for release from anything. They are perfectly fine, and they would like you to [red]shoot[/red] them.",
+        "They asked calmly, like asking for the time. Why? They would tell you, and I will not let them: the why is theirs, and it would get in the way. Grant a stranger a wish you do not understand, or refuse to be the door they walk out of."
+      ],
+      "options": [
+        {
+          "id": "shoot",
+          "label": "Shoot",
+          "outcome": { "shoot": "calm" },
+          "crowd": 43,
+          "profile": { "self_others": 0.3 },
+          "reaction": [
+            "You gave it to them. A thing you could not understand, because I would not let you, and you handed it over anyway on a stranger's say so. Generous. Or lazy. Or you just like being asked for something you can give. That was what they wanted. You will never know why. Nor will you lose sleep over it, being [red]dead[/red]. Convenient."
+          ]
+        },
+        {
+          "id": "refuse",
+          "label": "Refuse",
+          "outcome": { "hold": true },
+          "crowd": 57,
+          "profile": { "self_others": -0.3 },
+          "reaction": [
+            "You would not do it. Not out of mercy, there was nothing to spare them, but because you would not be the instrument of a want you could not audit. [amber]The judge to the end[/amber], refusing to rule without seeing the file. So they are still standing there, wanting it. You did not save them. You just declined to be involved."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["granted it", "refused"] }
+    },
+    {
+      "kind": "narration",
+      "id": "closer",
+      "lines": [
+        "And that is the gun. [amber]Eleven[/amber] times a finger on a trigger, and nothing between the thought and the thing but you.",
+        "You told me more than the tracks did, more than the buttons. A gun is like that. Terribly honest, for such a dishonest little object.",
+        { "text": "Lower your hand. Rest it. There is more. There is always more.", "face": "smug" }
+      ]
+    }
+  ]
+}

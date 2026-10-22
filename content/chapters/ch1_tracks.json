@@ -1,6 +1,7 @@
 {
   "id": "ch1",
   "title": "The Tracks",
+  "if_skipped": { "kills": { "soul": 8 } },
   "beats": [
     {
       "kind": "cinematic",

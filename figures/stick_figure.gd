@@ -5,7 +5,8 @@ extends Soul
 ## The body is a jointed rig posed by a [FigurePose]. Its legs bend at the knee to keep the feet planted,
 ## it breathes, it can turn and walk along the ground, and it folds down dead. Kinds of soul differ by
 ## small details, never new art: closed or hidden eyes, a pregnant belly, a cane and sparse hair, a beating
-## heart, z marks drifting up from a sleeper, a small crown. Its origin is the ground between its feet.
+## heart, z marks drifting up from a sleeper, a small crown, a pistol in the hand. Its origin is the ground
+## between its feet.
 
 ## Emitted once a walk has ended, with the figure standing in its pose where it was going.
 signal arrived
@@ -195,6 +196,29 @@ enum Facing { FRONT, LEFT, RIGHT }
 @export_range(0.0, 1.0, 0.01) var crown_notch := 0.5
 ## Width of the crown's line, as a multiple of the figure's line.
 @export_range(0.1, 2.0, 0.05) var crown_line := 0.8
+## Holds a small pistol in the screen right hand, seen from the player: the rounded front of the pistol
+## over the hand with the dark muzzle looking out, and the grip showing below it. The pose says which
+## way it points ([member FigurePose.pistol_down]), and it follows the hand through a fall.
+@export var pistol := false:
+	set(value):
+		pistol = value
+		queue_redraw()
+## Width and height of the pistol's front as the player sees it, in pixels.
+@export var pistol_size := Vector2(16.0, 14.0)
+## Radius of the rounded corners of the pistol, in pixels.
+@export_range(0.0, 10.0, 0.1) var pistol_corner := 3.5
+## How far above the hand the middle of the pistol's front sits, in pixels.
+@export_range(-20.0, 20.0, 0.1) var pistol_rise := 2.0
+## Width of the grip, and how far below the hand it reaches, in pixels.
+@export var pistol_grip := Vector2(8.0, 13.0)
+## How long the barrel looks once the pistol points down at the ground, in pixels.
+@export_range(0.0, 40.0, 0.5) var pistol_barrel := 20.0
+## Radius of the dark muzzle.
+@export_range(0.5, 8.0, 0.1) var muzzle_radius := 3.6
+## Width of the pistol's line, as a multiple of the figure's line.
+@export_range(0.1, 2.0, 0.05) var pistol_line := 0.75
+## How strongly the pistol's wash takes the ink over the paper, so it reads as a solid thing.
+@export_range(0.0, 1.0, 0.01) var pistol_wash := 0.35
 
 @export_group("Dying")
 ## The steps of the fold, in order: each pose says how long the figure takes to reach it.
@@ -271,6 +295,19 @@ func head_top() -> Vector2:
 	return neck + head_dir * (neck_length + head_radius * 2.0 + _crown_rise()) + Vector2.UP * float_gap
 
 
+## Where the muzzle of the pistol is right now, in the figure's own space, for a flash when it fires.
+## It follows the screen right hand through any pose, breathing included. It answers the same with or
+## without [member pistol] on, so a flash can be placed before the pistol is shown.
+func muzzle_point() -> Vector2:
+	var breath := _breath()
+	var spine_dir := Vector2.UP.rotated(deg_to_rad(_shown.spine_angle))
+	var neck := _hips(breath) + spine_dir * spine_length
+	var shoulders := neck - spine_dir * shoulder_drop
+	var right_angle := deg_to_rad(-_shown.right_shoulder - breath * breath_arm_sway)
+	var hand := _arm(shoulders, -spine_dir, right_angle, -deg_to_rad(_shown.right_elbow))[2]
+	return _muzzle(hand, spine_dir)
+
+
 func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 	var spacing := style.sample_spacing
 	var shown := _shown
@@ -278,7 +315,7 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 	var spine_dir := Vector2.UP.rotated(deg_to_rad(shown.spine_angle))
 	var head_angle := deg_to_rad(shown.spine_angle + shown.head_tilt)
 	var head_dir := Vector2.UP.rotated(head_angle)
-	var hips := Vector2(0.0, -leg_length) + shown.hip_offset + Vector2(0.0, -breath * breath_depth * 0.5)
+	var hips := _hips(breath)
 	var neck := hips + spine_dir * spine_length
 	var head := neck + head_dir * (neck_length + head_radius)
 	var chin := head - head_dir * head_radius
@@ -287,10 +324,9 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 	var sway := breath * breath_arm_sway
 	var left_angle := deg_to_rad(shown.left_shoulder + sway)
 	var right_angle := deg_to_rad(-shown.right_shoulder - sway)
-	var left_elbow := shoulders + down.rotated(left_angle) * upper_arm_length
-	var left_hand := left_elbow + down.rotated(left_angle + deg_to_rad(shown.left_elbow)) * forearm_length
-	var right_elbow := shoulders + down.rotated(right_angle) * upper_arm_length
-	var right_hand := right_elbow + down.rotated(right_angle - deg_to_rad(shown.right_elbow)) * forearm_length
+	var left_arm := _arm(shoulders, down, left_angle, deg_to_rad(shown.left_elbow))
+	var right_arm := _arm(shoulders, down, right_angle, -deg_to_rad(shown.right_elbow))
+	var right_hand := right_arm[2]
 	var left_foot := Vector2(-foot_spread, 0.0) + shown.left_foot
 	var right_foot := Vector2(foot_spread, 0.0) + shown.right_foot
 
@@ -299,8 +335,8 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 	lines.append(InkLine.along(InkBrush.ellipse(head, Vector2.ONE * head_radius, spacing, head_angle - PI * 0.75),
 			ink, 1.0, true))
 	lines.append(InkLine.along(InkBrush.resample_polyline(PackedVector2Array([hips, neck, chin]), spacing), ink))
-	lines.append(InkLine.along(InkBrush.resample_polyline(PackedVector2Array([shoulders, left_elbow, left_hand]), spacing), ink))
-	lines.append(InkLine.along(InkBrush.resample_polyline(PackedVector2Array([shoulders, right_elbow, right_hand]), spacing), ink))
+	lines.append(InkLine.along(InkBrush.resample_polyline(left_arm, spacing), ink))
+	lines.append(InkLine.along(InkBrush.resample_polyline(right_arm, spacing), ink))
 	var lying := absf(shown.spine_angle) > knee_lift_lean
 	# Facing the player, the knees bend outward. Turned, both bend the way the figure faces.
 	var turn := _turn()
@@ -325,6 +361,8 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 		lines.append(InkLine.along(_belly(hips, neck, spine_dir, spacing), ink))
 	if cane:
 		lines.append(InkLine.along(_cane(right_hand, spacing), ink, 0.85))
+	if pistol:
+		_add_pistol(lines, right_hand, spine_dir, ink, palette.paper.lerp(ink, pistol_wash), spacing)
 	if hair:
 		# A bald crown with a tuft over each ear.
 		for side: float in [-1.0, 1.0]:
@@ -358,6 +396,66 @@ func _belly(hips: Vector2, neck: Vector2, spine_dir: Vector2, spacing: float) ->
 		var angle := lerpf(-PI * 0.5, PI * 0.5, float(i) / steps)
 		points.append(middle + spine_dir * sin(angle) * half + out * cos(angle) * belly)
 	return points
+
+
+## Where the hips are in the shown pose, risen or sunk with [param breath].
+func _hips(breath: float) -> Vector2:
+	return Vector2(0.0, -leg_length) + _shown.hip_offset + Vector2(0.0, -breath * breath_depth * 0.5)
+
+
+## An arm hanging from [param shoulders], swung [param swing] radians from [param down] and bent a
+## further [param bend] radians at the elbow: the shoulder, the elbow and the hand, in that order.
+func _arm(shoulders: Vector2, down: Vector2, swing: float, bend: float) -> PackedVector2Array:
+	var elbow := shoulders + down.rotated(swing) * upper_arm_length
+	return PackedVector2Array([shoulders, elbow, elbow + down.rotated(swing + bend) * forearm_length])
+
+
+## The pistol held in [param hand], upright along [param up], the way the player sees it: the grip
+## reaching down from the hand, then over it the rounded front with the dark muzzle in it, both washed
+## in [param wash] so they cover what is behind them. As the pose points the pistol down, the grip goes
+## into the hand and the front swings below it, drawn out into the length of the barrel, the muzzle at
+## its far end.
+func _add_pistol(lines: Array[InkLine], hand: Vector2, up: Vector2, ink: Color, wash: Color, spacing: float) -> void:
+	var grip := Vector2(pistol_grip.x, pistol_grip.y * (1.0 - _shown.pistol_down))
+	if grip.y > 0.0:
+		lines.append(_pistol_part(hand - up * grip.y * 0.5, grip, up, ink, wash, spacing))
+	lines.append(_pistol_part(_pistol_middle(hand, up), _pistol_extent(), up, ink, wash, spacing))
+	lines.append(InkLine.dot(_muzzle(hand, up), _muzzle_size(), ink))
+
+
+## One rounded block of the pistol, [param size] across and along [param up], centred on [param middle].
+func _pistol_part(middle: Vector2, size: Vector2, up: Vector2, ink: Color, wash: Color, spacing: float) -> InkLine:
+	var outline := InkBrush.rounded_rect(Rect2(-size * 0.5, size), pistol_corner, spacing * 0.5)
+	var turn := Vector2.UP.angle_to(up)
+	for i in outline.size():
+		outline[i] = middle + outline[i].rotated(turn)
+	var part := InkLine.along(outline, ink, pistol_line, true)
+	part.fill = wash
+	return part
+
+
+## Width and height of the pistol as the player sees it: its front, or once it points down its barrel,
+## seen from above, as narrow as the grip and as long as the barrel.
+func _pistol_extent() -> Vector2:
+	return pistol_size.lerp(Vector2(pistol_grip.x, pistol_barrel), _shown.pistol_down)
+
+
+## The middle of the pistol held in [param hand], upright along [param up]: its front over the hand, or
+## its barrel reaching down from the hand once it points down.
+func _pistol_middle(hand: Vector2, up: Vector2) -> Vector2:
+	return hand + up * lerpf(pistol_rise, -pistol_barrel * 0.5, _shown.pistol_down)
+
+
+## Where the muzzle of a pistol held in [param hand] is: in the middle of its front, sliding to the far
+## end of the barrel as it points down.
+func _muzzle(hand: Vector2, up: Vector2) -> Vector2:
+	var reach := (_pistol_extent().y * 0.5 - _muzzle_size()) * _shown.pistol_down
+	return _pistol_middle(hand, up) - up * maxf(reach, 0.0)
+
+
+## Radius of the muzzle as the player sees it, narrowing with the pistol as it points down.
+func _muzzle_size() -> float:
+	return muzzle_radius * _pistol_extent().x / maxf(pistol_size.x, 0.001)
 
 
 ## A cane: a straight shaft from the ground up into the hand, hooked over at the top.

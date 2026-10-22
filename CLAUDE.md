@@ -53,6 +53,7 @@ Voice (Python 3, standard library only; the key comes from `.env`, which git ign
 - Save the chosen one for a speaker: `python tools/voice/save_voice.py <speaker> <audition slug>`
 - Voice every new or changed line: `python tools/voice/voice_lines.py` (`--dry-run` first to see what it will spend)
 - Voice clips are committed through Git LFS.
+- Sound effects: `python tools/sfx/sound_takes.py <sound>` makes takes of a sound in `tools/sfx/sounds.json` to pick by ear (`--dry-run` first), and `--save <take>` puts the pick in the game, through Git LFS.
 
 ## GodotPrompter
 

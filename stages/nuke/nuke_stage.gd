@@ -156,6 +156,7 @@ func play_consequence(index: int) -> StringName:
 	pin.dissolve_away(cloud_draw * 0.5)
 	cloud.position = pin.position
 	cloud.visible = true
+	run.kills.add(&"people", int(_target.get("people", 0)))
 	await cloud.draw_on(cloud_draw).finished
 	await get_tree().create_timer(after_hold, false).timeout
 	return _outcome()
