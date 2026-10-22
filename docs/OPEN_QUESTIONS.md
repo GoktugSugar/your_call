@@ -66,6 +66,16 @@ Built on 2026-10-23. The copy and the voices wait on the user before anything is
 - Nothing but the gesture and the voice marks a confessor's page in the box. Alternative: a mark on the box, or the confessor's words in another ink.
 - How each verdict is taken (head hung and eyes shut, arms open with a hop, a shrug), and the two in 7.10 standing either side of an empty booth.
 
+## To review: Chapter 8
+
+Built on 2026-10-23. The copy waits on the user before anything is voiced; the rest is provisional and logged in `DECISIONS.md`.
+
+- The trimmed copy, 19% shorter (review page: https://claude.ai/artifact/MG8Gvx3epiPF1dmVZ8oJ28), and its fixes to the old copy: the beast you spared comes to the dragon in place of the village, 8.03's miss line fits every class, and the honest roll's closing line needles instead of praising.
+- The die's look and roll, and its captions.
+- The scene's doodle answering the pick (a hop, a shake, a fall, backing away). Alternative: a fuller scene for the heavy beats, such as the beast cornered in the barrow or the dragon.
+- The twelve new doodles and their colours, from the old build's descriptions.
+- After 8.10 and the closer, the run starts over from the crash: there is no ending yet.
+
 ## Carried over from the earlier build
 
 These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus the points sections 9 and 14 leave to the user.
