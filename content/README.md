@@ -25,6 +25,12 @@ Either some narration from the imp:
 { "kind": "narration", "id": "taunt", "lines": [ "...", "..." ] }
 ```
 
+a cinematic, which plays the scene `cinematics/<scene>/<scene>_cinematic.tscn`:
+
+```json
+{ "kind": "cinematic", "id": "crash", "scene": "crash" }
+```
+
 or a question:
 
 ```json
@@ -46,6 +52,27 @@ or a question:
 - `verb` is one of `binary`, `multiple_choice`, `coordination_gamble`, `allocation`, `self_sacrifice`.
 - `weight` is `light`, `medium` or `heavy`.
 - `stage.type` names the stage scene, `stages/<type>/<type>_stage.tscn`. The rest of `stage` is read by that stage.
+
+## The trolley stage
+
+```json
+"stage": {
+  "type": "trolley",
+  "rolling": true,
+  "tracks": [
+    { "figures": [ "stranger", "stranger" ], "facing": "away" },
+    { "figures": [ { "kind": "stranger", "says": "Please. Please, not me." } ] },
+    { "figures": [ "guilty", "stranger" ], "roped": true }
+  ]
+}
+```
+
+- Each track lists its souls by kind, nearest the split first. The kinds are the files in `figures/kinds/`: `stranger`, `guilty`, `partner`, `child`, `elderly`, `pregnant`, `sleeper`, `baby`.
+- A soul given as `{ "kind": ..., "says": ... }` pleads: it clasps its hands and the words float over its head. The words follow the line rules (tags allowed) and get an id like `ch1.begging.stage.1`.
+- On a track, `"roped": true` ties its souls together, `"facing": "away"` turns them from the player, and `"dark": true` hides the track in a dark that lifts once the trolley has rolled.
+- `"rolling": true` sets the trolley creeping toward the split while the player decides.
+- Two tracks are a fork: track 0 runs straight on, track 1 branches, and a lever throws the trolley across. Three are a fan, first to third from the top, and the player points at one.
+- An option's `outcome` is `{ "track": n }`.
 
 ## An option
 
@@ -83,7 +110,8 @@ or an object, when someone else says it or the imp's face should change:
 ```
 
 - `speaker` is `imp` (the default), `button`, `plea`, `headline` or `confessor`.
-- `face` is `grin`, `smug`, `glare` or `surprised`.
+- `face` is `grin`, `smug`, `glare` or `surprised`. A line without one shows his grin.
+- `direction` is a delivery note for the voice, such as `"[furious]"`, sent ahead of the line when it is voiced. It is never shown.
 - Each line becomes one or more dialogue boxes: long lines are paged by whole sentences.
 - Every line gets an id from where it sits, `<chapter>.<beat>.<part>.<number>`, such as `ch1.lever.pull.1`.
 

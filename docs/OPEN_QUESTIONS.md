@@ -4,6 +4,10 @@ Everything not yet settled. Park unknowns here instead of guessing, and decide t
 
 Creative questions are the user's to answer. Technical ones are the developer's, and they are only listed here while they wait on a creative answer.
 
+## Chapter 1
+
+- Sign off on the trimmed copy (31% shorter, reviewed line by line on 2026-10-22). Nothing in Chapter 1 beyond 1.02 is voiced until it is approved.
+
 ## Carried over from the earlier build
 
 These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus the points sections 9 and 14 leave to the user.
