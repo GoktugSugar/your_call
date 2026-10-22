@@ -171,3 +171,15 @@ Built unattended like Chapter 3, on top of it. Technical calls are the dev's; ev
 - **4.14 and the closer.** Provisional, made overnight. "Look at their face" is cut (faces are dot eyes only, and it has folded by then). The closer counts eleven times a finger on a trigger: there are eleven gun questions.
 - **The bear's tiny smile.** Provisional, made overnight. PREMISE describes her with a tiny smile, and also says faces are dot eyes only; she has the smile, which one switch turns off.
 - **The imp's line when shot** is voiced with the direction "[outraged]", glaring. Provisional, made overnight.
+
+## 2026-10-22: building Chapter 5 overnight
+
+Built unattended like Chapters 3 and 4, on top of them. Technical calls are the dev's; every creative call is marked **Provisional, made overnight** and listed under "To review in the morning" in `OPEN_QUESTIONS.md`.
+
+- **The matchup stage is the doodles stage with "vs".** Dev. A side is a doodle in its colour, a crowd of up to a dozen small copies in staggered rows with the count in its label, the walking button itself, or everyone the player has killed as one red mob. A `DoodleGroup` lets a crowd or a figure lift, hop and dissolve as one doodle would, so the doodles stage's pointing, picking and amber loop work unchanged. The reveal is headed "how the bar voted", each bar in its side's colour; the keys 1 and 2 pick through the choice row as everywhere.
+- **Ten fighter doodles.** Dev: drawn by a helper, reviewed and merged. The brawler (blue, green or red), the gorilla and the gorilla with a knife (built on the gorilla), the chicken, the house cat, the lion, the grizzly, the boxer, the toddler and the wasp; the crowd doodles were checked as crowds of small copies.
+- **The trimmed copy.** Provisional, made overnight. 1,502 words down to 1,305, 13% shorter: the chapter is quick bar banter already. Review page: see Chapter 5's pull request.
+- **5.03's sum.** Provisional, made overnight. "Outnumbered twenty to one" did not add up (a thousand cats, forty dead); it is now nine hundred and sixty to one.
+- **5.06 follows the button's history.** Provisional, made overnight. The old ask said the button walked off without a word after being shot, and listed it as pressed, cursed and auctioned whatever the player did. The ask now has two versions, by whether the player shot it in 4.05 or let it come, and leaves out the rest.
+- **5.10 counts the run.** Provisional, made overnight. The old ask always named the bear and "that man, or the other one". It now names nothing the player might not have done and points at the label instead: "all 13 you killed", counting every kill in the run, a nuked country's people included. The last bear stands in the red mob only if she was shot.
+- **Colours for the sides.** Provisional, made overnight. "You" is green in both 5.06 and 5.10, and the walking button's bar is green too, its own colour.

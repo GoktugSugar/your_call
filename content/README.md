@@ -106,6 +106,14 @@ A **tableau** is a stage the imp talks over with nothing to choose, like the rec
 - Each id names a doodle's script, `doodles/<id>.gd`. A new doodle is a new script there.
 - Options need no `outcome`.
 
+## The matchup stage
+
+```json
+"stage": { "type": "matchup", "sides": [ { "doodle": "brawler", "count": 100, "role": "blue" }, { "doodle": "gorilla", "role": "secondary" } ] }
+```
+
+Who Would Win: two sides with "vs" between them, each over its option's label; the reveal colours each bar by its side's `role`. A side names a `doodle`; with a `count` over one it is a crowd. `{ "button": true }` is the walking button itself, and `{ "doodle": "brawler", "kills": true, "role": "red" }` is everyone the player has killed in the run, with `{kills}` in the option's label filled with how many. `"asks": [ { "if": "button_shot", "ask": "shot" }, { "ask": "spared" } ]` picks the question's keyed ask by the first fact the run remembers.
+
 ## Buttons
 
 Several stages are pressed with a push button. Where a stage takes `"button"`, it names a look in `stages/controls/looks/`: `plain`, `blue` (with a ring), `red` (with a dot), `green` or `gold` (with a dollar sign). Wherever an option's `outcome` has `"press": true`, that option is the one the button picks.

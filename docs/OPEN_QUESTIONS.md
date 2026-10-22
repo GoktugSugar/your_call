@@ -36,6 +36,14 @@ Creative calls made overnight on 2026-10-22, while the user slept. Each is provi
 - The imp's shot line voiced with "[outraged]".
 - The pleas (4.02, 4.03, 4.14) stay unvoiced: there are no free voice slots for new speakers.
 
+**Chapter 5, Who Would Win**
+- The trimmed copy, 13% shorter.
+- 5.03's corrected sum: nine hundred and sixty to one.
+- 5.06's two asks, by whether the button was shot in 4.05. Alternative: one ask that names none of its history.
+- 5.10 points at the count on the label instead of naming the bear and the man. Alternative: versions by what was killed.
+- 5.10 counts a nuked country's people, so the label can read in the billions. Alternative: count only the souls on screen.
+- Both "You" and the button in green in 5.06's reveal. Alternative: another colour for one of them.
+
 ## Carried over from the earlier build
 
 These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus the points sections 9 and 14 leave to the user.
