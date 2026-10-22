@@ -36,6 +36,9 @@ const KIND_PATH := "res://figures/kinds/%s.tres"
 @export var pistol := false
 ## Falls when the trolley hits. Off for a soul already lying down, which only dissolves.
 @export var falls := true
+## The steps the figure folds down through when it dies, in place of the scene's own, for a soul that
+## starts from somewhere else, such as its knees. Empty keeps the scene's.
+@export var fold_steps: Array[FigurePose] = []
 
 
 ## Whether a kind called [param id] exists.
@@ -65,6 +68,8 @@ func make() -> Soul:
 		figure.snoring = snoring
 		figure.crown = crown
 		figure.pistol = pistol
+		if not fold_steps.is_empty():
+			figure.fold_steps = fold_steps.duplicate()
 		if not falls:
 			figure.fold_steps = []
 	return soul
