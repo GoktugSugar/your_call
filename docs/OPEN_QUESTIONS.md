@@ -49,6 +49,8 @@ Creative calls made overnight on 2026-10-22, while the user slept. Each is provi
 - 5.06's two asks, by whether the button was shot in 4.05. Alternative: one ask that names none of its history.
 - 5.10 points at the count on the label instead of naming the bear and the man. Alternative: versions by what was killed.
 - 5.10 counts a nuked country's people, so the label can read in the billions. Alternative: count only the souls on screen.
+- 5.10's mob has the last bear in it only if she was shot in 4.01; the script always puts her there. Alternative: always the bear.
+- 5.10's lead in still says "whoever you put a bullet in" on a run that shot nothing in Chapter 4. Alternative: a version for a run with no shots.
 - Both "You" and the button in green in 5.06's reveal. Alternative: another colour for one of them.
 
 ## Carried over from the earlier build
