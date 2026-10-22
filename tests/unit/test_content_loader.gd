@@ -108,6 +108,41 @@ func test_a_line_can_name_the_voice_that_says_it() -> void:
 	assert_eq(ask[1].voice_name(), "confessor.recliner")
 
 
+func test_options_can_need_facts_and_remember_them() -> void:
+	var question := _question()
+	question.options[0]["if"] = "class_knight"
+	question.options[0]["unless"] = ["beast_killed", "took_gold"]
+	question.options[1]["remember"] = ["companion_trusted", "companion_with_you"]
+	var loader := ContentLoader.new(AXES)
+	var chapter := loader.load_chapter(_write({"id": "ch1", "title": "The Tracks", "beats": [question]}))
+	assert_eq(loader.problems, PackedStringArray())
+	var options := (chapter.find_beat(&"lever") as QuestionData).options
+	assert_eq(Array(options[0].requires), ["class_knight"])
+	assert_eq(Array(options[0].excludes), ["beast_killed", "took_gold"])
+	assert_eq(Array(options[1].remember), ["companion_trusted", "companion_with_you"])
+
+
+func test_lines_can_need_facts() -> void:
+	var question := _question()
+	question.ask = [{"text": "A chasm.", "unless": ["class_rogue"]}, {"text": "A lock.", "if": "class_rogue"}]
+	var loader := ContentLoader.new(AXES)
+	var chapter := loader.load_chapter(_write({"id": "ch1", "title": "The Tracks", "beats": [question]}))
+	assert_eq(loader.problems, PackedStringArray())
+	var ask := (chapter.find_beat(&"lever") as QuestionData).ask
+	var rogue := RunState.new()
+	rogue.remember(&"class_rogue")
+	assert_eq(LineData.for_run(ask, RunState.new()).map(func(line: LineData) -> String: return line.text), ["A chasm."])
+	assert_eq(LineData.for_run(ask, rogue).map(func(line: LineData) -> String: return line.text), ["A lock."])
+	assert_eq(LineData.for_run(ask, null).size(), 2, "with no run, every line is said")
+
+
+func test_a_condition_needs_facts_as_words() -> void:
+	var question := _question()
+	question.options[0]["if"] = 3
+	assert_string_contains("
+".join(_load(question).problems), "needs a fact or a list of facts")
+
+
 func test_reactions_and_endings_can_be_keyed_by_outcome() -> void:
 	var question := _question()
 	question.options[0].reaction = {"lives": ["It walks."], "dies": [{"text": "Gone.", "face": "glare"}]}

@@ -49,13 +49,22 @@ func ask_for(key: StringName) -> Array[LineData]:
 	return ask
 
 
-## The indices of the options the choice row shows, in order: all but the hidden ones.
-func shown_options() -> PackedInt32Array:
+## The indices of the options the choice row shows on [param run], in order: all but the hidden ones,
+## and those the run does not offer, such as another class's option. With no run, all but the hidden.
+func shown_options(run: RunState = null) -> PackedInt32Array:
 	var shown := PackedInt32Array()
 	for i in options.size():
-		if not options[i].hidden:
+		if options[i].offered_on(run):
 			shown.append(i)
 	return shown
+
+
+## Whether some of its options are offered only on some runs.
+func has_conditional_options() -> bool:
+	for option in options:
+		if not option.requires.is_empty() or not option.excludes.is_empty():
+			return true
+	return false
 
 
 ## The option labels, in order.

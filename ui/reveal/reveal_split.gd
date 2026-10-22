@@ -5,6 +5,9 @@ extends RefCounted
 ## By default it comes straight from the question's data; a stage whose split depends on how the
 ## question played, such as the tier an offer ladder stopped on, makes its own.
 
+## The whole crowd, which every split's shares add up to.
+const WHOLE := 100.0
+
 ## The heading over the bars.
 var heading := ""
 ## The words over each bar, in option order.
@@ -33,15 +36,30 @@ func is_least_popular() -> bool:
 
 
 ## The split as [param question]'s data has it, with the option at [param picked] as the player's.
-## A hidden option, picked only on the stage, has no bar.
-static func of(question: QuestionData, picked: int) -> RevealSplit:
+## A hidden option, picked only on the stage, has no bar, and nor does one [param run] did not offer.
+## When some options are offered only on some runs, the shares of those shown are scaled to the whole
+## crowd, so the bars always add up.
+static func of(question: QuestionData, picked: int, run: RunState = null) -> RevealSplit:
 	var split := RevealSplit.new()
 	split.heading = question.reveal_heading
 	var labels := question.bar_labels()
-	var shown := question.shown_options()
+	var shown := question.shown_options(run)
 	for i in shown:
 		split.labels.append(labels[i])
 		split.shares.append(question.options[i].crowd)
 	split.pick = shown.find(picked)
 	split.mark_label = question.reveal_mark
+	if question.has_conditional_options():
+		split.scale_to_whole()
 	return split
+
+
+## Scales the shares so they add up to the whole crowd, 100.
+func scale_to_whole() -> void:
+	var total := 0.0
+	for share in shares:
+		total += share
+	if total <= 0.0:
+		return
+	for i in shares.size():
+		shares[i] = shares[i] * WHOLE / total
