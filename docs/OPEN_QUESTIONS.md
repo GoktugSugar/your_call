@@ -42,7 +42,6 @@ These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus t
 - Why player-facing text has no dashes. The rule holds either way; the reason only matters if it ever needs bending.
 
 **Voice and pacing**
-- Whether narration should ever auto-advance once the imp finishes a box, perhaps as a setting. (Text now syncs with the voice and waits for a click.)
 - Whether the pleas and the confessors are voiced. (The walking button gets its own voice.)
 - Whether the gibberish blip voice survives for anyone (the walking button, perhaps).
 - Whether the imp's per-chapter register shifts are one voice or distinct takes.
