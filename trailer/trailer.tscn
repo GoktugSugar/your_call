@@ -1,0 +1,72 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://trailer/trailer.gd" id="1_trailer"]
+[ext_resource type="PackedScene" path="res://ink/paper/paper.tscn" id="2_paper"]
+[ext_resource type="PackedScene" path="res://figures/imp/imp.tscn" id="3_imp"]
+[ext_resource type="PackedScene" path="res://ui/reveal/crowd_reveal.tscn" id="4_reveal"]
+[ext_resource type="PackedScene" path="res://ui/choices/choice_row.tscn" id="5_choices"]
+[ext_resource type="PackedScene" path="res://ui/dialogue/dialogue_box.tscn" id="6_dialogue"]
+[ext_resource type="Script" path="res://game/question_player.gd" id="7_player"]
+[ext_resource type="PackedScene" path="res://ui/balance/balance_readout.tscn" id="8_balance"]
+[ext_resource type="Script" path="res://trailer/trailer_camera.gd" id="9_camera"]
+[ext_resource type="Script" path="res://trailer/trailer_pointer.gd" id="10_pointer"]
+[ext_resource type="PackedScene" path="res://trailer/title_card.tscn" id="11_title"]
+[ext_resource type="PackedScene" path="res://cinematics/eyelids.tscn" id="12_eyelids"]
+
+[node name="Trailer" type="Node" node_paths=PackedStringArray("question_player", "dialogue", "choices", "reveal", "balance", "imp", "camera", "pointer", "title_card", "eyelids", "overlay_root")]
+script = ExtResource("1_trailer")
+question_player = NodePath("QuestionPlayer")
+dialogue = NodePath("UI/DialogueBox")
+choices = NodePath("UI/ChoiceRow")
+reveal = NodePath("UI/CrowdReveal")
+balance = NodePath("UI/BalanceReadout")
+imp = NodePath("World/Imp")
+camera = NodePath("World/Camera")
+pointer = NodePath("Pointer")
+title_card = NodePath("TitleCard")
+eyelids = NodePath("Eyes/Eyelids")
+overlay_root = NodePath("Overlays")
+
+[node name="Paper" parent="." instance=ExtResource("2_paper")]
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="StageRoot" type="Node2D" parent="World"]
+
+[node name="Imp" parent="World" instance=ExtResource("3_imp")]
+hop_seed = 7
+
+[node name="Camera" type="Camera2D" parent="World" node_paths=PackedStringArray("words")]
+script = ExtResource("9_camera")
+words = NodePath("../../UI")
+
+[node name="TitleCard" parent="." instance=ExtResource("11_title")]
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="BalanceReadout" parent="UI" instance=ExtResource("8_balance")]
+
+[node name="CrowdReveal" parent="UI" instance=ExtResource("4_reveal")]
+
+[node name="ChoiceRow" parent="UI" instance=ExtResource("5_choices")]
+
+[node name="DialogueBox" parent="UI" instance=ExtResource("6_dialogue")]
+
+[node name="QuestionPlayer" type="Node" parent="." node_paths=PackedStringArray("stage_root", "dialogue", "choices", "reveal", "imp")]
+script = ExtResource("7_player")
+stage_root = NodePath("../World/StageRoot")
+dialogue = NodePath("../UI/DialogueBox")
+choices = NodePath("../UI/ChoiceRow")
+reveal = NodePath("../UI/CrowdReveal")
+imp = NodePath("../World/Imp")
+
+[node name="Overlays" type="Node" parent="."]
+
+[node name="Eyes" type="CanvasLayer" parent="."]
+layer = 30
+
+[node name="Eyelids" parent="Eyes" instance=ExtResource("12_eyelids")]
+
+[node name="Pointer" type="Node" parent="."]
+script = ExtResource("10_pointer")
