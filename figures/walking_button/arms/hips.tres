@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ButtonArmPose" format=3]
+
+[ext_resource type="Script" path="res://figures/walking_button/button_arm_pose.gd" id="1_pose"]
+
+[resource]
+script = ExtResource("1_pose")
+front_shoulder = 125.0
+front_elbow = -160.0
+back_shoulder = 125.0
+back_elbow = -160.0
