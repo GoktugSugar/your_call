@@ -60,6 +60,8 @@ const AIM_ANY := "any"
 @export_group("Layout")
 ## Where the targets stand, down the page.
 @export_range(0.0, 1080.0, 1.0) var ground_y := 700.0
+## How much bigger the souls stand here than on the tracks: the gun brings them close.
+@export_range(0.2, 4.0, 0.01) var soul_scale := 1.7
 ## Extra room round a target's drawing that still counts as aiming at it.
 @export_range(0.0, 80.0, 0.5) var aim_padding := 8.0
 ## What the brackets frame when the gun is turned on the player: the view.
@@ -140,6 +142,8 @@ var _hold := -1
 var _aimed := ""
 ## What the player clicked on the stage to fire at, by aim id, or empty for a shot picked in the row.
 var _clicked := ""
+## Where the pointer is, in this stage's space, from the last mouse event; off the page until there is one.
+var _pointer := Vector2(-100000.0, -100000.0)
 ## The target the gun fired at, for the reveal.
 var _last_shot := ""
 ## What the row lights, by aim id, or empty.
@@ -306,6 +310,8 @@ func leave() -> void:
 	lock.release()
 	for plea: Plea in _pleas.values():
 		plea.fade_out()
+	if _walker != null:
+		_walker.fade_words()
 	await fade.finished
 	await super.leave()
 
@@ -332,13 +338,9 @@ func _process(delta: float) -> void:
 			_commit(_hold)
 	if not _live:
 		return
-	var pointer := get_local_mouse_position()
-	sight.position = pointer
-	var over := _aim_under(pointer)
-	if over != _aimed:
-		_aimed = over
-		Input.set_default_cursor_shape(Input.CURSOR_CROSS if over != "" else Input.CURSOR_ARROW)
-		option_hovered.emit(_option_for(over))
+	if _pointer.x > -10000.0:
+		sight.position = _pointer
+	_update_aim()
 	var shown := _aimed if _aimed != "" else _highlighted
 	if shown != "":
 		lock.lock_onto(_aim_rect(shown))
@@ -347,7 +349,11 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not _live or _aimed == "" or not event.is_action_pressed(&"pick"):
+	if not _live or not event is InputEventMouse:
+		return
+	_pointer = (make_input_local(event) as InputEventMouse).position
+	_update_aim()
+	if _aimed == "" or not event.is_action_pressed(&"pick"):
 		return
 	var index := _option_for(_aimed)
 	if index < 0:
@@ -355,6 +361,16 @@ func _unhandled_input(event: InputEvent) -> void:
 	get_viewport().set_input_as_handled()
 	_clicked = _aimed
 	_commit(index)
+
+
+## Finds what is under the pointer, and tells the row when that changes.
+func _update_aim() -> void:
+	var over := _aim_under(_pointer)
+	if over == _aimed:
+		return
+	_aimed = over
+	Input.set_default_cursor_shape(Input.CURSOR_CROSS if over != "" else Input.CURSOR_ARROW)
+	option_hovered.emit(_option_for(over))
 
 
 func _commit(index: int) -> void:
@@ -443,6 +459,7 @@ func _make_target(entry: Dictionary) -> Node2D:
 		target = DoodlesStage.make_doodle(str(entry["doodle"]))
 	elif SoulKind.exists(StringName(str(entry.get("kind", "")))):
 		target = SoulKind.find(StringName(str(entry["kind"]))).make()
+		target.scale *= soul_scale
 		if entry.has("role"):
 			(target as Soul).color_override = StringName(str(entry["role"]))
 	if target == null:
