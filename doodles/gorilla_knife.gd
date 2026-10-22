@@ -15,7 +15,7 @@ extends Gorilla
 ## Where the knife's hilt sits, in the gorilla's space, and which way its blade points, in degrees
 ## from pointing straight forward, upward negative. The knife's shapes below are drawn round its hilt,
 ## with the blade pointing along positive x.
-const _KNIFE_HILT := Vector2(101.0, -24.0)
+const _KNIFE_HILT := Vector2(95.0, -24.0)
 const _KNIFE_ANGLE := -60.0
 ## The handle, gripped across the fist.
 const _HANDLE := Rect2(-26.0, -5.0, 24.0, 10.0)

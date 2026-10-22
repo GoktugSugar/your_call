@@ -25,29 +25,29 @@ extends InkDrawing
 
 ## The outline, from the tip of the tail down its back edge, round the belly, up the breast and the
 ## neck, over the head and down the back of the neck, and along the back to the tail.
-const _OUTLINE := [Vector2(-86.0, -156.0), Vector2(-100.0, -134.0), Vector2(-104.0, -106.0), Vector2(-94.0, -78.0),
-		Vector2(-70.0, -54.0), Vector2(-30.0, -42.0), Vector2(14.0, -42.0), Vector2(52.0, -54.0), Vector2(76.0, -78.0),
-		Vector2(84.0, -104.0), Vector2(88.0, -126.0), Vector2(96.0, -140.0), Vector2(100.0, -154.0),
-		Vector2(92.0, -168.0), Vector2(76.0, -172.0), Vector2(62.0, -162.0), Vector2(56.0, -144.0),
-		Vector2(52.0, -124.0), Vector2(32.0, -110.0), Vector2(-10.0, -106.0), Vector2(-46.0, -112.0),
-		Vector2(-66.0, -130.0)]
+const _OUTLINE := [Vector2(-92.0, -156.0), Vector2(-106.0, -134.0), Vector2(-110.0, -106.0), Vector2(-100.0, -78.0),
+		Vector2(-76.0, -54.0), Vector2(-36.0, -42.0), Vector2(8.0, -42.0), Vector2(46.0, -54.0), Vector2(70.0, -78.0),
+		Vector2(78.0, -104.0), Vector2(82.0, -126.0), Vector2(90.0, -140.0), Vector2(94.0, -154.0),
+		Vector2(86.0, -168.0), Vector2(70.0, -172.0), Vector2(56.0, -162.0), Vector2(50.0, -144.0),
+		Vector2(46.0, -124.0), Vector2(26.0, -110.0), Vector2(-16.0, -106.0), Vector2(-52.0, -112.0),
+		Vector2(-72.0, -130.0)]
 ## The comb, three bumps standing up from the top of the head. Its base hides behind the head.
-const _COMB := [Vector2(64.0, -164.0), Vector2(60.0, -180.0), Vector2(66.0, -190.0), Vector2(74.0, -182.0),
-		Vector2(82.0, -196.0), Vector2(90.0, -184.0), Vector2(98.0, -188.0), Vector2(102.0, -174.0),
-		Vector2(96.0, -162.0)]
+const _COMB := [Vector2(58.0, -164.0), Vector2(54.0, -180.0), Vector2(60.0, -190.0), Vector2(68.0, -182.0),
+		Vector2(76.0, -196.0), Vector2(84.0, -184.0), Vector2(92.0, -188.0), Vector2(96.0, -174.0),
+		Vector2(90.0, -162.0)]
 ## The beak's three corners. Its base hides behind the head.
-const _BEAK := [Vector2(94.0, -154.0), Vector2(116.0, -147.0), Vector2(94.0, -138.0)]
+const _BEAK := [Vector2(88.0, -154.0), Vector2(110.0, -147.0), Vector2(88.0, -138.0)]
 ## The wattle hanging under the beak. Its top hides behind the head.
-const _WATTLE := [Vector2(96.0, -142.0), Vector2(106.0, -134.0), Vector2(104.0, -122.0), Vector2(96.0, -124.0),
-		Vector2(92.0, -134.0)]
+const _WATTLE := [Vector2(90.0, -142.0), Vector2(100.0, -134.0), Vector2(98.0, -122.0), Vector2(90.0, -124.0),
+		Vector2(86.0, -134.0)]
 ## The fold of the wing along its side.
-const _WING := [Vector2(-44.0, -98.0), Vector2(-4.0, -98.0), Vector2(30.0, -84.0), Vector2(16.0, -64.0),
-		Vector2(-26.0, -64.0)]
-const _EYE := Vector2(84.0, -156.0)
-const _LEGS := [[Vector2(-14.0, -44.0), Vector2(-16.0, -6.0)], [Vector2(16.0, -44.0), Vector2(18.0, -6.0)]]
+const _WING := [Vector2(-50.0, -98.0), Vector2(-10.0, -98.0), Vector2(24.0, -84.0), Vector2(10.0, -64.0),
+		Vector2(-32.0, -64.0)]
+const _EYE := Vector2(78.0, -156.0)
+const _LEGS := [[Vector2(-20.0, -44.0), Vector2(-22.0, -6.0)], [Vector2(10.0, -44.0), Vector2(12.0, -6.0)]]
 ## Each foot, from its back toe up to the bottom of its leg and down to its front toe.
-const _FEET := [[Vector2(-26.0, 0.0), Vector2(-16.0, -6.0), Vector2(0.0, 0.0)],
-		[Vector2(8.0, 0.0), Vector2(18.0, -6.0), Vector2(34.0, 0.0)]]
+const _FEET := [[Vector2(-32.0, 0.0), Vector2(-22.0, -6.0), Vector2(-6.0, 0.0)],
+		[Vector2(2.0, 0.0), Vector2(12.0, -6.0), Vector2(28.0, 0.0)]]
 
 
 func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
