@@ -4,7 +4,8 @@ extends Control
 ## growing upward. Lines ink on in it in the hand-lettered face, a page of whole sentences at a time.
 ## A voiced line inks on in time with its voice, and each page plays only its own stretch of the take.
 ## The first click finishes the page while the voice plays on; the next click moves on, fading the
-## voice out if it is still going. It listens for input only while it waits on the player.
+## voice out if it is still going. It listens for input only while it waits on the player. It always
+## knows which character is being said, for a speaker whose mouth moves with the words.
 
 ## Emitted when a page appears.
 signal page_shown(line: LineData, page: int, page_count: int)
@@ -81,6 +82,8 @@ const _WRAP_SLACK := 2.0
 const _SILENT_DB := -60.0
 
 var _effect := InkOnEffect.new()
+## The page's text without markup: the characters whose times [member _schedule] holds.
+var _plain := ""
 var _schedule := PackedFloat32Array()
 var _elapsed := 0.0
 var _typing := false
@@ -204,6 +207,27 @@ func is_waiting() -> bool:
 	return _waiting
 
 
+## The character being said now, or [param lead] seconds from now. A voiced page is read off the voice's
+## own clock, so it keeps following the voice after a click has finished showing the page; an unvoiced
+## one is read off its typing. Spaces and punctuation count, as the pauses they are. Empty when nothing
+## is being said.
+func spoken_character(lead := 0.0) -> String:
+	if not _talking:
+		return ""
+	# The voice's clock runs at the take's own speed.
+	return character_at(_plain, _schedule, _elapsed + lead * (voice_speed if _voiced else 1.0))
+
+
+## The character of [param text] being said [param time] seconds in, by [param schedule]: when each of
+## its characters starts, with one more entry for when the last one ends. Empty before the first starts
+## and once the last has ended.
+static func character_at(text: String, schedule: PackedFloat32Array, time: float) -> String:
+	var count := mini(text.length(), schedule.size() - 1)
+	if count <= 0 or time < schedule[0] or time >= schedule[count]:
+		return ""
+	return text[clampi(schedule.bsearch(time, false) - 1, 0, count - 1)]
+
+
 ## The frame's rect on the canvas.
 func frame_rect() -> Rect2:
 	return frame.get_global_rect()
@@ -224,6 +248,7 @@ func _show_page(line: LineData, page: String, index: int, count: int, clip: Voic
 	text_label.size = text_size
 	text_label.text = "[inkon]%s[/inkon]" % markup
 	var plain := text_label.get_parsed_text()
+	_plain = plain
 	_start_voice(clip, from, plain.length())
 	if not _voiced:
 		_build_schedule(plain)
