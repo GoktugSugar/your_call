@@ -3,8 +3,8 @@
     python tools/voice/save_voice.py <role> <audition slug>
     python tools/voice/save_voice.py imp wiseguy_barker
 
-<role> is who the voice is for in the game, such as imp. The audition comes from
-voice_auditions/imp_auditions.json, written by design_auditions.py.
+<role> is who the voice is for in the game, such as imp or button. The audition comes from
+voice_auditions/<role>_auditions.json, written by design_auditions.py.
 """
 
 import argparse
@@ -26,7 +26,10 @@ def main() -> None:
     parser.add_argument("slug")
     args = parser.parse_args()
 
-    index = json.loads((DEFAULT_OUT / "imp_auditions.json").read_text(encoding="utf-8"))
+    index_path = DEFAULT_OUT / f"{args.role}_auditions.json"
+    if not index_path.exists():
+        sys.exit(f"No auditions for {args.role} yet: design some with design_auditions.py --speaker {args.role}.")
+    index = json.loads(index_path.read_text(encoding="utf-8"))
     candidate = next((c for c in index["candidates"] if c["slug"] == args.slug), None)
     if candidate is None:
         sys.exit(f"No audition called {args.slug}.")
