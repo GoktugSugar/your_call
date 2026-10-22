@@ -181,8 +181,7 @@ func test_a_line_can_be_kept_silent() -> void:
 func test_voiced_must_be_true_or_false() -> void:
 	var question := _question()
 	question.options[0].reaction = [{"text": "I quit.", "voiced": "no"}]
-	assert_string_contains("
-".join(_load(question).problems), "voiced needs true or false")
+	assert_string_contains("\n".join(_load(question).problems), "voiced needs true or false")
 
 
 func test_unknown_key_is_reported() -> void:
