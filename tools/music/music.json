@@ -1,0 +1,26 @@
+{
+  "note": "Music made with ElevenLabs (Eleven Music) by music_takes.py. model: the music model. styles and avoid: styles every section has, and styles none of them should. sections: in order, each with how many seconds it runs, its text (a section name in square brackets and nothing else, so the piece stays instrumental), its own styles and what to avoid. takes: how many to make in a batch. file: where the chosen take goes.",
+  "trailer_bed": {
+    "model": "music_v2_5",
+    "styles": ["instrumental", "dark comedy", "mischievous", "hand played acoustic instruments", "D minor"],
+    "avoid": ["vocals", "lyrics", "singing", "choir", "synthesizer", "electronic", "drum kit", "epic trailer drums"],
+    "sections": [
+      { "seconds": 5.0, "text": "[Intro]", "styles": ["a lone plucked double bass, sneaking", "ticking woodblock", "sparse and sly", "quiet"] },
+      { "seconds": 17.0, "text": "[Waltz]", "styles": ["dark carnival waltz in 3/4 at 150 BPM", "oom pah tuba", "pizzicato strings", "accordion", "celesta melody", "playful and macabre", "medium energy"] },
+      { "seconds": 17.0, "text": "[Waltz Builds]", "styles": ["dark carnival waltz in 3/4 at 150 BPM", "full brass joins the tuba", "violins take the melody", "snare rolls", "building, rising intensity", "grand and sinister"] },
+      { "seconds": 5.0, "text": "[Climax]", "styles": ["big brassy swell to a climax", "cymbal crash", "ends on one short loud stab, then silence"] }
+    ],
+    "takes": 3,
+    "file": "assets/audio/music/trailer_bed.mp3"
+  },
+  "trailer_sting": {
+    "model": "music_v2_5",
+    "styles": ["instrumental", "dark comedy", "mischievous", "hand played acoustic instruments", "D minor"],
+    "avoid": ["vocals", "lyrics", "singing", "choir", "synthesizer", "electronic", "drum kit"],
+    "sections": [
+      { "seconds": 8.0, "text": "[Sting]", "styles": ["a sly little music box phrase", "pizzicato strings answer", "ends on one low tuba note with a soft cymbal", "playful final flourish", "dark carnival", "quiet then a small button ending"] }
+    ],
+    "takes": 3,
+    "file": "assets/audio/music/trailer_sting.mp3"
+  }
+}
