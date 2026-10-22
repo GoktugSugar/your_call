@@ -66,6 +66,7 @@ func _ready() -> void:
 		var every := DoodlesStage.all_ids()
 		var start := (maxi(int(args.get("page", "1")), 1) - 1) * per_page
 		ids = every.slice(start, start + per_page)
+	doodle_scale = float(args.get("scale", str(doodle_scale)))
 	_staging = args.has("stage")
 	if _staging:
 		var sample := samples[clampi(int(args["stage"]) - 1, 0, samples.size() - 1)]
