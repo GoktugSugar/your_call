@@ -91,10 +91,160 @@ BUTTON_CANDIDATES = [
      "gruff despite its size. Outraged and grumbling, swearing under its breath. Perfect audio quality."),
 ]
 
+# The dead who confess in Chapter 7, each read with their own first line from docs/SCRIPT.md, tags
+# stripped. Ordinary people, not cartoons: none sounds like the imp's New York swagger or the button's
+# whine, and the two in 7.10 are equally sincere, so neither voice sounds like the liar.
+CONFESSORS = {
+    "recliner": (
+        "I paid for that seat. The whole seat. The recline is part of the seat. It is a button, it is right "
+        "there, the airline put it there for me to press.",
+        [
+            ("frequent_flyer",
+             "A middle aged American man, a frequent flyer with a firm sense of entitlement. Mid pitch, slightly "
+             "nasal, defensive and exasperated, explaining what he thinks is obvious. Natural, conversational. "
+             "Perfect audio quality."),
+            ("clipped_executive",
+             "A brisk, self assured English businessman in his fifties. Clipped, impatient and condescending, "
+             "as if arguing with a flight attendant. Natural pace. Perfect audio quality."),
+            ("stubborn_midwesterner",
+             "A gruff, stubborn American man in his sixties from the Midwest. Low and grumbling, folksy and "
+             "immovable, certain he is in the right. Unhurried. Perfect audio quality."),
+        ]),
+    "wedding": (
+        "It was cream. And she knew exactly what she was doing when she sat me at the very back table, next "
+        "to her ghastly uncle. This was years in the making. She started it.",
+        [
+            ("catty_thirties",
+             "A sharp, catty American woman in her thirties. Bright and confident, a little sing song, "
+             "defensive with a sly edge of pride. Natural, conversational. Perfect audio quality."),
+            ("haughty_english",
+             "A glamorous, haughty English woman in her forties. Smooth, arch and theatrical, wounded pride "
+             "under a polished surface. Perfect audio quality."),
+            ("sweet_southern",
+             "A fiery woman in her late twenties with a Southern American accent. Quick and indignant, sweetly "
+             "vicious. Perfect audio quality."),
+        ]),
+    "loan": (
+        "I carried him for a year. A whole year. And not one thank you, not one honest word about it, just "
+        "excuses and, I noticed, a brand new phone.",
+        [
+            ("simmering_brother",
+             "A tightly wound American man in his forties. Mid low pitch, measured but simmering with "
+             "resentment, self righteous. Natural, conversational. Perfect audio quality."),
+            ("blunt_northerner",
+             "A blunt man in his fifties with a Northern English accent. Plain spoken and stubborn, hurt "
+             "underneath, never raises his voice. Perfect audio quality."),
+            ("aggrieved_aussie",
+             "An earnest, aggrieved Australian man in his late thirties. A warm voice gone bitter, talking fast "
+             "when he defends himself. Perfect audio quality."),
+        ]),
+    "secret": (
+        "If I said something and I was wrong, I lose her forever. If I said something and I was right, I am "
+        "the one who detonated her whole life.",
+        [
+            ("quiet_guilt",
+             "A soft spoken American woman in her thirties. Quiet, anxious and guilty, choosing her words "
+             "carefully, close to tears but holding together. Perfect audio quality."),
+            ("weary_irish",
+             "A gentle Irish woman in her forties. Warm and low, weary with regret, slow and sincere. Perfect "
+             "audio quality."),
+            ("nervous_english",
+             "A tense young English woman in her twenties. Breathy, nervous and defensive, her words tumbling "
+             "out. Perfect audio quality."),
+        ]),
+    "promise": (
+        "She made me promise while she was already going. What was I supposed to say. No? You do not argue "
+        "with a dying woman. You say yes, and you mean it, and I did mean it, I swear I did.",
+        [
+            ("worn_father",
+             "A tired working class American man in his forties. Low and rough, grieving and sincere, his voice "
+             "catching. Natural pace. Perfect audio quality."),
+            ("soft_scot",
+             "A gentle Scottish man in his fifties. Soft, heavy with grief and guilt, plain spoken. Perfect "
+             "audio quality."),
+            ("strained_young_dad",
+             "A worn out young father in his thirties, neutral American accent. Quiet and strained, pleading to "
+             "be understood. Perfect audio quality."),
+        ]),
+    "favorite": (
+        "You want to know the last honest thing they ever said to me. They told me they wished I had more of "
+        "my brother in me. I was twelve years old.",
+        [
+            ("cold_daughter",
+             "A woman in her forties, neutral American accent. Calm and cold on the surface, decades of hurt "
+             "underneath, bitter and precise. Perfect audio quality."),
+            ("controlled_son",
+             "A man in his forties with a soft English accent. Quiet and controlled, bitter, a hurt that never "
+             "healed. Perfect audio quality."),
+            ("husky_guarded",
+             "A woman in her late thirties with a low, husky voice. Flat, guarded and wounded, every word "
+             "deliberate. Perfect audio quality."),
+        ]),
+    "good_deed": (
+        "He would be dead. Do you understand that. Dead, in the ground, twenty years now, if I had not gone "
+        "in after him.",
+        [
+            ("proud_rescuer",
+             "A big hearted, boastful American man in his fifties. Loud and warm, proud of himself, wounded that "
+             "he is not appreciated. Perfect audio quality."),
+            ("pompous_english",
+             "A pompous English man in his sixties. Plummy, indignant and self important, lecturing. Perfect "
+             "audio quality."),
+            ("brash_bostonian",
+             "A barrel chested man in his forties with a Boston accent. Brash and aggrieved, talking with his "
+             "hands. Perfect audio quality."),
+        ]),
+    "whistle": (
+        "What he did was real. I did not invent it, I did not stretch it, I reported exactly what happened "
+        "and it was bad.",
+        [
+            ("firm_professional",
+             "A precise, intense American woman in her thirties. Controlled and articulate, shaken but firm, "
+             "anger held in. Perfect audio quality."),
+            ("dignified_londoner",
+             "A tired, dignified woman in her forties with a London accent. Measured and hurt, quietly furious. "
+             "Perfect audio quality."),
+            ("earnest_canadian",
+             "A young professional woman in her late twenties with a Canadian accent. Earnest and frustrated, "
+             "her voice tight with disbelief. Perfect audio quality."),
+        ]),
+    "her": (
+        "I told him one thing. One. The single worst thing I have ever done, a thing I never breathed to "
+        "another living soul, and I told him because he was my best friend.",
+        [
+            ("raw_betrayed",
+             "A woman in her thirties, neutral American accent. Raw and emotional, betrayed, sincere, on the "
+             "edge of tears. Perfect audio quality."),
+            ("trembling_welsh",
+             "A woman in her forties with a soft Welsh accent. Hurt and accusing, her voice trembling. Perfect "
+             "audio quality."),
+            ("fierce_english",
+             "A young woman in her twenties with an English accent. Fierce, wounded and intense. Perfect audio "
+             "quality."),
+        ]),
+    "him": (
+        "That is not what happened. She told me that secret, yes. And then she told other people herself, "
+        "drunk, at a party, and panicked in the morning, and needed a body to pin it on.",
+        [
+            ("steady_sad",
+             "A man in his thirties, neutral American accent. Calm, steady and sad, quietly insistent and "
+             "sincere. Perfect audio quality."),
+            ("gentle_irish",
+             "A man in his forties with a soft Irish accent. Gentle and wounded, patient, resigned. Perfect "
+             "audio quality."),
+            ("earnest_english",
+             "A young man in his twenties with an English accent. Earnest, frustrated and hurt, trying to stay "
+             "calm. Perfect audio quality."),
+        ]),
+}
+
 # Who can be auditioned: the text their candidates read, and the candidates, each a slug and a description.
+# A role with several voices, such as the confessors, names each as role.voice; --speaker confessor
+# auditions them all.
 AUDITIONS = {
     "imp": (IMP_TEXT, IMP_CANDIDATES),
     "button": (BUTTON_TEXT, BUTTON_CANDIDATES),
+    **{f"confessor.{name}": audition for name, audition in CONFESSORS.items()},
 }
 
 
@@ -120,19 +270,29 @@ def design(description: str, text: str, key: str, models: list[str]) -> tuple[di
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--speaker", default="imp", choices=sorted(AUDITIONS), help="who the voice is for")
+    parser.add_argument("--speaker", default="imp", help="who the voice is for: " + ", ".join(sorted(AUDITIONS))
+                        + ", or a role such as confessor for all of its voices")
     parser.add_argument("--out", type=pathlib.Path, default=DEFAULT_OUT, help="folder for the previews")
     parser.add_argument("--only", nargs="*", help="slugs of the candidates to design, default all")
     parser.add_argument("--dry-run", action="store_true", help="list what would be designed and what it spends")
     args = parser.parse_args()
-    text, candidates = AUDITIONS[args.speaker]
+    roles = [role for role in AUDITIONS if role == args.speaker or role.startswith(args.speaker + ".")]
+    if not roles:
+        sys.exit(f"No auditions for {args.speaker}. Known: {', '.join(sorted(AUDITIONS))}")
     wanted = set(args.only) if args.only else None
-    chosen = [(number, slug, description) for number, (slug, description) in enumerate(candidates, start=1)
-              if wanted is None or slug in wanted]
+    plan = []
+    for role in roles:
+        text, candidates = AUDITIONS[role]
+        chosen = [(number, slug, description) for number, (slug, description) in enumerate(candidates, start=1)
+                  if wanted is None or slug in wanted]
+        if chosen:
+            plan.append((role, text, chosen))
     if args.dry_run:
-        for number, slug, _description in chosen:
-            print(f"{args.speaker}_{number:02d}_{slug}")
-        print(f"{len(chosen)} designs reading {len(text)} characters each: {len(chosen) * len(text)} characters")
+        for role, text, chosen in plan:
+            for number, slug, _description in chosen:
+                print(f"{role}_{number:02d}_{slug} reads {len(text)} characters")
+        designs = sum(len(chosen) for _role, _text, chosen in plan)
+        print(f"{designs} designs: {sum(len(text) * len(chosen) for _role, text, chosen in plan)} characters")
         return
     key = api_key()
 
@@ -147,14 +307,21 @@ def main() -> None:
 
     args.out.mkdir(parents=True, exist_ok=True)
     (args.out / ".gdignore").touch()
-    index_path = args.out / f"{args.speaker}_auditions.json"
+    for role, text, chosen in plan:
+        audition(role, text, chosen, key, args.out)
+    print(f"Saved to {args.out}")
+
+
+def audition(role: str, text: str, chosen: list[tuple[int, str, str]], key: str, out: pathlib.Path) -> None:
+    """Designs each chosen candidate for role, keeps all of its takes, and records them in role's index."""
+    index_path = out / f"{role}_auditions.json"
     index = json.loads(index_path.read_text(encoding="utf-8")) if index_path.exists() else {"text": text, "candidates": []}
     for number, slug, description in chosen:
         result, model = design(description, text, key, MODELS)
         for take, preview in enumerate(result["previews"], start=1):
             take_slug = slug if take == 1 else f"{slug}_{take}"
             extension = "wav" if "wav" in preview.get("media_type", "") else "mp3"
-            path = args.out / f"{args.speaker}_{number:02d}_{take_slug}.{extension}"
+            path = out / f"{role}_{number:02d}_{take_slug}.{extension}"
             path.write_bytes(base64.b64decode(preview["audio_base_64"]))
             index["candidates"] = [c for c in index["candidates"] if c["slug"] != take_slug]
             index["candidates"].append({
@@ -168,9 +335,9 @@ def main() -> None:
                 "duration_secs": preview.get("duration_secs"),
             })
             print(f"{path.name}: {preview.get('duration_secs', '?')} s, model {model}")
-    index["candidates"].sort(key=lambda c: (c["number"], c.get("take", 1)))
-    index_path.write_text(json.dumps(index, indent=2), encoding="utf-8", newline="\n")
-    print(f"Saved to {args.out}")
+        # Written after every design, so a failure part way keeps what was already paid for.
+        index["candidates"].sort(key=lambda c: (c["number"], c.get("take", 1)))
+        index_path.write_text(json.dumps(index, indent=2), encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":

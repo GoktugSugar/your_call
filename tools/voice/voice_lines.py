@@ -7,9 +7,10 @@
     python tools/voice/voice_lines.py --prune      also delete clips whose lines are gone
 
 Godot exports the lines from content (dev/export_voice_lines.gd), so line ids are built in one place.
-A line is voiced when its speaker has a voice in voices.json, which also sets the model, its settings,
+A line is voiced when its voice has an entry in voices.json, which also sets the model, its settings,
 and an optional "direction": a v3 stage direction such as "[rapid-fire]" said before every line to
-shape the delivery. The direction is not spoken and its timings are dropped. Its clip goes to
+shape the delivery. A line's voice is its speaker's, such as "imp", or for a speaker with several
+voices the speaker's and its own, such as "confessor.recliner". The direction is not spoken and its timings are dropped. Its clip goes to
 assets/voice/<speaker>/<line id>.mp3, with <line id>.json beside it holding the timings, and
 assets/voice/manifest.json records the text and voice settings each clip was made from. A clip is
 out of date when either changes. The game plays a clip only while its line's text still matches.
@@ -50,6 +51,11 @@ def export_lines() -> list[dict]:
         if result.returncode != 0 or not out.exists():
             sys.exit(f"Godot could not export the lines:\n{result.stdout}\n{result.stderr}")
         return json.loads(out.read_text(encoding="utf-8"))["lines"]
+
+
+def voice_of(line: dict) -> str:
+    """The name of the voice that says a line: its speaker's, or a voice of its own, such as confessor.recliner."""
+    return line.get("voice") or line["speaker"]
 
 
 def voice_setup(voice: dict) -> tuple[str, dict, str]:
@@ -108,7 +114,7 @@ def main() -> None:
 
     todo = []
     for line in lines:
-        voice = voices.get(line["speaker"])
+        voice = voices.get(voice_of(line))
         if voice is None or (args.only and not line["id"].startswith(args.only)):
             continue
         entry = manifest.get(line["id"], {})
@@ -116,7 +122,7 @@ def main() -> None:
                  and entry.get("direction", "") == line.get("direction", ""))
         if args.force or not fresh:
             todo.append((line, voice))
-    unvoiced = sorted({line["speaker"] for line in lines if line["speaker"] not in voices})
+    unvoiced = sorted({voice_of(line) for line in lines if voice_of(line) not in voices})
     if unvoiced:
         print(f"No voice yet for: {', '.join(unvoiced)}")
     print(f"{len(todo)} lines to voice, {sum(len(line['text']) for line, _ in todo)} characters")

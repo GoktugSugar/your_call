@@ -49,3 +49,9 @@ func test_a_brace_that_frames_nothing_is_stray() -> void:
 	assert_false(Markup.has_stray_brace("{amount} banked"))
 	assert_true(Markup.has_stray_brace("an {open brace"))
 	assert_true(Markup.has_stray_brace("{Amount}"))
+
+
+func test_a_filled_line_keeps_its_voice() -> void:
+	var line := LineData.make("ch7.loan.ask.3", "I carried him for {amount}.", &"confessor")
+	line.voice = &"loan"
+	assert_eq(line.filled({"amount": "a year"}).voice, &"loan")
