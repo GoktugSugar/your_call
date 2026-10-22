@@ -6,5 +6,19 @@
     "influence": 0.5,
     "takes": 4,
     "file": "assets/sfx/gunshot.mp3"
+  },
+  "crash": {
+    "prompt": "A car crash at night heard from inside the car: a short tyre screech, then one heavy crunch of metal and breaking glass, then silence. No music, no voices, no sirens.",
+    "seconds": 2.0,
+    "influence": 0.6,
+    "takes": 4,
+    "file": "assets/sfx/crash.mp3"
+  },
+  "pen_scribble": {
+    "prompt": "A quick pen scribbling a word on thick paper, close up: a short dry scratch of a nib. No music, no voices.",
+    "seconds": 1.5,
+    "influence": 0.5,
+    "takes": 3,
+    "file": "assets/sfx/pen_scribble.mp3"
   }
 }
