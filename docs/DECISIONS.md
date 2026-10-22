@@ -150,3 +150,9 @@ Built unattended while the user slept, as they asked. Technical calls are the de
 ## 2026-10-22: the dev menu for more chapters
 
 - **The dev menu lists the chapters, with the picked chapter's questions beside them.** Dev, asked for by the user in the morning: with three chapters or more, a column per chapter ran off the screen. The chapters are now a list on the left, and clicking or reaching one shows its questions on the right, a long chapter in even columns of at most sixteen. The menu is sized for its biggest page, so it keeps still from chapter to chapter, and it opens on the chapter being played.
+
+## 2026-10-22: the morning's tuning
+
+The user played the overnight chapters and sent notes.
+
+- **The curse in 3.07's auction ending is split into seven boxes.** The user's call, for impact: a box per beat, the words unchanged (the penny, the cancer, already dead, the new plan, the resurrection, "There. Now it counts.", "Get out of my void."), each still glaring and voiced on its own with "[exasperated]". Seven fresh takes, 421 characters: the account ran out of credits after the fourth, the user upgraded to the Creator tier, and the last three were voiced.
