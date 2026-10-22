@@ -20,7 +20,8 @@ const _CHANNEL_WIDTH := 1
 const _CHANNEL_ENDS := 2
 const _CHANNEL_BOIL := 3
 
-static var _noise: PackedFloat32Array = _make_noise()
+## Built on first use, since a script the editor reloads comes back with its static variables empty.
+static var _noise := PackedFloat32Array()
 static var _material: ShaderMaterial
 
 
@@ -33,6 +34,8 @@ static func shared_material() -> ShaderMaterial:
 
 ## Smooth value noise in [-1, 1] along one dimension. The same [param seed] always gives the same curve.
 static func noise(x: float, seed: int) -> float:
+	if _noise.is_empty():
+		_noise = _make_noise()
 	var i := floori(x)
 	var f := x - i
 	var a := _noise[(i + seed) & _NOISE_MASK]
