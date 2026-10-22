@@ -6,7 +6,7 @@ Creative questions are the user's to answer. Technical ones are the developer's,
 
 ## Chapter 1
 
-- Sign off on the trimmed copy (31% shorter, reviewed line by line on 2026-10-22). Nothing in Chapter 1 beyond 1.02 is voiced until it is approved.
+- Sign off on the trimmed copy (31% shorter, reviewed line by line on 2026-10-22). It is voiced only once approved: 58 imp lines, about 11,100 characters. Until then the chapter plays unvoiced, 1.02 included, since its trimmed lines no longer match the old takes.
 
 ## Carried over from the earlier build
 
