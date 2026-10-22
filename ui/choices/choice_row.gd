@@ -23,8 +23,14 @@ signal committed(index: int)
 @export_range(0.0, 3.0, 0.01) var linger := 0.45
 ## Seconds the row takes to fade out.
 @export_range(0.0, 2.0, 0.01) var fade_out_duration := 0.3
+## The narrowest gap between two words, when a long row closes up to fit the screen.
+@export_range(0.0, 200.0, 1.0) var min_separation := 36.0
+## Room kept clear at each side of the screen.
+@export_range(0.0, 400.0, 1.0) var side_margin := 48.0
 
 var _words: Array[ChoiceWord] = []
+## The gap between words when there is room for it, from the row's theme.
+var _separation := 0
 var _live := false
 var _pointed := -1
 var _highlighted := -1
@@ -32,6 +38,7 @@ var _highlighted := -1
 
 func _ready() -> void:
 	modulate.a = 0.0
+	_separation = row.get_theme_constant(&"separation")
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -46,15 +53,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 ## Shows [param labels] as words just above [param box], and waits for one to be picked. Returns its index.
 func offer(labels: PackedStringArray, box: Rect2) -> int:
-	_clear()
-	for i in labels.size():
-		var word := word_scene.instantiate() as ChoiceWord
-		word.text = labels[i]
-		word.index = i
-		word.pointed.connect(_on_word_pointed)
-		word.clicked.connect(_on_word_clicked)
-		row.add_child(word)
-		_words.append(word)
+	lay_out(labels)
 	var height := row.get_combined_minimum_size().y
 	row.position = Vector2(0.0, box.position.y - gap_above_box - height)
 	row.size = Vector2(size.x, height)
@@ -64,6 +63,29 @@ func offer(labels: PackedStringArray, box: Rect2) -> int:
 	create_tween().tween_property(self, ^"modulate:a", 1.0, fade_in_duration)
 	offered.emit(labels.size())
 	return await committed
+
+
+## Sets [param labels] out as the row's words, closing up the gaps between them when a long row would
+## not fit the screen otherwise, without offering them yet.
+func lay_out(labels: PackedStringArray) -> void:
+	_clear()
+	for i in labels.size():
+		var word := word_scene.instantiate() as ChoiceWord
+		word.text = labels[i]
+		word.index = i
+		word.pointed.connect(_on_word_pointed)
+		word.clicked.connect(_on_word_clicked)
+		row.add_child(word)
+		_words.append(word)
+	var gap := float(_separation)
+	if _words.size() > 1:
+		gap = clampf((_room() - _words_width()) / (_words.size() - 1), min_separation, _separation)
+	row.add_theme_constant_override(&"separation", roundi(gap))
+
+
+## Whether the words laid out fit the screen, with their gaps closed up as far as they go.
+func fits() -> bool:
+	return _words_width() + min_separation * maxi(_words.size() - 1, 0) <= _room()
 
 
 ## Lights the option at [param index] as if pointed at, from a control elsewhere. [code]-1[/code] clears it.
@@ -110,10 +132,25 @@ func _refresh() -> void:
 		word.look = ChoiceWord.Look.LIFTED if lit else ChoiceWord.Look.RESTING
 
 
+## Takes the words away at once, so the next row's layout never counts them.
 func _clear() -> void:
 	for word in _words:
+		row.remove_child(word)
 		word.queue_free()
 	_words.clear()
+
+
+## How wide the words are together, without their gaps.
+func _words_width() -> float:
+	var width := 0.0
+	for word in _words:
+		width += word.get_combined_minimum_size().x
+	return width
+
+
+## How wide the row may run: the screen, less a margin each side.
+func _room() -> float:
+	return size.x - side_margin * 2.0
 
 
 func _on_word_pointed(word: ChoiceWord, is_pointed: bool) -> void:

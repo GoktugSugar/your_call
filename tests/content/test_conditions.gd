@@ -1,12 +1,14 @@
 extends GutTest
 ## Options and lines that only some runs see: walking each chapter through every set of facts a run can
-## reach, every question offers at least two options whose shares add up to about the whole crowd,
-## every line with a condition is said on some run, and every fact a condition names is one an option
-## remembers or the run knows.
+## reach, every question offers at least two options whose shares add up to about the whole crowd and
+## whose words fit the choice row, every line with a condition is said on some run, and every fact a
+## condition names is one an option remembers or the run knows.
 
 const CHAPTERS_DIR := "res://content/chapters"
 ## How far a run's shown shares may stray from the whole crowd before they are scaled to it.
 const SLACK := 6.0
+## The choice row, for measuring.
+const ROW_SCENE := "res://ui/choices/choice_row.tscn"
 ## Facts the run remembers from its stages rather than from an option's data.
 const STAGE_FACTS: PackedStringArray = ["button_woke", "button_auctioned", "button_shot", "button_spared"]
 
@@ -135,3 +137,35 @@ func test_the_dragon_offers_one_way_out_whoever_came_along() -> void:
 				if boss.options[i].id in situational:
 					count += 1
 			assert_eq(count, 1, "with [%s]" % ",".join(facts))
+
+
+func test_every_choice_row_fits_the_screen() -> void:
+	# The row fills its parent, the screen.
+	var screen := Control.new()
+	screen.size = Vector2(ProjectSettings.get_setting("display/window/size/viewport_width"),
+			ProjectSettings.get_setting("display/window/size/viewport_height"))
+	add_child_autofree(screen)
+	var row := (load(ROW_SCENE) as PackedScene).instantiate() as ChoiceRow
+	screen.add_child(row)
+	var offenders := PackedStringArray()
+	for chapter in _chapters:
+		var reachable := _reachable(chapter)
+		for beat in chapter.beats:
+			var question := beat as QuestionData
+			if question == null or question.is_tableau():
+				continue
+			var seen := {}
+			for facts: PackedStringArray in reachable[question.id]:
+				var labels := PackedStringArray()
+				for i in question.shown_options(_run_of(facts)):
+					labels.append(question.options[i].label)
+				var key := "|".join(labels)
+				if seen.has(key):
+					continue
+				seen[key] = true
+				row.lay_out(labels)
+				if not row.fits():
+					offenders.append("%s: %s" % [question.id, ", ".join(labels)])
+	assert_eq(offenders, PackedStringArray(), "
+".join(offenders))
+
