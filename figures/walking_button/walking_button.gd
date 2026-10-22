@@ -131,6 +131,9 @@ signal walked_off
 @export_range(0.0, 200.0, 0.5) var words_gap := 16.0
 ## Whether its words keep their size on the page however big or small it is drawn.
 @export var words_keep_size := false
+## Where its words float, in its own space, when they should not ride just over its cap, such as over
+## the roof of a booth it stands in. Left infinite, they float just over its cap.
+@export var words_spot := Vector2.INF
 
 var _alive := false
 var _standing := false
@@ -530,7 +533,9 @@ func _blend_arms(weight: float, from: ButtonArmPose, to: ButtonArmPose) -> void:
 func _place_words() -> void:
 	if _words == null:
 		return
-	var at := Vector2(0.0, -_rise + body.cap_middle().y - body.cap_radius - words_gap)
+	var at := words_spot
+	if not at.is_finite():
+		at = Vector2(0.0, -_rise + body.cap_middle().y - body.cap_radius - words_gap)
 	if at.is_equal_approx(_words_at):
 		return
 	_words_at = at

@@ -22,6 +22,16 @@ var mark := -1.0
 var mark_label := ""
 
 
+## Whether the player's bar is the shortest: no other option was chosen by fewer.
+func is_least_popular() -> bool:
+	if pick < 0 or pick >= shares.size():
+		return false
+	for share in shares:
+		if share < shares[pick]:
+			return false
+	return true
+
+
 ## The split as [param question]'s data has it, with the option at [param picked] as the player's.
 ## A hidden option, picked only on the stage, has no bar.
 static func of(question: QuestionData, picked: int) -> RevealSplit:
