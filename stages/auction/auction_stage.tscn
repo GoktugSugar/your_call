@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://stages/auction/auction_stage.gd" id="1_stage"]
+[ext_resource type="Script" path="res://stages/shop/price_tag.gd" id="2_tag"]
+[ext_resource type="Script" path="res://stages/controls/pick_loop.gd" id="3_loop"]
+[ext_resource type="PackedScene" path="res://figures/walking_button/walking_button.tscn" id="4_walker"]
+[ext_resource type="Resource" path="res://figures/walking_button/arms/hips.tres" id="5_hips"]
+
+[node name="AuctionStage" type="Node2D" node_paths=PackedStringArray("slot", "tag", "tally", "loop")]
+script = ExtResource("1_stage")
+walker_scene = ExtResource("4_walker")
+bidding_arms = ExtResource("5_hips")
+slot = NodePath("Slot")
+tag = NodePath("Tag")
+tally = NodePath("Tally")
+loop = NodePath("Loop")
+
+[node name="Slot" type="Node2D" parent="."]
+position = Vector2(880, 650)
+
+[node name="Tag" type="Node2D" parent="." node_paths=PackedStringArray("words")]
+position = Vector2(1090, 480)
+rotation = -0.0698
+script = ExtResource("2_tag")
+words = NodePath("Words")
+
+[node name="Words" type="Label" parent="Tag"]
+offset_right = 40.0
+offset_bottom = 23.0
+mouse_filter = 2
+
+[node name="Tally" type="Label" parent="."]
+visible = false
+offset_left = 1100.0
+offset_top = 540.0
+offset_right = 1300.0
+offset_bottom = 590.0
+mouse_filter = 2
+horizontal_alignment = 1
+
+[node name="Loop" type="Node2D" parent="."]
+visible = false
+script = ExtResource("3_loop")
+radii = Vector2(220, 170)
