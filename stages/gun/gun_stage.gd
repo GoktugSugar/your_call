@@ -111,6 +111,8 @@ const AIM_ANY := "any"
 @export var charge_size := Vector2(0.16, 2.6)
 ## How hard it speeds up as it comes: 1 is steady.
 @export_range(1.0, 6.0, 0.05) var charge_ease := 2.4
+## Seconds it takes to cover the rest of the way once it is shot or left to come.
+@export_range(0.05, 5.0, 0.05) var arrive_time := 0.7
 ## The walking button's size against the thing's, once it turns out to be the button.
 @export_range(0.1, 3.0, 0.01) var button_size := 0.8
 ## How it holds its arms, hurt, and saying hello.
@@ -222,7 +224,7 @@ func choose() -> int:
 	var seconds := float((question.stage.get("alone", {}) as Dictionary).get("seconds", 8.0))
 	get_tree().create_timer(seconds, false).timeout.connect(func() -> void:
 		if _live:
-			chosen_alone.emit(_hold))
+			chosen_alone.emit.call_deferred(_hold))
 	return await chosen_alone
 
 
@@ -596,23 +598,37 @@ func _place_thing(share: float) -> void:
 		_thing.scale = Vector2.ONE * size
 
 
-## Shot, the charging thing turns out to be the walking button, unhurt and offended.
+## Shot, the charging thing keeps coming all the same, and turns out to be the walking button, unhurt
+## and offended.
 func _thing_shot() -> StringName:
 	var again := run.remembers(RunState.BUTTON_WOKE)
 	run.remember(RunState.BUTTON_SHOT)
+	await _finish_charge()
 	await _turn_into_button(&"hurt_again" if again else &"hurt", hurt_arms)
 	return &"shot_again" if again else &"shot"
 
 
 ## Left to come, the charging thing arrives and turns out to be the walking button, saying hello.
 func _thing_arrives() -> StringName:
-	while _charge < 1.0:
-		_charge = minf(_charge + get_process_delta_time() / 0.6, 1.0)
-		_place_thing(_charge)
-		await get_tree().process_frame
+	await _finish_charge()
 	run.remember(RunState.BUTTON_SPARED)
 	await _turn_into_button(&"hello", hello_arms)
 	return &"waved"
+
+
+## The charging thing covers the rest of the way in [member arrive_time], whatever happened to it.
+func _finish_charge() -> void:
+	_charging = false
+	if _charge >= 1.0:
+		return
+	var rest := create_tween()
+	rest.tween_method(_set_charge, _charge, 1.0, arrive_time)
+	await rest.finished
+
+
+func _set_charge(share: float) -> void:
+	_charge = share
+	_place_thing(share)
 
 
 ## The charging thing dissolves into the walking button where it is, which says the question's line set
