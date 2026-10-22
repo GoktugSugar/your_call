@@ -41,6 +41,7 @@ func play_run(chapters: Array[ChapterData], run: RunState, from_chapter := &"", 
 	for chapter in chapters:
 		if not started:
 			if chapter.id != from_chapter:
+				run.assume(chapter)
 				continue
 			started = true
 		var ending := await play_chapter(chapter, run, from_beat)

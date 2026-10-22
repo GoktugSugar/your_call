@@ -1,6 +1,7 @@
 {
   "id": "ch2",
   "title": "The Buttons",
+  "if_skipped": { "remember": ["button_woke"], "kills": { "stranger": 1 } },
   "beats": [
     {
       "kind": "cinematic",

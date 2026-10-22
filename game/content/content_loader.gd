@@ -9,15 +9,16 @@ const WEIGHTS: PackedStringArray = ["light", "medium", "heavy"]
 const SPEAKERS: PackedStringArray = ["imp", "button", "plea", "headline", "confessor"]
 const FACES: PackedStringArray = ["grin", "smug", "glare", "surprised"]
 
-const _CHAPTER_KEYS: PackedStringArray = ["id", "title", "wallet", "beats"]
+const _CHAPTER_KEYS: PackedStringArray = ["id", "title", "wallet", "if_skipped", "beats"]
 const _WALLET_KEYS: PackedStringArray = ["start"]
+const _SKIPPED_KEYS: PackedStringArray = ["remember", "kills"]
 const _QUESTION_KEYS: PackedStringArray = ["kind", "id", "number", "title", "verb", "weight", "stage", "ask", "lines",
 		"options", "reveal"]
 ## A tableau is a stage the imp talks over, with nothing to choose and no reveal.
 const _TABLEAU_KEYS: PackedStringArray = ["kind", "id", "number", "title", "weight", "stage", "ask", "lines"]
 const _NARRATION_KEYS: PackedStringArray = ["kind", "id", "lines"]
 const _CINEMATIC_KEYS: PackedStringArray = ["kind", "id", "scene"]
-const _OPTION_KEYS: PackedStringArray = ["id", "label", "outcome", "crowd", "profile", "reaction", "ending"]
+const _OPTION_KEYS: PackedStringArray = ["id", "label", "outcome", "crowd", "profile", "reaction", "ending", "hidden"]
 const _LINE_KEYS: PackedStringArray = ["text", "speaker", "face", "direction", "voiced"]
 ## The key that marks a line inside stage data, such as a plea over a figure.
 const _STAGE_LINE_KEY := "says"
@@ -58,6 +59,12 @@ func load_chapter(path: String) -> ChapterData:
 		chapter.wallet = wallet
 	else:
 		problems.append("%s: wallet needs an object" % path)
+	var skipped: Variant = data.get("if_skipped", {})
+	if skipped is Dictionary:
+		_check_keys(skipped, _SKIPPED_KEYS, path + " if_skipped")
+		chapter.if_skipped = skipped
+	else:
+		problems.append("%s: if_skipped needs an object" % path)
 	var seen := {}
 	for raw: Variant in _list(data, "beats", path):
 		var beat := _beat(raw, chapter.id, path)
@@ -186,6 +193,11 @@ func _option(raw: Variant, line_prefix: String, where: String) -> OptionData:
 	var here := "%s option %s" % [where, option.id]
 	_check_keys(data, _OPTION_KEYS, here)
 	option.label = _text(data, "label", here, true)
+	var hidden: Variant = data.get("hidden", false)
+	if hidden is bool:
+		option.hidden = hidden
+	else:
+		problems.append("%s: hidden needs true or false" % here)
 	var crowd: Variant = data.get("crowd")
 	if crowd is float or crowd is int:
 		option.crowd = float(crowd)
