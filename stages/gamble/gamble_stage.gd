@@ -1,6 +1,6 @@
 class_name GambleStage
 extends Stage
-## The coordination gamble: two buttons, and between them the soul whose fate the player decides.
+## The coordination gamble: the soul whose fate the player decides, standing apart, and two buttons.
 ## A seeded room of the newly dead has already voted. Pressing the gamble's button stakes the soul on
 ## the room: it lives only if more of the room pressed that button than the line. The other button
 ## keeps it alive whatever the room did. A soul that lives walks out; one the room lets down folds.
@@ -14,9 +14,9 @@ extends Stage
 ## The push button each option is pressed with.
 @export var button_scene: PackedScene
 ## Where the buttons stand, left to right, in option order.
-@export var button_spots := PackedVector2Array([Vector2(700.0, 650.0), Vector2(1220.0, 650.0)])
-## Where the soul stands.
-@export var soul_spot := Vector2(960.0, 650.0)
+@export var button_spots := PackedVector2Array([Vector2(1000.0, 650.0), Vector2(1320.0, 650.0)])
+## Where the soul stands, apart from the buttons, with clear page to walk out across.
+@export var soul_spot := Vector2(640.0, 650.0)
 ## The kind of soul at stake when the question does not say.
 @export var default_soul := &"stranger"
 
