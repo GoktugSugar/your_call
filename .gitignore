@@ -27,3 +27,6 @@ Thumbs.db
 # Placeholder music of unknown licence: played locally, never published
 /assets/audio/music/bgm_placeholder.mp3
 /assets/audio/music/bgm_placeholder.mp3.import
+
+# Helper worktrees made while developing; Godot is kept out of them by .claude/.gdignore
+/.claude/worktrees/
