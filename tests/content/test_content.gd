@@ -126,6 +126,21 @@ func test_every_soul_on_a_track_is_a_known_kind() -> void:
 	assert_eq(offenders, PackedStringArray(), "\n".join(offenders))
 
 
+func test_every_doodle_a_stage_names_exists() -> void:
+	var offenders := PackedStringArray()
+	for question in _questions():
+		var named: Array = question.stage.get("doodles", []).duplicate()
+		if question.stage.has("item"):
+			named.append(question.stage["item"])
+		for id: Variant in named:
+			var doodle := DoodlesStage.make_doodle(str(id))
+			if doodle == null:
+				offenders.append("%s: no doodle '%s'" % [question.id, id])
+			else:
+				doodle.free()
+	assert_eq(offenders, PackedStringArray(), "\n".join(offenders))
+
+
 func _questions() -> Array[QuestionData]:
 	var found: Array[QuestionData] = []
 	for chapter in _chapters:
