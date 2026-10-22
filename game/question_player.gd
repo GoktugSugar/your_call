@@ -9,6 +9,8 @@ extends Node
 signal phase_changed(phase: Phase)
 ## Emitted each time the player is asked to choose, whether in the choice row or on the stage alone.
 signal choosing_started
+## Emitted when the stage cues the imp's face, such as his surprise when a button comes alive.
+signal imp_face_cued(face: StringName)
 
 enum Phase { IDLE, ASKING, CHOOSING, CONSEQUENCE, REACTING, REVEALING, DONE }
 ## How the imp's line after each round of an offer ladder plays before the offer comes back.
@@ -155,6 +157,7 @@ func _make_stage(for_question: QuestionData) -> Stage:
 		return null
 	var made := packed.instantiate() as Stage
 	made.dialogue = dialogue
+	made.imp_face_cued.connect(imp_face_cued.emit)
 	stage_root.add_child(made)
 	made.setup(for_question)
 	return made

@@ -6,12 +6,16 @@ extends Node2D
 ## The question player drives a stage through [method setup], [method enter], [method set_choosing],
 ## [method play_consequence] and [method leave], awaiting each one. A stage can also report how the
 ## consequence came out, so the imp reacts to it; bring the offer round again; take the player's choice
-## by itself, with no choice row; fill the placeholders in its question's lines; and make its own reveal.
+## by itself, with no choice row; fill the placeholders in its question's lines; make its own reveal; and
+## cue the imp's face at a moment of its own.
 
 ## Emitted when the pointer moves onto or off an in-scene control. [code]-1[/code] means none.
 signal option_hovered(index: int)
 ## Emitted when the player picks an option with an in-scene control.
 signal option_committed(index: int)
+## Emitted when something on the stage should change the imp's face, such as a button coming alive.
+## [param face] is one of his faces: grin, smug, glare or surprised.
+signal imp_face_cued(face: StringName)
 
 ## Which wing the imp stands in while this stage is up.
 @export var imp_wing := Imp.Wing.RIGHT

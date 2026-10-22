@@ -39,6 +39,7 @@ func _ready() -> void:
 		return
 	_check_start(chapters)
 	dialogue.page_shown.connect(_on_page_shown)
+	question_player.imp_face_cued.connect(_on_imp_face_cued)
 	dialogue.talking_changed.connect(imp.set_talking)
 	dialogue.talking_changed.connect(Music.duck)
 	imp.set_speech(dialogue.spoken_character)
@@ -88,6 +89,17 @@ func _check_start(chapters: Array[ChapterData]) -> void:
 
 ## Each page sets the imp's face (his grin unless the line asks for another) and may send him hopping.
 func _on_page_shown(line: LineData, _page: int, _page_count: int) -> void:
-	var face := String(line.face).to_upper() if line.face != &"" else "GRIN"
-	imp.set_face(ImpDrawing.Face.get(face, ImpDrawing.Face.GRIN))
+	imp.set_face(_face(line.face))
 	imp.hop_if_settled()
+
+
+## A stage cues the imp's face, such as his surprise when a button comes alive. It holds until the next
+## page sets his face.
+func _on_imp_face_cued(face: StringName) -> void:
+	imp.set_face(_face(face))
+
+
+## The imp's face called [param face_name], or his grin when it names none he has.
+static func _face(face_name: StringName) -> ImpDrawing.Face:
+	var key := String(face_name).to_upper() if face_name != &"" else "GRIN"
+	return ImpDrawing.Face.get(key, ImpDrawing.Face.GRIN)

@@ -22,6 +22,10 @@ extends Stage
 @export_range(0.0, 5.0, 0.05) var swear_hold := 2.2
 ## Which way it stomps off: -1 left, 1 right. The imp stands to the right.
 @export_range(-1, 1) var exit_direction := -1
+## The face the imp pulls when it comes alive. Empty leaves his face alone.
+@export var alive_face := &"surprised"
+## Seconds after the press lands, and the button yelps, before the imp pulls it.
+@export_range(0.0, 2.0, 0.05) var alive_face_delay := 0.2
 
 @export_group("Consequence")
 ## Seconds the stage holds after the button is pressed or left.
@@ -71,12 +75,13 @@ func option_point(index: int) -> Vector2:
 	return button.press_point() if index >= 0 and index == _press else Vector2.INF
 
 
-## Pressed, the button yelps as the press lands and wakes with a start, swears at the player, gets up
-## and stomps off, muttering. Its lines are said aloud when they have been voiced, and it finishes each
-## before the next.
+## Pressed, the button yelps as the press lands and wakes with a start, and the imp is taken aback; it
+## swears at the player, gets up and stomps off, muttering. Its lines are said aloud when they have been
+## voiced, and it finishes each before the next.
 func _come_alive() -> void:
 	var said := question.stage_lines
 	_say(said, 0)
+	_take_imp_aback()
 	await button.press()
 	await _walker.wake()
 	await _walker.finish_saying()
@@ -91,6 +96,14 @@ func _come_alive() -> void:
 	_say(said, 2)
 	await _walker.walk_off(exit_direction)
 	await _walker.finish_saying()
+
+
+## Cues the imp's [member alive_face] a beat after the button yelps. It holds until his next line.
+func _take_imp_aback() -> void:
+	if alive_face == &"":
+		return
+	await get_tree().create_timer(alive_face_delay, false).timeout
+	imp_face_cued.emit(alive_face)
 
 
 ## Has the walking button say line [param index] of [param said], if there is one, aloud when it has
