@@ -129,6 +129,8 @@ signal walked_off
 @export_group("Words")
 ## Gap between the top of its cap and the bottom of its words, in pixels.
 @export_range(0.0, 200.0, 0.5) var words_gap := 16.0
+## Whether its words keep their size on the page however big or small it is drawn.
+@export var words_keep_size := false
 
 var _alive := false
 var _standing := false
@@ -253,6 +255,8 @@ func say(text: String, voice: VoiceClip = null) -> void:
 		_let_go(_words)
 	_words = words_scene.instantiate() as Plea
 	add_child(_words)
+	if words_keep_size:
+		_words.scale = Vector2.ONE / maxf(absf(scale.x), 0.01)
 	_words.set_words(text)
 	_words_at = Vector2.INF
 	_place_words()

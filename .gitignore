@@ -21,8 +21,9 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Voice auditions are scratch audio for choosing voices, not game assets
+# Voice auditions and sound effect takes are scratch audio for choosing by ear, not game assets
 /voice_auditions/
+/sfx_auditions/
 
 # Placeholder music of unknown licence: played locally, never published
 /assets/audio/music/bgm_placeholder.mp3

@@ -232,6 +232,7 @@ func _roll_step(distance: float) -> void:
 	while _next_hit < _victims.size() and front_on_route >= _hit_at[_next_hit]:
 		var soul := _victims[_next_hit] as Soul
 		soul.fold(1.0)
+		run.kills.add(&"soul")
 		if _pleas.has(soul):
 			(_pleas[soul] as Plea).fade_out()
 		if _ropes.has(_route_index):

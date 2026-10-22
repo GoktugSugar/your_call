@@ -139,6 +139,7 @@ func play_consequence(index: int) -> StringName:
 		create_tween().tween_property(readouts, ^"modulate:a", 1.0, words_fade)
 	if stranger != null:
 		await get_tree().create_timer(victim_pause, false).timeout
+		run.kills.add(victim)
 		await stranger.fold(1.0 if _rng.randf() < 0.5 else -1.0)
 		stranger.queue_free()
 		_count += 1

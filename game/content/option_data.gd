@@ -7,10 +7,15 @@ extends RefCounted
 var id := &""
 ## The words in the choice row. Plain text, never colour tags.
 var label := ""
+## Left out of the choice row: picked only on the stage, such as shooting the imp.
+var hidden := false
 ## The seeded share of the crowd who chose it, shown on the reveal.
 var crowd := 0.0
 ## Silent nudges to the profile, by axis id. Negative leans toward the axis's first pole.
 var profile: Dictionary[StringName, float] = {}
+## Nudges that replace [member profile] on some outcomes, keyed like [member reactions], such as nothing
+## at all for trying to buy without the money. Each value is a [code]Dictionary[StringName, float][/code].
+var profiles := {}
 ## What the option does on its stage. Each stage reads its own keys.
 var outcome := {}
 ## The imp's reaction, one line per dialogue box run, whatever the stage's outcome.
@@ -35,6 +40,13 @@ func reaction_for(result: StringName) -> Array[LineData]:
 ## The secret ending [param result] fires, or an empty name.
 func ending_for(result: StringName) -> StringName:
 	return endings.get(result, ending)
+
+
+## The nudges for [param result]: its own if it has any, otherwise the plain [member profile].
+func profile_for(result: StringName) -> Dictionary[StringName, float]:
+	if profiles.has(result):
+		return profiles[result]
+	return profile
 
 
 ## Every reaction line, plain and keyed, in the order they sit in the content.

@@ -4,6 +4,8 @@ extends Node
 ## narration and questions, until the run ends or a choice fires a secret ending. An ending is an
 ## ending, never a loss: the imp's reaction is his last line, he fades, the stage goes, and the credits
 ## roll. The imp takes his leave at the end of each chapter, and the next opens on the player waking.
+## A chapter with a wallet, such as the money chapter, opens it as its first words are said and puts it
+## away at its end.
 
 ## Emitted as each chapter starts.
 signal chapter_started(chapter: ChapterData)
@@ -32,16 +34,17 @@ const CREDITS_SCENE := "res://ui/credits/credits.tscn"
 
 
 ## Plays [param chapters] in order, from the chapter with the id [param from_chapter] and its beat
-## [param from_beat] (or from the start), feeding choices into [param profile]. Returns the secret
+## [param from_beat] (or from the start), with [param run] remembering what happens. Returns the secret
 ## ending a choice fired, or an empty name when the run went to its end.
-func play_run(chapters: Array[ChapterData], profile: Profile, from_chapter := &"", from_beat := &"") -> StringName:
+func play_run(chapters: Array[ChapterData], run: RunState, from_chapter := &"", from_beat := &"") -> StringName:
 	var started := from_chapter == &""
 	for chapter in chapters:
 		if not started:
 			if chapter.id != from_chapter:
+				run.assume(chapter)
 				continue
 			started = true
-		var ending := await play_chapter(chapter, profile, from_beat)
+		var ending := await play_chapter(chapter, run, from_beat)
 		if ending != &"":
 			return ending
 		from_beat = &""
@@ -50,9 +53,9 @@ func play_run(chapters: Array[ChapterData], profile: Profile, from_chapter := &"
 	return &""
 
 
-## Plays [param chapter] from the beat [param from] (or the start), feeding choices into [param profile].
-## Returns the secret ending a choice fired, or an empty name when the chapter ran to its end.
-func play_chapter(chapter: ChapterData, profile: Profile, from := &"") -> StringName:
+## Plays [param chapter] from the beat [param from] (or the start), with [param run] remembering what
+## happens. Returns the secret ending a choice fired, or an empty name when the chapter ran to its end.
+func play_chapter(chapter: ChapterData, run: RunState, from := &"") -> StringName:
 	chapter_started.emit(chapter)
 	var started := from == &""
 	for beat in chapter.beats:
@@ -61,6 +64,8 @@ func play_chapter(chapter: ChapterData, profile: Profile, from := &"") -> String
 				continue
 			started = true
 		beat_started.emit(beat)
+		if not beat is CinematicData and not chapter.wallet.is_empty() and run.wallet == null:
+			run.open_wallet(int(chapter.wallet.get("start", 0)))
 		if beat is CinematicData:
 			var scene := (beat as CinematicData).scene
 			var cinematic: Variant = _add_overlay(CINEMATIC_SCENE % [scene, scene])
@@ -73,11 +78,13 @@ func play_chapter(chapter: ChapterData, profile: Profile, from := &"") -> String
 			await dialogue.close()
 		elif beat is QuestionData:
 			await _imp_ready()
-			var ending := await question_player.play(beat as QuestionData, profile)
+			var ending := await question_player.play(beat as QuestionData, run)
 			if ending != &"":
+				run.close_wallet()
 				await _end(ending)
 				return ending
 		await get_tree().create_timer(between_beats, false).timeout
+	run.close_wallet()
 	return &""
 
 

@@ -95,6 +95,7 @@ func play_consequence(index: int) -> StringName:
 	if lives:
 		await _walk_out()
 	else:
+		run.kills.add(&"soul")
 		await _soul.fold(1.0)
 	await get_tree().create_timer(after_hold, false).timeout
 	return &"lives" if lives else &"dies"
