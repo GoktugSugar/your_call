@@ -3,9 +3,10 @@ extends GutTest
 ## doodle has, and the stage puts each one over its option and answers the pointer.
 
 const STAGE_SCENE := "res://stages/doodles/doodles_stage.tscn"
-## The doodles the Chapter 1 would you rathers use.
+## The doodles the would you rathers use.
 const IDS: PackedStringArray = ["winged_figure", "flexing_figure", "sweet_poop", "foul_ice_cream",
-		"giant_duck", "tiny_horses", "rewind_button", "pause_button"]
+		"giant_duck", "tiny_horses", "rewind_button", "pause_button", "snowflake", "sun", "third_arm_figure",
+		"two_headed_figure"]
 ## The tallest a doodle may stand above its origin, in pixels.
 const TALLEST := 240.0
 ## The furthest a doodle may spread either side of its origin, so it stays inside its slot.
