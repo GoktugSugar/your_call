@@ -1,5 +1,5 @@
 @tool
-class_name Wallet
+class_name WalletDoodle
 extends InkDrawing
 ## A doodle: a wallet that holds twenty dollars again every morning. A green bifold wallet stands on
 ## its fold, seen from the front and a little open, so the back half shows over the front one, and a
