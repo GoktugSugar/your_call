@@ -62,6 +62,8 @@ signal picked(chapter: StringName, beat: StringName)
 @export var lit_role := &"faded"
 ## How opaque that wash is.
 @export_range(0.0, 1.0, 0.01) var lit_alpha := 0.6
+## Space between an entry's words and the ends of its wash.
+@export_range(0, 40) var wash_padding := 8
 ## How opaque the panel is.
 @export_range(0.0, 1.0, 0.01) var panel_alpha := 0.97
 
@@ -91,6 +93,9 @@ func _ready() -> void:
 	panel.add_theme_stylebox_override(&"panel", style)
 	_lit.bg_color = Color(palette.color(lit_role), lit_alpha)
 	_lit.set_corner_radius_all(6)
+	for wash: StyleBox in [_lit, _plain]:
+		wash.content_margin_left = wash_padding
+		wash.content_margin_right = wash_padding
 	auto_skip.text = auto_skip_text
 	_style_entry(auto_skip, palette.color(entry_role))
 	auto_skip.toggled.connect(func(on: bool) -> void: PlayerSettings.auto_advance = on)
