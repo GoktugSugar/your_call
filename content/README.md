@@ -19,6 +19,8 @@ The tests in `tests/content/` load every chapter and fail on any problem, so run
 }
 ```
 
+A chapter can say what a run started after it, from the dev menu, should take it to have left behind: `"if_skipped": { "remember": ["button_woke"], "kills": { "stranger": 1 } }`, the facts later beats look back on and the kills by kind. Later beats read the walking button's history (`button_woke`, `button_auctioned`, `button_shot`, `button_spared`) and the kill tally.
+
 A chapter that hands the player money, like The Money, has a `wallet`: `"wallet": { "start": 10000 }`. The wallet opens as the chapter's first words are said, its balance shows at the top of the screen until the chapter ends, and the shop, the auction, the buyback and the receipt spend from it and read it.
 
 ## A beat
@@ -170,6 +172,19 @@ A button with `label` on its cap and a clock over it. There is no choice row: th
 Pressing the button inks a world map in; a pin goes round over it while the imp says the question's `spin` lines, then lands on a random country from `countries`, whose name and `caption` ink on beside it, and a mushroom cloud doodles onto the spot.
 - Outcomes, in this order: `"home"` when it is the player's own country, read from the system's region; the country's code, such as `"VA"`, when the pressing option has a reaction for it; otherwise the `key` of the first band its people fall `under` (a band with no `under` takes the rest).
 - Placeholders: `{country}` and `{people}`.
+
+## The gun stage
+
+```json
+"stage": { "type": "gun", "imp": true, "survivors": "leave",
+  "targets": [ { "id": "man", "kind": "stranger", "x": 640 }, { "id": "bear", "kind": "bear", "x": 1200 } ] }
+```
+
+First person: an ink sight follows the pointer, amber brackets lock on to the target under it, and a click fires. Each target names a soul `kind` (or a `doodle`), stands at `x` on the ground (or `y`), and can plead (`says`), be drawn in a palette `role`, and carry a `crowd` share and a `label` for a reveal by target.
+- An option's outcome is `{ "shoot": "<target id>" }`, `{ "shoot": "any" }` (the target clicked, or one at random when picked in the row), `{ "shoot": "imp" }`, `{ "shoot": "self" }`, or `{ "hold": true }` to lower the gun. An option with `"hidden": true` stays out of the choice row and the reveal, and only the stage picks it: the imp is shot this way.
+- `"imp": true` lets the sight lock on to the imp; `"survivors": "leave"` sends the figures left standing walking off; `"empty": true` makes every shot a dry click; `"dies_anyway": true` has the target die by itself once the gun is lowered; `"fires_back": 50` has an armed target fire back at a lowered gun that share of the time; `"alone": { "seconds": 8 }` asks nothing, shows no choice row, and lowers the gun when time runs out; `"charge": { "seconds": 6 }` sends the doodle target charging while the player chooses, arriving (which holds) when time runs out, and turning out to be the walking button, which says the question's `hurt_again`, `hurt` or `hello` line.
+- Outcomes: the id of the target shot, `imp`, `self`, `click` (an empty gun), `held`, `fired` and `lowered` (an armed target's answer), and for the charging thing `shot`, `shot_again` (the button woke in 2.11) or `waved`.
+- With targets that carry `crowd`, the reveal is a bar per target in its colour, then the holding option's.
 
 ## The money chapter's stages
 
