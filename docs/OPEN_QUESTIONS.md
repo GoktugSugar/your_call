@@ -22,7 +22,7 @@ Creative calls made overnight on 2026-10-22, while the user slept. Each is provi
 - The colours of the items the script left uncoloured.
 - The weights given to Chapter 3's questions.
 
-**Chapter 4, The Gun**
+**Chapter 4, The Gun** (review page: https://claude.ai/artifact/HDpDmK7RQpz8XC5v2dv4i9)
 - The trimmed copy, 21% shorter.
 - 4.02: lowered, the dying one dies anyway a moment later. Alternative: it stays alive, pleading, while the imp speaks.
 - 4.03: no hold option, and "Aim, or do not" cut. Alternative: add a "Lower the gun" option.
@@ -36,7 +36,7 @@ Creative calls made overnight on 2026-10-22, while the user slept. Each is provi
 - The imp's shot line voiced with "[outraged]".
 - The pleas (4.02, 4.03, 4.14) stay unvoiced: there are no free voice slots for new speakers.
 
-**Chapter 5, Who Would Win**
+**Chapter 5, Who Would Win** (review page: https://claude.ai/artifact/Pic5ATmJtsKUYSDBFJjnZi)
 - The trimmed copy, 13% shorter.
 - 5.03's corrected sum: nine hundred and sixty to one.
 - 5.06's two asks, by whether the button was shot in 4.05. Alternative: one ask that names none of its history.
