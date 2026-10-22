@@ -171,6 +171,7 @@ Built unattended like Chapter 3, on top of it. Technical calls are the dev's; ev
 - **4.14 and the closer.** Provisional, made overnight. "Look at their face" is cut (faces are dot eyes only, and it has folded by then). The closer counts eleven times a finger on a trigger: there are eleven gun questions.
 - **The bear's tiny smile.** Provisional, made overnight. PREMISE describes her with a tiny smile, and also says faces are dot eyes only; she has the smile, which one switch turns off.
 - **The imp's line when shot** is voiced with the direction "[outraged]", glaring. Provisional, made overnight.
+- **Chapter 4 is voiced.** Dev, as approved for the overnight run: 64 takes, 11,979 characters, the imp's lines and the walking button's three in their own voices, with `eleven_v3`. None failed or fell back, and none was plainly broken (the slowest are the button's directed yelps). The pleas stay unvoiced.
 
 ## 2026-10-22: building Chapter 5 overnight
 

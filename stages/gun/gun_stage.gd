@@ -178,7 +178,7 @@ func setup(for_question: QuestionData) -> void:
 		var target := _make_target(entry)
 		if target == null:
 			continue
-		target.position = Vector2(float(entry.get("x", 960.0)), float(entry.get("y", ground_y)))
+		target.position = Vector2(float(entry.get("x", _page_middle())), float(entry.get("y", ground_y)))
 		targets_root.add_child(target)
 		_targets.append(target)
 		_ids.append(str(entry.get("id", "")))
@@ -532,7 +532,7 @@ func _down(index: int) -> void:
 	var soul := _targets[index] as Soul
 	if soul != null:
 		run.kills.add(StringName(_kinds[index]))
-		soul.fold(1.0 if _targets[index].position.x >= 960.0 else -1.0)
+		soul.fold(1.0 if _targets[index].position.x >= _page_middle() else -1.0)
 	if str(question.stage.get("survivors", "")) == "leave":
 		for i in _targets.size():
 			if i != index:
@@ -544,7 +544,7 @@ func _walk_off(target: Node2D) -> void:
 	var figure := target as StickFigure
 	if figure == null:
 		return
-	var way := -1.0 if figure.position.x < 960.0 else 1.0
+	var way := -1.0 if figure.position.x < _page_middle() else 1.0
 	var edge := -walk_off_margin if way < 0.0 else get_viewport_rect().size.x + walk_off_margin
 	figure.walk_to(edge, walk_off_speed)
 
@@ -656,6 +656,11 @@ func _turn_into_button(said: StringName, arms: ButtonArmPose) -> void:
 		await _walker.say(lines[0].text, VoiceLibrary.clip_for(lines[0]))
 		await _walker.finish_saying()
 	await _settle()
+
+
+## The middle of the page, across: a target left of it falls and walks off to the left.
+func _page_middle() -> float:
+	return get_viewport_rect().size.x * 0.5
 
 
 func _settle() -> void:
