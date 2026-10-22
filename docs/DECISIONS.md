@@ -112,3 +112,4 @@ All the user's calls, at the check-in on the playable chapter.
 - **The money button stays gold.** Money is amber in the text, but the cap is gold, so the amber of a hover or a pick never blurs into it.
 - **The pin's draw stays the 39 countries.** The line for the player's own country fires only for players from one of them.
 - **The trimmed copy is signed off for voicing.**
+- **Swearing is voiced as written**, the imp's and the walking button's alike, as the imp's already is in Chapter 1.

@@ -46,15 +46,9 @@ These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus t
 - Whether the pleas and the confessors are voiced. (The walking button gets its own voice.)
 - Whether the gibberish blip voice survives for anyone (the walking button, perhaps).
 - Whether the imp's per-chapter register shifts are one voice or distinct takes.
-- How the swearing is handled in the voice.
 
 **Music**
 - The real background music. The current track is a placeholder of unknown licence, played locally and kept out of the public repository.
-
-## Chapter 2
-
-Raised while building The Buttons on 2026-10-22, to settle at the check-in.
-
 
 **Language**
 - Whether to localize again, and into which languages. If yes, the text and voice pipelines should be designed for it from the start.
