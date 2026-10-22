@@ -329,18 +329,23 @@ func _update_talking() -> void:
 func _wait_for_player(auto := false) -> void:
 	_waiting = true
 	waiting_changed.emit(true)
-	if auto:
-		_move_on_by_itself(_page_count)
+	_move_on_by_itself(_page_count, auto)
 	await advanced
 
 
 ## Moves on from page number [param page] once its voice has finished and it has stayed up for
-## [member auto_hold], unless the player has moved on already.
-func _move_on_by_itself(page: int) -> void:
+## [member auto_hold], when [param auto] asks for it or the player has [member PlayerSettings.auto_advance]
+## on, unless the player has moved on already. The setting is watched while the page waits, so turning
+## it on takes the page along.
+func _move_on_by_itself(page: int, auto: bool) -> void:
+	while not (auto or PlayerSettings.auto_advance):
+		if not _waiting or page != _page_count:
+			return
+		await get_tree().process_frame
 	while _voiced and _voice().playing and page == _page_count:
 		await get_tree().process_frame
 	await get_tree().create_timer(auto_hold, false).timeout
-	if _waiting and page == _page_count:
+	if _waiting and page == _page_count and (auto or PlayerSettings.auto_advance):
 		advance()
 
 

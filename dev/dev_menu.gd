@@ -1,8 +1,9 @@
 class_name DevMenu
 extends CanvasLayer
 ## Development only: F2 opens a list of every chapter in the run and every question in it, with the
-## one being played marked. Picking one starts the run there. The game holds still while the list is
-## open, and F2 or Esc closes it again. Mouse or keys: the arrows move between entries, Enter picks.
+## one being played marked. Picking one starts the run there. Over the list, a switch turns on auto skip,
+## the player setting that moves dialogue on by itself. The game holds still while the menu is open, and
+## F2 or Esc closes it again. Mouse or keys: the arrows move between entries, Enter picks.
 
 ## Emitted when an entry is picked: the chapter's id, and the beat to start from, empty for its top.
 signal picked(chapter: StringName, beat: StringName)
@@ -13,12 +14,16 @@ signal picked(chapter: StringName, beat: StringName)
 @export var scroll: ScrollContainer
 ## Holds a column per chapter.
 @export var columns: HBoxContainer
+## Turns auto skip on and off: [member PlayerSettings.auto_advance].
+@export var auto_skip: CheckButton
 
 @export_group("Words")
 ## What the entry for the top of a chapter says.
 @export var top_text := "From the top"
 ## What marks the entry being played now.
 @export var now_mark := "now:"
+## What the auto skip switch says.
+@export var auto_skip_text := "Auto skip: each line moves on once it is said"
 ## Size of each chapter's name.
 @export_range(8, 120) var heading_size := 34
 ## Size of the entries.
@@ -58,6 +63,9 @@ func _ready() -> void:
 	style.set_border_width_all(2)
 	style.set_corner_radius_all(14)
 	panel.add_theme_stylebox_override(&"panel", style)
+	auto_skip.text = auto_skip_text
+	_style_entry(auto_skip, palette.color(entry_role))
+	auto_skip.toggled.connect(func(on: bool) -> void: PlayerSettings.auto_advance = on)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -70,6 +78,7 @@ func _unhandled_input(event: InputEvent) -> void:
 ## [param now_chapter] as the one being played.
 func open(chapters: Array[ChapterData], now_chapter: StringName, now_beat: StringName) -> void:
 	_fill(chapters, now_chapter, now_beat)
+	auto_skip.set_pressed_no_signal(PlayerSettings.auto_advance)
 	# Shown before it is measured, since a container sizes only what is visible.
 	visible = true
 	var screen := get_viewport().get_visible_rect().size
@@ -123,22 +132,9 @@ func _fill(chapters: Array[ChapterData], now_chapter: StringName, now_beat: Stri
 
 
 func _add_entry(column: VBoxContainer, text: String, chapter: StringName, beat: StringName, is_now: bool) -> Button:
-	var palette := InkPalette.get_default()
 	var entry := Button.new()
 	entry.text = "%s %s" % [now_mark, text] if is_now else text
-	entry.flat = true
-	entry.alignment = HORIZONTAL_ALIGNMENT_LEFT
-	entry.focus_mode = Control.FOCUS_ALL
-	entry.add_theme_font_size_override(&"font_size", entry_size)
-	var color := palette.color(now_role if is_now else entry_role)
-	for state: StringName in [&"font_color", &"font_hover_color", &"font_focus_color", &"font_pressed_color",
-			&"font_hover_pressed_color"]:
-		entry.add_theme_color_override(state, color)
-	var lit := StyleBoxFlat.new()
-	lit.bg_color = Color(palette.color(lit_role), 0.6)
-	lit.set_corner_radius_all(6)
-	for state: StringName in [&"hover", &"focus", &"pressed", &"hover_pressed"]:
-		entry.add_theme_stylebox_override(state, lit)
+	_style_entry(entry, InkPalette.get_default().color(now_role if is_now else entry_role))
 	entry.pressed.connect(func() -> void: picked.emit(chapter, beat))
 	column.add_child(entry)
 	if _first == null:
@@ -146,3 +142,20 @@ func _add_entry(column: VBoxContainer, text: String, chapter: StringName, beat: 
 	if is_now:
 		_now = entry
 	return entry
+
+
+## Gives [param button] the look of an entry, its words in [param color], with a wash behind it under
+## the pointer or the keys.
+func _style_entry(button: Button, color: Color) -> void:
+	button.flat = true
+	button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	button.focus_mode = Control.FOCUS_ALL
+	button.add_theme_font_size_override(&"font_size", entry_size)
+	for state: StringName in [&"font_color", &"font_hover_color", &"font_focus_color", &"font_pressed_color",
+			&"font_hover_pressed_color"]:
+		button.add_theme_color_override(state, color)
+	var lit := StyleBoxFlat.new()
+	lit.bg_color = Color(InkPalette.get_default().color(lit_role), 0.6)
+	lit.set_corner_radius_all(6)
+	for state: StringName in [&"hover", &"focus", &"pressed", &"hover_pressed"]:
+		button.add_theme_stylebox_override(state, lit)
