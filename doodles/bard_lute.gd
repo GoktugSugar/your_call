@@ -9,7 +9,7 @@ extends InkDrawing
 ## its middle.
 
 ## How big the lute is drawn, as a multiple of its natural size.
-@export_range(0.2, 3.0, 0.01) var lute_scale := 1.0:
+@export_range(0.2, 3.0, 0.01) var lute_scale := 1.1:
 	set(value):
 		lute_scale = value
 		queue_redraw()
