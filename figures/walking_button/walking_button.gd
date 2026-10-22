@@ -43,7 +43,9 @@ signal walked_off
 @export_group("Arms")
 ## How it holds its arms when it has nothing to say with them.
 @export var rest_arms: ButtonArmPose
-## How it flings its arms up when it wakes with a start.
+## How its arms come out as it wakes, wincing. Empty grows them at rest.
+@export var wince_arms: ButtonArmPose
+## How it flings its arms up when it wakes with a start. Empty keeps them where they are.
 @export var startled_arms: ButtonArmPose
 ## How far its arms swing with each step, in degrees.
 @export_range(0.0, 90.0, 0.5) var arm_swing := 22.0
@@ -206,7 +208,8 @@ func wake() -> void:
 	_tuck = 0.0
 	_rise = 0.0
 	_eyes_shut = true
-	_arms.blend(_resting_arms(), _resting_arms(), 0.0)
+	var wince := wince_arms if wince_arms != null else _resting_arms()
+	_arms.blend(wince, wince, 0.0)
 	_motion = create_tween()
 	_motion.tween_property(self, ^"_growth", 1.0, sprout_duration).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	_motion.tween_interval(wince_hold)

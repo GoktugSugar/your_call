@@ -129,6 +129,15 @@ func test_a_fist_pose_clenches_a_fist() -> void:
 	assert_eq(fists.size(), 1, "one clenched fist")
 
 
+func test_a_shaking_fist_shakes_on_the_boil() -> void:
+	var walker := _walker()
+	walker.alive = true
+	await walker.hold_arms(ButtonArmPose.find(&"fist"))
+	var before := _fist(walker)
+	Ink.boiled.emit(Ink.variant)
+	assert_ne(_fist(walker), before, "the fist moved with the page's boil")
+
+
 func test_an_unknown_pose_is_nothing() -> void:
 	assert_null(ButtonArmPose.find(&"no_such_pose"))
 
@@ -148,6 +157,14 @@ func _lines(drawing: InkDrawing) -> Array[InkLine]:
 
 func _open_eyes(walker: WalkingButton) -> Array:
 	return _lines(walker.face).filter(func(line: InkLine) -> bool: return line.dot_radius > 0.0)
+
+
+## Where its clenched fist is, or nowhere when its hands are open.
+func _fist(walker: WalkingButton) -> Vector2:
+	for line in _lines(walker.limbs):
+		if line.dot_radius > 0.0:
+			return line.path[0]
+	return Vector2.INF
 
 
 ## The words it is saying, or null when it says nothing.

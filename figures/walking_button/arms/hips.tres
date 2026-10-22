@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_pose")
-front_shoulder = 105.0
-front_elbow = -165.0
-back_shoulder = 105.0
-back_elbow = -165.0
+front_shoulder = 125.0
+front_elbow = -160.0
+back_shoulder = 125.0
+back_elbow = -160.0
