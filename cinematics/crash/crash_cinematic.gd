@@ -69,6 +69,11 @@ signal finished
 ## How blurred the blotch edges start, and how sharp they end.
 @export var focus_softness := Vector2(0.32, 0.03)
 
+@export_group("Skipping")
+## Seconds after it starts before a press can skip it, so a click that only brings the window
+## into focus does not throw the opening away.
+@export_range(0.0, 5.0, 0.05) var skip_grace := 0.6
+
 var _running := false
 var _sequence: Tween
 var _focus: Tween
@@ -103,7 +108,7 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _running and event.is_action_pressed(&"advance"):
+	if _running and _clock >= skip_grace and event.is_action_pressed(&"advance"):
 		get_viewport().set_input_as_handled()
 		_finish()
 
