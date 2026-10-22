@@ -1,12 +1,13 @@
 @tool
 class_name StickFigure
-extends InkDrawing
+extends Soul
 ## A soul: the androgynous stick figure every person in the game is drawn with. Dot eyes, no other face.
 ## The body is a jointed rig posed by a [FigurePose]. Its legs bend at the knee to keep the feet planted,
-## it breathes, and it folds down dead. Its origin is the ground between its feet.
+## it breathes, and it folds down dead. Kinds of soul differ by small details, never new art: closed or
+## hidden eyes, a pregnant belly, a cane and sparse hair, a beating heart, z marks drifting up from a sleeper.
+## Its origin is the ground between its feet.
 
-## Emitted once a fold has finished and the figure has dissolved away.
-signal folded
+enum Eyes { OPEN, CLOSED, HIDDEN }
 
 ## The pose the figure holds. Setting it snaps the figure into it.
 @export var pose: FigurePose:
@@ -85,11 +86,60 @@ signal folded
 ## How far the arms sway with each breath, in degrees.
 @export_range(0.0, 10.0, 0.1) var breath_arm_sway := 2.5
 
+@export_group("Details")
+## Open dot eyes, eyes closed in sleep, or none at all for a figure turned away.
+@export var eyes := Eyes.OPEN:
+	set(value):
+		eyes = value
+		queue_redraw()
+## How far a pregnant belly bulges from the spine, in pixels. Zero for none.
+@export_range(0.0, 40.0, 0.5) var belly := 0.0:
+	set(value):
+		belly = value
+		queue_redraw()
+## Leans on a cane, held in the screen right hand.
+@export var cane := false:
+	set(value):
+		cane = value
+		queue_redraw()
+## A few sparse wisps of hair, for the old.
+@export var hair := false:
+	set(value):
+		hair = value
+		queue_redraw()
+## A small beating heart floats over the head.
+@export var heart := false:
+	set(value):
+		heart = value
+		queue_redraw()
+## Z marks drift up from the head.
+@export var snoring := false:
+	set(value):
+		snoring = value
+		queue_redraw()
+## Palette role of the heart.
+@export var heart_role := &"pink"
+## Width of the heart, in pixels.
+@export_range(4.0, 60.0, 0.5) var heart_size := 15.0
+## Beats a second. Like breathing, the beat steps with the page's boil.
+@export_range(0.1, 4.0, 0.05) var heart_rate := 1.1
+## How much the heart swells on a beat, as a fraction of its size.
+@export_range(0.0, 1.0, 0.01) var heart_swell := 0.25
+## Gap between the top of the head and anything floating over it, in pixels.
+@export_range(0.0, 80.0, 0.5) var float_gap := 12.0
+## Seconds each z mark takes to drift up and fade.
+@export_range(0.2, 10.0, 0.05) var snore_period := 2.4
+## How far each z mark drifts, in pixels: out to the right and up.
+@export var snore_drift := Vector2(22.0, -42.0)
+## Height of a z mark as it leaves the head and once it has drifted, in pixels.
+@export var snore_size := Vector2(7.0, 13.0)
+## Palette role of the z marks.
+@export var snore_role := &"ink"
+
 @export_group("Dying")
 ## The steps of the fold, in order: each pose says how long the figure takes to reach it.
+## Leave it empty for a soul already lying down, which only dissolves.
 @export var fold_steps: Array[FigurePose] = []
-## Seconds the body takes to dissolve once it is down.
-@export_range(0.0, 3.0, 0.01) var fold_fade := 0.5
 
 var _shown := FigurePose.new()
 var _breathing := true
@@ -122,6 +172,15 @@ func fold(direction := 1.0) -> void:
 	await play_motion(fold_steps, direction < 0.0)
 	await dissolve_away(fold_fade).finished
 	folded.emit()
+
+
+## Where something floating over the figure sits, such as a plea: just above the top of its head,
+## in the figure's own space.
+func head_top() -> Vector2:
+	var hips := Vector2(0.0, -leg_length) + _shown.hip_offset
+	var neck := hips + Vector2.UP.rotated(deg_to_rad(_shown.spine_angle)) * spine_length
+	var head_dir := Vector2.UP.rotated(deg_to_rad(_shown.spine_angle + _shown.head_tilt))
+	return neck + head_dir * (neck_length + head_radius * 2.0) + Vector2.UP * float_gap
 
 
 func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
@@ -161,8 +220,88 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 			PackedVector2Array([hips, _knee(hips, right_foot, -1.0, lying), right_foot]), spacing), ink))
 	for side: float in [-1.0, 1.0]:
 		var eye := head + Vector2(eye_spread * side, -eye_height).rotated(head_angle)
-		lines.append(InkLine.dot(eye, eye_radius, ink))
+		match eyes:
+			Eyes.OPEN:
+				lines.append(InkLine.dot(eye, eye_radius, ink))
+			Eyes.CLOSED:
+				var lid := PackedVector2Array([Vector2(-0.85, -0.1), Vector2(0.0, 0.55), Vector2(0.85, -0.1)])
+				for i in lid.size():
+					lid[i] = eye + (lid[i] * eye_radius).rotated(head_angle)
+				lines.append(InkLine.along(InkBrush.resample_smooth(lid, false, spacing * 0.5), ink, 0.7))
+	if belly > 0.0:
+		lines.append(InkLine.along(_belly(hips, neck, spine_dir, spacing), ink))
+	if cane:
+		lines.append(InkLine.along(_cane(right_hand, spacing), ink, 0.85))
+	if hair:
+		# A bald crown with a tuft over each ear.
+		for side: float in [-1.0, 1.0]:
+			var tuft := PackedVector2Array([Vector2(0.88, -0.5), Vector2(1.2, -0.62), Vector2(1.12, -0.22), Vector2(1.42, -0.18)])
+			for i in tuft.size():
+				tuft[i] = head + (Vector2(tuft[i].x * side, tuft[i].y) * head_radius).rotated(head_angle)
+			lines.append(InkLine.along(InkBrush.resample_smooth(tuft, false, spacing * 0.5), ink, 0.55))
+	if heart:
+		lines.append(_heart(head + head_dir * (head_radius + float_gap), palette.color(heart_role), spacing))
+	if snoring:
+		for i in 3:
+			_add_z(lines, head + Vector2(head_radius * 0.8, -head_radius), _clock() / snore_period + i / 3.0,
+					palette.color(snore_role), spacing)
 	return lines
+
+
+## A pregnant belly: a round bulge out from the lower spine, toward the screen right.
+func _belly(hips: Vector2, neck: Vector2, spine_dir: Vector2, spacing: float) -> PackedVector2Array:
+	var low := hips.lerp(neck, 0.02)
+	var high := hips.lerp(neck, 0.6)
+	var middle := low.lerp(high, 0.5)
+	var half := low.distance_to(high) * 0.5
+	var out := -spine_dir.orthogonal()
+	var points := PackedVector2Array()
+	var steps := maxi(6, ceili(PI * maxf(half, belly) / spacing))
+	for i in steps + 1:
+		var angle := lerpf(-PI * 0.5, PI * 0.5, float(i) / steps)
+		points.append(middle + spine_dir * sin(angle) * half + out * cos(angle) * belly)
+	return points
+
+
+## A cane: a straight shaft from the ground up into the hand, hooked over at the top.
+func _cane(hand: Vector2, spacing: float) -> PackedVector2Array:
+	var top := hand + Vector2(0.0, -4.0)
+	var shaft := InkBrush.resample_polyline(PackedVector2Array([Vector2(hand.x + 2.0, 0.0), top]), spacing)
+	var hook := InkBrush.resample_smooth(PackedVector2Array([top, top + Vector2(-3.0, -3.0), top + Vector2(-6.5, -0.5),
+			top + Vector2(-7.0, 3.0)]), false, spacing * 0.5)
+	shaft.append_array(hook.slice(1))
+	return shaft
+
+
+## A small heart centred above [param top], washed in its own colour, swelling on each beat.
+func _heart(top: Vector2, color: Color, spacing: float) -> InkLine:
+	var beat := pow(maxf(sin(_clock() * TAU * heart_rate), 0.0), 4.0)
+	var size := heart_size * (1.0 + heart_swell * beat) / 32.0
+	var points := PackedVector2Array()
+	var steps := 24
+	for i in steps:
+		var t := TAU * i / steps
+		var x := 16.0 * pow(sin(t), 3.0)
+		var y := 13.0 * cos(t) - 5.0 * cos(2.0 * t) - 2.0 * cos(3.0 * t) - cos(4.0 * t)
+		points.append(top + Vector2(x, -y - 4.0) * size)
+	var line := InkLine.along(InkBrush.resample_smooth(points, true, spacing * 0.5), color, 0.8, true)
+	line.fill = Color(color, 0.4)
+	return line
+
+
+## One z mark, [param phase] of the way through its drift up from [param start]. Phases wrap at 1.
+func _add_z(lines: Array[InkLine], start: Vector2, phase: float, color: Color, spacing: float) -> void:
+	var t := fposmod(phase, 1.0)
+	var half := lerpf(snore_size.x, snore_size.y, t) * 0.5
+	var centre := start + snore_drift * t
+	var corners := PackedVector2Array([centre + Vector2(-half, -half), centre + Vector2(half, -half),
+			centre + Vector2(-half, half), centre + Vector2(half, half)])
+	lines.append(InkLine.along(InkBrush.resample_polyline(corners, spacing * 0.5), Color(color, sin(t * PI)), 0.6))
+
+
+## Seconds on the page clock, for details that move. The editor holds still.
+func _clock() -> float:
+	return 0.0 if Engine.is_editor_hint() else Ink.time
 
 
 ## Where the knee sits for a leg reaching from [param hip] to [param foot]. Standing, it bends out

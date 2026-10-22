@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="FigurePose" format=3]
+
+[ext_resource type="Script" path="res://figures/figure_pose.gd" id="1_pose"]
+
+[resource]
+script = ExtResource("1_pose")
+left_shoulder = 40.0
+left_elbow = -170.0
+right_shoulder = 40.0
+right_elbow = -170.0
