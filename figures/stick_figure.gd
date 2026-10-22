@@ -5,7 +5,7 @@ extends Soul
 ## The body is a jointed rig posed by a [FigurePose]. Its legs bend at the knee to keep the feet planted,
 ## it breathes, it can turn and walk along the ground, and it folds down dead. Kinds of soul differ by
 ## small details, never new art: closed or hidden eyes, a pregnant belly, a cane and sparse hair, a beating
-## heart, z marks drifting up from a sleeper. Its origin is the ground between its feet.
+## heart, z marks drifting up from a sleeper, a small crown. Its origin is the ground between its feet.
 
 ## Emitted once a walk has ended, with the figure standing in its pose where it was going.
 signal arrived
@@ -161,6 +161,11 @@ enum Facing { FRONT, LEFT, RIGHT }
 	set(value):
 		snoring = value
 		queue_redraw()
+## A small crown sits on the head, for the best life.
+@export var crown := false:
+	set(value):
+		crown = value
+		queue_redraw()
 ## Palette role of the heart.
 @export var heart_role := &"pink"
 ## Width of the heart, in pixels.
@@ -179,6 +184,17 @@ enum Facing { FRONT, LEFT, RIGHT }
 @export var snore_size := Vector2(7.0, 13.0)
 ## Palette role of the z marks.
 @export var snore_role := &"ink"
+## Width of the crown across its points, and how far its points rise above the top of the head, in pixels.
+@export var crown_size := Vector2(20.0, 11.0)
+## How wide the crown is where it rests on the head, as a share of its width across the points. Under 1,
+## it flares out toward the points. It rests on the outline of the head, clear of the eyes.
+@export_range(0.1, 1.5, 0.01) var crown_base := 0.7
+## How many points the crown has.
+@export_range(2, 7) var crown_points := 3
+## How deep the notches between the points cut, as a share of the crown's height.
+@export_range(0.0, 1.0, 0.01) var crown_notch := 0.5
+## Width of the crown's line, as a multiple of the figure's line.
+@export_range(0.1, 2.0, 0.05) var crown_line := 0.8
 
 @export_group("Dying")
 ## The steps of the fold, in order: each pose says how long the figure takes to reach it.
@@ -246,13 +262,13 @@ func walk_to(x: float, speed := 0.0) -> void:
 	arrived.emit()
 
 
-## Where something floating over the figure sits, such as a plea: just above the top of its head,
-## in the figure's own space.
+## Where something floating over the figure sits, such as a plea: just above the top of its head, or
+## of its crown, in the figure's own space.
 func head_top() -> Vector2:
 	var hips := Vector2(0.0, -leg_length) + _shown.hip_offset
 	var neck := hips + Vector2.UP.rotated(deg_to_rad(_shown.spine_angle)) * spine_length
 	var head_dir := Vector2.UP.rotated(deg_to_rad(_shown.spine_angle + _shown.head_tilt))
-	return neck + head_dir * (neck_length + head_radius * 2.0) + Vector2.UP * float_gap
+	return neck + head_dir * (neck_length + head_radius * 2.0 + _crown_rise()) + Vector2.UP * float_gap
 
 
 func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
@@ -316,8 +332,11 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 			for i in tuft.size():
 				tuft[i] = head + (Vector2(tuft[i].x * side, tuft[i].y) * head_radius).rotated(head_angle)
 			lines.append(InkLine.along(InkBrush.resample_smooth(tuft, false, spacing * 0.5), ink, 0.55))
+	if crown:
+		lines.append(InkLine.along(_crown(head, head_angle, spacing * 0.5), ink, crown_line))
 	if heart:
-		lines.append(_heart(head + head_dir * (head_radius + float_gap), palette.color(heart_role), spacing))
+		lines.append(_heart(head + head_dir * (head_radius + _crown_rise() + float_gap), palette.color(heart_role),
+				spacing))
 	if snoring:
 		for i in 3:
 			_add_z(lines, head + Vector2(head_radius * 0.8, -head_radius), _clock() / snore_period + i / 3.0,
@@ -349,6 +368,31 @@ func _cane(hand: Vector2, spacing: float) -> PackedVector2Array:
 			top + Vector2(-7.0, 3.0)]), false, spacing * 0.5)
 	shaft.append_array(hook.slice(1))
 	return shaft
+
+
+## A small crown resting on the head and tilted with it, drawn as one line the way a hand doodles it:
+## up from the outline of the head, over the points and back down to the outline.
+func _crown(head: Vector2, head_angle: float, spacing: float) -> PackedVector2Array:
+	var half := crown_size.x * 0.5
+	var rest_x := minf(half * crown_base, head_radius)
+	var rest_y := sqrt(head_radius * head_radius - rest_x * rest_x)
+	var top := head_radius + crown_size.y
+	var notch := top - crown_size.y * crown_notch
+	var gap := crown_size.x / maxi(crown_points - 1, 1)
+	var outline := PackedVector2Array([Vector2(-rest_x, rest_y)])
+	for i in crown_points:
+		if i > 0:
+			outline.append(Vector2(-half + gap * (i - 0.5), notch))
+		outline.append(Vector2(-half + gap * i, top))
+	outline.append(Vector2(rest_x, rest_y))
+	for i in outline.size():
+		outline[i] = head + Vector2(outline[i].x, -outline[i].y).rotated(head_angle)
+	return InkBrush.resample_polyline(outline, spacing)
+
+
+## How far the crown's points stand above the top of the head. Zero without a crown.
+func _crown_rise() -> float:
+	return crown_size.y if crown else 0.0
 
 
 ## A small heart centred above [param top], washed in its own colour, swelling on each beat.

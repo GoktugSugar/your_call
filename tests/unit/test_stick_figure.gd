@@ -1,6 +1,8 @@
 extends GutTest
-## The stick figure's walk. A walk carries the figure to where it was going and stands it back in its
-## pose, turned the way it went; on the way each foot stays planted while the other steps.
+## The stick figure's walk and its crown. A walk carries the figure to where it was going and stands it
+## back in its pose, turned the way it went; on the way each foot stays planted while the other steps.
+## The best life is a gold figure in a crown that rests on the head clear of the eyes, and floating words
+## clear the crown.
 
 const FIGURE_SCENE := "res://figures/stick_figure.tscn"
 ## Where a walking figure sets off, and how far it walks.
@@ -16,6 +18,8 @@ const MAX_WAIT := 5.0
 const SAMPLES_PER_STEP := 24
 ## How far apart two lengths may be and still count as the same, in pixels: nothing beyond rounding.
 const ROUNDING := 0.001
+## The least gap there must be between the crown's line and an eye, in pixels.
+const EYE_CLEARANCE := 1.0
 
 
 func test_a_walk_ends_at_its_target() -> void:
@@ -88,6 +92,47 @@ func test_the_body_never_drifts_back() -> void:
 	assert_eq(previous, WALK, "it ends where it was going")
 
 
+func test_the_best_life_is_a_gold_figure_in_a_crown() -> void:
+	var soul := SoulKind.find(&"best_life").make()
+	var figure := soul as StickFigure
+	assert_not_null(figure, "the best life is a stick figure")
+	if figure != null:
+		assert_eq(figure.color_override, &"gold")
+		assert_true(figure.crown, "it wears a crown")
+	soul.free()
+
+
+func test_the_crown_rests_on_the_head_clear_of_the_eyes() -> void:
+	for facing: StickFigure.Facing in [StickFigure.Facing.FRONT, StickFigure.Facing.LEFT, StickFigure.Facing.RIGHT]:
+		var figure := _figure()
+		figure.crown = true
+		figure.facing = facing
+		var lines := figure._build_lines(InkStyle.get_default(), InkPalette.get_default())
+		var head := _centre(lines[0].path)
+		var crown := lines[lines.size() - 1]
+		var half_line := InkStyle.get_default().width * figure.crown_line * 0.5
+		var nearest_head := INF
+		var nearest_eye := INF
+		for point in crown.path:
+			nearest_head = minf(nearest_head, point.distance_to(head))
+			for line in lines:
+				if line.dot_radius > 0.0:
+					nearest_eye = minf(nearest_eye, point.distance_to(line.path[0]) - line.dot_radius - half_line)
+		assert_almost_eq(nearest_head, figure.head_radius, ROUNDING, "facing %d: it rests on the head" % facing)
+		assert_gt(nearest_eye, EYE_CLEARANCE, "facing %d: it clears the eyes" % facing)
+
+
+func test_floating_words_clear_the_crown() -> void:
+	var figure := _figure()
+	var bare_top := figure.head_top()
+	figure.crown = true
+	var top := figure.head_top()
+	assert_almost_eq(top.y, bare_top.y - figure.crown_size.y, ROUNDING, "raised by the crown's height")
+	var lines := figure._build_lines(InkStyle.get_default(), InkPalette.get_default())
+	for point in lines[lines.size() - 1].path:
+		assert_lt(top.y, point.y, "above the crown")
+
+
 ## A figure standing in the tree, ready to walk.
 func _walker() -> StickFigure:
 	var figure := _figure_scene().instantiate() as StickFigure
@@ -137,3 +182,10 @@ func _highest(samples: PackedVector2Array) -> float:
 		highest = minf(highest, sample.y)
 	return highest
 
+
+## The middle of a ring of evenly spaced points.
+func _centre(points: PackedVector2Array) -> Vector2:
+	var sum := Vector2.ZERO
+	for point in points:
+		sum += point
+	return sum / points.size()
