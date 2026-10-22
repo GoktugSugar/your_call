@@ -50,7 +50,10 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 	var spacing := style.sample_spacing
 	var color := palette.color(role)
 	var lines: Array[InkLine] = []
-	lines.append(InkLine.along(InkBrush.ellipse(_HEAD, Vector2.ONE * head_radius, spacing, -PI * 0.75), color, 1.0, true))
+	# Bare paper inside the head, so in a crowd the heads in front hide the figures behind them.
+	var head := InkLine.along(InkBrush.ellipse(_HEAD, Vector2.ONE * head_radius, spacing, -PI * 0.75), color, 1.0, true)
+	head.fill = palette.paper
+	lines.append(head)
 	lines.append(InkLine.along(InkBrush.resample_polyline(PackedVector2Array([_HIPS, _NECK]), spacing), color))
 	for leg: Array in _LEGS:
 		lines.append(InkLine.along(InkBrush.resample_polyline(PackedVector2Array(leg), spacing), color))
