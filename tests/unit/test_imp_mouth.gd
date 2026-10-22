@@ -1,6 +1,7 @@
 extends GutTest
-## The imp's talking mouth: how open each sound sets it, that it only moves while he talks and rests in
-## his face's own shape when he stops, and that it changes shape in eased steps rather than every frame.
+## The imp's talking mouth: how open each sound sets it, that each shape stands for what is said while
+## it is up, that it only moves while he talks and rests in his face's own shape when he stops, and that
+## it changes shape in eased steps rather than every frame.
 
 const IMP_SCENE := "res://figures/imp/imp.tscn"
 ## A rate and a frame length that add up exactly in binary, so a step lands on a known frame.
@@ -119,10 +120,35 @@ func test_each_shape_eases_part_of_the_way_to_the_sound() -> void:
 	assert_almost_eq(imp.drawing.mouth_open, imp.mouth.on_vowels * imp.mouth.easing, 0.0001)
 
 
+func test_lips_meeting_anywhere_in_a_shape_close_it() -> void:
+	var imp := _imp_saying("a")
+	imp.set_speech(_first_half_then(imp, "a", "m"))
+	imp.set_talking(true)
+	simulate(imp, FRAMES_PER_SHAPE, FRAME)
+	assert_almost_eq(imp.drawing.mouth_open, imp.mouth.on_m_b_and_p * imp.mouth.easing, 0.0001,
+			"an m late in the shape closes it, though the shape starts on a vowel")
+
+
+func test_a_shape_opens_as_wide_as_its_sounds_on_average() -> void:
+	var imp := _imp_saying("a")
+	imp.set_speech(_first_half_then(imp, "a", " "))
+	imp.set_talking(true)
+	simulate(imp, FRAMES_PER_SHAPE, FRAME)
+	var average := (imp.mouth.on_vowels + imp.mouth.on_pauses) * 0.5
+	assert_almost_eq(imp.drawing.mouth_open, average * imp.mouth.easing, 0.0001)
+
+
 ## The imp from his scene, saying [param sound] for as long as he talks, at a rate the tests can count frames by.
 func _imp_saying(sound: String) -> Imp:
 	var imp := (load(IMP_SCENE) as PackedScene).instantiate() as Imp
 	add_child_autofree(imp)
 	imp.mouth.shapes_per_second = SHAPES_PER_SECOND
-	imp.set_speech(func(_lead: float) -> String: return sound)
+	imp.mouth.lead = 0.0
+	imp.set_speech(func(_ahead: float) -> String: return sound)
 	return imp
+
+
+## Speech that says [param first] for the first half of each of [param imp]'s mouth shapes, then [param then].
+func _first_half_then(imp: Imp, first: String, then: String) -> Callable:
+	var half := 0.5 / imp.mouth.shapes_per_second
+	return func(ahead: float) -> String: return first if ahead < half else then
