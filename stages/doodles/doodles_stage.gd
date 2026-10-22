@@ -86,6 +86,17 @@ var _pointed := -1
 var _highlighted := -1
 
 
+## The id of every doodle there is, one per script in [code]res://doodles/[/code], in name order. For the
+## samplers and the tests: an exported build may not list its scripts.
+static func all_ids() -> PackedStringArray:
+	var ids := PackedStringArray()
+	for file in DirAccess.get_files_at(DOODLE_SCRIPT.get_base_dir()):
+		if file.get_extension() == "gd":
+			ids.append(file.get_basename())
+	ids.sort()
+	return ids
+
+
 ## A new doodle drawn by the script for [param id], or null when there is no such doodle.
 static func make_doodle(id: String) -> InkDrawing:
 	var path := DOODLE_SCRIPT % id
