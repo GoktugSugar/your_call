@@ -13,7 +13,7 @@ const KIND_PATH := "res://figures/kinds/%s.tres"
 ## Palette role the whole soul is drawn in, such as red for the guilty. Empty keeps the ink.
 @export var color_role := &""
 ## Size against a grown stranger.
-@export_range(0.2, 2.0, 0.01) var size := 1.0
+@export_range(0.2, 4.0, 0.01) var size := 1.0
 
 @export_group("Stick figure")
 ## The pose the figure holds. Empty keeps the scene's.
