@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://cinematics/crash/crash_cinematic.gd" id="1_cinematic"]
+[ext_resource type="Script" path="res://cinematics/crash/crash_view.gd" id="2_view"]
+[ext_resource type="Shader" path="res://cinematics/crash/waking.gdshader" id="3_waking"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_waking"]
+shader = ExtResource("3_waking")
+
+[node name="CrashCinematic" type="CanvasLayer" node_paths=PackedStringArray("view", "night", "flash", "waking")]
+layer = 5
+script = ExtResource("1_cinematic")
+view = NodePath("View")
+night = NodePath("Night")
+flash = NodePath("Flash")
+waking = NodePath("Waking")
+
+[node name="Night" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -120.0
+offset_right = 120.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.105882354, 0.101960786, 0.09019608, 1)
+
+[node name="View" type="Node2D" parent="."]
+position = Vector2(960, 540)
+script = ExtResource("2_view")
+
+[node name="Flash" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -120.0
+offset_right = 120.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.9607843, 0.9490196, 0.9137255, 1)
+
+[node name="Waking" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_waking")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.105882354, 0.101960786, 0.09019608, 1)
