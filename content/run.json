@@ -3,6 +3,7 @@
   "chapters": [
     "ch1_tracks.json",
     "ch2_buttons.json",
-    "ch3_money.json"
+    "ch3_money.json",
+    "ch4_gun.json"
   ]
 }
