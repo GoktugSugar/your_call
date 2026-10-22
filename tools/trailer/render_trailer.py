@@ -43,7 +43,7 @@ FRAME_NAME = "f"
 # Seconds recorded past the last moment the cut takes from a shot, so a piece never runs short.
 TAIL = 0.2
 
-STEAM = {"name": "your_call_trailer_steam.mp4", "crf": 14, "maxrate": "24M", "bufsize": "48M", "audio": "192k", "scale": None}
+STEAM = {"name": "your_call_trailer_steam.mp4", "crf": 10, "maxrate": "24M", "bufsize": "48M", "audio": "192k", "scale": None}
 SHARE = {"name": "your_call_trailer.mp4", "crf": 20, "maxrate": "10M", "bufsize": "20M", "audio": "160k", "scale": None}
 DRAFT = {"name": "your_call_trailer_draft.mp4", "crf": 24, "maxrate": "3M", "bufsize": "6M", "audio": "128k", "scale": (960, 540)}
 
@@ -109,10 +109,11 @@ def frames_needed(cut: dict) -> dict[str, int]:
     return needed
 
 
-def recipe(cut: dict, shot: str, frames: int) -> str:
-    """Changes whenever what a shot's recording would show changes, as far as the data knows."""
+def recipe(cut: dict, shot: str) -> str:
+    """Changes whenever what a shot's recording would show changes, as far as the data knows. How long
+    it runs is left out: a recording long enough for the cut stays good when the cut takes less."""
     parts = {
-        "shot": cut["shots"][shot], "frames": frames, "fps": cut["fps"], "size": cut["size"],
+        "shot": cut["shots"][shot], "fps": cut["fps"], "size": cut["size"],
         "lines": hashlib.sha1(LINES.read_bytes()).hexdigest(),
         "voices": hashlib.sha1(MANIFEST.read_bytes()).hexdigest() if MANIFEST.exists() else "",
     }
@@ -151,7 +152,7 @@ def record_all(cut: dict, wanted: list[str], jobs: int) -> None:
     try:
         needed = frames_needed(cut)
         with concurrent.futures.ThreadPoolExecutor(max_workers=jobs) as pool:
-            futures = [pool.submit(record, shot, needed[shot], cut["fps"], recipe(cut, shot, needed[shot])) for shot in wanted]
+            futures = [pool.submit(record, shot, needed[shot], cut["fps"], recipe(cut, shot)) for shot in wanted]
             for future in concurrent.futures.as_completed(futures):
                 shot, ok, problems = future.result()
                 print(f"  recorded {shot}" if ok else f"  FAILED to record {shot} (see {SHOTS / shot / 'log.txt'})")
@@ -277,7 +278,7 @@ def master_sound(cut: dict) -> pathlib.Path:
     graph_file = RENDERS / "sound_graph.txt"
     graph_file.write_text(graph, encoding="utf-8")
     mix = RENDERS / "sound_mix.wav"
-    run_ffmpeg(["-loglevel", "error", *inputs, "-filter_complex_script", str(graph_file), "-map", "[outa]",
+    run_ffmpeg(["-loglevel", "error", *inputs, "-/filter_complex", str(graph_file), "-map", "[outa]",
                 "-c:a", "pcm_f32le", str(mix)], "mix the sound")
     sound = cut.get("sound", {})
     target = f"I={float(sound.get('loudness', -16.0))}:TP={float(sound.get('peak', -1.5))}:LRA=11"
@@ -302,7 +303,7 @@ def encode_one(cut: dict, encode: dict, sound: pathlib.Path) -> pathlib.Path:
     graph_file = RENDERS / (out.stem + "_graph.txt")
     graph_file.write_text(graph, encoding="utf-8")
     audio_index = len(placed_inputs(inputs))
-    run_ffmpeg(["-loglevel", "error", *inputs, "-i", str(sound), "-filter_complex_script", str(graph_file),
+    run_ffmpeg(["-loglevel", "error", *inputs, "-i", str(sound), "-/filter_complex", str(graph_file),
                 "-map", "[outv]", "-map", f"{audio_index}:a",
                 "-c:v", "libx264", "-preset", "slow", "-tune", "grain", "-profile:v", "high", "-level", "4.2",
                 "-crf", str(encode["crf"]), "-maxrate", encode["maxrate"], "-bufsize", encode["bufsize"],
@@ -360,7 +361,7 @@ def main() -> None:
     if unknown:
         sys.exit(f"No shot called {', '.join(sorted(unknown))} in trailer_cut.json")
     stale = [shot for shot in needed if args.fresh or shot in forced
-             or not is_current(shot, recipe(cut, shot, needed[shot]), needed[shot])]
+             or not is_current(shot, recipe(cut, shot), needed[shot])]
 
     print(f"The cut: {len(cut['cut'])} pieces, {total_seconds(cut):.2f} s at {cut['fps']} fps")
     for piece in pieces(cut):
