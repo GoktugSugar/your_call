@@ -22,6 +22,20 @@ Creative calls made overnight on 2026-10-22, while the user slept. Each is provi
 - The colours of the items the script left uncoloured.
 - The weights given to Chapter 3's questions.
 
+**Chapter 4, The Gun**
+- The trimmed copy, 21% shorter.
+- 4.02: lowered, the dying one dies anyway a moment later. Alternative: it stays alive, pleading, while the imp speaks.
+- 4.03: no hold option, and "Aim, or do not" cut. Alternative: add a "Lower the gun" option.
+- 4.05: a six second charge; shot, it keeps coming. Alternatives: a shorter or longer charge; shot, it stops where it is.
+- 4.05: the button's "Again?" only if it woke in 2.11. Alternative: always "Again?" (the button remembers the player either way).
+- 4.06: "Fire blind" in the row fires at random. Alternative: list the five colours in the row.
+- 4.08: no choice row, eight seconds, then the gun lowers itself. Alternatives: a choice row after all, or a different wait.
+- 4.12: the brackets frame the whole view for the gun turned on the player. Alternative: another way to show it with no avatar.
+- 4.13: the reveal split into each option's reaction.
+- The bear's tiny smile against the dot eyes only rule.
+- The imp's shot line voiced with "[outraged]".
+- The pleas (4.02, 4.03, 4.14) stay unvoiced: there are no free voice slots for new speakers.
+
 ## Carried over from the earlier build
 
 These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus the points sections 9 and 14 leave to the user.
