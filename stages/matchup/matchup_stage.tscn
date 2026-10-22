@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://stages/matchup/matchup_stage.gd" id="1_stage"]
+[ext_resource type="PackedScene" path="res://ui/choices/choice_word.tscn" id="2_word"]
+[ext_resource type="Script" path="res://ink/ink_drawing.gd" id="3_ink"]
+[ext_resource type="PackedScene" path="res://figures/walking_button/walking_button.tscn" id="4_walker"]
+[ext_resource type="Resource" path="res://figures/walking_button/arms/fist.tres" id="5_fist"]
+
+[node name="MatchupStage" type="Node2D" node_paths=PackedStringArray("slots", "words", "or_label", "flourish")]
+script = ExtResource("1_stage")
+walker_scene = ExtResource("4_walker")
+fighter_arms = ExtResource("5_fist")
+slots = [NodePath("Slot0"), NodePath("Slot1")]
+words = [NodePath("Word0"), NodePath("Word1")]
+or_label = NodePath("Or")
+flourish = NodePath("Flourish")
+
+[node name="Slot0" type="Node2D" parent="."]
+position = Vector2(700, 560)
+
+[node name="Slot1" type="Node2D" parent="."]
+position = Vector2(1220, 560)
+
+[node name="Word0" parent="." instance=ExtResource("2_word")]
+offset_left = 590.0
+offset_top = 572.0
+offset_right = 810.0
+offset_bottom = 628.0
+text = "Side A"
+
+[node name="Word1" parent="." instance=ExtResource("2_word")]
+offset_left = 1110.0
+offset_top = 572.0
+offset_right = 1330.0
+offset_bottom = 628.0
+text = "Side B"
+
+[node name="Or" type="Label" parent="."]
+offset_left = 940.0
+offset_top = 440.0
+offset_right = 980.0
+offset_bottom = 488.0
+text = "vs"
+horizontal_alignment = 1
+
+[node name="Flourish" type="Node2D" parent="."]
+visible = false
+script = ExtResource("3_ink")
