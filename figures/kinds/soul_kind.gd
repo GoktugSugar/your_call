@@ -32,6 +32,8 @@ const KIND_PATH := "res://figures/kinds/%s.tres"
 @export var snoring := false
 ## A small crown on the head, for the best life.
 @export var crown := false
+## A pistol in the hand, for a soul that is armed. The pose says which way it points.
+@export var pistol := false
 ## Falls when the trolley hits. Off for a soul already lying down, which only dissolves.
 @export var falls := true
 
@@ -62,6 +64,7 @@ func make() -> Soul:
 		figure.heart = heart
 		figure.snoring = snoring
 		figure.crown = crown
+		figure.pistol = pistol
 		if not falls:
 			figure.fold_steps = []
 	return soul

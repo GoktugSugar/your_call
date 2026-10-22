@@ -23,6 +23,9 @@ extends Resource
 @export var left_foot := Vector2.ZERO
 ## Where the screen right foot is planted, relative to standing.
 @export var right_foot := Vector2.ZERO
+## Which way a pistol in the hand points, for an armed figure: 0 straight at the player, 1 down at the
+## ground in front of the figure.
+@export_range(0.0, 1.0, 0.01) var pistol_down := 0.0
 
 @export_group("Arriving")
 ## Seconds to blend into this pose when it is a step in a motion.
@@ -46,6 +49,7 @@ func blend(from: FigurePose, to: FigurePose, weight: float) -> void:
 	right_elbow = lerpf(from.right_elbow, to.right_elbow, weight)
 	left_foot = from.left_foot.lerp(to.left_foot, weight)
 	right_foot = from.right_foot.lerp(to.right_foot, weight)
+	pistol_down = lerpf(from.pistol_down, to.pistol_down, weight)
 
 
 ## The same pose seen in a mirror, for falling the other way.
