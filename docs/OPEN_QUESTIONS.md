@@ -37,14 +37,13 @@ These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus t
 - Three meanings have no tag. Either add tags or leave these words plain:
   - the green, orange and purple figures in the Last Bullet, which the imp names aloud
   - the brown bear
-- Money is amber in the text but gold on the money button.
 - Whether choice labels should ever carry their mapped colour.
 - Whether the fuller colour pass reads as rich or as busy in places.
 - Why player-facing text has no dashes. The rule holds either way; the reason only matters if it ever needs bending.
 
 **Voice and pacing**
 - Whether narration should ever auto-advance once the imp finishes a box, perhaps as a setting. (Text now syncs with the voice and waits for a click.)
-- Whether the pleas, the confessors and the walking button are voiced.
+- Whether the pleas and the confessors are voiced. (The walking button gets its own voice.)
 - Whether the gibberish blip voice survives for anyone (the walking button, perhaps).
 - Whether the imp's per-chapter register shifts are one voice or distinct takes.
 - How the swearing is handled in the voice.
@@ -56,9 +55,6 @@ These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus t
 
 Raised while building The Buttons on 2026-10-22, to settle at the check-in.
 
-- How the imp's line after each press of an offer ladder (2.03, 2.06) plays before the offer comes back: held up while the player chooses again (the build now), played out and cleared on its own (the old build), or waiting for a click.
-- How the dollar break's "I am not doing the voice for this one" plays now that the imp is voiced.
-- Whether the pin in 2.10 can land on the player's own country when it is not in the bundled list. The list has no Turkey, for one.
 
 **Language**
 - Whether to localize again, and into which languages. If yes, the text and voice pipelines should be designed for it from the start.
