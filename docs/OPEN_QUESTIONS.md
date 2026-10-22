@@ -22,6 +22,14 @@ Creative calls made overnight on 2026-10-22, while the user slept. Each is provi
 - The colours of the items the script left uncoloured.
 - The weights given to Chapter 3's questions.
 
+**Chapter 4's figures** (drawn by a helper on 2026-10-22, provisional, logged in `DECISIONS.md`)
+- The bear's tiny smile on a lighter muzzle, against the dot eyes only rule for faces. Alternatives: the smile without the muzzle, or dot eyes alone (both are switches).
+- The bear's outline in ink around the solid brown. Alternative: a brown outline, so she is a brown shape with no ink edge.
+- The future baby's mustache, a flat topped block high under the eyes, and the paintbrush on the ground beside the blanket with sky paint. Alternatives: another identification colour, or the brush propped against the bundle.
+- The future baby at 2.4 times the bundle. Alternatives: anywhere from 2.2 to 2.6.
+- The armed stranger's pistol in a muted grey wash, held at mid chest with the elbows out. Alternative: an outline only.
+- The dying soul's kneel with its shins splayed along the ground, reaching out and up with one hand. Alternatives: a lower slump propped on one hand, or both hands raised.
+
 ## Carried over from the earlier build
 
 These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus the points sections 9 and 14 leave to the user.
