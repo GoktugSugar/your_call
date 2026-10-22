@@ -22,8 +22,12 @@ extends Stage
 @export_group("Layout")
 ## Where the middle of the rows sits, down the page.
 @export_range(0.0, 1080.0, 1.0) var rows_middle := 500.0
-## Distance from one row's baseline to the next.
+## Distance from one row's baseline to the next, when there is room for it.
 @export_range(20.0, 400.0, 1.0) var row_height := 122.0
+## The first row's baseline goes no higher than this, clear of the balance at the top.
+@export_range(0.0, 1080.0, 1.0) var rows_top := 250.0
+## The last row's baseline goes no lower than this, clear of the dialogue box.
+@export_range(0.0, 1080.0, 1.0) var rows_bottom := 780.0
 ## Where each row's doodle stands, across the page.
 @export_range(0.0, 1920.0, 1.0) var doodle_x := 690.0
 ## How big the doodles are, as a share of their natural size.
@@ -73,9 +77,12 @@ func setup(for_question: QuestionData) -> void:
 	for i in for_question.options.size():
 		if bool(for_question.options[i].outcome.get("sell", false)):
 			_sell = i
-	var top := rows_middle - (_items.size() - 1) * row_height * 0.5
+	var step := row_height
+	if _items.size() > 1:
+		step = minf(row_height, (rows_bottom - rows_top) / (_items.size() - 1))
+	var top := maxf(rows_middle - (_items.size() - 1) * step * 0.5, rows_top)
 	for i in _items.size():
-		_rows.append(_make_row(_items[i], top + i * row_height))
+		_rows.append(_make_row(_items[i], top + i * step))
 	for i in _rows.size():
 		_rows[i].modulate.a = 1.0 if i == 0 else dim_alpha
 

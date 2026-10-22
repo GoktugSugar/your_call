@@ -3,7 +3,7 @@ extends Stage
 ## The money chapter's receipt, a tableau with nothing to choose: an ink receipt draws in under the
 ## balance and prints itself a line at a time. A row for each thing still owned, its doodle, its name
 ## and what was paid in amber, the dearest few when there are many; then what the player started with,
-## spent and was left with; then, lighter, the doodles of the dearest things they passed on. It reports
+## spent and was left with, and beside it, lighter, the doodles of the dearest things they passed on. It reports
 ## which read the imp gives over it, by the share of the pot left, and quietly nudges the profile by that
 ## share. Stage data:
 ## [codeblock]
@@ -32,29 +32,31 @@ const FILLS: PackedStringArray = ["name", "units", "more", "start", "spent", "le
 
 @export_group("Layout")
 ## Room between the slip's edges and what is printed on it, across and down.
-@export var margin := Vector2(46.0, 28.0)
+@export var margin := Vector2(46.0, 22.0)
 ## Height of each row of a thing bought.
-@export_range(10.0, 200.0, 1.0) var row_height := 58.0
+@export_range(10.0, 200.0, 1.0) var row_height := 50.0
 ## Height of each line of the money at the bottom.
-@export_range(10.0, 200.0, 1.0) var sum_height := 44.0
+@export_range(10.0, 200.0, 1.0) var sum_height := 40.0
 ## Gap between the parts of the receipt.
-@export_range(0.0, 100.0, 1.0) var part_gap := 16.0
+@export_range(0.0, 100.0, 1.0) var part_gap := 12.0
 ## How big the doodles on the rows are, as a share of their natural size.
-@export_range(0.05, 1.0, 0.01) var row_doodle_scale := 0.22
+@export_range(0.05, 1.0, 0.01) var row_doodle_scale := 0.2
 ## How big the doodles of things passed on are.
-@export_range(0.05, 1.0, 0.01) var passed_doodle_scale := 0.26
+@export_range(0.05, 1.0, 0.01) var passed_doodle_scale := 0.22
 ## Room each doodle of a thing passed on takes, across.
-@export_range(10.0, 300.0, 1.0) var passed_spacing := 120.0
-## Height of the row of things passed on.
-@export_range(10.0, 300.0, 1.0) var passed_height := 82.0
+@export_range(10.0, 300.0, 1.0) var passed_spacing := 64.0
+## Height of the doodles of things passed on, under their caption.
+@export_range(10.0, 300.0, 1.0) var passed_height := 64.0
+## Where the middle of the things passed on sits across the slip, as a share of its printing width.
+@export_range(0.0, 1.0, 0.01) var passed_across := 0.74
 ## Room left of a row's name for its doodle.
-@export_range(0.0, 200.0, 1.0) var doodle_room := 72.0
+@export_range(0.0, 200.0, 1.0) var doodle_room := 64.0
 
 @export_group("Words")
 ## Size of the title.
-@export_range(8, 120) var title_size := 42
+@export_range(8, 120) var title_size := 38
 ## Size of the rows and the money.
-@export_range(8, 120) var words_size := 34
+@export_range(8, 120) var words_size := 31
 ## Palette role of the title and the lighter words.
 @export var quiet_role := &"heading"
 ## Palette role of the names and the money.
@@ -151,6 +153,7 @@ func _lay_out() -> void:
 		var more := _words_in(data, "more").format({"more": Numbers.grouped(owned.size() - shown.size())})
 		y = _print_line(more, words_size, quiet_role, Vector2(left + doodle_room, y), HORIZONTAL_ALIGNMENT_LEFT, width)
 	y += part_gap
+	var money_top := y
 	var values := fills()
 	for key: String in ["started", "spent", "left"]:
 		var role := money_role if key == "left" else words_role
@@ -158,10 +161,12 @@ func _lay_out() -> void:
 		y += sum_height
 	var passed := _dearest_passed(int(data.get("most_passed", 4)))
 	if not passed.is_empty():
-		y += part_gap
-		y = _print_line(_words_in(data, "passed", "caption"), words_size, quiet_role, Vector2(0.0, y), HORIZONTAL_ALIGNMENT_CENTER, width)
+		# Beside the money, so the slip stays short enough to clear the dialogue box.
+		var across := left + width * passed_across
+		var below := _print_line(_words_in(data, "passed", "caption"), words_size, quiet_role, Vector2(across, money_top),
+				HORIZONTAL_ALIGNMENT_CENTER, width)
 		var row := Node2D.new()
-		row.position = Vector2(0.0, y + passed_height)
+		row.position = Vector2(across, below + passed_height)
 		row.set_meta(&"passed", true)
 		content.add_child(row)
 		_printed.append(row)
@@ -171,7 +176,7 @@ func _lay_out() -> void:
 				doodle.position = Vector2((i - (passed.size() - 1) * 0.5) * passed_spacing, 0.0)
 				doodle.scale = Vector2.ONE * passed_doodle_scale
 				row.add_child(doodle)
-		y += passed_height
+		y = maxf(y, below + passed_height)
 	slip.size = Vector2(slip.size.x, y + margin.y)
 
 

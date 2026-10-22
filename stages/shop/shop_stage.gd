@@ -8,13 +8,15 @@ extends Stage
 ## {"type": "shop", "item": "burrito", "label": "Free food for life", "price": 1800}
 ## {"type": "shop", "item": "charity_hand", "label": "End Poverty", "price": "everything", "buyback": 100}
 ## {"type": "shop", "item": "stranger_clock", "label": "A stranger's years", "price": 700, "step": 100,
-##  "most": 40, "tag": {"text": "{price} a year"}, "tally": {"text": "{count} years taken"}}
+##  "most": 40, "tag": {"text": "{price} a year"},
+##  "tally": {"text": "{count} years taken", "one": {"text": "{count} year taken"}}}
 ## [/codeblock]
 ## [code]item[/code] names the doodle, [code]label[/code] is the thing's name on the receipt, and a price
 ## of [code]everything[/code] asks for the whole balance. [code]buyback[/code] is the share of the price
 ## the buyback offers for it, in percent, when that differs from the buyback's own. With [code]step[/code]
 ## it is bought one at a time, as often as the player likes up to [code]most[/code], each one dearer by
-## the step, with [code]tag[/code] and [code]tally[/code] as its running words.
+## the step, with [code]tag[/code] and [code]tally[/code] as its running words; the tally shows from the
+## first one bought, in its [code]one[/code] words while there is just the one.
 ## The option whose outcome has [code]buy[/code] buys; the other keeps the money.
 ## Outcomes: [code]bought[/code]; [code]broke[/code] when the money is not there, which counts as keeping
 ## it; [code]passed[/code] for keeping it. Bought one at a time: [code]first[/code] and [code]more[/code]
@@ -97,6 +99,7 @@ var _lifted := false
 var _lift_tween: Tween
 var _tag_text := "{price}"
 var _tally_text := ""
+var _tally_one := ""
 
 
 func setup(for_question: QuestionData) -> void:
@@ -121,9 +124,12 @@ func setup(for_question: QuestionData) -> void:
 	var tally_data: Variant = data.get("tally", {})
 	if tally_data is Dictionary:
 		_tally_text = str(tally_data.get("text", ""))
+		var one: Variant = tally_data.get("one", {})
+		_tally_one = str(one.get("text", _tally_text)) if one is Dictionary else _tally_text
 	tally.add_theme_font_size_override(&"font_size", tally_size)
 	tally.add_theme_color_override(&"font_color", InkPalette.get_default().color(tally_role))
 	tally.visible = _one_at_a_time and not _tally_text.is_empty()
+	tally.modulate.a = 0.0
 	_refresh()
 
 
@@ -261,7 +267,9 @@ func _purchase() -> Purchase:
 func _refresh() -> void:
 	var values := fills()
 	tag.set_words(_tag_text.format(values))
-	tally.text = _tally_text.format(values)
+	tally.text = (_tally_one if _count == 1 else _tally_text).format(values)
+	if _count > 0 and tally.visible and tally.modulate.a < 1.0:
+		create_tween().tween_property(tally, ^"modulate:a", 1.0, words_fade)
 	tally.reset_size()
 	tally.position = tag.position + Vector2(tag.point_length + (tag.card_size.x - tally.size.x) * 0.5,
 			tag.card_size.y * 0.5 + tally_gap)
@@ -304,8 +312,10 @@ func _shake_tag() -> void:
 ## The offer goes faint as it passes by.
 func _fade_offer() -> void:
 	var fade := create_tween().set_parallel(true)
-	for item: CanvasItem in [slot, tag, tally]:
+	for item: CanvasItem in [slot, tag]:
 		fade.tween_property(item, ^"modulate:a", passed_alpha, fade_duration)
+	if _count > 0:
+		fade.tween_property(tally, ^"modulate:a", passed_alpha, fade_duration)
 	await fade.finished
 
 
@@ -314,9 +324,9 @@ func _hold() -> void:
 		await get_tree().create_timer(hold_duration, false).timeout
 
 
-## The words that fade in and out with the drawings.
+## The words that fade in and out with the drawings. The tally inks in with the first one bought.
 func _words() -> Array[CanvasItem]:
 	var items: Array[CanvasItem] = [tag.words]
-	if tally.visible:
+	if tally.visible and _count > 0:
 		items.append(tally)
 	return items

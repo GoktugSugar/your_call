@@ -9,7 +9,7 @@ slip = NodePath("Slip")
 content = NodePath("Slip/Content")
 
 [node name="Slip" type="Node2D" parent="."]
-position = Vector2(960, 150)
+position = Vector2(960, 128)
 script = ExtResource("2_slip")
 
 [node name="Content" type="Node2D" parent="Slip"]

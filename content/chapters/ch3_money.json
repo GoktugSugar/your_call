@@ -731,7 +731,7 @@
         "step": 100,
         "most": 40,
         "tag": { "text": "{price} a year" },
-        "tally": { "text": "{count} years taken" }
+        "tally": { "text": "{count} years taken", "one": { "text": "{count} year taken" } }
       },
       "ask": [
         "Now this one is fun. Years. Not yours. Theirs. A stranger, alive somewhere right now, and I skim a year off their life and pour it into you. [amber]{price}[/amber] for the first, a little more for each after. Buy as many as your wallet allows. They will only wonder why they got so tired so young."
