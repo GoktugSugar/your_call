@@ -137,7 +137,7 @@ const _SMIRK_OPEN_BOTTOM := [Vector2(-11.0, -89.5), Vector2(-2.0, -86.5), Vector
 ## The frown opens into a squared snarl, its corners pulled down.
 const _SNARL_TOP := [Vector2(-12.5, -84.5), Vector2(-6.0, -93.5), Vector2(6.0, -93.5), Vector2(12.5, -84.5)]
 const _SNARL_BOTTOM := [Vector2(-12.5, -84.5), Vector2(-5.0, -82.0), Vector2(5.0, -82.0), Vector2(12.5, -84.5)]
-## The O opens rounder and taller.
+## The O grows from its middle as it opens, out to a wider, taller O than the one it rests in.
 const _SURPRISED_OPEN_MOUTH := Vector2(0.0, -90.5)
 const _SURPRISED_OPEN_RADII := Vector2(6.5, 8.5)
 ## The open mouth's outline is finer than the closed one, so the dark inside shows at his size.
@@ -200,13 +200,15 @@ func _add_face(lines: Array[InkLine], head: Transform2D, tint: Color, wash: Colo
 			for eye: Vector2 in _SURPRISED_EYES:
 				lines.append(InkLine.along(InkBrush.ellipse(head * eye, Vector2.ONE * _SURPRISED_EYE_RADIUS, spacing * 0.5),
 						tint, 0.7, true))
-			var parting := _parting() if parted else 0.0
-			var o := InkLine.along(InkBrush.ellipse(head * _SURPRISED_MOUTH.lerp(_SURPRISED_OPEN_MOUTH, parting),
-					_SURPRISED_MOUTH_RADII.lerp(_SURPRISED_OPEN_RADII, parting), spacing * 0.5), tint,
-					_OPEN_MOUTH_WIDTH if parted else _SURPRISED_MOUTH_WIDTH, true)
 			if parted:
+				# Open, the O grows from its middle as the lips part, like every other mouth.
+				var o := InkLine.along(InkBrush.ellipse(head * _SURPRISED_OPEN_MOUTH, _SURPRISED_OPEN_RADII * _parting(),
+						spacing * 0.5), tint, _OPEN_MOUTH_WIDTH, true)
 				o.fill = wash
-			lines.append(o)
+				lines.append(o)
+			else:
+				lines.append(InkLine.along(InkBrush.ellipse(head * _SURPRISED_MOUTH, _SURPRISED_MOUTH_RADII, spacing * 0.5),
+						tint, _SURPRISED_MOUTH_WIDTH, true))
 
 
 ## How far his lips are parted, from [member least_parting] as they first part to 1 at their widest.
