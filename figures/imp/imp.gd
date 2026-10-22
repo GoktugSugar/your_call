@@ -96,6 +96,18 @@ enum Wing { LEFT, RIGHT }
 ## Seconds he takes to ease back into shape after landing.
 @export_range(0.0, 2.0, 0.01) var hop_settle := 0.3
 
+@export_group("Shot")
+## How far he is knocked back and forth when the player shoots him, in pixels.
+@export_range(0.0, 80.0, 0.5) var shot_jolt := 16.0
+## How many times he is knocked back and forth.
+@export_range(1, 8) var shot_jolts := 3
+## Seconds the knocking takes.
+@export_range(0.01, 2.0, 0.01) var shot_jolt_time := 0.3
+## How much bigger he grows as he rounds on the camera, coming at it.
+@export_range(1.0, 3.0, 0.01) var round_scale := 1.45
+## Seconds he takes to round on the camera.
+@export_range(0.05, 2.0, 0.01) var round_duration := 0.4
+
 @export_group("Appearing")
 ## Seconds he takes to scribble into being.
 @export_range(0.05, 3.0, 0.01) var scribble_duration := 0.55
@@ -110,6 +122,9 @@ enum Wing { LEFT, RIGHT }
 
 ## Which wing he is in.
 var wing: Wing = Wing.RIGHT
+## Whether he has rounded on the camera, shot: he stays big and glaring, and does not hop, until he
+## next appears.
+var rounded := false
 
 ## Offsets into the drift's noise, so his two axes and his head wander independently.
 const _DRIFT_Y_OFFSET := 37.3
@@ -160,6 +175,7 @@ func _process(delta: float) -> void:
 ## Scribbles him into being at a fresh spot in [param in_wing]. Emits [signal appeared].
 func appear(in_wing: Wing = Wing.RIGHT) -> void:
 	wing = in_wing
+	rounded = false
 	position = _pick_spot(_wing_rect(wing))
 	visible = true
 	drawing.dissolve = 0.0
@@ -179,11 +195,30 @@ func hop() -> void:
 	await hop_to(_pick_spot(_wing_rect(wing)))
 
 
-## Hops to a fresh spot, unless he is mid hop or arrived where he is too recently.
+## Hops to a fresh spot, unless he is mid hop, arrived where he is too recently, or has rounded on the camera.
 func hop_if_settled() -> void:
-	if is_hopping() or _time - _arrived_at < min_stay:
+	if rounded or is_hopping() or _time - _arrived_at < min_stay:
 		return
 	await hop()
+
+
+## Shot: he is knocked back and forth, then glares and rounds on the camera, growing as he comes at it.
+## He stays like that until he next appears.
+func round_on_camera() -> void:
+	rounded = true
+	if _hop != null and _hop.is_valid():
+		_hop.kill()
+	var home := position
+	var knock := create_tween()
+	for i in shot_jolts:
+		knock.tween_property(self, ^"position:x", home.x + shot_jolt * (1.0 if i % 2 == 0 else -1.0),
+				shot_jolt_time / (shot_jolts + 1)).set_trans(Tween.TRANS_SINE)
+	knock.tween_property(self, ^"position:x", home.x, shot_jolt_time / (shot_jolts + 1))
+	await knock.finished
+	set_face(ImpDrawing.Face.GLARE)
+	var come := create_tween()
+	come.tween_property(self, ^"scale", Vector2.ONE * round_scale, round_duration).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	await come.finished
 
 
 ## Whether he is in the air or landing.
