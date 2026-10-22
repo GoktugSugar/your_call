@@ -10,6 +10,7 @@ extends Node
 ## --burst=S        with --shots, also save a screenshot every S seconds while a consequence plays
 ## --window=WxH     a plain window of exactly that size, to check a resolution
 ## --log-talk       print when each page starts, finishes inking on, and stops being spoken
+## --beat=ID        start the run at the beat with this id instead of the top
 ## [/codeblock]
 
 ## Seconds autoplay waits before each click.
@@ -32,6 +33,8 @@ func _ready() -> void:
 	overlay.visible = false
 	var args := DevArgs.parse()
 	DevArgs.apply_window(get_window(), args)
+	if args.has("beat"):
+		main.start_beat = StringName(args["beat"])
 	if args.has("speed"):
 		Engine.time_scale = float(args["speed"])
 	var player: QuestionPlayer = main.question_player
@@ -88,8 +91,9 @@ func _autoplay(pick: String) -> void:
 func _pull_lever() -> void:
 	var player: QuestionPlayer = main.question_player
 	var stage := player.stage as TrolleyStage
-	if stage == null:
-		push_error("autoplay: this stage has no lever")
+	if stage == null or not stage.lever.visible:
+		push_warning("autoplay: this stage has no lever, picking the first option instead")
+		_act(&"choose_1")
 		return
 	await get_tree().create_timer(autoplay_delay, true).timeout
 	var at := get_viewport().get_screen_transform() * stage.lever.grip_point()
