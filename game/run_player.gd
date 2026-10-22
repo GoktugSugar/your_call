@@ -79,6 +79,7 @@ func play_chapter(chapter: ChapterData, run: RunState, from := &"") -> StringNam
 			await _imp_ready()
 			var ending := await question_player.play(beat as QuestionData, run)
 			if ending != &"":
+				run.close_wallet()
 				await _end(ending)
 				return ending
 		await get_tree().create_timer(between_beats, false).timeout
