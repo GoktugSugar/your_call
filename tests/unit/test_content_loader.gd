@@ -63,6 +63,35 @@ func test_lines_get_ids_from_where_they_sit() -> void:
 	assert_eq(question.options[0].reaction[0].id, "ch1.lever.pull.1")
 
 
+func test_a_cinematic_beat_names_its_scene() -> void:
+	var loader := ContentLoader.new(AXES)
+	var chapter := loader.load_chapter(_write({"id": "ch1", "title": "The Tracks",
+			"beats": [{"kind": "cinematic", "id": "crash", "scene": "crash"}, _question()]}))
+	assert_eq(loader.problems, PackedStringArray())
+	assert_eq((chapter.find_beat(&"crash") as CinematicData).scene, &"crash")
+
+
+func test_pleas_in_stage_data_become_plea_lines() -> void:
+	var question := _question({"stage": {"type": "trolley", "tracks": [{"figures": ["stranger"]},
+			{"figures": [{"kind": "stranger", "says": "Please. Not me."}]}]}})
+	var loader := ContentLoader.new(AXES)
+	var chapter := loader.load_chapter(_write({"id": "ch1", "title": "The Tracks", "beats": [question]}))
+	var lines := (chapter.find_beat(&"lever") as QuestionData).stage_lines
+	assert_eq(lines.size(), 1)
+	assert_eq(lines[0].text, "Please. Not me.")
+	assert_eq(lines[0].speaker, &"plea")
+	assert_eq(lines[0].id, "ch1.lever.stage.1")
+
+
+func test_a_line_can_carry_a_voice_direction() -> void:
+	var question := _question()
+	question.options[0].reaction = [{"text": "What.", "direction": "[furious]"}]
+	var loader := ContentLoader.new(AXES)
+	var chapter := loader.load_chapter(_write({"id": "ch1", "title": "The Tracks", "beats": [question]}))
+	assert_eq(loader.problems, PackedStringArray())
+	assert_eq((chapter.find_beat(&"lever") as QuestionData).options[0].reaction[0].direction, "[furious]")
+
+
 func test_unknown_key_is_reported() -> void:
 	assert_eq(_load(_question({"wieght": "heavy"})).problems.size(), 1)
 

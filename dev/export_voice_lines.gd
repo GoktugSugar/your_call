@@ -24,7 +24,8 @@ func _initialize() -> void:
 		for beat in chapter.beats:
 			for line in _lines_of(beat):
 				var spoken := Markup.strip(line.text)
-				lines.append({"id": line.id, "speaker": String(line.speaker), "text": spoken, "sha1": spoken.sha1_text()})
+				lines.append({"id": line.id, "speaker": String(line.speaker), "text": spoken, "sha1": spoken.sha1_text(),
+						"direction": line.direction})
 	for problem in loader.problems:
 		printerr(problem)
 	var json := FileAccess.open(out, FileAccess.WRITE)
@@ -41,6 +42,7 @@ func _lines_of(beat: BeatData) -> Array[LineData]:
 	elif beat is QuestionData:
 		var question := beat as QuestionData
 		lines.append_array(question.ask)
+		lines.append_array(question.stage_lines)
 		for option in question.options:
 			lines.append_array(option.reaction)
 	return lines

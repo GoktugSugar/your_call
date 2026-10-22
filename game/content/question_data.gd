@@ -15,6 +15,8 @@ var weight := &"medium"
 var stage := {}
 ## The imp's lines that pose the question.
 var ask: Array[LineData] = []
+## Lines the stage shows, such as a plea floating over a figure. Their stage data names them with [code]says[/code].
+var stage_lines: Array[LineData] = []
 ## The answers, in the order the choice row and the reveal show them.
 var options: Array[OptionData] = []
 ## The reveal's heading.

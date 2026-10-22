@@ -12,8 +12,11 @@ const FACES: PackedStringArray = ["grin", "smug", "glare", "surprised"]
 const _CHAPTER_KEYS: PackedStringArray = ["id", "title", "beats"]
 const _QUESTION_KEYS: PackedStringArray = ["kind", "id", "number", "title", "verb", "weight", "stage", "ask", "options", "reveal"]
 const _NARRATION_KEYS: PackedStringArray = ["kind", "id", "lines"]
+const _CINEMATIC_KEYS: PackedStringArray = ["kind", "id", "scene"]
 const _OPTION_KEYS: PackedStringArray = ["id", "label", "outcome", "crowd", "profile", "reaction", "ending"]
-const _LINE_KEYS: PackedStringArray = ["text", "speaker", "face"]
+const _LINE_KEYS: PackedStringArray = ["text", "speaker", "face", "direction"]
+## The key that marks a line inside stage data, such as a plea over a figure.
+const _STAGE_LINE_KEY := "says"
 const _REVEAL_KEYS: PackedStringArray = ["heading"]
 
 ## Problems found so far, one line each, saying where.
@@ -81,6 +84,13 @@ func _beat(raw: Variant, chapter_id: StringName, path: String) -> BeatData:
 			narration.chapter = chapter_id
 			narration.lines = _lines(data, "lines", "%s.%s.lines" % [chapter_id, id], where)
 			return narration
+		"cinematic":
+			_check_keys(data, _CINEMATIC_KEYS, where)
+			var cinematic := CinematicData.new()
+			cinematic.id = StringName(id)
+			cinematic.chapter = chapter_id
+			cinematic.scene = StringName(_text(data, "scene", where, true))
+			return cinematic
 		var kind:
 			problems.append("%s: unknown beat kind '%s'" % [where, kind])
 			return null
@@ -97,6 +107,7 @@ func _question(data: Dictionary, chapter_id: StringName, id: StringName, where: 
 	var stage: Variant = data.get("stage", {})
 	if stage is Dictionary and str(stage.get("type", "")) != "":
 		question.stage = stage
+		_collect_stage_lines(stage, question.stage_lines, "%s.%s.stage" % [chapter_id, id])
 	else:
 		problems.append("%s: stage needs an object with a type" % where)
 	question.ask = _lines(data, "ask", "%s.%s.ask" % [chapter_id, id], where)
@@ -167,16 +178,32 @@ func _lines(data: Dictionary, key: String, id_prefix: String, where: String) -> 
 			_check_keys(raw, _LINE_KEYS, line_id)
 			var speaker := str(raw.get("speaker", "imp"))
 			var face := str(raw.get("face", ""))
+			var direction := str(raw.get("direction", ""))
 			if not speaker in SPEAKERS:
 				problems.append("%s: unknown speaker '%s'" % [line_id, speaker])
 			if face != "" and not face in FACES:
 				problems.append("%s: unknown face '%s'" % [line_id, face])
-			lines.append(LineData.make(line_id, _text(raw, "text", line_id, true), StringName(speaker), StringName(face)))
+			var made := LineData.make(line_id, _text(raw, "text", line_id, true), StringName(speaker), StringName(face))
+			made.direction = direction
+			lines.append(made)
 		else:
 			problems.append("%s: a line must be text or an object" % line_id)
 	if lines.is_empty():
 		problems.append("%s: %s needs at least one line" % [where, key])
 	return lines
+
+
+## Finds every [code]says[/code] in the stage data, depth first, and makes each a plea line.
+func _collect_stage_lines(value: Variant, into: Array[LineData], id_prefix: String) -> void:
+	if value is Dictionary:
+		if value.get(_STAGE_LINE_KEY) is String:
+			into.append(LineData.make("%s.%d" % [id_prefix, into.size() + 1], value[_STAGE_LINE_KEY], &"plea"))
+		for key: Variant in value:
+			if key != _STAGE_LINE_KEY:
+				_collect_stage_lines(value[key], into, id_prefix)
+	elif value is Array:
+		for item: Variant in value:
+			_collect_stage_lines(item, into, id_prefix)
 
 
 func _list(data: Dictionary, key: String, where: String) -> Array:
