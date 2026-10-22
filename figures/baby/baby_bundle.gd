@@ -24,19 +24,26 @@ extends Soul
 	set(value):
 		eye_spread = value
 		queue_redraw()
+## Gap between the top of the head and anything floating over it, in pixels.
+@export_range(0.0, 80.0, 0.5) var float_gap := 12.0
+
+
+## Where something floating over the baby sits: just above the top of its head, in its own space.
+func head_top() -> Vector2:
+	return _head_centre() + Vector2.UP * (head_radius + float_gap)
 
 
 func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 	var spacing := style.sample_spacing
 	var lines: Array[InkLine] = []
-	var body := Rect2(-bundle_size.x * 0.5 - head_radius * 0.5, -bundle_size.y, bundle_size.x, bundle_size.y)
+	var body := _blanket()
 	var blanket := InkLine.along(InkBrush.rounded_rect(body, bundle_size.y * 0.48, spacing), palette.ink, 1.0, true)
 	blanket.fill = palette.paper
 	lines.append(blanket)
 	var wrap := PackedVector2Array([body.position + Vector2(body.size.x * 0.32, 0.0),
 			body.position + Vector2(body.size.x * 0.5, body.size.y * 0.55), body.end - Vector2(body.size.x * 0.28, 0.0)])
 	lines.append(InkLine.along(InkBrush.resample_smooth(wrap, false, spacing * 0.5), palette.ink, 0.8))
-	var head := Vector2(body.end.x + head_radius * 0.55, -head_radius - 1.0)
+	var head := _head_centre()
 	var face := InkLine.along(InkBrush.ellipse(head, Vector2.ONE * head_radius, spacing, -PI * 0.6), palette.ink, 1.0, true)
 	face.fill = palette.paper
 	lines.append(face)
@@ -46,3 +53,13 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 	for side: float in [-1.0, 1.0]:
 		lines.append(InkLine.dot(head + Vector2(eye_spread * side, -0.5), eye_radius, palette.ink))
 	return lines
+
+
+## The blanket the baby is wrapped in, lying on the ground, with room on its right for the head.
+func _blanket() -> Rect2:
+	return Rect2(-bundle_size.x * 0.5 - head_radius * 0.5, -bundle_size.y, bundle_size.x, bundle_size.y)
+
+
+## The middle of the head, poking out of the right end of the blanket.
+func _head_centre() -> Vector2:
+	return Vector2(_blanket().end.x + head_radius * 0.55, -head_radius - 1.0)
