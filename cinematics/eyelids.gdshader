@@ -1,7 +1,7 @@
 shader_type canvas_item;
-// Waking up: a dark sheet over the page that clears unevenly, in blotches, from the middle out, the way
-// heavy eyes open. The blotch edges start soft and sharpen as the eyes focus, and the pattern drifts.
-// The rect's own colour is the darkness.
+// Shut eyes: a dark sheet over the page that clears unevenly, in blotches, from the middle out, the way
+// heavy eyes open, and closes back in the same way. The blotch edges soften out of focus and sharpen in
+// focus, and the pattern drifts. The rect's own colour is the darkness. Eyelids (eyelids.gd) drives it.
 
 /** How far the eyes are open: 0 is all dark, 1 is all clear. */
 uniform float clear : hint_range(0.0, 1.0, 0.001) = 0.0;
