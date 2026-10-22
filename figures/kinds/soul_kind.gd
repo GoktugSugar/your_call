@@ -30,6 +30,8 @@ const KIND_PATH := "res://figures/kinds/%s.tres"
 @export var heart := false
 ## Z marks drifting up from the head.
 @export var snoring := false
+## A small crown on the head, for the best life.
+@export var crown := false
 ## Falls when the trolley hits. Off for a soul already lying down, which only dissolves.
 @export var falls := true
 
@@ -59,6 +61,7 @@ func make() -> Soul:
 		figure.hair = hair
 		figure.heart = heart
 		figure.snoring = snoring
+		figure.crown = crown
 		if not falls:
 			figure.fold_steps = []
 	return soul
