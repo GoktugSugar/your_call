@@ -19,11 +19,17 @@ extends Node
 @export var question_player: QuestionPlayer
 @export var imp: Imp
 @export var dialogue: DialogueBox
+## The money chapter's balance, at the top of the screen while its wallet is open.
+@export var balance: BalanceReadout
 ## Development tools added in debug builds only.
 @export var dev_tools_scene: PackedScene
 
-## The silent portrait of the player, started fresh for each run.
-var profile := Profile.new()
+## What the run remembers, the silent portrait among it, started fresh for each run.
+var run := RunState.new()
+## The silent portrait of the player, for this run.
+var profile: Profile:
+	get:
+		return run.profile
 ## The chapters of the run, in order.
 var chapters: Array[ChapterData] = []
 
@@ -44,8 +50,10 @@ func _ready() -> void:
 	dialogue.talking_changed.connect(Music.duck)
 	imp.set_speech(dialogue.spoken_character)
 	while is_inside_tree():
-		profile = Profile.new()
-		await run_player.play_run(chapters, profile, start_chapter, start_beat)
+		run = RunState.new()
+		if balance != null:
+			balance.watch(run)
+		await run_player.play_run(chapters, run, start_chapter, start_beat)
 		await get_tree().create_timer(pause_between, false).timeout
 
 

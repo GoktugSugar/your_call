@@ -9,9 +9,12 @@ const WEIGHTS: PackedStringArray = ["light", "medium", "heavy"]
 const SPEAKERS: PackedStringArray = ["imp", "button", "plea", "headline", "confessor"]
 const FACES: PackedStringArray = ["grin", "smug", "glare", "surprised"]
 
-const _CHAPTER_KEYS: PackedStringArray = ["id", "title", "beats"]
+const _CHAPTER_KEYS: PackedStringArray = ["id", "title", "wallet", "beats"]
+const _WALLET_KEYS: PackedStringArray = ["start"]
 const _QUESTION_KEYS: PackedStringArray = ["kind", "id", "number", "title", "verb", "weight", "stage", "ask", "lines",
 		"options", "reveal"]
+## A tableau is a stage the imp talks over, with nothing to choose and no reveal.
+const _TABLEAU_KEYS: PackedStringArray = ["kind", "id", "number", "title", "weight", "stage", "ask", "lines"]
 const _NARRATION_KEYS: PackedStringArray = ["kind", "id", "lines"]
 const _CINEMATIC_KEYS: PackedStringArray = ["kind", "id", "scene"]
 const _OPTION_KEYS: PackedStringArray = ["id", "label", "outcome", "crowd", "profile", "reaction", "ending"]
@@ -47,6 +50,14 @@ func load_chapter(path: String) -> ChapterData:
 	chapter.id = StringName(_text(data, "id", path, true))
 	chapter.title = _text(data, "title", path)
 	_check_keys(data, _CHAPTER_KEYS, path)
+	var wallet: Variant = data.get("wallet", {})
+	if wallet is Dictionary:
+		_check_keys(wallet, _WALLET_KEYS, path + " wallet")
+		if not wallet.is_empty() and not (wallet.get("start") is float or wallet.get("start") is int):
+			problems.append("%s: the wallet needs a start, a number" % path)
+		chapter.wallet = wallet
+	else:
+		problems.append("%s: wallet needs an object" % path)
 	var seen := {}
 	for raw: Variant in _list(data, "beats", path):
 		var beat := _beat(raw, chapter.id, path)
@@ -82,6 +93,9 @@ func _beat(raw: Variant, chapter_id: StringName, path: String) -> BeatData:
 		"question":
 			_check_keys(data, _QUESTION_KEYS, where)
 			return _question(data, chapter_id, StringName(id), where)
+		"tableau":
+			_check_keys(data, _TABLEAU_KEYS, where)
+			return _question(data, chapter_id, StringName(id), where, true)
 		"narration":
 			_check_keys(data, _NARRATION_KEYS, where)
 			var narration := NarrationData.new()
@@ -101,14 +115,17 @@ func _beat(raw: Variant, chapter_id: StringName, path: String) -> BeatData:
 			return null
 
 
-func _question(data: Dictionary, chapter_id: StringName, id: StringName, where: String) -> QuestionData:
+## A question, or with [param tableau] a stage the imp talks over with nothing to choose.
+func _question(data: Dictionary, chapter_id: StringName, id: StringName, where: String, tableau := false) -> QuestionData:
 	var question := QuestionData.new()
 	question.id = id
 	question.chapter = chapter_id
 	question.number = _text(data, "number", where)
 	question.title = _text(data, "title", where)
-	question.verb = StringName(_one_of(data, "verb", VERBS, where))
-	question.weight = StringName(_one_of(data, "weight", WEIGHTS, where))
+	if not tableau:
+		question.verb = StringName(_one_of(data, "verb", VERBS, where))
+	if not tableau or data.has("weight"):
+		question.weight = StringName(_one_of(data, "weight", WEIGHTS, where))
 	var stage: Variant = data.get("stage", {})
 	if stage is Dictionary and str(stage.get("type", "")) != "":
 		question.stage = stage
@@ -116,9 +133,17 @@ func _question(data: Dictionary, chapter_id: StringName, id: StringName, where: 
 		_collect_stage_texts(stage, question.stage_texts)
 	else:
 		problems.append("%s: stage needs an object with a type" % where)
-	question.ask = _lines(data, "ask", "%s.%s.ask" % [chapter_id, id], where)
+	var ask: Variant = data.get("ask", [])
+	if ask is Dictionary:
+		# Keyed by name: the stage picks how to pose it.
+		for key: Variant in ask:
+			question.asks[StringName(str(key))] = _lines(ask, str(key), "%s.%s.ask.%s" % [chapter_id, id, key], where)
+		if (ask as Dictionary).is_empty():
+			problems.append("%s: ask needs at least one way to ask" % where)
+	elif not tableau or data.has("ask"):
+		question.ask = _lines(data, "ask", "%s.%s.ask" % [chapter_id, id], where)
 	var option_ids := {}
-	for raw: Variant in _list(data, "options", where):
+	for raw: Variant in _list(data, "options", where) if not tableau else []:
 		var option := _option(raw, "%s.%s" % [chapter_id, id], where)
 		if option == null:
 			continue
@@ -126,7 +151,7 @@ func _question(data: Dictionary, chapter_id: StringName, id: StringName, where: 
 			problems.append("%s: option id '%s' is used twice" % [where, option.id])
 		option_ids[option.id] = true
 		question.options.append(option)
-	if question.options.size() < 2:
+	if question.options.size() < 2 and not tableau:
 		problems.append("%s: a question needs at least two options" % where)
 	var sets: Variant = data.get("lines", {})
 	if sets is Dictionary:
@@ -138,7 +163,9 @@ func _question(data: Dictionary, chapter_id: StringName, id: StringName, where: 
 	else:
 		problems.append("%s: lines needs an object of named lists" % where)
 	var reveal: Variant = data.get("reveal", {})
-	if reveal is Dictionary:
+	if tableau:
+		pass
+	elif reveal is Dictionary:
 		_check_keys(reveal, _REVEAL_KEYS, where + " reveal")
 		question.reveal_heading = str(reveal.get("heading", question.reveal_heading))
 		question.reveal_mark = _text(reveal, "mark", where + " reveal")
@@ -172,14 +199,12 @@ func _option(raw: Variant, line_prefix: String, where: String) -> OptionData:
 		problems.append("%s: outcome needs an object" % here)
 	var profile: Variant = data.get("profile", {})
 	if profile is Dictionary:
-		for axis: Variant in profile:
-			var nudge: Variant = profile[axis]
-			if not (nudge is float or nudge is int):
-				problems.append("%s: profile nudge for '%s' needs a number" % [here, axis])
-			elif not _axes.is_empty() and not str(axis) in _axes:
-				problems.append("%s: unknown profile axis '%s'" % [here, axis])
+		for key: Variant in profile:
+			if profile[key] is Dictionary:
+				# Keyed by an outcome: these nudges replace the plain ones when the stage reports it.
+				option.profiles[StringName(str(key))] = _nudges(profile[key], "%s outcome %s" % [here, key])
 			else:
-				option.profile[StringName(axis)] = float(nudge)
+				option.profile.merge(_nudges({key: profile[key]}, here))
 	else:
 		problems.append("%s: profile needs an object" % here)
 	var reaction: Variant = data.get("reaction", [])
@@ -201,6 +226,20 @@ func _option(raw: Variant, line_prefix: String, where: String) -> OptionData:
 	else:
 		problems.append("%s: ending needs a name, or an object of names by outcome" % here)
 	return option
+
+
+## Profile nudges by axis id, from [param data].
+func _nudges(data: Dictionary, here: String) -> Dictionary[StringName, float]:
+	var nudges: Dictionary[StringName, float] = {}
+	for axis: Variant in data:
+		var nudge: Variant = data[axis]
+		if not (nudge is float or nudge is int):
+			problems.append("%s: profile nudge for '%s' needs a number" % [here, axis])
+		elif not _axes.is_empty() and not str(axis) in _axes:
+			problems.append("%s: unknown profile axis '%s'" % [here, axis])
+		else:
+			nudges[StringName(axis)] = float(nudge)
+	return nudges
 
 
 func _lines(data: Dictionary, key: String, id_prefix: String, where: String) -> Array[LineData]:

@@ -3,7 +3,8 @@ extends Node
 ## Plays one question through the core loop: the imp poses it, the player answers with the stage's
 ## control or the choice row, the ink consequence plays, the imp reacts over the world, a click lets
 ## the choice land, the crowd reveal shows how others chose, and the choice quietly nudges the profile.
-## On an offer ladder the offer comes round again after each acceptance, until the player stops.
+## On an offer ladder the offer comes round again after each acceptance, until the player stops. A
+## tableau, a question with nothing to choose, is its stage, what the imp says over it, and a click.
 
 ## Emitted as the question moves through the loop.
 signal phase_changed(phase: Phase)
@@ -48,16 +49,26 @@ var question: QuestionData
 var stage: Stage
 
 
-## Plays [param to_play] from start to finish. Each pick's profile nudges are added to [param profile].
-## Returns the secret ending the player's choice fired, or an empty name.
-func play(to_play: QuestionData, profile: Profile) -> StringName:
+## Plays [param to_play] from start to finish, handing its stage [param run], what the run remembers.
+## Each pick's profile nudges are added to the run's profile. Returns the secret ending the player's
+## choice fired, or an empty name.
+func play(to_play: QuestionData, run: RunState) -> StringName:
 	question = to_play
-	stage = _make_stage(to_play)
+	stage = _make_stage(to_play, run)
 	if stage == null:
 		return &""
 	phase = Phase.ASKING
 	await stage.enter()
-	await dialogue.say(stage.fill(to_play.ask), true)
+	var ask := stage.fill(to_play.ask_for(stage.ask_key()))
+	if to_play.is_tableau():
+		await _play_tableau(ask)
+		return &""
+	if not stage.offers_choice():
+		await dialogue.say(ask)
+		await dialogue.close()
+		await _finish()
+		return &""
+	await dialogue.say(ask, true)
 
 	var pick := 0
 	while true:
@@ -80,7 +91,7 @@ func play(to_play: QuestionData, profile: Profile) -> StringName:
 			await dialogue.close()
 			phase = Phase.DONE
 			return ending
-		profile.apply(option.profile)
+		run.profile.apply(option.profile_for(result))
 		if stage.another_round():
 			await _say_between_rounds(reaction)
 			continue
@@ -93,11 +104,7 @@ func play(to_play: QuestionData, profile: Profile) -> StringName:
 	await _pause(before_reveal)
 	phase = Phase.REVEALING
 	await reveal.present(stage.reveal_split(pick))
-
-	stage.queue_free()
-	stage = null
-	question = null
-	phase = Phase.DONE
+	await _finish(false)
 	return &""
 
 
@@ -110,6 +117,33 @@ func clear_stage() -> void:
 	question = null
 	await leaving.leave()
 	leaving.queue_free()
+
+
+## A tableau: the imp says its ask over the stage, if it has one, the stage plays out and says how it
+## came out, and the imp says the question's lines for that, the click on the last page the gate.
+func _play_tableau(ask: Array[LineData]) -> void:
+	if not ask.is_empty():
+		await dialogue.say(ask)
+		await dialogue.close()
+	phase = Phase.CONSEQUENCE
+	var result := await stage.play_consequence(-1)
+	await _pause(before_reaction)
+	phase = Phase.REACTING
+	var lines := stage.fill(question.lines_in(result))
+	if not lines.is_empty():
+		await dialogue.say(lines)
+	await dialogue.close()
+	await _finish()
+
+
+## Lets go of the question: the stage dissolves away first when [param leaving].
+func _finish(leaving := true) -> void:
+	if leaving:
+		await stage.leave()
+	stage.queue_free()
+	stage = null
+	question = null
+	phase = Phase.DONE
 
 
 ## Waits for the player's pick: in the choice row, with the stage's controls lit and picking in step,
@@ -125,7 +159,7 @@ func _choose(to_play: QuestionData) -> int:
 	stage.option_committed.connect(choices.commit)
 	choices.hovered.connect(stage.highlight_option)
 	stage.set_choosing(true)
-	var pick := await choices.offer(to_play.option_labels(), dialogue.frame_rect())
+	var pick := await choices.offer(stage.option_labels(), dialogue.frame_rect())
 	stage.set_choosing(false)
 	choices.hovered.disconnect(stage.highlight_option)
 	stage.option_hovered.disconnect(choices.highlight)
@@ -148,7 +182,7 @@ func _say_between_rounds(lines: Array[LineData]) -> void:
 			await dialogue.close()
 
 
-func _make_stage(for_question: QuestionData) -> Stage:
+func _make_stage(for_question: QuestionData, run: RunState) -> Stage:
 	var type := str(for_question.stage.get("type", ""))
 	var path := STAGE_SCENE % [type, type]
 	var packed := load(path) as PackedScene if ResourceLoader.exists(path) else null
@@ -157,6 +191,7 @@ func _make_stage(for_question: QuestionData) -> Stage:
 		return null
 	var made := packed.instantiate() as Stage
 	made.dialogue = dialogue
+	made.run = run
 	made.imp_face_cued.connect(imp_face_cued.emit)
 	stage_root.add_child(made)
 	made.setup(for_question)
