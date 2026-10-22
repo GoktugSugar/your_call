@@ -95,10 +95,14 @@ func _check_start(chapters: Array[ChapterData]) -> void:
 		start_beat = &""
 
 
-## Each page sets the imp's face (his grin unless the line asks for another) and may send him hopping.
-func _on_page_shown(line: LineData, _page: int, _page_count: int) -> void:
+## Each page sets the imp's face (his grin unless the line asks for another) and may send him hopping; a
+## new line may send him roaming, when the page is his.
+func _on_page_shown(line: LineData, page: int, _page_count: int) -> void:
 	imp.set_face(_face(line.face))
-	imp.hop_if_settled()
+	if page == 0:
+		imp.hop_for_line()
+	else:
+		imp.hop_if_settled()
 
 
 ## A stage cues the imp's face, such as his surprise when a button comes alive. It holds until the next
