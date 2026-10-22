@@ -2,8 +2,9 @@ class_name CrashCinematic
 extends CanvasLayer
 ## The opening: a brief, fragmentary ink flash of the judge's death over black, then waking in the void.
 ## Headlights bear down on a night road, flickering like a bad memory; the view swerves; the hit lands
-## with a flash and a shake; then black. The black clears in uneven blotches, blinking, drifting and
-## sharpening as the eyes focus, onto the plain page. No text, no body. An advance press skips to the end.
+## with a flash and a shake; then black. The eyes open ([Eyelids]): the black clears in uneven blotches,
+## blinking, drifting and sharpening as they focus, onto the plain page. No text, no body. An advance
+## press skips to the end.
 
 ## Emitted at the moment of the hit, for the sound of it.
 signal hit
@@ -16,8 +17,8 @@ signal finished
 @export var night: ColorRect
 ## The white of the hit.
 @export var flash: ColorRect
-## The darkness that clears as the eyes open.
-@export var waking: ColorRect
+## The shut eyes that open onto the page once the memory has gone black. Their timing is theirs.
+@export var eyelids: Eyelids
 
 @export_group("Approach")
 ## Seconds the headlights take to arrive.
@@ -51,24 +52,6 @@ signal finished
 ## Seconds of black before waking.
 @export_range(0.0, 5.0, 0.05) var black_hold := 0.6
 
-@export_group("Waking")
-## How far the eyes first open, as a share of fully open.
-@export_range(0.0, 1.0, 0.01) var first_open := 0.5
-## Seconds the eyes take to first open.
-@export_range(0.05, 5.0, 0.05) var first_open_time := 0.9
-## How far the eyes sink back in the heavy blink.
-@export_range(0.0, 1.0, 0.01) var blink_close := 0.3
-## Seconds the heavy blink takes.
-@export_range(0.05, 5.0, 0.05) var blink_time := 0.3
-## Seconds the eyes take to open the rest of the way.
-@export_range(0.05, 5.0, 0.05) var full_open_time := 1.1
-## How far the blotches drift while the eyes focus, across and up and down, in pixels. The drift settles to nothing.
-@export var drift_strength := Vector2(80.0, 40.0)
-## Sways a second of the blotches' drift, across and up and down.
-@export var drift_rate := Vector2(0.8, 0.56)
-## How blurred the blotch edges start, and how sharp they end.
-@export var focus_softness := Vector2(0.32, 0.03)
-
 @export_group("Skipping")
 ## Seconds after it starts before a press can skip it, so a click that only brings the window
 ## into focus does not throw the opening away.
@@ -76,7 +59,6 @@ signal finished
 
 var _running := false
 var _sequence: Tween
-var _focus: Tween
 var _rng := RandomNumberGenerator.new()
 var _approach := 0.0
 var _swerve := 0.0
@@ -88,7 +70,6 @@ var _flickering := false
 func _ready() -> void:
 	var palette := InkPalette.get_default()
 	night.color = palette.ink
-	waking.color = palette.ink
 	flash.color = palette.paper
 	visible = false
 	set_process(false)
@@ -124,7 +105,6 @@ func play() -> void:
 	_running = true
 	_flickering = true
 	set_process(true)
-	var waking_material := waking.material as ShaderMaterial
 	_sequence = create_tween()
 	_sequence.tween_method(_set_approach, 0.0, 1.0, approach_duration)
 	_sequence.parallel().tween_method(_set_swerve, 0.0, 1.0, swerve_duration) \
@@ -134,14 +114,7 @@ func play() -> void:
 	_sequence.parallel().tween_method(_shake, 1.0, 0.0, shake_duration)
 	_sequence.tween_callback(_cut_to_black)
 	_sequence.tween_interval(black_hold)
-	_sequence.tween_callback(_begin_waking)
-	_sequence.tween_method(_set_clear.bind(waking_material), 0.0, first_open, first_open_time) \
-			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	_sequence.tween_method(_set_clear.bind(waking_material), first_open, blink_close, blink_time) \
-			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	_sequence.tween_method(_set_clear.bind(waking_material), blink_close, 1.0, full_open_time) \
-			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	_sequence.tween_callback(_finish)
+	_sequence.tween_callback(_wake)
 	await finished
 
 
@@ -155,7 +128,7 @@ func _reset() -> void:
 	view.position = _center()
 	flash.visible = true
 	flash.modulate.a = 0.0
-	waking.visible = false
+	eyelids.visible = false
 	_approach = 0.0
 	_swerve = 0.0
 	_clock = 0.0
@@ -193,26 +166,12 @@ func _cut_to_black() -> void:
 	flash.visible = false
 
 
-func _begin_waking() -> void:
-	var material := waking.material as ShaderMaterial
-	material.set_shader_parameter(&"clear", 0.0)
-	material.set_shader_parameter(&"softness", focus_softness.x)
-	waking.visible = true
+## The night gives way to shut eyes, which open onto the page. Their blotches sway on this cinematic's
+## clock.
+func _wake() -> void:
 	night.visible = false
-	var focus_time := first_open_time + blink_time + full_open_time
-	_focus = create_tween()
-	_focus.tween_method(_focus_step.bind(material), 0.0, 1.0, focus_time)
-
-
-## Drifts the blotches in a sway that settles, and sharpens their edges, as the eyes focus.
-func _focus_step(progress: float, material: ShaderMaterial) -> void:
-	var sway := _clock * drift_rate * TAU
-	material.set_shader_parameter(&"drift", Vector2(sin(sway.x), cos(sway.y)) * drift_strength * (1.0 - progress))
-	material.set_shader_parameter(&"softness", lerpf(focus_softness.x, focus_softness.y, progress))
-
-
-func _set_clear(value: float, material: ShaderMaterial) -> void:
-	material.set_shader_parameter(&"clear", value)
+	await eyelids.open(_clock)
+	_finish()
 
 
 func _finish() -> void:
@@ -220,9 +179,9 @@ func _finish() -> void:
 		return
 	_running = false
 	_flickering = false
-	for tween: Tween in [_sequence, _focus]:
-		if tween != null and tween.is_valid():
-			tween.kill()
+	if _sequence != null and _sequence.is_valid():
+		_sequence.kill()
+	eyelids.stop()
 	set_process(false)
 	offset = Vector2.ZERO
 	visible = false
