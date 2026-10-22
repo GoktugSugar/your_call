@@ -9,6 +9,8 @@ The game's questions and narration live here as data. Adding a question means ad
 
 The tests in `tests/content/` load every chapter and fail on any problem, so run them after editing.
 
+The trailer's lines are written in the same form, a chapter of narration beats, in `trailer/trailer_lines.json`: their ids are `trailer.<name>.lines.1`, and the voice tools voice them with the rest.
+
 ## A chapter
 
 ```json
