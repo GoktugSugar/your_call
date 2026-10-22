@@ -511,7 +511,8 @@
         "button": "green",
         "comes_alive": true,
         "says": [
-          { "text": "Ow! Fuck. That actually hurt, you absolute prick.", "speaker": "button" },
+          { "text": "Ow! Fuck.", "speaker": "button", "direction": "[yelping in pain]" },
+          { "text": "That actually hurt, you absolute prick.", "speaker": "button" },
           { "text": "Unbelievable. I did nothing to you. Nothing.", "speaker": "button" }
         ]
       },

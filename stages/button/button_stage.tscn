@@ -10,7 +10,7 @@
 script = ExtResource("1_stage")
 button = NodePath("Button")
 walker_scene = ExtResource("3_walker")
-yelp_arms = ExtResource("4_fist")
+swear_arms = ExtResource("4_fist")
 stomp_arms = ExtResource("5_rest")
 
 [node name="Button" parent="." instance=ExtResource("2_button")]

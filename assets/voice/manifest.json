@@ -1511,11 +1511,11 @@
   },
   "ch2.walks_away.stage.1": {
     "audio": "res://assets/voice/button/ch2.walks_away.stage.1.mp3",
-    "direction": "",
+    "direction": "[yelping in pain]",
     "model": "eleven_v3",
-    "seconds": 3.36,
+    "seconds": 1.6,
     "speaker": "button",
-    "text_sha1": "a6111a7b67036b66663341f6ff848b21ef1275b9",
+    "text_sha1": "7a7817e1f099529389d057c5f5369d05c1925e01",
     "timing": "res://assets/voice/button/ch2.walks_away.stage.1.json",
     "voice": "c02aa7b55de3"
   },
@@ -1523,10 +1523,20 @@
     "audio": "res://assets/voice/button/ch2.walks_away.stage.2.mp3",
     "direction": "",
     "model": "eleven_v3",
-    "seconds": 3.28,
+    "seconds": 2.4,
+    "speaker": "button",
+    "text_sha1": "d535897578df5e59d6fc30202f2477339f791e8f",
+    "timing": "res://assets/voice/button/ch2.walks_away.stage.2.json",
+    "voice": "c02aa7b55de3"
+  },
+  "ch2.walks_away.stage.3": {
+    "audio": "res://assets/voice/button/ch2.walks_away.stage.3.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.2,
     "speaker": "button",
     "text_sha1": "87b444db0b9d446a31262ef7987212aca8e8d8dd",
-    "timing": "res://assets/voice/button/ch2.walks_away.stage.2.json",
+    "timing": "res://assets/voice/button/ch2.walks_away.stage.3.json",
     "voice": "c02aa7b55de3"
   }
 }

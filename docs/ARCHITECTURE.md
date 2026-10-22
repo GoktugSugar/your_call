@@ -88,7 +88,7 @@ The trolley speeds up all the way. Each soul folds as the trolley's front reache
 
 **The timer stage** takes the choice by itself: one button with a word on it and a clock counting down over it. The imp's `countdown` lines drop in at `stage.cues` without waiting for clicks, and the player presses the button (or key 1) or lets the clock run out.
 
-**The button stage** is one button alone. The option whose outcome has `press` presses it. With `comes_alive`, the button is a dormant walking button: pressed, it wakes, says the stage's first line with a fist shaken at the player, gets up and stomps off saying the second.
+**The button stage** is one button alone. The option whose outcome has `press` presses it. With `comes_alive`, the button is a dormant walking button: pressed, it yelps the stage's first line as the press lands and wakes, says the second with a fist shaken at the player, gets up and stomps off saying the third.
 
 **The better offer stage** is a button and the best life: the golden soul inks itself in on the ask line `stage.cue`. Taking it presses the button, and the soul hops for joy and strolls off, fading; keeping your own, it turns its back and fades.
 

@@ -3,9 +3,10 @@ extends Stage
 ## One push button, alone on the page. The option whose outcome has [code]press[/code] presses it; the
 ## other leaves it be. Stage data: [code]{"type": "button", "button": "plain"}[/code], where
 ## [code]button[/code] names the button's look.
-## With [code]"comes_alive": true[/code] the button is the walking button, dormant: pressed, it wakes
-## with a start, says the stage's first line with a fist shaken at the player, gets up, and stomps off
-## saying the second. Its lines are the stage data's [code]says[/code], spoken by the button.
+## With [code]"comes_alive": true[/code] the button is the walking button, dormant: pressed, it yelps
+## the stage's first line as the press lands and wakes with a start, says the second with a fist shaken
+## at the player, gets up, and stomps off saying the third. Its lines are the stage data's
+## [code]says[/code], spoken by the button.
 
 ## The button.
 @export var button: PushButton
@@ -13,12 +14,12 @@ extends Stage
 @export var walker_scene: PackedScene
 
 @export_group("Coming alive")
-## The arm pose it yelps with.
-@export var yelp_arms: ButtonArmPose
+## The arm pose it swears at the player with, once it is awake.
+@export var swear_arms: ButtonArmPose
 ## The arm pose it stomps off with.
 @export var stomp_arms: ButtonArmPose
-## Seconds it holds its yelp before it gets up, at least: it finishes saying its line first.
-@export_range(0.0, 5.0, 0.05) var yelp_hold := 2.2
+## Seconds it shakes its fist before it gets up, at least: it finishes saying its line first.
+@export_range(0.0, 5.0, 0.05) var swear_hold := 2.2
 ## Which way it stomps off: -1 left, 1 right. The imp stands to the right.
 @export_range(-1, 1) var exit_direction := -1
 
@@ -58,10 +59,10 @@ func highlight_option(index: int) -> void:
 func play_consequence(index: int) -> StringName:
 	set_choosing(false)
 	button.highlighted = false
-	if index == _press:
+	if index == _press and _walker != null:
+		await _come_alive()
+	elif index == _press:
 		await button.press()
-		if _walker != null:
-			await _come_alive()
 	await get_tree().create_timer(after_hold, false).timeout
 	return &""
 
@@ -70,21 +71,30 @@ func option_point(index: int) -> Vector2:
 	return button.press_point() if index >= 0 and index == _press else Vector2.INF
 
 
-## The button wakes with a start, swears at the player, gets up and stomps off, muttering. Its lines
-## are said aloud when they have been voiced, and it finishes each before it moves on.
+## Pressed, the button yelps as the press lands and wakes with a start, swears at the player, gets up
+## and stomps off, muttering. Its lines are said aloud when they have been voiced, and it finishes each
+## before the next.
 func _come_alive() -> void:
 	var said := question.stage_lines
+	_say(said, 0)
+	await button.press()
 	await _walker.wake()
-	if said.size() > 0:
-		_walker.say(said[0].text, VoiceLibrary.clip_for(said[0]))
-	if yelp_arms != null:
-		_walker.hold_arms(yelp_arms)
-	await get_tree().create_timer(yelp_hold, false).timeout
+	await _walker.finish_saying()
+	_say(said, 1)
+	if swear_arms != null:
+		_walker.hold_arms(swear_arms)
+	await get_tree().create_timer(swear_hold, false).timeout
 	await _walker.finish_saying()
 	await _walker.stand_up()
 	if stomp_arms != null:
 		_walker.hold_arms(stomp_arms)
-	if said.size() > 1:
-		_walker.say(said[1].text, VoiceLibrary.clip_for(said[1]))
+	_say(said, 2)
 	await _walker.walk_off(exit_direction)
 	await _walker.finish_saying()
+
+
+## Has the walking button say line [param index] of [param said], if there is one, aloud when it has
+## been voiced. It does not wait for the line to be said.
+func _say(said: Array[LineData], index: int) -> void:
+	if index < said.size():
+		_walker.say(said[index].text, VoiceLibrary.clip_for(said[index]))

@@ -100,6 +100,8 @@ Several stages are pressed with a push button. Where a stage takes `"button"`, i
 
 One button, alone. The pressing option presses it; the other leaves it be.
 
+With `"comes_alive": true` it is the walking button, dormant until pressed: it yelps the first of the stage's `says` lines as the press lands and wakes with a start, says the second with a fist shaken at the player, gets up, and stomps off saying the third. Its lines are spoken by the button (`"speaker": "button"`), each finished before the next.
+
 ### The better offer stage
 
 ```json
