@@ -146,3 +146,7 @@ Built unattended while the user slept, as they asked. Technical calls are the de
 - **Colours for the items the script left uncoloured.** Provisional, made overnight. Sky for Ten More IQ and Rewind, ink for Perfect Memory, green for One More Voice, purple for Never Tired, orange for The Lie Detector, Charisma and the burrito, grey for Feel Nothing.
 - **Weights.** Provisional, made overnight. The shop items and breathers are light; End Poverty, the auction, the buyback, the years and the receipt are medium.
 - **Chapter 3 is voiced.** Dev, as the user approved for the overnight run: the trimmed copy in the two voices there are, with `eleven_v3`: 116 takes, 15,108 characters (the imp's lines in the wiseguy barker's voice, the walking button's five in its own). Every take came back from v3 and none fell back; none was plainly broken (the slowest reads a dollar amount out as words). Played through end to end with the voice, and the auction's ending through the credits.
+
+## 2026-10-22: the dev menu for more chapters
+
+- **The dev menu lists the chapters, with the picked chapter's questions beside them.** Dev, asked for by the user in the morning: with three chapters or more, a column per chapter ran off the screen. The chapters are now a list on the left, and clicking or reaching one shows its questions on the right, a long chapter in even columns of at most sixteen. The menu is sized for its biggest page, so it keeps still from chapter to chapter, and it opens on the chapter being played.
