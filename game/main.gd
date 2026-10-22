@@ -24,6 +24,8 @@ extends Node
 
 ## The silent portrait of the player, started fresh for each run.
 var profile := Profile.new()
+## The chapters of the run, in order.
+var chapters: Array[ChapterData] = []
 
 
 func _ready() -> void:
@@ -31,7 +33,7 @@ func _ready() -> void:
 		var tools := dev_tools_scene.instantiate()
 		tools.set(&"main", self)
 		add_child(tools)
-	var chapters := _load_run()
+	chapters = _load_run()
 	if chapters.is_empty():
 		push_error("Main: no chapters to play in %s" % run_path)
 		return

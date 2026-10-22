@@ -1,5 +1,6 @@
 extends Node
-## Development only: Main adds this in debug builds. F5 restarts, F3 shows the overlay with the
+## Development only: Main adds this in debug builds. F2 opens a menu to jump to any chapter or question,
+## F5 restarts (at the last jump, if there was one), F3 shows the overlay with the chapter, the
 ## question's phase and the silent profile. Switches after [code]--[/code] on the command line:
 ## [codeblock]
 ## --autoplay=N     pick option N (counting from 1) and click through everything else
@@ -17,6 +18,10 @@ extends Node
 ## --every=S        with --shots, also save a screenshot every S seconds all the way through
 ## --window=WxH     a plain window of exactly that size, to check a resolution
 ## --log-talk       print when each page starts, finishes inking on, and stops being spoken
+## --target=XX      on the nuke stage, the pin lands on the country with this code, such as VA
+## --home=XX        on the nuke stage, treat the country with this code as the player's own
+## --menu=S         open the jump menu S seconds in, once per launch, for a screenshot of it
+## --menu-pick=CH:BEAT  with --menu, then pick that entry from it, such as ch2:timer (ch2: is its top)
 ## --chapter=ID     start the run at the chapter with this id, such as ch2, instead of the first
 ## --beat=ID        start at the beat with this id, in that chapter or the first chapter that has it
 ## [/codeblock]
@@ -25,12 +30,21 @@ extends Node
 @export_range(0.0, 5.0, 0.05) var autoplay_delay := 0.6
 ## Shows the phase and the profile.
 @export var overlay: Label
+## Lists every chapter and question to jump to.
+@export var menu: DevMenu
+
+## Where the last jump from the menu starts the run. Kept across restarts, so F5 starts there again.
+static var _jump_chapter := &""
+static var _jump_beat := &""
+## Whether --menu has opened the menu already in this launch, so a jump's restart does not open it again.
+static var _menu_opened := false
+## Screenshots taken so far, counted across restarts so a jump does not write over earlier ones.
+static var _shot_count := 0
 
 ## The main scene, set by Main before this enters the tree.
 var main: Main
 
 var _shot_path := ""
-var _shot_count := 0
 var _burst := 0.0
 var _questions_done := 0
 var _quit_after := 0
@@ -38,6 +52,7 @@ var _quit_after := 0
 var _picks := PackedStringArray()
 var _choices_made := 0
 var _chapter := &""
+var _beat := &""
 
 
 func _ready() -> void:
@@ -49,7 +64,21 @@ func _ready() -> void:
 		main.start_chapter = StringName(args["chapter"])
 	if args.has("beat"):
 		main.start_beat = StringName(args["beat"])
+	if _jump_chapter != &"":
+		main.start_chapter = _jump_chapter
+		main.start_beat = _jump_beat
 	main.run_player.chapter_started.connect(func(chapter: ChapterData) -> void: _chapter = chapter.id)
+	main.run_player.beat_started.connect(func(beat: BeatData) -> void: _beat = beat.id)
+	menu.picked.connect(_jump_to)
+	if args.has("menu") and not _menu_opened:
+		_menu_opened = true
+		_open_menu_after(float(args["menu"]), str(args.get("menu-pick", "")))
+	if args.has("target") or args.has("home"):
+		# A stage is set up just after it enters the tree, so this lands before the nuke stage picks.
+		# Any other stage has no such property and ignores it.
+		main.question_player.stage_root.child_entered_tree.connect(func(node: Node) -> void:
+			node.set(&"target_override", str(args.get("target", "")))
+			node.set(&"home_override", str(args.get("home", ""))))
 	if args.has("speed"):
 		Engine.time_scale = float(args["speed"])
 	var player: QuestionPlayer = main.question_player
@@ -73,10 +102,42 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed(&"dev_restart"):
-		get_tree().reload_current_scene()
+	if event.is_action_pressed(&"dev_menu"):
+		get_viewport().set_input_as_handled()
+		if menu.is_open():
+			menu.close()
+		else:
+			menu.open(main.chapters, _chapter, _beat)
+	elif event.is_action_pressed(&"dev_restart"):
+		_restart()
 	elif event.is_action_pressed(&"dev_overlay"):
 		overlay.visible = not overlay.visible
+
+
+## Starts the run over at [param chapter], from [param beat] or its top, and keeps that as the place
+## F5 starts from.
+func _jump_to(chapter: StringName, beat: StringName) -> void:
+	_jump_chapter = chapter
+	_jump_beat = beat
+	_restart()
+
+
+func _restart() -> void:
+	get_tree().paused = false
+	get_tree().reload_current_scene()
+
+
+## Opens the menu [param seconds] in, then picks [param pick] (chapter:beat) from it, if given.
+func _open_menu_after(seconds: float, pick: String) -> void:
+	await get_tree().create_timer(seconds, true, false, true).timeout
+	menu.open(main.chapters, _chapter, _beat)
+	if pick.is_empty():
+		return
+	await get_tree().create_timer(autoplay_delay * 2.0, true, false, true).timeout
+	if not _shot_path.is_empty():
+		await _shoot()
+	var parts := pick.split(":")
+	menu.pick(StringName(parts[0]), StringName(parts[1] if parts.size() > 1 else ""))
 
 
 func _process(_delta: float) -> void:
