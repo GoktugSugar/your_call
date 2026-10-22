@@ -165,7 +165,8 @@
             "6": ["[amber]Six[/amber]. [amber]Six![/amber] I can hardly say it with a straight face."],
             "3": ["[amber]Three dollars[/amber]. We are nearly at the bottom, you magnificent [red]ghoul[/red]. Press on."],
             "1": [
-              { "text": "A [red]person[/red]. You just [red]killed[/red] a person. For [amber]one dollar[/amber]. I am not doing the voice for this one. There is nothing funny here, nothing, and I find everything funny. You are a greedy piece of shit, and I am done with you. Go and rot. I quit.", "face": "glare" }
+              { "text": "A [red]person[/red]. You just [red]killed[/red] a person. For [amber]one dollar[/amber].", "face": "glare" },
+              { "text": "I am not doing the voice for this one. There is nothing funny here, nothing, and I find everything funny. You are a greedy piece of shit, and I am done with you. Go and rot. I quit.", "face": "glare", "voiced": false }
             ]
           },
           "ending": { "1": "dollar" }
