@@ -8,8 +8,11 @@ var id := ""
 var speaker := &"imp"
 ## What they say, with colour tags such as [code][amber]five[/amber][/code].
 var text := ""
-## The imp's expression while he says it, or empty to leave it as it is.
+## The imp's expression while he says it, or empty for his usual grin.
 var face := &""
+## A stage direction for the voice, such as [code][furious][/code], said before the line but not
+## spoken or shown. Empty uses the speaker's own direction, if any.
+var direction := ""
 
 
 static func make(line_id: String, line_text: String, line_speaker := &"imp", line_face := &"") -> LineData:

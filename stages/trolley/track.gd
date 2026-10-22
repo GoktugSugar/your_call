@@ -68,6 +68,16 @@ func direction_at(distance: float) -> Vector2:
 	return (ahead - behind).normalized()
 
 
+## How far [param point], in this node's space, is from the nearest point of the centre line.
+func distance_to_point(point: Vector2) -> float:
+	_ensure_centerline()
+	var nearest := INF
+	for i in range(1, _centerline.size()):
+		var on_line := Geometry2D.get_closest_point_to_segment(point, _centerline[i - 1], _centerline[i])
+		nearest = minf(nearest, point.distance_to(on_line))
+	return nearest
+
+
 ## How far along the track it first reaches [param x] in this node's space, or the end if it never does.
 func distance_at_x(x: float) -> float:
 	_ensure_centerline()

@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://stages/trolley/plea.gd" id="1_plea"]
+
+[node name="Plea" type="Node2D" node_paths=PackedStringArray("label")]
+script = ExtResource("1_plea")
+label = NodePath("Words")
+
+[node name="Words" type="RichTextLabel" parent="."]
+offset_left = -230.0
+offset_right = 230.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 3
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+clip_contents = false

@@ -43,7 +43,7 @@ The editor is the 4.7.2 standard build in `C:/Program Files/Godot/`. There is no
 - Run the game: `"C:/Program Files/Godot/Godot.exe" --path .` (F5 restarts, F3 shows the phase and the silent profile)
 - Look before you claim a visual change works. Autoplay a question and save a screenshot before each click, plus a burst during the consequence:
   `G --path . -- --window=1920x1080 --autoplay=1 --speed=2 --shots=<scratch>/run --burst=0.25 --quit-after=1`
-  (`--autoplay=lever` clicks the stage's lever instead of a choice word.) Any other scene: `G --path . res://dev/capture_runner.tscn -- --window=1920x1080 --scene=res://... --out=<scratch>/shot --times=0.5,2`
+  (`--autoplay=lever` clicks the stage's lever instead of a choice word, `--point` clicks option N where the stage shows it, a track or a doodle, and `--every=S` adds a screenshot every S seconds, for beats nobody clicks through such as the crash and the credits.) Any other scene: `G --path . res://dev/capture_runner.tscn -- --window=1920x1080 --scene=res://... --out=<scratch>/shot --times=0.5,2`
 - The game opens maximized. `--window=WxH` forces an exact window size, so check small windows (`--window=1600x900`) as well as large.
 - Keep screenshots and other scratch output out of the repo.
 

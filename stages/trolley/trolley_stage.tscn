@@ -1,28 +1,56 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://stages/trolley/trolley_stage.gd" id="1_stage"]
 [ext_resource type="Script" path="res://stages/trolley/track.gd" id="2_track"]
 [ext_resource type="Script" path="res://stages/trolley/trolley_cart.gd" id="3_cart"]
 [ext_resource type="Script" path="res://stages/trolley/lever.gd" id="4_lever"]
-[ext_resource type="PackedScene" path="res://figures/stick_figure.tscn" id="5_figure"]
+[ext_resource type="Script" path="res://stages/trolley/track_layout.gd" id="5_layout"]
+[ext_resource type="PackedScene" path="res://stages/trolley/plea.tscn" id="6_plea"]
+[ext_resource type="Resource" path="res://figures/poses/plead.tres" id="7_plead"]
 
-[node name="TrolleyStage" type="Node2D" node_paths=PackedStringArray("approach", "routes", "trolley", "lever", "figure_layer")]
+[node name="TrolleyStage" type="Node2D" node_paths=PackedStringArray("approach", "layouts", "trolley", "lever", "figure_layer")]
 script = ExtResource("1_stage")
 approach = NodePath("Tracks/Approach")
-routes = [NodePath("Tracks/Route0"), NodePath("Tracks/Route1")]
+layouts = [NodePath("Tracks/Fork"), NodePath("Tracks/Fan")]
 trolley = NodePath("Trolley")
 lever = NodePath("Lever")
 figure_layer = NodePath("Figures")
-figure_scene = ExtResource("5_figure")
+plea_scene = ExtResource("6_plea")
+plead_pose = ExtResource("7_plead")
 
 [node name="Tracks" type="Node2D" parent="."]
 
-[node name="Route1" type="Node2D" parent="Tracks"]
+[node name="Fork" type="Node2D" parent="Tracks" node_paths=PackedStringArray("routes")]
+script = ExtResource("5_layout")
+routes = [NodePath("Route0"), NodePath("Route1")]
+
+[node name="Route1" type="Node2D" parent="Tracks/Fork"]
 script = ExtResource("2_track")
 path_points = PackedVector2Array(760, 575, 820, 573, 900, 540, 980, 465, 1060, 404, 1160, 381, 1600, 380)
 bare_start = 34.0
 
-[node name="Route0" type="Node2D" parent="Tracks"]
+[node name="Route0" type="Node2D" parent="Tracks/Fork"]
+script = ExtResource("2_track")
+path_points = PackedVector2Array(760, 575, 1600, 575)
+bare_start = 34.0
+
+[node name="Fan" type="Node2D" parent="Tracks" node_paths=PackedStringArray("routes")]
+visible = false
+script = ExtResource("5_layout")
+routes = [NodePath("Up"), NodePath("Straight"), NodePath("Down")]
+has_lever = false
+
+[node name="Up" type="Node2D" parent="Tracks/Fan"]
+script = ExtResource("2_track")
+path_points = PackedVector2Array(760, 575, 820, 573, 900, 540, 980, 465, 1060, 404, 1160, 381, 1600, 380)
+bare_start = 34.0
+
+[node name="Down" type="Node2D" parent="Tracks/Fan"]
+script = ExtResource("2_track")
+path_points = PackedVector2Array(760, 575, 820, 577, 900, 605, 980, 671, 1060, 724, 1160, 744, 1600, 745)
+bare_start = 34.0
+
+[node name="Straight" type="Node2D" parent="Tracks/Fan"]
 script = ExtResource("2_track")
 path_points = PackedVector2Array(760, 575, 1600, 575)
 bare_start = 34.0

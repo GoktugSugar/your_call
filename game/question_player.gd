@@ -67,6 +67,10 @@ func play(to_play: QuestionData, profile: Profile) -> OptionData:
 	phase = Phase.REACTING
 	await dialogue.say(option.reaction)
 	await dialogue.close()
+	if option.ending != &"":
+		# A secret ending: the reaction was the imp's last line, and the run player takes it from here.
+		phase = Phase.DONE
+		return option
 	profile.apply(option.profile)
 
 	await stage.leave()
@@ -82,6 +86,17 @@ func play(to_play: QuestionData, profile: Profile) -> OptionData:
 	question = null
 	phase = Phase.DONE
 	return option
+
+
+## Dissolves the stage still on screen, if any, and frees it.
+func clear_stage() -> void:
+	if stage == null:
+		return
+	var leaving := stage
+	stage = null
+	question = null
+	await leaving.leave()
+	leaving.queue_free()
 
 
 func _make_stage(for_question: QuestionData) -> Stage:

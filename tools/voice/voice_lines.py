@@ -66,8 +66,9 @@ def signature(voice: dict) -> str:
     return hashlib.sha1(json.dumps(recipe, sort_keys=True).encode("utf-8")).hexdigest()[:12]
 
 
-def synthesize(text: str, voice: dict, key: str) -> tuple[bytes, dict, str]:
+def synthesize(text: str, voice: dict, key: str, line_direction: str = "") -> tuple[bytes, dict, str]:
     model, settings, direction = voice_setup(voice)
+    direction = line_direction or direction
     for attempt_model in dict.fromkeys([model, FALLBACK_MODEL]):
         # Only v3 reads stage directions; another model would say them aloud.
         prefix = f"{direction} " if direction and attempt_model == "eleven_v3" else ""
@@ -111,7 +112,8 @@ def main() -> None:
         if voice is None or (args.only and not line["id"].startswith(args.only)):
             continue
         entry = manifest.get(line["id"], {})
-        fresh = entry.get("text_sha1") == line["sha1"] and entry.get("voice") == signature(voice)
+        fresh = (entry.get("text_sha1") == line["sha1"] and entry.get("voice") == signature(voice)
+                 and entry.get("direction", "") == line.get("direction", ""))
         if args.force or not fresh:
             todo.append((line, voice))
     unvoiced = sorted({line["speaker"] for line in lines if line["speaker"] not in voices})
@@ -125,7 +127,7 @@ def main() -> None:
 
     key = api_key() if todo else ""
     for line, voice in todo:
-        audio, timing, model = synthesize(line["text"], voice, key)
+        audio, timing, model = synthesize(line["text"], voice, key, line.get("direction", ""))
         folder = VOICE_DIR / line["speaker"]
         folder.mkdir(parents=True, exist_ok=True)
         (folder / f"{line['id']}.mp3").write_bytes(audio)
@@ -138,6 +140,7 @@ def main() -> None:
             "timing": f"res://assets/voice/{line['speaker']}/{line['id']}.json",
             "text_sha1": line["sha1"],
             "voice": signature(voice),
+            "direction": line.get("direction", ""),
             "model": model,
             "seconds": round(timing["ends"][-1], 3) if timing["ends"] else None,
         }

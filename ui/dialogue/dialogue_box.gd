@@ -70,7 +70,8 @@ signal advanced
 ## Seconds the box takes to fade away when it closes.
 @export_range(0.0, 2.0, 0.01) var close_duration := 0.22
 
-## Extra width given to a measured page, so rounding never wraps a line the measure kept whole.
+## Extra width given to a measured page on top of a space, so rounding never wraps a line the measure
+## kept whole. A line only stays whole with room for the space it broke at, which its measured width leaves out.
 const _WRAP_SLACK := 2.0
 ## Loud enough to call silence, in decibels.
 const _SILENT_DB := -60.0
@@ -190,8 +191,7 @@ func paginate(text: String) -> PackedStringArray:
 
 func _show_page(line: LineData, page: String, index: int, count: int, clip: VoiceClip, from: int) -> void:
 	var markup := Markup.to_bbcode(page, InkPalette.get_default())
-	measure_label.text = markup
-	var text_size := Vector2(minf(measure_label.get_content_width() + _WRAP_SLACK, max_text_width), measure_label.get_content_height())
+	var text_size := text_size_for(markup)
 	var frame_size := text_size + padding * 2.0
 	frame.size = frame_size
 	frame.position = Vector2((size.x - frame_size.x) * 0.5, size.y - bottom_margin - frame_size.y)
@@ -287,6 +287,20 @@ func _end_typing() -> void:
 	_typing = false
 	typing_changed.emit(false)
 	_update_talking()
+
+
+## The size a page's text takes in the box, given as BBCode: its widest line, with room to keep
+## every line whole, by its height.
+func text_size_for(bbcode: String) -> Vector2:
+	measure_label.text = bbcode
+	return Vector2(minf(measure_label.get_content_width() + _wrap_room(), max_text_width), measure_label.get_content_height())
+
+
+## Width a page needs beyond its measured width to keep its lines whole: a space, and a little slack.
+func _wrap_room() -> float:
+	var font := measure_label.get_theme_font(&"normal_font")
+	var font_size := measure_label.get_theme_font_size(&"normal_font_size")
+	return font.get_string_size(" ", HORIZONTAL_ALIGNMENT_LEFT, -1.0, font_size).x + _WRAP_SLACK
 
 
 func _fits(markup: String) -> bool:

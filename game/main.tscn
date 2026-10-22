@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://game/main.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://ink/paper/paper.tscn" id="2_paper"]
@@ -8,9 +8,11 @@
 [ext_resource type="PackedScene" path="res://ui/dialogue/dialogue_box.tscn" id="6_dialogue"]
 [ext_resource type="Script" path="res://game/question_player.gd" id="7_player"]
 [ext_resource type="PackedScene" path="res://dev/dev_tools.tscn" id="8_dev"]
+[ext_resource type="Script" path="res://game/run_player.gd" id="9_run"]
 
-[node name="Main" type="Node" node_paths=PackedStringArray("question_player", "imp", "dialogue")]
+[node name="Main" type="Node" node_paths=PackedStringArray("run_player", "question_player", "imp", "dialogue")]
 script = ExtResource("1_main")
+run_player = NodePath("RunPlayer")
 question_player = NodePath("QuestionPlayer")
 imp = NodePath("World/Imp")
 dialogue = NodePath("UI/DialogueBox")
@@ -39,3 +41,12 @@ stage_root = NodePath("../World/StageRoot")
 dialogue = NodePath("../UI/DialogueBox")
 choices = NodePath("../UI/ChoiceRow")
 reveal = NodePath("../UI/CrowdReveal")
+
+[node name="Overlays" type="Node" parent="."]
+
+[node name="RunPlayer" type="Node" parent="." node_paths=PackedStringArray("question_player", "dialogue", "imp", "overlay_root")]
+script = ExtResource("9_run")
+question_player = NodePath("../QuestionPlayer")
+dialogue = NodePath("../UI/DialogueBox")
+imp = NodePath("../World/Imp")
+overlay_root = NodePath("../Overlays")

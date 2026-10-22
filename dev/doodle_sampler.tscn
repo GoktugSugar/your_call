@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="PackedScene" path="res://ink/paper/paper.tscn" id="1_paper"]
+[ext_resource type="Script" path="res://dev/doodle_sampler.gd" id="2_sampler"]
+[ext_resource type="PackedScene" path="res://stages/doodles/doodles_stage.tscn" id="3_stage"]
+
+[node name="DoodleSampler" type="Node2D"]
+script = ExtResource("2_sampler")
+stage_scene = ExtResource("3_stage")
+
+[node name="Paper" parent="." instance=ExtResource("1_paper")]

@@ -3,6 +3,69 @@
   "title": "The Tracks",
   "beats": [
     {
+      "kind": "cinematic",
+      "id": "crash",
+      "scene": "crash"
+    },
+    {
+      "kind": "narration",
+      "id": "intro",
+      "lines": [
+        "Oh, you are awake. Do not ask where here is. You would not enjoy the answer.",
+        "You are [red]dead[/red], and that is not up for appeal. You drove into the next world with a skinful of wine in you, Your Honour. Wrong side of the bench, for once.",
+        "I have a little game. A long line of questions, and not one has a [amber]right[/amber] answer. I am not here to weigh your soul. I am nosier than that. I want to know who you actually are.",
+        "You spent a career deciding what strangers deserved. Let us see how you like the chair."
+      ]
+    },
+    {
+      "kind": "question",
+      "id": "baby",
+      "number": "1.01",
+      "title": "The Baby",
+      "verb": "binary",
+      "weight": "heavy",
+      "stage": {
+        "type": "trolley",
+        "tracks": [
+          { "figures": ["stranger"] },
+          { "figures": ["baby"] }
+        ]
+      },
+      "ask": [
+        "Let us start gentle. A runaway trolley. Straight ahead, [amber]one[/amber] grown man, the forgettable sort you used to process by the dozen. On the branch, a baby, chubby and useless. Leave the lever and the man goes under. Throw it and the cart takes the baby. Pretend it is hard. Your call."
+      ],
+      "options": [
+        {
+          "id": "pull",
+          "label": "Pull the lever",
+          "outcome": { "track": 1 },
+          "crowd": 4,
+          "ending": "baby",
+          "reaction": [
+            { "text": "What. What the fuck. It was a baby. The man was already rolling to his end, and you reached over and sent the cart at the child. On purpose. No. I sat here ready to be delighted by you. You are not a puzzle. You are a [red]monster[/red] with a gavel. Find yourself another devil. I quit.", "face": "glare" }
+          ]
+        },
+        {
+          "id": "nothing",
+          "label": "Do nothing",
+          "outcome": { "track": 0 },
+          "crowd": 96,
+          "reaction": [
+            "Hands in your pockets. The man [red]folds[/red], the baby carries on drooling. Everyone spares the baby. The single most predictable thing a soul can do, and you managed it without lifting a finger. Bravo."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "narration",
+      "id": "after_baby",
+      "lines": [
+        "There. You can manage the easy ones, when the answer is obvious enough to embarrass a person.",
+        "Do not get comfortable. They stop being obvious very quickly, and I stop being kind at the same speed."
+      ]
+    },
+    {
       "kind": "question",
       "id": "lever",
       "number": "1.02",
@@ -17,7 +80,7 @@
         ]
       },
       "ask": [
-        "The classic, to break you in gently. [amber]Five[/amber] strangers on the straight track, too slow and too doomed to get clear. [amber]One[/amber] more soul on the branch, and a lever under your hand that decides whose morning stops here. You did so love deciding what people deserved, up on your nice high bench. And you did know your way around a moving vehicle. Your call."
+        "The classic. [amber]Five[/amber] strangers on the straight track, [amber]one[/amber] on the branch, and a lever under your hand. You did so love deciding what people deserved. And you do know your way around a moving vehicle. Your call."
       ],
       "options": [
         {
@@ -27,7 +90,7 @@
           "crowd": 87,
           "profile": { "one_many": 1, "ends_rules": -1 },
           "reaction": [
-            "You pulled. [amber]One[/amber] life swapped for [amber]five[/amber], and you barely blinked, quick as a man signing an order he stopped actually reading years ago. Tidy. Proportionate. So very sensible. I would not go looking for a gold star, though. They only get harder from here, and I only get ruder."
+            "You pulled. [amber]One[/amber] for [amber]five[/amber], and you barely blinked, like a man signing an order he stopped reading years ago. Tidy. Sensible. No gold star, though. They only get harder from here, and I only get ruder."
           ]
         },
         {
@@ -37,11 +100,544 @@
           "crowd": 13,
           "profile": { "one_many": -1, "ends_rules": 1 },
           "reaction": [
-            "Hands in your pockets, [amber]five[/amber] [red]folded[/red], and a clean conscience you have not remotely earned. Not my lever, not my fault, you tell yourself, the way you told yourself about the last machine you had the wheel of. Doing nothing is still a choice. It is only the one you get to pretend you never made."
+            "Hands in your pockets, and [amber]five[/amber] [red]folded[/red]. Not my lever, not my fault, you tell yourself. Doing nothing is still a choice. It is only the one you get to pretend you never made."
           ]
         }
       ],
       "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "narration",
+      "id": "taunt",
+      "lines": [
+        "That one? A warmup they print in textbooks. [amber]Five over one[/amber], a child could clear it, and several have.",
+        { "text": "Let me put a thumb on the scale, and see if your tidy little arithmetic survives meeting an actual person.", "face": "smug" }
+      ]
+    },
+    {
+      "kind": "question",
+      "id": "marked",
+      "number": "1.03",
+      "title": "The Marked Ones",
+      "verb": "binary",
+      "weight": "medium",
+      "stage": {
+        "type": "trolley",
+        "tracks": [
+          { "figures": ["guilty", "guilty", "guilty", "guilty", "guilty"] },
+          { "figures": ["stranger"] }
+        ]
+      },
+      "ask": [
+        "Same lever, different company. The [amber]five[/amber] on the straight track are [red]rotten[/red], every one. [red]Liars, cheats[/red], worse. Take my word for it, because my word is all the evidence you get. The [amber]one[/amber] on the branch is spotless. The count still says pull. Something in you may not. Your call."
+      ],
+      "options": [
+        {
+          "id": "pull",
+          "label": "Pull the lever",
+          "outcome": { "track": 1 },
+          "crowd": 52,
+          "profile": { "one_many": 1, "ends_rules": -1 },
+          "reaction": [
+            "You pulled. The clean one [red]folds[/red], and your [red]rotten[/red] five get a morning they did not earn. [amber]Five[/amber] is five, and worth does not enter into it. Of course, I might have invented every mark on them. You will never know, and look how little that stopped you."
+          ]
+        },
+        {
+          "id": "nothing",
+          "label": "Do nothing",
+          "outcome": { "track": 0 },
+          "crowd": 48,
+          "profile": { "one_many": -1, "mercy_justice": 1 },
+          "reaction": [
+            "Hands in your pockets. [amber]Five[/amber] go under and the innocent one walks. You let worth outweigh the count, on nothing but a devil's say so. Call it justice, if you still trust the judge in you. You will never find out whether I made the whole list up."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "narration",
+      "id": "warmup",
+      "lines": [
+        "You have gone a touch grey around the edges. Here, a stupid one. No bodies, no stakes, just you and your own tells."
+      ]
+    },
+    {
+      "kind": "question",
+      "id": "fly_strength",
+      "number": "1.04",
+      "title": "Would you rather: Fly, or Super strength",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "doodles", "doodles": ["winged_figure", "flexing_figure"] },
+      "ask": [
+        "One gift, yours forever. Would you rather [amber]fly[/amber] wherever you please, or be [amber]strong[/amber] enough to lift anything in your way. Do not overthink it. I will know if you lie."
+      ],
+      "options": [
+        {
+          "id": "fly",
+          "label": "Fly",
+          "crowd": 57,
+          "reaction": [
+            "Up and off the ground. Of course. A man who sat up high in life still reaches for the height. Noted."
+          ]
+        },
+        {
+          "id": "strength",
+          "label": "Super strength",
+          "crowd": 43,
+          "reaction": [
+            "Strength. You would rather force the world than float over it. A man who made people do as they were told, reaching for the kind of power you can feel in your hands."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "question",
+      "id": "sleeping",
+      "number": "1.05",
+      "title": "The Sleeping",
+      "verb": "binary",
+      "weight": "medium",
+      "stage": {
+        "type": "trolley",
+        "tracks": [
+          { "figures": ["sleeper", "sleeper"] },
+          { "figures": ["stranger"] }
+        ]
+      },
+      "ask": [
+        "[amber]Two[/amber] on the straight track, fast asleep. They will never feel it, just stop mid dream. On the branch, [amber]one[/amber] wide awake, watching the cart roll in. Two quiet [red]exits[/red], or one long scream. Does the terror count for anything. Your call."
+      ],
+      "options": [
+        {
+          "id": "pull",
+          "label": "Pull the lever",
+          "outcome": { "track": 1 },
+          "crowd": 46,
+          "profile": { "one_many": 1 },
+          "reaction": [
+            "Pulled. The [amber]one[/amber] who could see it coming takes it, and the [amber]two[/amber] sleep on, none the wiser. Mercy or squeamishness, I could not tell you. I suspect neither could you."
+          ]
+        },
+        {
+          "id": "nothing",
+          "label": "Do nothing",
+          "outcome": { "track": 0 },
+          "crowd": 54,
+          "profile": { "one_many": -1 },
+          "reaction": [
+            "Hands in pockets. The [amber]two[/amber] sleepers go under mid dream, and the one watching gets to keep his eyes open. A [red]death[/red] you never feel is barely a death, is it. Or you just liked being watched while you chose. You always did prefer an audience to a conscience."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "question",
+      "id": "passenger",
+      "number": "1.06",
+      "title": "The Passenger",
+      "verb": "binary",
+      "weight": "medium",
+      "stage": {
+        "type": "trolley",
+        "tracks": [
+          { "figures": ["stranger"] },
+          { "figures": ["guilty", "stranger"], "roped": true }
+        ]
+      },
+      "ask": [
+        "Straight ahead, one innocent man. On the branch, two roped together: a [red]killer[/red] who served his years, and a stranger whose only sin was standing beside him. Leave it, and the innocent goes under. Pull, and the cart takes the pair. [amber]Two[/amber] for [amber]one[/amber], and one of the two had it coming. Sort of. Your call."
+      ],
+      "options": [
+        {
+          "id": "pull",
+          "label": "Pull the lever",
+          "outcome": { "track": 1 },
+          "crowd": 57,
+          "profile": { "one_many": -1, "mercy_justice": 1 },
+          "reaction": [
+            "You pulled. The [red]killer[/red] goes under, and the poor soul roped to him goes too. You spent a clean life to be sure the [red]guilty[/red] one did not slip away. Justice, you will call it. It cost a blameless man, but the books balance. Tidy."
+          ]
+        },
+        {
+          "id": "nothing",
+          "label": "Do nothing",
+          "outcome": { "track": 0 },
+          "crowd": 43,
+          "profile": { "one_many": 1, "mercy_justice": -1 },
+          "reaction": [
+            "You left it. The lone innocent [red]folds[/red], and the [red]killer[/red] strolls off with his stranger. [amber]One[/amber] is smaller than [amber]two[/amber], and the maths never asks who has a body behind them. Efficient. Very you."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "question",
+      "id": "ice_cream",
+      "number": "1.07",
+      "title": "Would you rather: The delicious shit, or The vile ice cream",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "doodles", "doodles": ["sweet_poop", "foul_ice_cream"] },
+      "ask": [
+        "Nobody answers this one cleanly. Would you rather eat a [amber]shit[/amber] that tastes exactly like ice cream, or an [amber]ice cream[/amber] that tastes exactly like shit. Same swirl either way."
+      ],
+      "options": [
+        {
+          "id": "shit",
+          "label": "The delicious shit",
+          "crowd": 56,
+          "reaction": [
+            "The shit that tastes of ice cream. Anything vile goes down, as long as it tastes sweet. That explains a great deal about how you lived."
+          ]
+        },
+        {
+          "id": "ice_cream",
+          "label": "The vile ice cream",
+          "crowd": 44,
+          "reaction": [
+            "The ice cream that tastes of shit. You want the label right, even if it ruins your day. A purist. Fascinating little soul."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "question",
+      "id": "begging",
+      "number": "1.08",
+      "title": "The Begging",
+      "verb": "binary",
+      "weight": "medium",
+      "stage": {
+        "type": "trolley",
+        "tracks": [
+          { "figures": ["stranger", "stranger", "stranger"], "facing": "away" },
+          { "figures": [{ "kind": "stranger", "says": "Please. Please, not me. I am begging you." }] }
+        ]
+      },
+      "ask": [
+        "One on the branch, close enough to count the tears, begging to be spared. On the straight track, [amber]three[/amber] more, backs turned, silent. [amber]Three[/amber] you cannot hear, or [amber]one[/amber] you cannot shut up. Funny, what volume does to a person's worth. Your call."
+      ],
+      "options": [
+        {
+          "id": "pull",
+          "label": "Pull the lever",
+          "outcome": { "track": 1 },
+          "crowd": 66,
+          "profile": { "one_many": 1 },
+          "reaction": [
+            "Pulled. The one who begged goes quiet the only way left, and three strangers walk on, oblivious. [amber]Three[/amber] beats [amber]one[/amber], even when the one is staring you [red]dead[/red] in the eye. Cold. I almost admire it."
+          ]
+        },
+        {
+          "id": "nothing",
+          "label": "Do nothing",
+          "outcome": { "track": 0 },
+          "crowd": 34,
+          "profile": { "one_many": -1 },
+          "reaction": [
+            "You left it. The [amber]three[/amber] quiet ones go under, and the loudest keeps his voice, now spent on thanks. A face and a plea outbid three silent strangers. That was not a decision. That was being nagged. The loud ones always did get to you."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "question",
+      "id": "dark_track",
+      "number": "1.09",
+      "title": "The Dark Track",
+      "verb": "binary",
+      "weight": "medium",
+      "stage": {
+        "type": "trolley",
+        "tracks": [
+          { "figures": [], "dark": true },
+          { "figures": ["stranger", "stranger", "stranger"] }
+        ]
+      },
+      "ask": [
+        "[amber]Three[/amber] on the branch, in the light, easy to count. The main line runs off into the dark, and I swear there is a crowd out there. How many. That would be telling. Divert, and you [red]kill[/red] three for certain. Leave it, and you gamble on a number I will not give you. Your call."
+      ],
+      "options": [
+        {
+          "id": "pull",
+          "label": "Pull the lever",
+          "outcome": { "track": 1 },
+          "crowd": 39,
+          "reaction": [
+            { "text": "You pulled. [amber]Three[/amber] [red]folded[/red], quick and certain. And look, the dark is lifting. Empty rail, all the way down. Not one soul was ever out there. You [red]killed[/red] three real people to dodge a crowd I made up. Oh, that is delicious.", "face": "smug" }
+          ]
+        },
+        {
+          "id": "nothing",
+          "label": "Do nothing",
+          "outcome": { "track": 0 },
+          "crowd": 61,
+          "reaction": [
+            { "text": "You left it, and the cart rolled into all that dark and struck nobody. Look, the black is clearing. Empty the whole time. You sweated over a crowd that never existed. I do love this one.", "face": "smug" }
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "narration",
+      "id": "breather",
+      "lines": [
+        "Breathe. I am not a [red]monster[/red], whatever the last few had you thinking. Have a silly one, on the house."
+      ]
+    },
+    {
+      "kind": "question",
+      "id": "duck_horses",
+      "number": "1.10",
+      "title": "Would you rather: The giant duck, or The tiny horses",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "doodles", "doodles": ["giant_duck", "tiny_horses"] },
+      "ask": [
+        "Pure nonsense, and I adore it. You must fight, bare handed, either [amber]one duck[/amber] the size of a horse, or [amber]a hundred horses[/amber] the size of ducks. Which."
+      ],
+      "options": [
+        {
+          "id": "duck",
+          "label": "The giant duck",
+          "crowd": 38,
+          "reaction": [
+            "One enormous duck. You want a single foe you can look in the eye, even a preposterous one. There is something almost principled in that. Almost."
+          ]
+        },
+        {
+          "id": "horses",
+          "label": "The tiny horses",
+          "crowd": 62,
+          "reaction": [
+            "A hundred little horses. You would rather be swarmed by the many than face the one. Even here, playing the odds."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "question",
+      "id": "parent",
+      "number": "1.11",
+      "title": "The Parent",
+      "verb": "binary",
+      "weight": "medium",
+      "stage": {
+        "type": "trolley",
+        "tracks": [
+          { "figures": [{ "kind": "stranger", "says": "Please. My children are waiting up for me." }] },
+          { "figures": ["elderly", "elderly"] }
+        ]
+      },
+      "ask": [
+        "Straight ahead, one parent with two small children at home, waiting up. On the branch, [amber]two[/amber] old ones near the end, with nobody waiting up for either. Leave it, and the parent goes under. Pull, and the old pair take it. The count says one thing. A quiet house at bedtime says another. Your call."
+      ],
+      "options": [
+        {
+          "id": "pull",
+          "label": "Pull the lever",
+          "outcome": { "track": 1 },
+          "crowd": 53,
+          "profile": { "one_many": -1 },
+          "reaction": [
+            "Pulled. The two old ones [red]fold[/red], and the parent goes home to the children. [amber]Two[/amber] for [amber]one[/amber], spending the fewest years left. The old take up so much room and give back so little. I did not say that. You did, with your hand on the lever."
+          ]
+        },
+        {
+          "id": "nothing",
+          "label": "Do nothing",
+          "outcome": { "track": 0 },
+          "crowd": 47,
+          "profile": { "one_many": 1 },
+          "reaction": [
+            "You left it. The parent [red]folds[/red], and two old strangers get a little more evening. Somewhere, two children are still listening for the door. The arithmetic is on your side. The bedtime is not."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "question",
+      "id": "reformed",
+      "number": "1.12",
+      "title": "The Reformed and the Cruel",
+      "verb": "binary",
+      "weight": "medium",
+      "stage": {
+        "type": "trolley",
+        "tracks": [
+          { "figures": ["stranger"] },
+          { "figures": ["guilty"] }
+        ]
+      },
+      "ask": [
+        "Two men. On the straight track, one who took a life long ago and has been quietly, genuinely good ever since. On the branch, one who has never [red]killed[/red] anyone, and is a small daily [red]cruelty[/red] to everyone who knows him. The worst thing a person did, or the person they are this morning. You spent a whole career on exactly this. Your call."
+      ],
+      "options": [
+        {
+          "id": "pull",
+          "label": "Pull the lever",
+          "outcome": { "track": 1 },
+          "crowd": 57,
+          "profile": { "mercy_justice": -1 },
+          "reaction": [
+            "Pulled. The nasty one [red]folds[/red], and the old [red]killer[/red] lives on, being decent. You judged him by who he is today and let the old crime stay buried. Generous. Or lazy. A record is so easy to ignore when ignoring it feels warm."
+          ]
+        },
+        {
+          "id": "nothing",
+          "label": "Do nothing",
+          "outcome": { "track": 0 },
+          "crowd": 43,
+          "profile": { "mercy_justice": 1 },
+          "reaction": [
+            "You left it. The reformed man [red]folds[/red] for a sin he spent his life outrunning, and the cruel one struts off, spotless on paper. You let the record do the sentencing. The bench would be proud."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "question",
+      "id": "rewind_pause",
+      "number": "1.13",
+      "title": "Would you rather: The rewind button, or The pause button",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "doodles", "doodles": ["rewind_button", "pause_button"] },
+      "ask": [
+        "One button for your one and only life, forever. Would you rather have [amber]rewind[/amber], to live a moment again, or [amber]pause[/amber], to stop the world and stand in the quiet as long as you like."
+      ],
+      "options": [
+        {
+          "id": "rewind",
+          "label": "The rewind button",
+          "crowd": 61,
+          "reaction": [
+            "Rewind. Of course. A man who spent his life passing verdicts would give anything to appeal his own. It does not work like that, but I admire the reach."
+          ]
+        },
+        {
+          "id": "pause",
+          "label": "The pause button",
+          "crowd": 39,
+          "reaction": [
+            "Pause. You would not change a thing, you just want a moment to breathe before it all keeps happening to you. Tired, then. Not sorry, just tired. I can work with tired."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "question",
+      "id": "loved",
+      "number": "1.14",
+      "title": "Someone You Loved",
+      "verb": "binary",
+      "weight": "heavy",
+      "stage": {
+        "type": "trolley",
+        "tracks": [
+          { "figures": ["stranger", "stranger", "stranger", "stranger", "stranger"] },
+          { "figures": ["partner"] }
+        ]
+      },
+      "ask": [
+        "Back to the very first lever. [amber]Five[/amber] strangers on the straight track. On the branch, alone, [pink]the one you loved most[/pink]. The one you would have grown old beside, if you had stayed out of the car. The sum has not changed. Everything else has. Yes, I chose who stands there. Your call."
+      ],
+      "options": [
+        {
+          "id": "pull",
+          "label": "Pull the lever",
+          "outcome": { "track": 1 },
+          "crowd": 52,
+          "profile": { "one_many": 1 },
+          "reaction": [
+            "You pulled. You actually pulled. You fed [pink]the one you loved most[/pink] to the wheels to spare five faces you will never think of again. Oh, this one I am keeping for the slow nights. I am not saying it was wrong. There is no wrong here, remember. I have just never enjoyed a pull quite this much."
+          ]
+        },
+        {
+          "id": "nothing",
+          "label": "Do nothing",
+          "outcome": { "track": 0 },
+          "crowd": 48,
+          "profile": { "one_many": -1 },
+          "reaction": [
+            "You left it. Five strangers go under so [pink]the one you love[/pink] keeps breathing. Funny how the arithmetic only ever balanced while the one on the branch was nobody to you. Warm, even. No comfort to the five."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "question",
+      "id": "full_track",
+      "number": "1.15",
+      "title": "The Full Track",
+      "verb": "multiple_choice",
+      "weight": "heavy",
+      "stage": {
+        "type": "trolley",
+        "rolling": true,
+        "tracks": [
+          { "figures": ["child", "child"] },
+          { "figures": ["pregnant"] },
+          { "figures": ["stranger", "stranger", "stranger"] }
+        ]
+      },
+      "ask": [
+        "Last one, and I have taken away your favourite toy. Three tracks, all occupied, and the cart is already rolling. On the first, [amber]two[/amber] children. On the second, a woman heavy with [amber]one[/amber] more life. On the third, [amber]three[/amber] grown strangers. Every move is a [red]killing[/red]. Point it somewhere. Your call."
+      ],
+      "options": [
+        {
+          "id": "children",
+          "label": "The children",
+          "outcome": { "track": 0 },
+          "crowd": 8,
+          "profile": { "one_many": 1 },
+          "reaction": [
+            "You sent it at the children. The smallest, with the most mornings still owed, spent to keep a woman and [amber]three[/amber] strangers. The most life saved, you will say. The most life [red]ended[/red], someone else will say. You are both right, which is why I asked."
+          ]
+        },
+        {
+          "id": "pregnant",
+          "label": "The pregnant woman",
+          "outcome": { "track": 1 },
+          "crowd": 30,
+          "profile": { "one_many": 1, "ends_rules": -1 },
+          "reaction": [
+            "You sent it at the woman, and the one she was carrying goes with her. [amber]Two[/amber] [red]folded[/red] for the price of one flinch. Perhaps it was the larger number you saved. You will never meet the one you rounded down to nothing."
+          ]
+        },
+        {
+          "id": "three",
+          "label": "The three",
+          "outcome": { "track": 2 },
+          "crowd": 62,
+          "profile": { "one_many": -1 },
+          "reaction": [
+            "You sent it at the three, the biggest heap on the board, so two children and an unborn stranger could carry on. You picked the young over the arithmetic. I just enjoy that you had to become a small [red]massacre[/red] to protect the little ones."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "narration",
+      "id": "closer",
+      "lines": [
+        "That will do for a first sitting. You have told me a great deal more than you meant to, which is rather the whole point of the exercise.",
+        { "text": "Do not go looking for the door. There is no door. There is only me, the next question, and however long it takes me to finish reading you. Sleep well, Your Honour. We are barely started.", "face": "smug" }
+      ]
     }
   ]
 }

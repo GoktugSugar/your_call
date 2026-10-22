@@ -77,6 +77,19 @@ func test_every_question_has_a_stage_scene() -> void:
 	assert_eq(offenders, PackedStringArray(), "\n".join(offenders))
 
 
+func test_every_soul_on_a_track_is_a_known_kind() -> void:
+	var offenders := PackedStringArray()
+	for question in _questions():
+		if str(question.stage.get("type", "")) != "trolley":
+			continue
+		for track: Dictionary in question.stage.get("tracks", []):
+			for entry: Variant in track.get("figures", []):
+				var kind := str((entry as Dictionary).get("kind", "") if entry is Dictionary else entry)
+				if not SoulKind.exists(StringName(kind)):
+					offenders.append("%s: no soul kind '%s'" % [question.id, kind])
+	assert_eq(offenders, PackedStringArray(), "\n".join(offenders))
+
+
 func _questions() -> Array[QuestionData]:
 	var found: Array[QuestionData] = []
 	for chapter in _chapters:
@@ -95,6 +108,7 @@ func _all_lines() -> Array[LineData]:
 			elif beat is QuestionData:
 				var question := beat as QuestionData
 				lines.append_array(question.ask)
+				lines.append_array(question.stage_lines)
 				for option in question.options:
 					lines.append_array(option.reaction)
 	return lines

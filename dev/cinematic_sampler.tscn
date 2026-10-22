@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://dev/cinematic_sampler.gd" id="1_sampler"]
+[ext_resource type="PackedScene" path="res://ink/paper/paper.tscn" id="2_paper"]
+[ext_resource type="PackedScene" path="res://cinematics/crash/crash_cinematic.tscn" id="3_crash"]
+[ext_resource type="PackedScene" path="res://ui/credits/credits.tscn" id="4_credits"]
+
+[node name="CinematicSampler" type="Node" node_paths=PackedStringArray("crash", "credits")]
+script = ExtResource("1_sampler")
+crash = NodePath("CrashCinematic")
+credits = NodePath("Credits")
+
+[node name="Paper" parent="." instance=ExtResource("2_paper")]
+
+[node name="CrashCinematic" parent="." instance=ExtResource("3_crash")]
+
+[node name="Credits" parent="." instance=ExtResource("4_credits")]
