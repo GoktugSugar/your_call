@@ -59,9 +59,15 @@ func _load_run() -> Array[ChapterData]:
 	return chapters
 
 
-## Falls back to the top of the run when the chapter or beat to start from does not exist.
+## Falls back to the top of the run when the chapter or beat to start from does not exist. A beat
+## given without a chapter starts in the first chapter that has it.
 func _check_start(chapters: Array[ChapterData]) -> void:
 	var first: ChapterData = chapters[0]
+	if start_chapter == &"" and start_beat != &"":
+		for chapter in chapters:
+			if chapter.find_beat(start_beat) != null:
+				start_chapter = chapter.id
+				break
 	if start_chapter != &"":
 		first = null
 		for chapter in chapters:

@@ -18,7 +18,7 @@ extends Node
 ## --window=WxH     a plain window of exactly that size, to check a resolution
 ## --log-talk       print when each page starts, finishes inking on, and stops being spoken
 ## --chapter=ID     start the run at the chapter with this id, such as ch2, instead of the first
-## --beat=ID        start at the beat with this id, in that chapter or the first
+## --beat=ID        start at the beat with this id, in that chapter or the first chapter that has it
 ## [/codeblock]
 
 ## Seconds autoplay waits before each click.
