@@ -1773,10 +1773,70 @@
     "audio": "res://assets/voice/imp/ch3.cigarettes.buy.cursed.1.mp3",
     "direction": "[exasperated]",
     "model": "eleven_v3",
-    "seconds": 33.6,
+    "seconds": 7.12,
     "speaker": "imp",
-    "text_sha1": "ddecb6d3ea2f2562101d911ed9b3dbc537977c9b",
+    "text_sha1": "f9d5a676c031e0af7b5dd95ec7cc6a7c9ebe2d66",
     "timing": "res://assets/voice/imp/ch3.cigarettes.buy.cursed.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch3.cigarettes.buy.cursed.2": {
+    "audio": "res://assets/voice/imp/ch3.cigarettes.buy.cursed.2.mp3",
+    "direction": "[exasperated]",
+    "model": "eleven_v3",
+    "seconds": 6.88,
+    "speaker": "imp",
+    "text_sha1": "7e12c95bbe102c499bbd689c886e06c768c539df",
+    "timing": "res://assets/voice/imp/ch3.cigarettes.buy.cursed.2.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch3.cigarettes.buy.cursed.3": {
+    "audio": "res://assets/voice/imp/ch3.cigarettes.buy.cursed.3.mp3",
+    "direction": "[exasperated]",
+    "model": "eleven_v3",
+    "seconds": 5.44,
+    "speaker": "imp",
+    "text_sha1": "3f019f2d1412fff3708fc1db1a9e277c144a74df",
+    "timing": "res://assets/voice/imp/ch3.cigarettes.buy.cursed.3.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch3.cigarettes.buy.cursed.4": {
+    "audio": "res://assets/voice/imp/ch3.cigarettes.buy.cursed.4.mp3",
+    "direction": "[exasperated]",
+    "model": "eleven_v3",
+    "seconds": 2.24,
+    "speaker": "imp",
+    "text_sha1": "990d17ee0f45b06cbf760e1a5ae6ca2d4c9847eb",
+    "timing": "res://assets/voice/imp/ch3.cigarettes.buy.cursed.4.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch3.cigarettes.buy.cursed.5": {
+    "audio": "res://assets/voice/imp/ch3.cigarettes.buy.cursed.5.mp3",
+    "direction": "[exasperated]",
+    "model": "eleven_v3",
+    "seconds": 9.2,
+    "speaker": "imp",
+    "text_sha1": "a3667c1904b69a8daf62a77f8da2ca9a4a77f040",
+    "timing": "res://assets/voice/imp/ch3.cigarettes.buy.cursed.5.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch3.cigarettes.buy.cursed.6": {
+    "audio": "res://assets/voice/imp/ch3.cigarettes.buy.cursed.6.mp3",
+    "direction": "[exasperated]",
+    "model": "eleven_v3",
+    "seconds": 2.0,
+    "speaker": "imp",
+    "text_sha1": "0db6ed352734860b287f318588770b746816c848",
+    "timing": "res://assets/voice/imp/ch3.cigarettes.buy.cursed.6.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch3.cigarettes.buy.cursed.7": {
+    "audio": "res://assets/voice/imp/ch3.cigarettes.buy.cursed.7.mp3",
+    "direction": "[exasperated]",
+    "model": "eleven_v3",
+    "seconds": 2.32,
+    "speaker": "imp",
+    "text_sha1": "89cfca2d341582ad8b1bfc35ef9a43af2a57deac",
+    "timing": "res://assets/voice/imp/ch3.cigarettes.buy.cursed.7.json",
     "voice": "c95aad52ae0b"
   },
   "ch3.cigarettes.gloat.1": {
