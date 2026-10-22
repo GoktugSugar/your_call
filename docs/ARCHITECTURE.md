@@ -12,7 +12,7 @@ Godot 4.7, Forward+ renderer, GDScript with static typing. The base canvas is 19
 |---|---|
 | `ink/` | The ink look: the brush that turns paths into hand-drawn lines, the boil clock, the shared style and palette, the paper ground. |
 | `figures/` | The reusable rigs drawn in ink: the souls (the stick figure, its poses and kinds, the baby) and the imp. |
-| `doodles/` | The doodles a would you rather shows, one script each, named by id (`doodles/<id>.gd`). |
+| `doodles/` | The doodles a would you rather shows, one script each, named by id (`doodles/<id>.gd`). What several doodles draw alike and is no doodle itself, such as the head in profile the head doodles share, is in `doodles/parts/`, out of the list of doodles. |
 | `cinematics/` | Cinematic beats, one folder each (`cinematics/<name>/<name>_cinematic.tscn`): the opening crash and the waking that opens every later chapter, with the eyelids they share at the root. |
 | `stages/` | Question presentations, one folder each. A stage stages any question that uses it, from that question's data. Controls more than one stage uses, such as the push button, are in `stages/controls/`. |
 | `ui/` | The dialogue box, the choice row, the crowd reveal, the credits, and the theme. |
