@@ -70,6 +70,7 @@ func test_every_placeholder_is_one_its_stage_fills() -> void:
 	for question in _questions():
 		var fills := StageFills.names(question)
 		var texts := PackedStringArray(question.stage_texts)
+		texts.append_array(question.option_labels())
 		for line in question.all_lines():
 			texts.append(line.text)
 		for text in texts:

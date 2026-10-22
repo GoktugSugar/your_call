@@ -122,8 +122,7 @@ func _question(data: Dictionary, chapter_id: StringName, id: StringName, where: 
 	question.chapter = chapter_id
 	question.number = _text(data, "number", where)
 	question.title = _text(data, "title", where)
-	if not tableau:
-		question.verb = StringName(_one_of(data, "verb", VERBS, where))
+	question.verb = StringName(_one_of(data, "verb", VERBS, where)) if not tableau else &""
 	if not tableau or data.has("weight"):
 		question.weight = StringName(_one_of(data, "weight", WEIGHTS, where))
 	var stage: Variant = data.get("stage", {})
