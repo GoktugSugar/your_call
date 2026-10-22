@@ -28,6 +28,7 @@ offset_right = 600.0
 offset_bottom = 24.0
 mouse_filter = 2
 script = ExtResource("2_underline")
+width_scale = 1.8
 
 [node name="Line" type="RichTextLabel" parent="."]
 offset_right = 1920.0
