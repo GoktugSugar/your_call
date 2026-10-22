@@ -175,6 +175,8 @@ func leave() -> void:
 
 ## The middle of the doodle for [param index] on the canvas, where a pointer would point at it.
 func option_point(index: int) -> Vector2:
+	if index < 0 or index >= _doodles.size() or _doodles[index] == null:
+		return Vector2.INF
 	return slots[index].get_global_transform_with_canvas() * hit_area.get_center()
 
 

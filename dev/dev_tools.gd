@@ -3,11 +3,14 @@ extends Node
 ## question's phase and the silent profile. Switches after [code]--[/code] on the command line:
 ## [codeblock]
 ## --autoplay=N     pick option N (counting from 1) and click through everything else
-## --autoplay=lever  point at the stage's lever, then click it, with synthetic pointer events
+## --point          with --autoplay=N, point at the option on the stage and click it there (a track,
+##                  a doodle) with synthetic pointer events, instead of picking it in the choice row
+## --autoplay=lever  point at the stage's lever and click it; on a stage without one, its first option
 ## --speed=X        run the game X times faster
 ## --shots=PATH     save a screenshot just before each autoplay click, as PATH_01.png and on
 ## --quit-after=N   quit once N questions have finished
 ## --burst=S        with --shots, also save a screenshot every S seconds while a consequence plays
+## --every=S        with --shots, also save a screenshot every S seconds all the way through
 ## --window=WxH     a plain window of exactly that size, to check a resolution
 ## --log-talk       print when each page starts, finishes inking on, and stops being spoken
 ## --beat=ID        start the run at the beat with this id instead of the top
@@ -52,7 +55,9 @@ func _ready() -> void:
 	if args.has("autoplay"):
 		_shot_path = args.get("shots", "")
 		_burst = float(args.get("burst", "0"))
-		_autoplay(args["autoplay"])
+		_autoplay(args["autoplay"], args.has("point"))
+		if args.has("every") and not _shot_path.is_empty():
+			_shoot_every(float(args["every"]))
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -76,27 +81,44 @@ func _process(_delta: float) -> void:
 	overlay.text = "\n".join(lines)
 
 
-func _autoplay(pick: String) -> void:
+func _autoplay(pick: String, pointing: bool) -> void:
 	var player: QuestionPlayer = main.question_player
 	player.dialogue.waiting_changed.connect(func(waiting: bool) -> void:
 		if waiting:
 			_act(&"advance"))
-	if pick == "lever":
-		player.choices.offered.connect(func(_count: int) -> void: _pull_lever())
-	else:
-		player.choices.offered.connect(func(_count: int) -> void: _act(StringName("choose_%d" % int(pick))))
+	player.choices.offered.connect(func(_count: int) -> void: _pick(pick, pointing))
 	player.reveal.settled.connect(func() -> void: _act(&"advance"))
 
 
-func _pull_lever() -> void:
-	var player: QuestionPlayer = main.question_player
-	var stage := player.stage as TrolleyStage
-	if stage == null or not stage.lever.visible:
-		push_warning("autoplay: this stage has no lever, picking the first option instead")
-		_act(&"choose_1")
-		return
+## Picks the option autoplay was asked for: on the stage when pointing and the stage shows it there,
+## and otherwise in the choice row.
+func _pick(pick: String, pointing: bool) -> void:
+	var stage: Stage = main.question_player.stage
+	var lever := pick == "lever"
+	var index := _first_shown(stage) if lever else int(pick) - 1
+	if lever or pointing:
+		var at := stage.option_point(index) if stage != null else Vector2.INF
+		if at.is_finite():
+			await _click_at(at)
+			return
+		push_warning("autoplay: the stage does not show option %d, picking it in the choice row" % (index + 1))
+	_act(StringName("choose_%d" % (index + 1)))
+
+
+## The first option [param stage] shows in the scene, or the first option when it shows none.
+func _first_shown(stage: Stage) -> int:
+	if stage == null:
+		return 0
+	for i in stage.question.options.size():
+		if stage.option_point(i).is_finite():
+			return i
+	return 0
+
+
+## Moves the pointer to [param point] on the canvas, then clicks there, with synthetic pointer events.
+func _click_at(point: Vector2) -> void:
 	await get_tree().create_timer(autoplay_delay, true).timeout
-	var at := get_viewport().get_screen_transform() * stage.lever.grip_point()
+	var at := get_viewport().get_screen_transform() * point
 	var motion := InputEventMouseMotion.new()
 	motion.position = at
 	motion.global_position = at
@@ -134,6 +156,12 @@ func _shoot() -> void:
 	await RenderingServer.frame_post_draw
 	_shot_count += 1
 	get_viewport().get_texture().get_image().save_png("%s_%02d.png" % [_shot_path, _shot_count])
+
+
+func _shoot_every(seconds: float) -> void:
+	while seconds > 0.0:
+		await get_tree().create_timer(seconds, true).timeout
+		await _shoot()
 
 
 func _shoot_consequence() -> void:

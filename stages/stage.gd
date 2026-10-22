@@ -66,6 +66,12 @@ func leave() -> void:
 	await tween.finished
 
 
+## Where on the canvas a pointer picks the option at [param index] in the scene, or
+## [code]Vector2.INF[/code] when the scene has no control for it and it is picked only in the choice row.
+func option_point(_index: int) -> Vector2:
+	return Vector2.INF
+
+
 func _ink_drawings() -> Array[InkDrawing]:
 	var found: Array[InkDrawing] = []
 	var pending: Array[Node] = [self]

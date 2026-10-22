@@ -177,6 +177,16 @@ func leave() -> void:
 	await super.leave()
 
 
+## On a fork, the lever's grip for the option it stands for; on a fan, halfway along each option's route.
+func option_point(index: int) -> Vector2:
+	if _layout.has_lever:
+		return lever.grip_point() if index >= 0 and index == _lever_option else Vector2.INF
+	if index < 0 or index >= question.options.size():
+		return Vector2.INF
+	var route := _routes[_option_route(index)]
+	return route.get_global_transform_with_canvas() * route.point_at(route.length() * 0.5)
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if not _pointing or not event is InputEventMouse:
 		return
