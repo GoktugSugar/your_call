@@ -1,9 +1,12 @@
 class_name RunPlayer
 extends Node
-## Plays the run: a chapter's beats in order, cinematics, the imp's narration and questions, until
-## the chapter ends or a choice fires a secret ending. An ending is an ending, never a loss: the imp's
-## reaction is his last line, he fades, the stage goes, and the credits roll.
+## Plays the run: its chapters in order, and each chapter's beats in order, cinematics, the imp's
+## narration and questions, until the run ends or a choice fires a secret ending. An ending is an
+## ending, never a loss: the imp's reaction is his last line, he fades, the stage goes, and the credits
+## roll. The imp takes his leave at the end of each chapter, and the next opens on the player waking.
 
+## Emitted as each chapter starts.
+signal chapter_started(chapter: ChapterData)
 ## Emitted as each beat starts.
 signal beat_started(beat: BeatData)
 
@@ -28,9 +31,29 @@ const CREDITS_SCENE := "res://ui/credits/credits.tscn"
 @export var imp_wing := Imp.Wing.RIGHT
 
 
+## Plays [param chapters] in order, from the chapter with the id [param from_chapter] and its beat
+## [param from_beat] (or from the start), feeding choices into [param profile]. Returns the secret
+## ending a choice fired, or an empty name when the run went to its end.
+func play_run(chapters: Array[ChapterData], profile: Profile, from_chapter := &"", from_beat := &"") -> StringName:
+	var started := from_chapter == &""
+	for chapter in chapters:
+		if not started:
+			if chapter.id != from_chapter:
+				continue
+			started = true
+		var ending := await play_chapter(chapter, profile, from_beat)
+		if ending != &"":
+			return ending
+		from_beat = &""
+		if imp.visible:
+			await imp.vanish()
+	return &""
+
+
 ## Plays [param chapter] from the beat [param from] (or the start), feeding choices into [param profile].
 ## Returns the secret ending a choice fired, or an empty name when the chapter ran to its end.
 func play_chapter(chapter: ChapterData, profile: Profile, from := &"") -> StringName:
+	chapter_started.emit(chapter)
 	var started := from == &""
 	for beat in chapter.beats:
 		if not started:
@@ -50,10 +73,10 @@ func play_chapter(chapter: ChapterData, profile: Profile, from := &"") -> String
 			await dialogue.close()
 		elif beat is QuestionData:
 			await _imp_ready()
-			var picked := await question_player.play(beat as QuestionData, profile)
-			if picked != null and picked.ending != &"":
-				await _end(picked.ending)
-				return picked.ending
+			var ending := await question_player.play(beat as QuestionData, profile)
+			if ending != &"":
+				await _end(ending)
+				return ending
 		await get_tree().create_timer(between_beats, false).timeout
 	return &""
 

@@ -3,9 +3,13 @@ extends Node
 ## question's phase and the silent profile. Switches after [code]--[/code] on the command line:
 ## [codeblock]
 ## --autoplay=N     pick option N (counting from 1) and click through everything else
-## --point          with --autoplay=N, point at the option on the stage and click it there (a track,
-##                  a doodle) with synthetic pointer events, instead of picking it in the choice row
+## --autoplay=1,1,2  pick these in turn, one per choice, the last one from then on (an offer ladder
+##                  comes round again, so this presses twice and then stops)
+## --point          with --autoplay, point at the option on the stage and click it there (a track,
+##                  a doodle, a button) with synthetic pointer events, instead of picking it in the choice row
 ## --autoplay=lever  point at the stage's lever and click it; on a stage without one, its first option
+##                  On a stage that takes the choice by itself, such as the timer, autoplay clicks the
+##                  option where the stage shows it, or leaves it alone to let the stage decide.
 ## --speed=X        run the game X times faster
 ## --shots=PATH     save a screenshot just before each autoplay click, as PATH_01.png and on
 ## --quit-after=N   quit once N questions have finished
@@ -13,7 +17,8 @@ extends Node
 ## --every=S        with --shots, also save a screenshot every S seconds all the way through
 ## --window=WxH     a plain window of exactly that size, to check a resolution
 ## --log-talk       print when each page starts, finishes inking on, and stops being spoken
-## --beat=ID        start the run at the beat with this id instead of the top
+## --chapter=ID     start the run at the chapter with this id, such as ch2, instead of the first
+## --beat=ID        start at the beat with this id, in that chapter or the first
 ## [/codeblock]
 
 ## Seconds autoplay waits before each click.
@@ -29,6 +34,10 @@ var _shot_count := 0
 var _burst := 0.0
 var _questions_done := 0
 var _quit_after := 0
+## The picks autoplay makes, one per choice, the last one from then on.
+var _picks := PackedStringArray()
+var _choices_made := 0
+var _chapter := &""
 
 
 func _ready() -> void:
@@ -36,8 +45,11 @@ func _ready() -> void:
 	overlay.visible = false
 	var args := DevArgs.parse()
 	DevArgs.apply_window(get_window(), args)
+	if args.has("chapter"):
+		main.start_chapter = StringName(args["chapter"])
 	if args.has("beat"):
 		main.start_beat = StringName(args["beat"])
+	main.run_player.chapter_started.connect(func(chapter: ChapterData) -> void: _chapter = chapter.id)
 	if args.has("speed"):
 		Engine.time_scale = float(args["speed"])
 	var player: QuestionPlayer = main.question_player
@@ -73,7 +85,7 @@ func _process(_delta: float) -> void:
 	var player: QuestionPlayer = main.question_player
 	var lines := PackedStringArray()
 	var question := player.question
-	lines.append("%s  %s" % [question.number + " " + question.title if question != null else "between questions",
+	lines.append("%s  %s  %s" % [_chapter, question.number + " " + question.title if question != null else "between questions",
 			QuestionPlayer.Phase.keys()[player.phase].to_lower()])
 	var profile: Profile = main.profile
 	for axis in profile.leanings:
@@ -81,23 +93,36 @@ func _process(_delta: float) -> void:
 	overlay.text = "\n".join(lines)
 
 
-func _autoplay(pick: String, pointing: bool) -> void:
+func _autoplay(picks: String, pointing: bool) -> void:
+	_picks = picks.split(",")
 	var player: QuestionPlayer = main.question_player
 	player.dialogue.waiting_changed.connect(func(waiting: bool) -> void:
 		if waiting:
 			_act(&"advance"))
-	player.choices.offered.connect(func(_count: int) -> void: _pick(pick, pointing))
+	player.choosing_started.connect(func() -> void: _pick(_next_pick(), pointing))
 	player.reveal.settled.connect(func() -> void: _act(&"advance"))
 
 
+## The pick for the next choice: the next in the list, or the last one once the list runs out.
+func _next_pick() -> String:
+	var pick := _picks[mini(_choices_made, _picks.size() - 1)]
+	_choices_made += 1
+	return pick
+
+
 ## Picks the option autoplay was asked for: on the stage when pointing and the stage shows it there,
-## and otherwise in the choice row.
+## and otherwise in the choice row. On a stage that takes the choice by itself, it clicks the option
+## where the stage shows it, or leaves the stage to decide.
 func _pick(pick: String, pointing: bool) -> void:
 	var stage: Stage = main.question_player.stage
 	var lever := pick == "lever"
 	var index := _first_shown(stage) if lever else int(pick) - 1
+	var at := stage.option_point(index) if stage != null else Vector2.INF
+	if stage != null and stage.chooses_alone():
+		if at.is_finite():
+			await _click_at(at)
+		return
 	if lever or pointing:
-		var at := stage.option_point(index) if stage != null else Vector2.INF
 		if at.is_finite():
 			await _click_at(at)
 			return
