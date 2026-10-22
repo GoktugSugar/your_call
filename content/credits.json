@@ -1,0 +1,10 @@
+{
+  "title": "Your Call",
+  "credits": [
+    { "role": "A game by", "name": "Goktug Sugar" },
+    { "role": "Type", "name": "Caveat, by the Caveat Project Authors, under the SIL Open Font License" },
+    { "role": "Music", "name": "Placeholder track" },
+    { "role": "The imp's voice", "name": "Made with ElevenLabs" },
+    { "role": "Made with", "name": "Godot Engine" }
+  ]
+}
