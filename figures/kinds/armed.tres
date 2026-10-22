@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SoulKind" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://figures/kinds/soul_kind.gd" id="1_kind"]
+[ext_resource type="PackedScene" path="res://figures/stick_figure.tscn" id="2_scene"]
+[ext_resource type="Resource" path="res://figures/poses/aim.tres" id="3_pose"]
+
+[resource]
+script = ExtResource("1_kind")
+scene = ExtResource("2_scene")
+pose = ExtResource("3_pose")
+pistol = true
