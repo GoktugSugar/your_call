@@ -22,7 +22,7 @@ Creative calls made overnight on 2026-10-22, while the user slept. Each is provi
 - The colours of the items the script left uncoloured.
 - The weights given to Chapter 3's questions.
 
-**Chapter 4, The Gun**
+**Chapter 4, The Gun** (review page: https://claude.ai/artifact/HDpDmK7RQpz8XC5v2dv4i9)
 - The trimmed copy, 21% shorter.
 - 4.02: lowered, the dying one dies anyway a moment later. Alternative: it stays alive, pleading, while the imp speaks.
 - 4.03: no hold option, and "Aim, or do not" cut. Alternative: add a "Lower the gun" option.

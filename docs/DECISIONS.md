@@ -159,7 +159,7 @@ Built unattended like Chapter 3, on top of it. Technical calls are the dev's; ev
 - **What skipped chapters leave behind.** Dev. A run started part way, from the dev menu, takes each skipped chapter's `if_skipped`: facts to remember and kills by kind. Chapter 1 leaves 8 souls, Chapter 2 the button woken and a stranger, Chapter 4 the button spared, the bear and three strangers.
 - **The figures.** Dev: drawn by a helper. The last bear (sitting, front facing, filled solid brown, open bump ears, falling over when shot), the future baby (the bundle with a small square mustache and a paintbrush), the armed stranger (a pistol held at the player, lowered when it answers a lowered gun), the dying soul (on its knees, reaching out, finishing its fall when shot) and the calm one (hands clasped at ease).
 - **Souls stand larger on the gun's stage.** Dev. The gun brings them close: 1.7 times their size on the tracks.
-- **The trimmed copy.** Provisional, made overnight. 2,962 words down to 2,346, 21% shorter. Review page: see Chapter 4's pull request.
+- **The trimmed copy.** Provisional, made overnight. 2,962 words down to 2,346, 21% shorter. Review page: https://claude.ai/artifact/HDpDmK7RQpz8XC5v2dv4i9
 - **4.01: "heavier than a lever" is said once.** Provisional, made overnight. The intro says it, so the ask no longer repeats it.
 - **4.02: lowered, the dying one goes anyway.** Provisional, made overnight. A moment after the gun is lowered it finishes falling by itself, so "it still ended" is true on screen.
 - **4.03: no hold.** Provisional, made overnight. "Aim, or do not" is cut, since there is no option to hold; whichever is shot, the other walks off.
