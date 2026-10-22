@@ -154,7 +154,7 @@ func highlight_option(index: int) -> void:
 		_light_route(_option_route(index) if index >= 0 else -1)
 
 
-func play_consequence(index: int) -> void:
+func play_consequence(index: int) -> StringName:
 	set_choosing(false)
 	lever.highlighted = false
 	var route := _option_route(index)
@@ -167,6 +167,7 @@ func play_consequence(index: int) -> void:
 	if _darkness != null:
 		await get_tree().create_timer(dark_pause, false).timeout
 		await _darkness.lift()
+	return &""
 
 
 func leave() -> void:
