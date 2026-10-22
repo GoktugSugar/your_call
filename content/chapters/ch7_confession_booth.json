@@ -1,0 +1,578 @@
+{
+  "id": "ch7",
+  "title": "The Confession Booth",
+  "beats": [
+    { "kind": "cinematic", "id": "waking", "scene": "waking" },
+    {
+      "kind": "narration",
+      "id": "intro",
+      "lines": [
+        "New room. You will enjoy this one. For the first time since you got here, I am handing [amber]you[/amber] the gavel.",
+        "The [red]dead[/red] have grievances. Petty ones, enormous ones, and every one of them wants a ruling. You did this for a living. Back to work, judge. I will clerk.",
+        {
+          "text": "They confess. You rule one of [amber]three[/amber] ways, and yes, there is a middle, for when everyone involved was awful. Then, my favourite part, we find out whether the room agrees. Approach the booth.",
+          "face": "smug"
+        }
+      ]
+    },
+    {
+      "kind": "question",
+      "id": "recliner",
+      "number": "7.01",
+      "title": "The Recliner",
+      "verb": "multiple_choice",
+      "weight": "light",
+      "stage": {
+        "type": "booth",
+        "confessors": [
+          { "voice": "recliner", "says": { "text": "I paid for the whole seat.", "speaker": "headline" } }
+        ]
+      },
+      "ask": [
+        "Court is in session, such as it is. First on the docket. Do try not to [red]bleed[/red] on my floor.",
+        "This one reclined his seat all the way back on a [amber]nine hour[/amber] flight, into the knees behind him. Asked politely to ease it up, he declined. State your case.",
+        { "text": "I paid for the whole seat. The recline is part of the seat. It is a button. The airline put it there for me to press.", "speaker": "confessor", "voice": "recliner" },
+        { "text": "If the person behind me wanted knee room, they could have paid for it. Or asked nicely, instead of kicking my chair for [amber]six hours[/amber] like a furious toddler.", "speaker": "confessor", "voice": "recliner" },
+        "A man, a button, and the eternal war over [amber]four inches[/amber] of stale air. You have ruled on less. Your verdict."
+      ],
+      "options": [
+        {
+          "id": "guilty",
+          "label": "He was out of line",
+          "outcome": { "verdict": "guilty" },
+          "crowd": 44,
+          "reaction": [
+            "[red]Guilty[/red]. For pressing a button the airline installed and begged him to press. Somewhere a man is condemned for all eternity for reclining, and he feels it is slightly out of proportion."
+          ]
+        },
+        {
+          "id": "cleared",
+          "label": "He paid, it is his seat",
+          "outcome": { "verdict": "cleared" },
+          "crowd": 25,
+          "reaction": [
+            "Cleared. He paid, so he owns the airspace over a stranger's kneecaps. A property lawyer's verdict. It will make you deeply unpopular on every flight you never take again."
+          ]
+        },
+        {
+          "id": "everyone",
+          "label": "Everyone on that flight sucks",
+          "outcome": { "verdict": "everyone" },
+          "crowd": 31,
+          "reaction": [
+            { "text": "Everyone sucks. The reclined, the kneed, the airline, the sky itself. A refusal to pick a side, dressed up as wisdom. It tells me almost nothing, which is its own kind of answer.", "face": "smug" }
+          ]
+        }
+      ],
+      "lines": {
+        "least_popular": [
+          "Hold that thought. When I polled the room, it did not land anywhere near you. Not the popular call. Watch."
+        ]
+      },
+      "reveal": { "heading": "how the room ruled" }
+    },
+    {
+      "kind": "question",
+      "id": "wedding",
+      "number": "7.02",
+      "title": "The Wedding",
+      "verb": "multiple_choice",
+      "weight": "light",
+      "stage": {
+        "type": "booth",
+        "confessors": [
+          { "voice": "wedding", "says": { "text": "It was cream, actually.", "speaker": "headline" } }
+        ]
+      },
+      "ask": [
+        "Next. A woman who wore [amber]white[/amber] to a wedding that was not hers. On purpose. Among your people, I am told, that is a declaration of war.",
+        "She and the bride have, and I quote the file, history. State it.",
+        { "text": "It was cream. And she knew exactly what she was doing when she sat me at the back table, next to her ghastly uncle. She started it.", "speaker": "confessor", "voice": "wedding" },
+        { "text": "If she did not want to be outshone, she should not have married a man who used to be mine. I looked incredible. That is not a crime.", "speaker": "confessor", "voice": "wedding" },
+        "A dress, a [amber]decade[/amber] of grudge, and a bride who may or may not have had it coming. Rule."
+      ],
+      "options": [
+        {
+          "id": "guilty",
+          "label": "She did it to wound",
+          "outcome": { "verdict": "guilty" },
+          "crowd": 49,
+          "reaction": [
+            "[red]Guilty[/red]. She weaponised an outfit at someone else's altar. That dress will hang in a closet somewhere, radiating pure spite, for the next ten years."
+          ]
+        },
+        {
+          "id": "cleared",
+          "label": "The bride had it coming",
+          "outcome": { "verdict": "cleared" },
+          "crowd": 18,
+          "reaction": [
+            "Not guilty. The bride married the ex, seated her by the uncle, and so ordered the dress herself. Tit for tat accounting at a wedding reception. It is certainly a look."
+          ]
+        },
+        {
+          "id": "everyone",
+          "label": "Two feuds, no innocents",
+          "outcome": { "verdict": "everyone" },
+          "crowd": 33,
+          "reaction": [
+            "Everyone sucks, the whole reception hall. Two women at war for years, with a wedding for a battlefield. No clean party, no clean dress. You did not even look for a hero."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how the room ruled" }
+    },
+    {
+      "kind": "question",
+      "id": "loan",
+      "number": "7.03",
+      "title": "The Loan",
+      "verb": "multiple_choice",
+      "weight": "medium",
+      "stage": {
+        "type": "booth",
+        "confessors": [
+          { "voice": "loan", "says": { "text": "I only told the truth about him.", "speaker": "headline" } }
+        ]
+      },
+      "ask": [
+        "Number three. A family matter, my favourite. Nobody involved is fully sane, and they all remember it differently.",
+        "This one lent his brother money when the brother was drowning. The brother missed the date. So this one stood up at a family dinner and laid it all out, in front of everyone. State your case.",
+        { "text": "I carried him for [amber]a year[/amber]. Not one thank you, not one honest word. Just excuses, and, I noticed, a brand new phone.", "speaker": "confessor", "voice": "loan" },
+        { "text": "I did not lie. Every word I said at that table was true. If the truth humiliated him, that is on him, not on me for saying it out loud.", "speaker": "confessor", "voice": "loan" },
+        "A debt paid back in humiliation, in front of the whole bloodline. Rule."
+      ],
+      "options": [
+        {
+          "id": "guilty",
+          "label": "He shamed his own brother",
+          "outcome": { "verdict": "guilty" },
+          "crowd": 46,
+          "profile": { "mercy_justice": 0.5 },
+          "reaction": [
+            "[red]Guilty[/red]. The debt was real, but he chose an audience. He did not want the money back. He wanted the room to watch him not get it. Noted, and filed."
+          ]
+        },
+        {
+          "id": "cleared",
+          "label": "The brother earned it",
+          "outcome": { "verdict": "cleared" },
+          "crowd": 21,
+          "profile": { "mercy_justice": -0.5 },
+          "reaction": [
+            "Cleared. [amber]A year[/amber] of silence and a shiny new phone, so the public shaming was just an invoice with feelings attached. Truth is a defence, is it. Very efficient. Lonely, but efficient."
+          ]
+        },
+        {
+          "id": "everyone",
+          "label": "A whole family of debts",
+          "outcome": { "verdict": "everyone" },
+          "crowd": 33,
+          "reaction": [
+            "Everyone sucks. The deadbeat and the town crier. A family that will have this fight at every dinner until the last of them [red]dies[/red]. Some already have. It did not help."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how the room ruled" }
+    },
+    {
+      "kind": "question",
+      "id": "button_confession",
+      "number": "7.04",
+      "title": "The Button's Confession",
+      "verb": "multiple_choice",
+      "weight": "light",
+      "stage": {
+        "type": "booth",
+        "confessors": [
+          { "button": true, "says": { "text": "I bumped a man. In a doorway.", "speaker": "button" } }
+        ]
+      },
+      "ask": [
+        { "text": "Case four. Oh. Oh no. It is you again. The one I still have questions about.", "face": "glare" },
+        "Let the record show I did not ask for this. It has filed a confession. A real one. The court recognises, and I cannot believe I am saying this out loud, the button.",
+        { "text": "He remembers it. I would remember it.", "speaker": "button" },
+        "The button wishes the court to know that some time ago, on its travels, it bumped a man in a doorway. A glancing bump. It did not say sorry. It has thought about little else since.",
+        "It maintains that the man remembers, is very possibly still upset, and that this makes the button, and I quote, a [red]monster[/red]. It wants a ruling. In complete earnest.",
+        { "text": "Do not laugh. It will hear you, and it will take it very hard. Rule.", "face": "smug" }
+      ],
+      "options": [
+        {
+          "id": "guilty",
+          "label": "Guilty. It should apologise",
+          "outcome": { "verdict": "guilty" },
+          "crowd": 14,
+          "reaction": [
+            "You found a button [red]guilty[/red]. Of a bump. In a doorway. You gave it the same grave face you gave the trolleys. It looks devastated, and also profoundly grateful. It needed this."
+          ]
+        },
+        {
+          "id": "cleared",
+          "label": "It was nothing, let it go",
+          "outcome": { "verdict": "cleared" },
+          "crowd": 61,
+          "reaction": [
+            "Acquitted. You looked a small anxious button in the eye and told it it did nothing wrong, and it believed you. You are a judge, it is a button, and this is the closest thing to therapy either of you can afford."
+          ]
+        },
+        {
+          "id": "everyone",
+          "label": "That doorway had two fools",
+          "outcome": { "verdict": "everyone" },
+          "crowd": 25,
+          "reaction": [
+            "Everyone in that doorway sucks, including the man, who has not thought about it once. A perfectly balanced verdict for an imaginary crime. The button is nodding along. It just wanted to be here."
+          ]
+        }
+      ],
+      "lines": {
+        "leave": [
+          { "text": "Thank you, your honour. I feel lighter.", "speaker": "button" }
+        ]
+      },
+      "reveal": { "heading": "how the room ruled" }
+    },
+    {
+      "kind": "question",
+      "id": "secret",
+      "number": "7.05",
+      "title": "The Secret",
+      "verb": "multiple_choice",
+      "weight": "medium",
+      "stage": {
+        "type": "booth",
+        "confessors": [
+          { "voice": "secret", "says": { "text": "It was not mine to tell.", "speaker": "headline" } }
+        ]
+      },
+      "ask": [
+        "Five. A quieter one. Just a thing known, and not said.",
+        "This one found out her best friend's partner was cheating, and sat on it. The friend found out later. Worse, she found out this one had known the whole time. State it.",
+        { "text": "If I said something and I was wrong, I lose her. If I was right, I am the one who blew up her life. There was no way I walk away clean.", "speaker": "confessor", "voice": "secret" },
+        { "text": "I kept hoping he would end it, or she would see it herself. I was trying to protect her. She does not believe that now. But I was.", "speaker": "confessor", "voice": "secret" },
+        "A secret kept out of love, or out of cowardice, and a friendship that did not survive it. Rule."
+      ],
+      "options": [
+        {
+          "id": "guilty",
+          "label": "Her silence was a betrayal",
+          "outcome": { "verdict": "guilty" },
+          "crowd": 38,
+          "profile": { "mercy_justice": 0.5 },
+          "reaction": [
+            "[red]Guilty[/red]. Knowing and saying nothing is its own quiet lie, and a friend is owed the truth even when it goes off like a bomb. I hope nobody holds you to that. Everyone in this room is sitting on something."
+          ]
+        },
+        {
+          "id": "cleared",
+          "label": "It was not hers to tell",
+          "outcome": { "verdict": "cleared" },
+          "crowd": 34,
+          "profile": { "mercy_justice": -0.5 },
+          "reaction": [
+            "Cleared. Not her circus, not her marriage. The most loyal thing a friend can do, you rule, is look politely away while the house burns. A great many people will want you at their dinner parties. None of them should get you."
+          ]
+        },
+        {
+          "id": "everyone",
+          "label": "No clean way through it",
+          "outcome": { "verdict": "everyone" },
+          "crowd": 28,
+          "reaction": [
+            "Everyone sucks. The cheat, obviously, but both women too. One for knowing, one for needing to be told. There was no clean exit from that room, and you would not pretend there was. Bleak."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how the room ruled" }
+    },
+    {
+      "kind": "question",
+      "id": "promise",
+      "number": "7.06",
+      "title": "The Promise",
+      "verb": "multiple_choice",
+      "weight": "heavy",
+      "stage": {
+        "type": "booth",
+        "confessors": [
+          { "voice": "promise", "says": { "text": "My kids had to eat.", "speaker": "headline" } }
+        ]
+      },
+      "ask": [
+        "Six. It gets heavier from here. Brace whatever you have instead of a stomach.",
+        "This one promised his mother on her [red]deathbed[/red] that he would keep the family home. Forever. He sold it [amber]inside a year[/amber]. Not for a boat. To feed his children. State your case. She cannot hear you now.",
+        { "text": "She made me promise while she was already going. What was I supposed to say, no? You do not argue with a [red]dying[/red] woman. You say yes. And I meant it. I swear I did.", "speaker": "confessor", "voice": "promise" },
+        { "text": "Then it was a house full of her ghosts, or my kids eating. I chose the ones still alive. I think she would have understood. I have to think that.", "speaker": "confessor", "voice": "promise" },
+        "A promise to the [red]dead[/red], against the hunger of the living. Rule, judge. This one is the actual job."
+      ],
+      "options": [
+        {
+          "id": "guilty",
+          "label": "He broke a sacred vow",
+          "outcome": { "verdict": "guilty" },
+          "crowd": 22,
+          "profile": { "mercy_justice": 0.5 },
+          "reaction": [
+            "[red]Guilty[/red]. Some promises are meant to cost you everything, and a word given to the [red]dying[/red] is the heaviest kind. She would be proud of that ruling, if pride were still available to her. It is not."
+          ]
+        },
+        {
+          "id": "cleared",
+          "label": "The living come first",
+          "outcome": { "verdict": "cleared" },
+          "crowd": 48,
+          "profile": { "mercy_justice": -0.5 },
+          "reaction": [
+            "Cleared. The [red]dead[/red] do not eat, the children do, and you sided with the pulse over the promise. So a dying wish is worth nothing once it gets inconvenient. Good to know. I will remember that when it is your turn."
+          ]
+        },
+        {
+          "id": "everyone",
+          "label": "An impossible promise, broken",
+          "outcome": { "verdict": "everyone" },
+          "crowd": 30,
+          "reaction": [
+            "Everyone sucks. The mother is beyond caring and the children only wanted dinner, so mostly you are indicting a man for being poor while he grieved. Generous of you."
+          ]
+        }
+      ],
+      "lines": {
+        "least_popular": [
+          "Careful. The room split hard on this one, and you landed where almost nobody did. Not wrong. Just alone up there. Watch."
+        ]
+      },
+      "reveal": { "heading": "how the room ruled" }
+    },
+    {
+      "kind": "question",
+      "id": "favorite",
+      "number": "7.07",
+      "title": "The Favorite",
+      "verb": "multiple_choice",
+      "weight": "heavy",
+      "stage": {
+        "type": "booth",
+        "confessors": [
+          { "voice": "favorite", "says": { "text": "They never chose me. Not once.", "speaker": "headline" } }
+        ]
+      },
+      "ask": [
+        "Seven. A parent, a [red]deathbed[/red], and a child who did not come.",
+        "This one grew up second, always, behind a brother who could do no wrong. When the parent was [red]dying[/red], and asking for them by name, this one did not go. Did not call. State it.",
+        { "text": "You want the last honest thing they ever said to me? They wished I had more of my brother in me. I was [amber]twelve[/amber]. I have carried that for [amber]thirty years[/amber].", "speaker": "confessor", "voice": "favorite" },
+        { "text": "So no, I did not rush to hold the hand of someone who spent my whole life making me feel like a mistake. They wanted their favourite at the end. They could have [red]died[/red] looking at him.", "speaker": "confessor", "voice": "favorite" },
+        "A lifetime of coming second, against a parent [red]dying[/red] alone and asking. Rule."
+      ],
+      "options": [
+        {
+          "id": "guilty",
+          "label": "Leaving the dying is too far",
+          "outcome": { "verdict": "guilty" },
+          "crowd": 35,
+          "profile": { "mercy_justice": 0.5 },
+          "reaction": [
+            "[red]Guilty[/red]. Whatever was done to the child, a [red]dying[/red] parent asking for you is a line, and this one stepped over it. Some will call that cruel and some will call it right, and you just found out which one you are."
+          ]
+        },
+        {
+          "id": "cleared",
+          "label": "They earned that empty room",
+          "outcome": { "verdict": "cleared" },
+          "crowd": 32,
+          "profile": { "mercy_justice": -0.5 },
+          "reaction": [
+            "Cleared. [amber]Thirty years[/amber] as the runner up bought this one the right to skip the finale, and you signed off on the bill. The parent should have thought of that earlier, you rule. Cold. Definitely cold."
+          ]
+        },
+        {
+          "id": "everyone",
+          "label": "A family that failed each other",
+          "outcome": { "verdict": "everyone" },
+          "crowd": 33,
+          "reaction": [
+            "Everyone sucks, across two generations and one very quiet funeral. A parent who broke a child, and a child who broke them back at the worst moment. The same wound, handed down like an heirloom. Noted."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how the room ruled" }
+    },
+    {
+      "kind": "question",
+      "id": "good_deed",
+      "number": "7.08",
+      "title": "The Good Deed",
+      "verb": "multiple_choice",
+      "weight": "medium",
+      "stage": {
+        "type": "booth",
+        "confessors": [
+          { "voice": "good_deed", "says": { "text": "I gave him his whole life back.", "speaker": "headline" } }
+        ]
+      },
+      "ask": [
+        "Eight. A rescue, and what came after it, which is the actual case.",
+        "Years ago this one pulled a drowning stranger out of a river. A genuinely brave thing. And has reminded him of it every year since. Favours, loyalty, gratitude on demand. The man he saved now screens his calls. State your case.",
+        { "text": "He would be [red]dead[/red]. In the ground, twenty years now, if I had not gone in after him. The wife, the kids, the whole little life, all of it is on loan from me.", "speaker": "confessor", "voice": "good_deed" },
+        { "text": "So yes, when I need something, I ask him first. I handed him back the entire world. I think I can expect a phone call returned.", "speaker": "confessor", "voice": "good_deed" },
+        "A life saved, then invoiced forever. Is it still a gift if it never stops being a bill? Rule."
+      ],
+      "options": [
+        {
+          "id": "guilty",
+          "label": "He turned a rescue into a leash",
+          "outcome": { "verdict": "guilty" },
+          "crowd": 55,
+          "profile": { "mercy_justice": 0.5 },
+          "reaction": [
+            "[red]Guilty[/red]. A good deed with a lifelong interest rate is not a good deed, it is a purchase. He will loathe that. In his own head he has been the hero all along, and you just repriced him as a debt collector with wet shoes."
+          ]
+        },
+        {
+          "id": "cleared",
+          "label": "A life owes something",
+          "outcome": { "verdict": "cleared" },
+          "crowd": 17,
+          "profile": { "mercy_justice": -0.5 },
+          "reaction": [
+            "Cleared. A life is the largest thing there is, so the man who handed it back draws on the account forever. Gratitude is a debt with no final payment. Do think about who might be keeping that ledger open on you."
+          ]
+        },
+        {
+          "id": "everyone",
+          "label": "Both drowning, differently",
+          "outcome": { "verdict": "everyone" },
+          "crowd": 28,
+          "reaction": [
+            "Everyone sucks. The drowning man who will not pick up, and the swimmer who will not stop dialling. Bound by a river neither of them ever climbed out of. Poetic. Exhausting for everyone downstream."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how the room ruled" }
+    },
+    {
+      "kind": "question",
+      "id": "whistle",
+      "number": "7.09",
+      "title": "The Whistle",
+      "verb": "multiple_choice",
+      "weight": "heavy",
+      "stage": {
+        "type": "booth",
+        "confessors": [
+          { "voice": "whistle", "says": { "text": "I told the truth. It cost me everything.", "speaker": "headline" } }
+        ]
+      },
+      "ask": [
+        "Nine. This one asks the question out loud, which most of them are far too proud to do.",
+        "She reported a coworker, the office favourite, for something provably wrong. It cost him everything. Then the office turned on her, and it cost her everything too. She wants to know if being right made her the [red]villain[/red]. State it.",
+        { "text": "What he did was real. I did not invent it or stretch it. Everyone agreed it was bad. Then everyone hated me for being the one who said it.", "speaker": "confessor", "voice": "whistle" },
+        { "text": "I lost my job over his crime. My friends, my references. Rooms go quiet when I walk in. I was right. So why am I the only one who got punished?", "speaker": "confessor", "voice": "whistle" },
+        "The truth told, and the teller buried for it. Was she the [red]villain[/red] for being right? Rule."
+      ],
+      "options": [
+        {
+          "id": "guilty",
+          "label": "She should have stayed quiet",
+          "outcome": { "verdict": "guilty" },
+          "crowd": 12,
+          "profile": { "mercy_justice": 0.5 },
+          "reaction": [
+            "[red]Guilty[/red]. She told the truth about a genuine wrong, and you rule she should have swallowed it. Peace over honesty. I do notice it is always the honest one we ask to be quiet, never the one they were honest about."
+          ]
+        },
+        {
+          "id": "cleared",
+          "label": "She did the right thing",
+          "outcome": { "verdict": "cleared" },
+          "crowd": 58,
+          "profile": { "mercy_justice": -0.5 },
+          "reaction": [
+            "Cleared, no asterisk. She was right, she paid for it, and you refuse to call the paying a crime. It will not give her back the job, or the friends. But she has one judge on record saying she was not the [red]monster[/red]. That is very close to nothing. Not quite."
+          ]
+        },
+        {
+          "id": "everyone",
+          "label": "Right, but not clean about it",
+          "outcome": { "verdict": "everyone" },
+          "crowd": 30,
+          "reaction": [
+            "Everyone sucks. Bold, for a woman whose whole crime was being correct. Right but clumsy with it, you mean, righteous enough to hand the office its excuse. Or you could not give a clean verdict to someone the crowd had already punished. Even here. Telling."
+          ]
+        }
+      ],
+      "lines": {
+        "least_popular": [
+          "Sit with that. When I ran this by the room, it did not go where you went. She would find that either comforting or unbearable. So would I. Watch."
+        ]
+      },
+      "reveal": { "heading": "how the room ruled" }
+    },
+    {
+      "kind": "question",
+      "id": "two_stories",
+      "number": "7.10",
+      "title": "The Two Stories",
+      "verb": "multiple_choice",
+      "weight": "heavy",
+      "stage": {
+        "type": "booth",
+        "confessors": [
+          { "voice": "her", "side": "left", "says": { "text": "He told everyone.", "speaker": "headline" } },
+          { "voice": "him", "side": "right", "says": { "text": "She blamed me to survive it.", "speaker": "headline" } }
+        ]
+      },
+      "ask": [
+        "Last case. The kind that used to keep you up at night, back when the bench was real wood and the people in front of it still had [red]blood[/red] in them.",
+        "[amber]Two[/amber] souls, [amber]one[/amber] story, and it does not match. Best friends for most of their lives, until something ended it, hard.",
+        { "text": "Here is the part you will hate. Neither of them is lying. Both believe every word. You will never know which one is true. Neither will I.", "face": "smug" },
+        { "text": "I told him [amber]one[/amber] thing. The worst thing I have ever done. I never breathed it to another soul. I told him because he was my best friend.", "speaker": "confessor", "voice": "her" },
+        { "text": "And he told everyone. He handed my one secret round like gossip at a bus stop, watched my life come apart, and never once admitted it was him.", "speaker": "confessor", "voice": "her" },
+        { "text": "That is not what happened. She told me, yes. Then she told other people herself, drunk, at a party, and panicked in the morning and needed someone to blame.", "speaker": "confessor", "voice": "him" },
+        { "text": "So she picked me. She could not survive being the leak, and she has told it so often now that she believes it. I lost her over something she did to herself.", "speaker": "confessor", "voice": "him" },
+        "So rule. Testimony that cancels clean out, and no evidence coming, ever. This is the whole job, judge. It always was."
+      ],
+      "options": [
+        {
+          "id": "her",
+          "label": "Believe her",
+          "outcome": { "verdict": { "her": "cleared", "him": "guilty" } },
+          "crowd": 36,
+          "profile": { "mercy_justice": 0.5 },
+          "reaction": [
+            "You believed her. On nothing. On a feeling, on some tell you are sure you caught, the way you did it from the bench for [amber]thirty years[/amber]. Maybe you are right. You will never find out. That was always the job."
+          ]
+        },
+        {
+          "id": "him",
+          "label": "Believe him",
+          "outcome": { "verdict": { "her": "guilty", "him": "cleared" } },
+          "crowd": 30,
+          "profile": { "mercy_justice": 0.5 },
+          "reaction": [
+            "You believed him. Also on nothing. There are only two people here, and one of them is wrong and cannot feel it. Judges pick. It does not make it true. It just makes it over, for everyone but them."
+          ]
+        },
+        {
+          "id": "no_knowing",
+          "label": "There is no knowing",
+          "outcome": { "verdict": "everyone" },
+          "crowd": 34,
+          "profile": { "mercy_justice": -0.5 },
+          "reaction": [
+            "You refused to pick. No way to know, so no verdict. Useless to the two people standing here who needed it to end. For [amber]thirty years[/amber] nobody let you say I cannot know. You finally said it. They are not impressed. Look at them."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how the room ruled" }
+    },
+    {
+      "kind": "narration",
+      "id": "closer",
+      "lines": [
+        "Court is adjourned. A reclined seat, a white dress, a [red]deathbed[/red] promise, and [amber]two[/amber] people telling [amber]one[/amber] story. You never once flinched.",
+        "Funny thing about judging. It never tells me whether you were right. It only shows me how you reach for a verdict, how fast, and where you look while you decide. Which is all I was ever watching.",
+        { "text": "The docket is empty. For now. Step down, judge. You are very good at this. That was never quite the compliment you took it for.", "face": "smug" }
+      ]
+    }
+  ]
+}
