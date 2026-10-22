@@ -1,0 +1,29 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://figures/walking_button/walking_button.gd" id="1_walker"]
+[ext_resource type="PackedScene" path="res://stages/controls/push_button.tscn" id="2_button"]
+[ext_resource type="Resource" path="res://stages/controls/looks/green.tres" id="3_green"]
+[ext_resource type="Script" path="res://figures/walking_button/button_limbs.gd" id="4_limbs"]
+[ext_resource type="Script" path="res://figures/walking_button/button_face.gd" id="5_face"]
+[ext_resource type="PackedScene" path="res://stages/trolley/plea.tscn" id="6_plea"]
+[ext_resource type="Resource" path="res://figures/walking_button/arms/rest.tres" id="7_rest"]
+[ext_resource type="Resource" path="res://figures/walking_button/arms/startled.tres" id="8_startled"]
+
+[node name="WalkingButton" type="Node2D" node_paths=PackedStringArray("body", "limbs", "face")]
+script = ExtResource("1_walker")
+body = NodePath("Body")
+limbs = NodePath("Body/Limbs")
+face = NodePath("Body/Face")
+words_scene = ExtResource("6_plea")
+rest_arms = ExtResource("7_rest")
+startled_arms = ExtResource("8_startled")
+
+[node name="Body" parent="." instance=ExtResource("2_button")]
+look = ExtResource("3_green")
+
+[node name="Limbs" type="Node2D" parent="Body"]
+show_behind_parent = true
+script = ExtResource("4_limbs")
+
+[node name="Face" type="Node2D" parent="Body"]
+script = ExtResource("5_face")
