@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://stages/nuke/nuke_stage.gd" id="1_stage"]
+[ext_resource type="PackedScene" path="res://stages/controls/push_button.tscn" id="2_button"]
+[ext_resource type="Script" path="res://stages/nuke/world_map.gd" id="3_map"]
+[ext_resource type="Script" path="res://stages/nuke/map_pin.gd" id="4_pin"]
+[ext_resource type="Script" path="res://stages/nuke/mushroom_cloud.gd" id="5_cloud"]
+
+[node name="NukeStage" type="Node2D" node_paths=PackedStringArray("button", "world", "pin", "cloud", "name_label", "caption_label")]
+script = ExtResource("1_stage")
+button = NodePath("Button")
+world = NodePath("World")
+pin = NodePath("Pin")
+cloud = NodePath("Cloud")
+name_label = NodePath("Name")
+caption_label = NodePath("Caption")
+
+[node name="World" type="Node2D" parent="."]
+position = Vector2(960, 430)
+script = ExtResource("3_map")
+
+[node name="Cloud" type="Node2D" parent="."]
+script = ExtResource("5_cloud")
+
+[node name="Pin" type="Node2D" parent="."]
+script = ExtResource("4_pin")
+
+[node name="Button" parent="." instance=ExtResource("2_button")]
+position = Vector2(960, 650)
+
+[node name="Name" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+mouse_filter = 2
+
+[node name="Caption" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+mouse_filter = 2

@@ -61,14 +61,18 @@ const SPIN_SET := &"spin"
 @export_group("Words")
 ## Size of the country's name.
 @export_range(8, 200) var name_size := 56
-## Palette role of the country's name.
-@export var name_role := &"ink"
+## Palette role of the country's name: amber, as the imp's lines colour it, so it stands off the ink map.
+@export var name_role := &"amber"
 ## Size of the line under it.
 @export_range(8, 120) var caption_size := 34
 ## Palette role of the line under it.
 @export var caption_role := &"secondary"
-## Gap between the pin's head and the words over it.
-@export_range(0.0, 200.0, 1.0) var words_gap := 70.0
+## Width of the halo of paper round the words, so the coastlines never run through them. Zero for none.
+@export_range(0, 40) var halo_size := 10
+## Palette role of the halo.
+@export var halo_role := &"paper"
+## Gap between the top of the mushroom cloud and the words over it.
+@export_range(0.0, 200.0, 1.0) var words_gap := 16.0
 ## Seconds the words take to fade in.
 @export_range(0.0, 3.0, 0.05) var words_fade := 0.5
 ## The words stay inside this part of the canvas, clear of the imp's wings.
@@ -110,10 +114,14 @@ func setup(for_question: QuestionData) -> void:
 		drawing.visible = false
 	for label: Label in [name_label, caption_label]:
 		label.modulate.a = 0.0
+	var palette := InkPalette.get_default()
 	name_label.add_theme_font_size_override(&"font_size", name_size)
-	name_label.add_theme_color_override(&"font_color", InkPalette.get_default().color(name_role))
+	name_label.add_theme_color_override(&"font_color", palette.color(name_role))
 	caption_label.add_theme_font_size_override(&"font_size", caption_size)
-	caption_label.add_theme_color_override(&"font_color", InkPalette.get_default().color(caption_role))
+	caption_label.add_theme_color_override(&"font_color", palette.color(caption_role))
+	for label: Label in [name_label, caption_label]:
+		label.add_theme_constant_override(&"outline_size", halo_size)
+		label.add_theme_color_override(&"font_outline_color", palette.color(halo_role))
 	set_process(false)
 
 
@@ -284,7 +292,8 @@ func _drop_on_target() -> void:
 	await drop.finished
 
 
-## The country's name and its people ink on over the pin, kept clear of the edges.
+## The country's name and its people ink on over the pin, high enough to clear the cloud to come,
+## and kept clear of the edges: under the pin when there is no room over it.
 func _name_the_target() -> void:
 	name_label.text = str(_target.get("name", ""))
 	caption_label.text = str(question.stage.get("caption", "{people}")).format(fills())
@@ -292,9 +301,9 @@ func _name_the_target() -> void:
 	caption_label.reset_size()
 	var width := maxf(name_label.size.x, caption_label.size.x)
 	var height := name_label.size.y + caption_label.size.y
-	var top := Vector2(pin.position.x - width * 0.5, pin.position.y - words_gap - height)
+	var top := Vector2(pin.position.x - width * 0.5, pin.position.y - cloud.height - words_gap - height)
 	if top.y < words_area.position.y:
-		top.y = pin.position.y + words_gap * 0.4
+		top.y = pin.position.y + words_gap
 	top.x = clampf(top.x, words_area.position.x, words_area.end.x - width)
 	name_label.position = Vector2(top.x + (width - name_label.size.x) * 0.5, top.y)
 	caption_label.position = Vector2(top.x + (width - caption_label.size.x) * 0.5, top.y + name_label.size.y)
