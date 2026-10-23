@@ -478,9 +478,9 @@ There is one linear run, the same for everyone. All the content is in `SCRIPT.md
 - **Readouts appear only where a chapter needs a running number,** such as the money chapter's amber balance and price tags.
 - **Composed, centred tableaux.** Each question is laid out balanced above the dialogue box, on a consistent baseline.
 - **The sanctioned menu exception.** The main menu, settings and pause are the one place a real menu belongs, kept hand-drawn and spare.
-  - **Main menu:** a hand-lettered title, then New Game, Continue and Settings, with the current option in amber.
-  - **Settings:** music, SFX, fullscreen and language.
-  - **Pause (Esc):** Resume, Save and Quit to Menu.
+  - **Main menu:** a hand-lettered title, then New Game, Continue, Settings and Quit, with the current option in amber (2026-10-23: Quit added).
+  - **Settings:** music, sound effects and voice volume, fullscreen, and auto skip (2026-10-23; the earlier build had music, SFX, fullscreen and language).
+  - **Pause (Esc):** Resume, Save, Settings and Quit to Menu (2026-10-23: Settings added).
 - **The menu imp.**
   - Every so often he says one short bark as floating ink text over his head, then hops to a fresh spot.
   - Barks come at random from a small pool, never repeat back to back, and never block input.
@@ -552,6 +552,7 @@ There is one linear run, the same for everyone. All the content is in `SCRIPT.md
 - **New Game** asks for confirmation first if a run exists, then clears the save and the profile.
 - **Reaching any ending clears the run save,** because the run is over. The earlier build kept a rough record of which endings were seen, with a possible endings gallery in mind.
 - **Settings.**
+  - **The remake has (2026-10-23):** music, sound effect and voice volume, fullscreen, and auto skip, kept between sessions.
   - **The earlier build had:** music volume, SFX volume, fullscreen and language.
   - **Candidates never added:** text speed (asked for in the original brief), resolution, a master volume and key rebinding.
   - **With voice acting,** a voice volume and probably a text speed or auto-advance setting join the list.

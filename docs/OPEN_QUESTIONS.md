@@ -74,6 +74,22 @@ Built on 2026-10-23. The copy is signed off and voiced; the rest is provisional 
 - The twelve new doodles and their colours, from the old build's descriptions.
 - After 8.10 and the closer, the run starts over from the crash: there is no ending yet.
 
+## To review: the frame
+
+Built on 2026-10-23. The creative calls were the user's; these look and feel calls are the dev's, to tune in play, logged in `DECISIONS.md`.
+
+- The title's size and its stroke.
+- The menu imp's timing (first bark after 3 seconds, then every 5 to 9) and where he stands, either side of the column.
+- The eyes closing on the menu as the run is gone to, and opening on it after a quit.
+- The settings page's look: the ink bars, the on and off words, the gavel knock and the imp's bark as samples.
+- The pause's veil of paper.
+
+## Parked: the frame
+
+- An endings gallery. The record of endings reached is kept (`user://endings.json`); nothing shows it yet.
+- Whether Chapter 8's closer should roll the credits until the real endings exist. For now the game goes back to the menu.
+- A text speed, a master volume and a language setting, left off the settings for now (2026-10-23).
+
 ## Carried over from the earlier build
 
 These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus the points sections 9 and 14 leave to the user.

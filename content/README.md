@@ -6,6 +6,7 @@ The game's questions and narration live here as data. Adding a question means ad
 - `chapters/*.json`: one file per chapter, its beats in play order.
 - `profile_axes.json`: the silent profile's axes.
 - `countries.json`: the countries the pin in 2.10 can land on: name, ISO code, people, and where on the map.
+- `menu.json`: the main menu's title, and the imp's lines there (see "The main menu" below).
 
 The tests in `tests/content/` load every chapter and fail on any problem, so run them after editing.
 
@@ -350,6 +351,24 @@ A line can carry placeholders the stage fills in when it is shown, such as the a
 Stage data can hold words the player reads on the stage. They follow the text rules too, but they are not lines:
 - `says` anywhere in stage data is a line floating over something on the stage: plain text is a plea, a line object can name its speaker (`{ "text": "Ow!", "speaker": "button" }`), and a list holds several. They get ids like `ch2.walks_away.stage.1`.
 - `text`, `caption` and `label` keys hold readouts, captions and labels, such as `"{count} dead"`. They may carry placeholders, never colour tags.
+
+## The main menu
+
+```json
+{
+  "id": "menu",
+  "title": "Your Call",
+  "lines": {
+    "barks": [ { "text": "Still here, are we?", "face": "smug" } ],
+    "new_game": [ { "text": "Starting over? The run you have goes in the bin.", "face": "smug" } ]
+  }
+}
+```
+
+- `title` is the title over the menu: plain text, no tags.
+- `lines` holds named sets of the imp's lines, each a list of lines as anywhere else, with ids like `menu.barks.1`. `barks` are said now and then, one at a time and never the same twice running; `new_game` is the question New Game puts when there is a run to lose.
+- A line can hang on what the menu knows, with `if` and `unless` as in a chapter: `run_saved` is there to continue. "Continue is greyed out" is said `unless` it.
+- They are voiced like any line, by `tools/voice/voice_lines.py`.
 
 ## The text rules
 

@@ -3070,27 +3070,31 @@ Then the final line plays (no click needed), holds a moment, the imp fades away,
 
 ## The main menu
 
-The imp sits on the menu page (tinted amber) beside the hand-lettered title and the three options (New Game, Continue, Settings). Every so often (first after about 3 seconds, then a pause of 5 to 9) he says one short bark as plain ink text floating over him, picked at random and never the same twice running, with a matching face; once the text clears he hops to a fresh spot. Barks never block navigation.
+The imp sits on the menu page (tinted amber) beside the hand-lettered title and the options (New Game, Continue, Settings, Quit). Every so often (first after about 3 seconds, then a pause of 5 to 9) he says one short bark as plain ink text floating over him, voiced, picked at random and never the same twice running, with a matching face; once the text clears he hops to a fresh spot. Barks never block navigation. The copy is in `content/menu.json`; the light pass of 2026-10-23 split the comma splices into short sentences.
 
 > **Imp (smug):** Still here, are we?
 
 > **Imp (smug):** You already know which one you will pick, and so do I.
 
-> **Imp (grin):** Take your time, no one is waiting for you now.
+> **Imp (grin):** Take your time. No one is waiting for you now.
 
-> **Imp (glare):** A new game, as if the last one went so well for you.
+> **Imp (glare):** A new game. As if the last one went so well for you.
 
-> **Imp (wide grin):** Go on, press something, I love to watch you decide.
+> **Imp (grin):** Go on, press something. I love to watch you decide.
 
-> **Imp (smug):** All this hovering, you were always a staller.
+> **Imp (smug):** All this hovering. You were always a staller.
 
-> **Imp (grin):** Continue is greyed out, nothing back there for you.
+> **Imp (grin), only while Continue is greyed out:** Continue is greyed out. Nothing back there for you.
 
-> **Imp (wide grin):** I can hear the little cogs grinding from here.
+> **Imp (grin):** I can hear the little cogs grinding from here.
 
-> **Imp (grin):** Choose, or do not, it is all the same to me.
+> **Imp (grin):** Choose, or do not. It is all the same to me.
 
 > **Imp (glare):** You judged so many, and look who is squirming now.
+
+New Game, when there is a run to lose, the column becoming **Start over** and **Keep it**:
+
+> **Imp (smug):** Starting over? The run you have goes in the bin.
 
 ---
 
