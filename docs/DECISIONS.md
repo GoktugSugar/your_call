@@ -264,3 +264,28 @@ The main menu, the settings, the pause and the save, built in a worktree of its 
 - **Leaving and arriving.** Dev, to tune. Leaving the menu for the run, the eyes close on the page; quitting the run from the pause, they close on the held page, and the menu opens with them opening. After the credits or the last closer, the menu simply inks itself on. Continue is current when there is a run to pick up; on New Game's question, Keep it is current and Esc keeps it.
 - **The menu imp.** Dev, to tune: his first bark three seconds after he scribbles in, then one every five to nine seconds, each up for 1.6 seconds once said; between barks he hops to a fresh spot either side of the column, facing it. He keeps quiet while the settings are open, but for a bark at a new voice level.
 - **Dev runs keep off the player's save.** Dev. Every command line switch but `--window` drives the run: on the menu it steps straight into the run, so autoplay and screenshots work as before, and such a run never writes or clears the save. F2 works on the menu too and jumps into the run; a jump from F2 is a real run and saves like one. The menu forgets any earlier jump, so New Game starts at the top.
+
+## 2026-10-23: building Chapter 6, The Show
+
+The user picked three of the chapter ideas to build (The Show, Everyone Else, The Portrait) from a page of outlines, and asked for them built. Built in a worktree of its own (`.claude/worktrees/chapters`), each chapter on its own branch stacked on the menu: `feat/chapter-6`, `feat/chapter-9`, `feat/chapter-10`.
+
+- **The Show is Chapter 6.** User: the empty slot, louder and lighter after Who Would Win, and the opposite of the booth that follows, where the judge's verdict is the only one.
+- **The copy is the outline's.** User, by asking for the outlines to be built. Nothing is voiced until the user has played it and signed it off.
+- **Kept from the outline, provisional.** The show is called Your Call; both deaths on stage stay (the trapdoor and the collapse); the deaths are the room's, so they are not in the kill tally.
+- **One studio, a stage per round.** Dev. `StudioStage` builds the valance, the floor and the audience in code and runs the room's vote; each round is a small stage of its own that extends it (`applause`, `trapdoors`, `wheel`, `champion`, `split`, `collapse`, `prize_box`), as the auction extends the shop. The room's vote is the first option's seeded crowd with a random share of the room, as 2.01's gamble is, so the player's vote never changes it, which is the chapter's point.
+- **The audience is drawn from behind.** Dev, to tune: heads and shoulders in muted ink filled with paper, in a block either side of the dialogue box at the foot of the page; they bob while the votes are counted, and in the collapse the share of the room that gets up stands up out of its seats.
+- **The trapdoor drop.** Dev, to tune: the trapdoor swings open into a dark hole, the contestant drops through and fades, and paper under the floor hides the fall.
+- **Five props.** Dev: drawn by a helper in a worktree of its own (`helper/show-props`): the APPLAUSE sign (lit amber), the prize wheel (gold doubles, plain nothings, a fixed amber pointer), the gift box (a red ribbon; it opens), the podium (box paper, a muted band) and the card (split or steal, it flips). The wheel's winnings are written on the podium's band.
+- **Contestants stand larger.** Dev: 1.75 times their size on the tracks, as the studio is nearer.
+
+## 2026-10-23: building Chapter 9, Everyone Else
+
+- **Chapter 9 is Everyone Else, after The Campaign.** User, from the outline: every earlier chapter can be called back.
+- **The guess is a bar you mark.** User, of the two ways offered: an empty ink bar, an amber mark that follows the pointer or the arrow keys, a click or Enter to set it, then the true bar inks in beside the mark and the gap shows.
+- **No new axis.** User: the six stay; the closer reads the guesses about strangers on its own.
+- **Guesses are tableaux.** Dev. The guess is the reveal, so there is no crowd reveal after it; the question player keeps the ask's last page up while the player marks the bar (`Stage.holds_ask`), and the imp's lines follow by how close it came.
+- **Callbacks are keyed asks.** Dev. 1.02, 2.01 and 4.01 now remember what was picked (`pulled_lever`, `pressed_blue`, `pressed_red`, `shot_man`, `shot_bear`), and a guess picks its ask by them with `asks`, the matchup's way, now every stage's. A callback's truth repeats the earlier question's seed, held to it by a test (`of`). The conditions test walks the chapters in run order, carrying earlier chapters' facts in.
+- **The run keeps every pick and guess.** Dev: each pick with the share of the room that made it and whether it was the least popular, each guess with its gap; both are saved with the run.
+- **The odds are printed, not said.** Provisional. The outline had the imp say "One in {odds}"; a per run number would need a voice take for every run, so the slip prints the odds and he says "There. The bottom line." instead, as the map is read for the country in 2.10. Big counts read in words to their leading figure ("a thousand billion billion").
+- **The lost wallet's two numbers are from the 2019 lost wallet study** (51 in a hundred handed back with a little money, 72 with more), still to be checked. Every other seed is a placeholder.
+- **The closer is a tableau** that recaps the guesses about strangers and reads them low, high or close (within 8 on average).
