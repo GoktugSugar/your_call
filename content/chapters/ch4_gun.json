@@ -39,6 +39,7 @@
       "options": [
         {
           "id": "man",
+          "remember": "shot_man",
           "label": "Shoot the man",
           "outcome": { "shoot": "man" },
           "crowd": 42,
@@ -49,6 +50,7 @@
         },
         {
           "id": "bear",
+          "remember": "shot_bear",
           "label": "Shoot the bear",
           "outcome": { "shoot": "bear" },
           "crowd": 58,

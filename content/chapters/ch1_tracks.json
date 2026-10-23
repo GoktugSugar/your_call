@@ -86,6 +86,7 @@
       "options": [
         {
           "id": "pull",
+          "remember": "pulled_lever",
           "label": "Pull the lever",
           "outcome": { "track": 1 },
           "crowd": 87,

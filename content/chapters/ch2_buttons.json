@@ -30,6 +30,7 @@
       "options": [
         {
           "id": "blue",
+          "remember": "pressed_blue",
           "label": "Blue",
           "outcome": { "button": "blue", "gamble": true },
           "crowd": 43,
@@ -45,6 +46,7 @@
         },
         {
           "id": "red",
+          "remember": "pressed_red",
           "label": "Red",
           "outcome": { "button": "red" },
           "crowd": 57,

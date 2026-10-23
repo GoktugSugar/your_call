@@ -134,7 +134,7 @@ func test_every_doodle_a_stage_names_exists() -> void:
 		for key: String in ["item", "doodle"]:
 			if question.stage.has(key):
 				named.append(question.stage[key])
-		for key: String in ["sides", "targets"]:
+		for key: String in ["sides", "targets", "show"]:
 			for entry: Variant in question.stage.get(key, []):
 				if entry is Dictionary and entry.has("doodle"):
 					named.append(entry["doodle"])

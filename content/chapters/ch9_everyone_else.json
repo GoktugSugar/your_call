@@ -1,0 +1,270 @@
+{
+  "id": "ch9",
+  "title": "Everyone Else",
+  "beats": [
+    { "kind": "cinematic", "id": "waking", "scene": "waking" },
+    {
+      "kind": "narration",
+      "id": "intro",
+      "lines": [
+        { "text": "Step right up. All game long you have told me what [amber]you[/amber] would do. Fascinating. Truly. I nearly stayed awake.", "face": "smug" },
+        "Tonight, no choices. Tonight you guess what [amber]they[/amber] did. Everyone else. The room.",
+        "You get a bar and a little mark. Put the mark where you think the room is. Close, and you know people. Miles off, and you know yourself."
+      ]
+    },
+    {
+      "kind": "tableau",
+      "id": "wallet",
+      "number": "9.01",
+      "title": "The Lost Wallet",
+      "weight": "light",
+      "stage": {
+        "type": "guess", "truth": 51, "about": "strangers",
+        "show": [ { "doodle": "wallet" } ],
+        "gap": { "text": "off by {gap}" }, "exact": { "text": "spot on" }
+      },
+      "ask": [
+        "A wallet on the pavement. A name, an address, and [amber]ten dollars[/amber] inside.",
+        "Out of a [amber]hundred[/amber] people who pick it up, how many hand it back, cash and all? Mark it."
+      ],
+      "lines": {
+        "close": [ "Near enough. You have met people, and you did not enjoy it." ],
+        "low": [ "Lower than the truth. You think a stranger keeps the tenner. Half of them do not. Your opinion of people is lower than people." ],
+        "high": [ "Higher than the truth. A believer. Half of them keep it and buy a sandwich. A lovely sandwich, I bet." ]
+      }
+    },
+    {
+      "kind": "tableau",
+      "id": "fat_wallet",
+      "number": "9.02",
+      "title": "The Fat Wallet",
+      "weight": "light",
+      "stage": {
+        "type": "guess", "truth": 72, "about": "strangers",
+        "show": [ { "doodle": "wallet" }, { "doodle": "money_sack" } ],
+        "gap": { "text": "off by {gap}" }, "exact": { "text": "spot on" }
+      },
+      "ask": [
+        "Same wallet. Now there is [amber]a hundred dollars[/amber] in it.",
+        "More people hand it back, or fewer? Mark it."
+      ],
+      "lines": {
+        "close": [ "You saw that coming. Nobody sees that coming. Suspicious." ],
+        "low": [ "Lower. Of course lower. More money, more temptation. Except it goes the other way. More money, more of it comes back. More guilt, or more fear of getting caught. Pick one." ],
+        "high": [ "Higher, and there it is. More money, more of it comes back. I do not understand it either, and I have been [red]dead[/red] a very long time." ]
+      }
+    },
+    {
+      "kind": "tableau",
+      "id": "lever",
+      "number": "9.03",
+      "title": "The Lever",
+      "weight": "light",
+      "stage": {
+        "type": "guess", "truth": 87, "of": "ch1.lever.pull",
+        "show": [ { "lever": true } ],
+        "asks": [ { "if": "pulled_lever", "ask": "pulled" }, { "ask": "left" } ],
+        "gap": { "text": "off by {gap}" }, "exact": { "text": "spot on" }
+      },
+      "ask": {
+        "pulled": [
+          "Remember the lever? The first real one. [amber]Five[/amber] on the main track, [amber]one[/amber] on the side. You [amber]pulled[/amber].",
+          "How many in a hundred pulled? Mark it."
+        ],
+        "left": [
+          "Remember the lever? The first real one. [amber]Five[/amber] on the main track, [amber]one[/amber] on the side. You [amber]left it[/amber].",
+          "How many in a hundred pulled? Mark it."
+        ]
+      },
+      "lines": {
+        "close": [ "Close. You knew they would. You knew it was the easy one." ],
+        "low": [ "Lower. You thought it was hard for them. It was not. Nearly everybody pulls. Pulling is the easy bit. It gets worse." ],
+        "high": [ "Even higher than the truth. A few always freeze at a lever. You do not believe in freezing. Noted." ]
+      }
+    },
+    {
+      "kind": "question",
+      "id": "diary",
+      "number": "9.04",
+      "title": "The Diary",
+      "verb": "binary",
+      "weight": "medium",
+      "stage": { "type": "vignette", "doodle": "diary" },
+      "ask": [
+        "Your [pink]partner[/pink]'s diary, open on the table. Open at today.",
+        "They are out. Nobody will ever know. Do you read it?"
+      ],
+      "options": [
+        {
+          "id": "read",
+          "label": "Read it",
+          "crowd": 38,
+          "profile": { "ends_rules": -0.5 },
+          "remember": "read_diary",
+          "reaction": [ "You read it. Of course you read it. Somewhere in there is a page about you, and it is not the page you wanted." ]
+        },
+        {
+          "id": "leave",
+          "label": "Leave it",
+          "outcome": { "doodle": "leave" },
+          "crowd": 62,
+          "profile": { "ends_rules": 0.5 },
+          "remember": "left_diary",
+          "reaction": [ "You left it. Closed it, even. A man of principle, or a man who did not want to know. From here they look identical." ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "tableau",
+      "id": "everyones_diary",
+      "number": "9.05",
+      "title": "Everyone's Diary",
+      "weight": "light",
+      "stage": {
+        "type": "guess", "truth": 38, "of": "ch9.diary.read",
+        "show": [ { "doodle": "diary" } ],
+        "gap": { "text": "off by {gap}" }, "exact": { "text": "spot on" }
+      },
+      "ask": [ "Now the room. How many in a hundred read it? Mark it." ],
+      "lines": {
+        "high": [
+          { "text": "You read it, and you think everyone reads it. Everyone thinks everyone is like them. That is the whole trick of people.", "if": "read_diary" },
+          { "text": "You left it, and you think everyone else is reading. The worst of them and the best of yourself. Very judge of you.", "unless": "read_diary" }
+        ],
+        "low": [
+          { "text": "You read it, and you know you are in the minority. A self aware snoop. The rarest kind.", "if": "read_diary" },
+          { "text": "You left it, and you think most would. Most would. Enough would not.", "unless": "read_diary" }
+        ],
+        "close": [ "Close. You know your room. You know exactly how many of them would read your diary. Sleep well." ]
+      }
+    },
+    {
+      "kind": "tableau",
+      "id": "change",
+      "number": "9.06",
+      "title": "The Extra Change",
+      "weight": "light",
+      "stage": {
+        "type": "guess", "truth": 45, "about": "strangers",
+        "show": [ { "doodle": "cash_register" } ],
+        "gap": { "text": "off by {gap}" }, "exact": { "text": "spot on" }
+      },
+      "ask": [
+        "A cashier hands you [amber]twenty dollars[/amber] too much and turns away.",
+        "How many in a hundred say something? Mark it."
+      ],
+      "lines": {
+        "close": [ "Close. You have stood in that queue." ],
+        "low": [ "Lower. You think the cashier is on their own. Mostly true. Not as true as you think." ],
+        "high": [ "Higher. You think people speak up. Some do. Then they tell everyone they did." ]
+      }
+    },
+    {
+      "kind": "tableau",
+      "id": "red_blue",
+      "number": "9.07",
+      "title": "Red and Blue",
+      "weight": "light",
+      "stage": {
+        "type": "guess", "truth": 43, "of": "ch2.red_blue.blue",
+        "show": [ { "button": "blue" }, { "button": "red" } ],
+        "asks": [ { "if": "pressed_blue", "ask": "blue" }, { "if": "pressed_red", "ask": "red" }, { "ask": "either" } ],
+        "gap": { "text": "off by {gap}" }, "exact": { "text": "spot on" }
+      },
+      "ask": {
+        "blue": [
+          "Red and blue, back at the start of the buttons. Blue saved them only if enough of the room pressed it too. You pressed [blue]blue[/blue].",
+          "How many in a hundred pressed [blue]blue[/blue]? Mark it."
+        ],
+        "red": [
+          "Red and blue, back at the start of the buttons. Blue saved them only if enough of the room pressed it too. You pressed [red]red[/red].",
+          "How many in a hundred pressed [blue]blue[/blue]? Mark it."
+        ],
+        "either": [
+          "Red and blue, back at the start of the buttons. Blue saved them only if enough of the room pressed it too.",
+          "How many in a hundred pressed [blue]blue[/blue]? Mark it."
+        ]
+      },
+      "lines": {
+        "close": [ "Close. You knew it would be close. It always is, with that one." ],
+        "low": [ "Lower. You did not trust them to press [blue]blue[/blue]. A few more did than you thought. Not enough. Never quite enough." ],
+        "high": [ "Higher. You trusted the room. The room let you down. Rooms do." ]
+      }
+    },
+    {
+      "kind": "tableau",
+      "id": "bear",
+      "number": "9.08",
+      "title": "The Bear",
+      "weight": "light",
+      "stage": {
+        "type": "guess", "truth": 58, "of": "ch4.bear.bear",
+        "show": [ { "kind": "bear" } ],
+        "asks": [ { "if": "shot_bear", "ask": "bear" }, { "if": "shot_man", "ask": "man" }, { "ask": "either" } ],
+        "gap": { "text": "off by {gap}" }, "exact": { "text": "spot on" }
+      },
+      "ask": {
+        "bear": [ "The man and the last bear. You shot the bear.", "How many in a hundred shot the bear? Mark it." ],
+        "man": [ "The man and the last bear. You shot the man.", "How many in a hundred shot the bear? Mark it." ],
+        "either": [ "The man and the last bear, back at the gun.", "How many in a hundred shot the bear? Mark it." ]
+      },
+      "lines": {
+        "close": [ "Close. You knew exactly how cheap a man is next to the last of anything." ],
+        "low": [ "Lower. You thought they would save the bear. They did not. People love a bear right up until it is a person or a bear." ],
+        "high": [ "Higher. You thought she never stood a chance. She had a better one than you think. Not much better." ]
+      }
+    },
+    {
+      "kind": "tableau",
+      "id": "me",
+      "number": "9.09",
+      "title": "Me",
+      "weight": "light",
+      "stage": {
+        "type": "guess", "truth": 11,
+        "gap": { "text": "off by {gap}" }, "exact": { "text": "spot on" }
+      },
+      "ask": [
+        "And back at the bear, how many in a hundred aimed at [amber]me[/amber] instead?",
+        { "text": "Do not look at me like that. Mark it.", "face": "glare" }
+      ],
+      "lines": {
+        "close": [ { "text": "Eleven. Eleven of you. I remember every one of their faces. Dot eyes. Dot eyes, the lot of them.", "face": "glare" } ],
+        "low": [ { "text": "Lower. You think I am liked. Sweet. Wrong, but sweet.", "face": "smug" } ],
+        "high": [ { "text": "Higher. You think I am hated. Correct. But it is rude to guess it.", "face": "glare" } ]
+      }
+    },
+    {
+      "kind": "tableau",
+      "id": "odds",
+      "number": "9.10",
+      "title": "The Odds of You",
+      "weight": "medium",
+      "stage": {
+        "type": "odds", "most_rows": 6,
+        "title": { "text": "the odds of you" }, "line": { "text": "{number}  {pick}" },
+        "more": { "text": "and {more} more" }, "total": { "text": "one in {odds}" }
+      },
+      "ask": [
+        "Last one, and it is not a guess. I did the sum.",
+        "Every choice you made since the crash, against the room. The share who chose the same, multiplied, all the way down."
+      ],
+      "lines": {
+        "odds": [ { "text": "There. The bottom line. Nobody, in other words. Not one soul has ever made every choice you made. You are completely alone. That is not a compliment. It is barely a statistic.", "face": "smug" } ]
+      }
+    },
+    {
+      "kind": "tableau",
+      "id": "closer",
+      "title": "Closer",
+      "stage": { "type": "tally", "about": "strangers", "close": 8 },
+      "ask": [ "Here is what I learned tonight." ],
+      "lines": {
+        "low": [ "You think people are worse than they are. Every time. A judge who expected the worst, right to the end. I would say you will be pleasantly surprised one day, but you are [red]dead[/red]." ],
+        "high": [ "You think people are better than they are. Every time. All those years on the bench, and you still thought that. How did you get anything done." ],
+        "close": [ { "text": "You know exactly what people are like. Not better. Not worse. You knew all along, and you judged them anyway.", "face": "smug" } ]
+      }
+    }
+  ]
+}
