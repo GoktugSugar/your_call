@@ -90,7 +90,7 @@ The user held these across the whole earlier project. Treat them as hard constra
 
 ## 3. What changed for the remake
 
-- **The release is itch.io** (2026-10-23): a Windows download and a build that plays in the browser, not Steam. The browser build has its own needs: the Compatibility renderer, saves kept in the browser's storage, and no sound before the first click.
+- **The release is itch.io** (2026-10-23): a Windows download and a build that plays in the browser, not Steam. The browser build has its own needs: the Compatibility renderer, saves kept in the browser's storage, and no sound before the first click (the music fades in at it). It loads the voice a chapter at a time in the background, so it starts quickly.
 - **The engine is now Godot 4.7.**
   - For context: the very first prototype was in Godot 4.6. The project then moved to Unity out of personal preference, and now it returns to Godot.
   - Nothing from either earlier codebase carries over.

@@ -41,11 +41,17 @@ The editor is the 4.7.2 standard build in `C:/Program Files/Godot/`. There is no
 - Check every script compiles (import alone misses parse errors): `G --headless --path . -s res://dev/check_scripts.gd`
 - Run the tests: `G --headless --path . -s addons/gut/gut_cmdln.gd`
 - Run the game: `"C:/Program Files/Godot/Godot.exe" --path .` It opens on the main menu. F2 jumps to any chapter or question (from the menu too), F5 restarts, F3 shows the phase and the silent profile. Every dev switch but `--window` skips the menu straight into the run, and such a run never touches the player's save (`user://run.json`).
+- Profile: any run with `-- --profile` prints the frame and ink times every few seconds (add `--chapter=ch6 --beat=applause --autoplay=1` to profile a stage).
 - Look before you claim a visual change works. Autoplay a question and save a screenshot before each click, plus a burst during the consequence:
   `G --path . -- --window=1920x1080 --autoplay=1 --speed=2 --shots=<scratch>/run --burst=0.25 --quit-after=1`
   (`--autoplay=lever` clicks the stage's lever instead of a choice word, `--point` clicks option N where the stage shows it, a track or a doodle, and `--every=S` adds a screenshot every S seconds, for beats nobody clicks through such as the crash and the credits.) Any other scene: `G --path . res://dev/capture_runner.tscn -- --window=1920x1080 --scene=res://... --out=<scratch>/shot --times=0.5,2`, the main menu included (`--scene=res://ui/menu/main_menu.tscn --times=2,9` catches its first bark).
 - The game opens maximized. `--window=WxH` forces an exact window size, so check small windows (`--window=1600x900`) as well as large.
 - Keep screenshots and other scratch output out of the repo.
+
+Exports (into `builds/`, which git ignores):
+
+- Windows: `G --headless --path . --export-release "Windows" builds/windows/YourCall.exe`
+- Browser: `python tools/web/export_web.py` makes `builds/web` and `builds/your_call_web.zip` to upload; `python tools/web/serve.py` serves it as itch.io does at http://localhost:8060/.
 
 Voice (Python 3, standard library only; the key comes from `.env`, which git ignores):
 
