@@ -9,37 +9,37 @@ extends InkDrawing
 	set(value):
 		path_points = value
 		_centerline = PackedVector2Array()
-		_built.clear()
+		_built = []
 		queue_redraw()
 ## Distance between the two rails.
 @export_range(2.0, 60.0, 0.5) var gauge := 14.0:
 	set(value):
 		gauge = value
-		_built.clear()
+		_built = []
 		queue_redraw()
 ## Distance between sleepers.
 @export_range(4.0, 200.0, 0.5) var sleeper_spacing := 30.0:
 	set(value):
 		sleeper_spacing = value
-		_built.clear()
+		_built = []
 		queue_redraw()
 ## How far each sleeper reaches past the rails.
 @export_range(0.0, 40.0, 0.5) var sleeper_overhang := 6.0:
 	set(value):
 		sleeper_overhang = value
-		_built.clear()
+		_built = []
 		queue_redraw()
 ## Width of the sleepers, as a multiple of the line width.
 @export_range(0.0, 4.0, 0.05) var sleeper_width := 0.7:
 	set(value):
 		sleeper_width = value
-		_built.clear()
+		_built = []
 		queue_redraw()
 ## Length at the start left without sleepers, where this track leaves another.
 @export_range(0.0, 400.0, 1.0) var bare_start := 0.0:
 	set(value):
 		bare_start = value
-		_built.clear()
+		_built = []
 		queue_redraw()
 
 ## Sampling of the centre line used for distances along the track.
