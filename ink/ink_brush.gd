@@ -3,6 +3,8 @@ extends RefCounted
 ## Turns paths into hand-drawn ink. A line is resampled, nudged off its path like an unsteady hand,
 ## tapered at its loose ends, and drawn as a triangle strip whose UVs let the ink shader soften its edges.
 ## The boil comes from the variant: each variant moves the line a little, and the page cycles through them.
+## Each mark can be had as its triangles ([method stroke_shape], [method fill_shape], [method dot_shape]),
+## for a painter that keeps them to draw again, or drawn straight into a canvas item.
 
 const MATERIAL_PATH := "res://ink/ink_line_material.tres"
 
@@ -153,31 +155,49 @@ static func hatch_ellipse(center: Vector2, radii: Vector2, angle: float, spacing
 ## to the next, for a line that wavers softly instead of stepping.
 static func stroke(item: RID, path: PackedVector2Array, closed: bool, width: float, color: Color,
 		seed: int, variant: float, style: InkStyle, reveal := 1.0) -> void:
+	add_shape(item, stroke_shape(path, closed, width, color, seed, variant, style, reveal))
+
+
+## The triangles of [method stroke], as [code][indices, points, colors, uvs][/code], or empty when none
+## of the line shows.
+static func stroke_shape(path: PackedVector2Array, closed: bool, width: float, color: Color,
+		seed: int, variant: float, style: InkStyle, reveal := 1.0) -> Array:
 	var points := path
 	if closed:
 		points = _loop_with_overlap(path, style.loop_overlap)
-	_stroke_open(item, points, width, color, seed, variant, style, reveal)
+	return _open_stroke_shape(points, width, color, seed, variant, style, reveal)
 
 
 ## Fills the inside of a closed outline with flat colour. A wash sits under its line, so its edge needs no softening.
 static func fill(item: RID, outline: PackedVector2Array, color: Color) -> void:
+	add_shape(item, fill_shape(outline, color))
+
+
+## The triangles of [method fill], as [code][indices, points, colors, uvs][/code], or empty when the
+## outline holds none.
+static func fill_shape(outline: PackedVector2Array, color: Color) -> Array:
 	var polygon := outline
 	if polygon.size() > 2 and polygon[0].is_equal_approx(polygon[polygon.size() - 1]):
 		polygon = polygon.slice(0, polygon.size() - 1)
 	var indices := Geometry2D.triangulate_polygon(polygon)
 	if indices.is_empty():
-		return
+		return []
 	var uvs := PackedVector2Array()
 	uvs.resize(polygon.size())
 	uvs.fill(_SOLID_UV)
 	var colors := PackedColorArray()
 	colors.resize(polygon.size())
 	colors.fill(color)
-	RenderingServer.canvas_item_add_triangle_array(item, indices, polygon, colors, uvs)
+	return [indices, polygon, colors, uvs]
 
 
 ## A small round dot of ink, like an eye. It boils with the page.
 static func dot(item: RID, center: Vector2, radius: float, color: Color, seed: int, variant: float, style: InkStyle) -> void:
+	add_shape(item, dot_shape(center, radius, color, seed, variant, style))
+
+
+## The triangles of [method dot], as [code][indices, points, colors, uvs][/code].
+static func dot_shape(center: Vector2, radius: float, color: Color, seed: int, variant: float, style: InkStyle) -> Array:
 	var jitter := Vector2(_boil(0.5, seed, variant, style.boil_variants), _boil(7.5, seed, variant, style.boil_variants)) \
 			* style.boil_amplitude * 0.5
 	var c := center + jitter
@@ -194,7 +214,14 @@ static func dot(item: RID, center: Vector2, radius: float, color: Color, seed: i
 	var colors := PackedColorArray()
 	colors.resize(points.size())
 	colors.fill(color)
-	RenderingServer.canvas_item_add_triangle_array(item, indices, points, colors, uvs)
+	return [indices, points, colors, uvs]
+
+
+## Draws [param shape], triangles as [method stroke_shape] and the others give them, into [param item].
+## An empty shape draws nothing.
+static func add_shape(item: RID, shape: Array) -> void:
+	if not shape.is_empty():
+		RenderingServer.canvas_item_add_triangle_array(item, shape[0], shape[1], shape[2], shape[3])
 
 
 ## The total length of a path.
@@ -205,11 +232,11 @@ static func path_length(points: PackedVector2Array) -> float:
 	return total
 
 
-static func _stroke_open(item: RID, path: PackedVector2Array, width: float, color: Color,
-		seed: int, variant: float, style: InkStyle, reveal: float) -> void:
+static func _open_stroke_shape(path: PackedVector2Array, width: float, color: Color,
+		seed: int, variant: float, style: InkStyle, reveal: float) -> Array:
 	var n := path.size()
 	if n < 2 or reveal <= 0.0:
-		return
+		return []
 	var points := path.duplicate()
 	var ends_seed := _channel(seed, _CHANNEL_ENDS)
 	var start_overshoot := style.overshoot * (0.75 + 0.25 * _boil(0.5, ends_seed, variant, style.boil_variants))
@@ -223,7 +250,7 @@ static func _stroke_open(item: RID, path: PackedVector2Array, width: float, colo
 		lengths[i] = lengths[i - 1] + points[i].distance_to(points[i - 1])
 	var total := lengths[n - 1]
 	if total <= 0.0:
-		return
+		return []
 
 	var visible := total * minf(reveal, 1.0)
 	if visible < total:
@@ -237,7 +264,7 @@ static func _stroke_open(item: RID, path: PackedVector2Array, width: float, colo
 		points[n - 1] = a.lerp(b, t)
 		lengths[n - 1] = visible
 	if n < 2:
-		return
+		return []
 
 	var wobble_seed := _channel(seed, _CHANNEL_WOBBLE)
 	var width_seed := _channel(seed, _CHANNEL_WIDTH)
@@ -245,6 +272,23 @@ static func _stroke_open(item: RID, path: PackedVector2Array, width: float, colo
 	var wobble := style.wobble_amplitude * steadiness
 	var boil := style.boil_amplitude * steadiness
 	var taper := minf(style.taper_length, visible * style.max_taper_share)
+	# Worked out once for the whole line, not at every point: the style's settings, and the two boil
+	# variants the line blends between (as _boil does), read straight off the noise table.
+	if _noise.is_empty():
+		_noise = _make_noise()
+	var table := _noise
+	var wobble_wavelength := style.wobble_wavelength
+	var boil_wavelength := style.boil_wavelength
+	var width_wavelength := style.width_wavelength
+	var width_jitter := style.width_jitter
+	var taper_tip := style.taper_tip
+	var miter_limit := style.miter_limit
+	var variants := maxi(style.boil_variants, 1)
+	var from := floori(variant)
+	var boil_seed := _channel(seed, _CHANNEL_BOIL + posmod(from, variants))
+	var next_boil_seed := _channel(seed, _CHANNEL_BOIL + posmod(from + 1, variants))
+	var blend := variant - from
+	var blend_eased := blend * blend * (3.0 - 2.0 * blend)
 	var vertices := PackedVector2Array()
 	vertices.resize(n * 2)
 	var uvs := PackedVector2Array()
@@ -263,15 +307,32 @@ static func _stroke_open(item: RID, path: PackedVector2Array, width: float, colo
 		if i > 0 and i < n - 1:
 			var segment := (points[i] - points[i - 1]).normalized()
 			var cosine := normal.dot(Vector2(-segment.y, segment.x))
-			miter = minf(1.0 / maxf(cosine, 0.001), style.miter_limit)
+			miter = minf(1.0 / maxf(cosine, 0.001), miter_limit)
 
 		var s := lengths[i]
-		var offset := wobble * noise(s / style.wobble_wavelength, wobble_seed) \
-				+ boil * _boil(s / style.boil_wavelength, seed, variant, style.boil_variants)
-		var w := width * (1.0 + style.width_jitter * noise(s / style.width_wavelength, width_seed))
+		# The wobble, the boil and the width's swell: noise() and _boil(), worked through in place.
+		var x := s / wobble_wavelength
+		var k := floori(x)
+		var f := x - k
+		var drift := lerpf(table[(k + wobble_seed) & _NOISE_MASK], table[(k + 1 + wobble_seed) & _NOISE_MASK],
+				f * f * (3.0 - 2.0 * f))
+		x = s / boil_wavelength
+		k = floori(x)
+		f = x - k
+		var eased := f * f * (3.0 - 2.0 * f)
+		var boiled := lerpf(table[(k + boil_seed) & _NOISE_MASK], table[(k + 1 + boil_seed) & _NOISE_MASK], eased)
+		if blend > 0.0:
+			boiled = lerpf(boiled, lerpf(table[(k + next_boil_seed) & _NOISE_MASK],
+					table[(k + 1 + next_boil_seed) & _NOISE_MASK], eased), blend_eased)
+		var offset := wobble * drift + boil * boiled
+		x = s / width_wavelength
+		k = floori(x)
+		f = x - k
+		var w := width * (1.0 + width_jitter * lerpf(table[(k + width_seed) & _NOISE_MASK],
+				table[(k + 1 + width_seed) & _NOISE_MASK], f * f * (3.0 - 2.0 * f)))
 		if taper > 0.0:
 			var t := clampf(minf(s, visible - s) / taper, 0.0, 1.0)
-			w *= lerpf(style.taper_tip, 1.0, t * t * (3.0 - 2.0 * t))
+			w *= lerpf(taper_tip, 1.0, t * t * (3.0 - 2.0 * t))
 		var center := points[i] + normal * offset
 		var half := normal * (w * 0.5 * miter)
 		vertices[i * 2] = center + half
@@ -293,7 +354,7 @@ static func _stroke_open(item: RID, path: PackedVector2Array, width: float, colo
 	var colors := PackedColorArray()
 	colors.resize(n * 2)
 	colors.fill(color)
-	RenderingServer.canvas_item_add_triangle_array(item, indices, vertices, colors, uvs)
+	return [indices, vertices, colors, uvs]
 
 
 ## A closed loop as an open path that runs [param overlap] of its length past its own start.
