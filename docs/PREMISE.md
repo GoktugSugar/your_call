@@ -498,6 +498,7 @@ There is one linear run, the same for everyone. All the content is in `SCRIPT.md
 
 **Music and SFX**
 - Sound effects are many, for immersion (2026-10-23; they used to be kept spare, to match the visual minimalism). They sit under the voices and never tire: each is picked by ear from a batch of takes, varies a little every time it plays, and dips while anyone talks.
+- Music is one quiet looped track at a time, under everything: the main theme on the menu and through the run, carried unbroken from the menu into the game, and a track of their own for the chapters that change hats, The Show (a cheesy game show) and The Campaign (medieval and fantasy), crossfading in and out (2026-10-23).
 - The earlier build had a single quiet looped track under everything, carried unbroken from the menu into the game, and sparse SFX (a gunshot, a button click).
 - All of the earlier audio was placeholder.
 

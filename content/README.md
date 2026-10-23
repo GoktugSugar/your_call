@@ -24,6 +24,8 @@ The facts a run remembers so far: the walking button's history (`button_woke`, `
 
 A chapter can say what a run started after it, from the dev menu, should take it to have left behind: `"if_skipped": { "remember": ["button_woke"], "kills": { "stranger": 1 } }`, the facts later beats look back on and the kills by kind. Later beats read the walking button's history (`button_woke`, `button_auctioned`, `button_shot`, `button_spared`) and the kill tally.
 
+A chapter can name the track its music plays, a file in `assets/audio/music/` without its `.ogg`: `"music": "campaign"`. The music crossfades to it as the chapter starts; a chapter that names none plays the main theme. The tests check every chapter's track exists.
+
 A chapter that hands the player money, like The Money, has a `wallet`: `"wallet": { "start": 10000 }`. The wallet opens as the chapter's first words are said, its balance shows at the top of the screen until the chapter ends, and the shop, the auction, the buyback and the receipt spend from it and read it.
 
 ## A beat
