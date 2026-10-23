@@ -1,0 +1,58 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://stages/guess/guess_stage.gd" id="1_stage"]
+[ext_resource type="Script" path="res://stages/guess/guess_scale.gd" id="2_scale"]
+[ext_resource type="Script" path="res://ui/reveal/crowd_bar.gd" id="3_bar"]
+[ext_resource type="PackedScene" path="res://stages/controls/push_button.tscn" id="4_button"]
+
+[node name="GuessStage" type="Node2D" node_paths=PackedStringArray("scale_bar", "truth_bar", "guess_label", "gap_label")]
+script = ExtResource("1_stage")
+scale_bar = NodePath("Scale")
+truth_bar = NodePath("Truth")
+guess_label = NodePath("Guess")
+gap_label = NodePath("Gap")
+button_scene = ExtResource("4_button")
+
+[node name="Truth" type="Control" parent="." node_paths=PackedStringArray("number_label")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 560.0
+offset_top = 537.0
+offset_right = 1360.0
+offset_bottom = 583.0
+mouse_filter = 2
+script = ExtResource("3_bar")
+value = 50.0
+full_length = 800.0
+bar_height = 30.0
+number_label = NodePath("Number")
+
+[node name="Number" type="Label" parent="Truth"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 46.0
+theme_override_font_sizes/font_size = 40
+text = "50"
+
+[node name="Scale" type="Node2D" parent="."]
+z_index = 1
+position = Vector2(560, 560)
+script = ExtResource("2_scale")
+
+[node name="Guess" type="Label" parent="."]
+z_index = 2
+offset_right = 40.0
+offset_bottom = 46.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.9098039, 0.58431375, 0.11764706, 1)
+theme_override_font_sizes/font_size = 40
+text = "50"
+
+[node name="Gap" type="Label" parent="."]
+offset_top = 610.0
+offset_right = 40.0
+offset_bottom = 656.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.54901963, 0.53333336, 0.49411765, 1)
+theme_override_font_sizes/font_size = 38
+text = "off by 0"
