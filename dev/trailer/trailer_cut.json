@@ -133,16 +133,12 @@
               ],
               "seconds": 1.1
             }
-          },
-          "applaud": 2.2
+          }
         },
         {
           "wait": 0.35,
           "say": "welcome",
           "hold": 0.2
-        },
-        {
-          "applaud": 2.4
         }
       ],
       "seconds": 11

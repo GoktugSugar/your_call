@@ -13,7 +13,7 @@ dev/trailer/trailer.gd), the pieces of them that make the trailers in order, and
 laid over them. Each shot is one run of res://dev/trailer/trailer.tscn, recorded as an MJPEG AVI at full
 quality with its sound (the voices and the game's sound effects), as long as the shot's "seconds" say, in
 trailer_renders/shots/<format>/<shot>/ beside the log of its moments. A shot is recorded again when its
-settings, its format, the trailers' lines or the voice clips change. The shots of a format are recorded a
+settings, its format, the trailers' lines, or the voice clips or their timings change. The shots of a format are recorded a
 few at a time, each in its own small window; nothing plays out loud. The project's window and stretch
 settings for the recording come from an override.cfg that exists only while a format records.
 
@@ -31,6 +31,7 @@ sheet of each cut beside them.
 
 import argparse
 import concurrent.futures
+import functools
 import hashlib
 import json
 import os
@@ -43,7 +44,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 CUT = ROOT / "dev" / "trailer" / "trailer_cut.json"
 LINES = ROOT / "dev" / "trailer" / "trailer_lines.json"
-MANIFEST = ROOT / "assets" / "voice" / "manifest.json"
+VOICE_DIR = ROOT / "assets" / "voice"
 RENDERS = ROOT / "trailer_renders"
 SHOTS = RENDERS / "shots"
 OVERRIDE = ROOT / "override.cfg"
@@ -105,9 +106,18 @@ def recipe(cut: dict, fmt: str, shot: str) -> str:
     parts = {
         "shot": cut["shots"][shot], "fps": cut["fps"], "format": cut["formats"][fmt],
         "lines": hashlib.sha1(LINES.read_bytes()).hexdigest(),
-        "voices": hashlib.sha1(MANIFEST.read_bytes()).hexdigest() if MANIFEST.exists() else "",
+        "voices": voices_stamp(),
     }
     return hashlib.sha1(json.dumps(parts, sort_keys=True).encode("utf-8")).hexdigest()
+
+
+@functools.cache
+def voices_stamp() -> str:
+    """Changes whenever a line is voiced again or a take's timings change: the manifest and every timing."""
+    digest = hashlib.sha1()
+    for path in sorted(VOICE_DIR.rglob("*.json")):
+        digest.update(path.read_bytes())
+    return digest.hexdigest()
 
 
 def is_current(cut: dict, fmt: str, shot: str) -> bool:

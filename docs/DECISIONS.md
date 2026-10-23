@@ -383,3 +383,11 @@ The user asked for two new trailers, 16:9 and 9:16 for TikTok and Reels: funny, 
 - **Quicker than the game.** Dev: the trolley rolls in 1.5 seconds instead of 2.6, and the question player's pauses around the consequence and the reveal are shorter, in the trailer scene only.
 - **The trailers' clips stay out of the game.** Dev: both exports leave out `assets/voice/*/trailer.*`.
 - **Mixed to -14 LUFS.** Dev: as YouTube and TikTok play things, the music dipping under the voice.
+
+## 2026-10-23: the trailers' first notes
+
+The user watched both trailers and sent notes.
+
+- **No claps at the welcome.** User: the audience no longer claps as the camera pulls out or after his introduction; the room's applause in 6.01, later in the cut, stays. Dev: read as both of the welcome's claps, since the note set "the first part of the video" against "the end".
+- **Lines start where their sound does.** Dev, from the user's note that seven of the trailers' lines started abruptly, a sliver of their first word missing: v3 times a stage direction's characters over the first moments of the take, which already belong to the line's first word, so that word came back timed 0.1 to 0.4 seconds late and squeezed into a few hundredths of a second, and the dialogue box, which starts a page where its first character is timed, skipped that much of it. Only takes voiced with a direction do this: of the 787, the 760 without one are timed to start before their sound. `voice_lines.py` now times a directed take's first word from where its sound starts, the letters spread evenly from just before it to where they end, and `--fix-starts` did the same for the 22 takes made before that started late: 12 of the trailers' lines and 10 of the game's (in Chapters 2, 3, 4 and 8). Nothing was voiced again. With their starts back, both trailers run 73.3 seconds, from 70.5.
+- **A shot records again when a take's timings change.** Dev: the render's cache now reads every take's timings, not only the voice manifest.
