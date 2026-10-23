@@ -54,6 +54,17 @@ extends InkDrawing
 	set(value):
 		role = value
 		queue_redraw()
+## Palette roles of their clothes, washed into their shoulders, taken in turn along the rows. Empty
+## dresses them all in paper.
+@export var clothes: Array[StringName] = []:
+	set(value):
+		clothes = value
+		queue_redraw()
+## How strongly their clothes take their colour over the paper.
+@export_range(0.0, 1.0, 0.01) var clothes_wash := 0.45:
+	set(value):
+		clothes_wash = value
+		queue_redraw()
 ## Seed for who sways which way and who stands first.
 @export var crowd_seed := 7
 
@@ -136,6 +147,8 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 				head + Vector2(shoulders.x, shoulders.y + _risen[i] + head_radius)])
 		var torso := InkLine.along(InkBrush.resample_smooth(body, false, spacing_step), color, 0.8)
 		torso.fill = palette.paper
+		if not clothes.is_empty():
+			torso.fill = palette.paper.lerp(palette.color(clothes[(i * 7) % clothes.size()]), clothes_wash)
 		lines.append(torso)
 		var skull := InkLine.along(InkBrush.ellipse(head, Vector2.ONE * head_radius, spacing_step), color, 0.8, true)
 		skull.fill = palette.paper

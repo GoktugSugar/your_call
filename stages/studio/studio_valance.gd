@@ -45,6 +45,20 @@ extends InkDrawing
 	set(value):
 		wash_strength = value
 		queue_redraw()
+## Palette role of the braid along the scallops and the tassel at each join. Empty draws none.
+@export var trim_role := &"":
+	set(value):
+		trim_role = value
+		queue_redraw()
+## How far above the scallops' edge the braid runs, and the size of each tassel.
+@export_range(0.0, 60.0, 0.5) var trim_inset := 9.0:
+	set(value):
+		trim_inset = value
+		queue_redraw()
+@export_range(0.0, 20.0, 0.5) var tassel_radius := 5.0:
+	set(value):
+		tassel_radius = value
+		queue_redraw()
 
 ## How far above the page the valance starts, so its top edge is never seen.
 const _ABOVE := 12.0
@@ -63,6 +77,14 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 			var t := float(j) / _SCALLOP_POINTS
 			outline.append(Vector2(step * (i + t), depth + sin(t * PI) * sag))
 	lines.append(_washed(InkBrush.resample_smooth(outline, true, style.sample_spacing), color, wash))
+	if trim_role != &"":
+		var trim := palette.color(trim_role)
+		var braid := PackedVector2Array()
+		for point in outline.slice(2):
+			braid.append(point + Vector2(0.0, -trim_inset))
+		lines.append(InkLine.along(InkBrush.resample_smooth(braid, false, style.sample_spacing), trim, 0.8))
+		for i in scallops + 1:
+			lines.append(InkLine.dot(Vector2(step * i, depth + tassel_radius), tassel_radius, trim))
 	for side in [-1.0, 1.0]:
 		var edge := 0.0 if side < 0.0 else page_width
 		var swag_points := PackedVector2Array([Vector2(edge - side * _ABOVE, depth),
