@@ -5,9 +5,10 @@ extends InkDrawing
 ## sly slanted eyes over a wide grin, a boxy body, stubby bent arms that float beside it, and a
 ## crooked tail with a square tip. His line is heavier and jitters more than the rest of the page.
 ## Unlike every soul, he has a mouth and a few faces, and each face opens its mouth its own way as he
-## talks. His origin is the ground between his feet. Both arms join the body at the shoulders.
-## [Imp] animates the lean, the nod, the crouch, the arms, the tail and the jitter, and [ImpMouth] the
-## mouth; this only draws them.
+## talks. His origin is the ground between his feet. Both arms join the body at the shoulders, and his
+## legs can stand or hang loose under him as he floats.
+## [Imp] animates the lean, the nod, the crouch, the arms, the tail, the legs and the jitter, and
+## [ImpMouth] the mouth; this only draws them.
 
 enum Face { GRIN, SMUG, GLARE, SURPRISED }
 
@@ -40,6 +41,17 @@ enum Face { GRIN, SMUG, GLARE, SURPRISED }
 @export_range(-45.0, 45.0, 0.1) var tail_swing := 0.0:
 	set(value):
 		tail_swing = value
+		queue_redraw()
+## How loose his legs hang: 0 stands him on his feet, 1 lets them dangle under him, toes down, as he
+## floats.
+@export_range(0.0, 1.0, 0.01) var dangle := 0.0:
+	set(value):
+		dangle = value
+		queue_redraw()
+## How far his hanging legs swing from his hips, in degrees. Positive swings them right.
+@export_range(-45.0, 45.0, 0.1) var leg_swing := 0.0:
+	set(value):
+		leg_swing = value
 		queue_redraw()
 ## Where his line is in its jitter, counted in shapes. [Imp] moves it along.
 @export var jitter_phase := 0.0:
@@ -104,6 +116,9 @@ const _LEFT_ARM := [Vector2(-16.0, -66.0), Vector2(-43.4, -59.5), Vector2(-44.1,
 const _RIGHT_ARM := [Vector2(16.0, -66.0), Vector2(43.4, -59.5), Vector2(44.1, -47.6)]
 const _LEFT_LEG := [Vector2(-10.5, -12.6), Vector2(-16.1, -2.1), Vector2(-25.9, -0.7)]
 const _RIGHT_LEG := [Vector2(8.4, -12.6), Vector2(13.3, -2.8), Vector2(23.8, 0.0)]
+## The same legs hanging loose under him, the feet tipped toes down.
+const _LEFT_LEG_HANGING := [Vector2(-10.5, -12.6), Vector2(-13.3, 0.7), Vector2(-19.7, 8.3)]
+const _RIGHT_LEG_HANGING := [Vector2(8.4, -12.6), Vector2(10.5, 0.7), Vector2(16.9, 8.3)]
 const _TAIL := [Vector2(22.4, -24.5), Vector2(33.6, -29.4), Vector2(38.5, -26.6), Vector2(52.5, -33.6),
 		Vector2(56.0, -42.0), Vector2(61.6, -60.9)]
 const _TAIL_TIP := [Vector2(56.0, -79.1), Vector2(67.9, -81.9), Vector2(72.8, -68.6), Vector2(63.0, -65.8)]
@@ -174,9 +189,14 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 	lines.append(_line(head, _RIGHT_HORN, tint, spacing))
 	lines.append(_line(body * _rotation_about(_LEFT_ARM[0], arm_lift), _LEFT_ARM, tint, spacing))
 	lines.append(_line(body * _rotation_about(_RIGHT_ARM[0], -arm_lift), _RIGHT_ARM, tint, spacing))
-	for leg: Array in [_LEFT_LEG, _RIGHT_LEG]:
-		var points := PackedVector2Array(leg)
-		points[0] = body * points[0]
+	# Standing, his feet keep to the ground whatever his body does; hanging, they go where his hips do.
+	var hanging := body * _rotation_about(_HIPS, leg_swing)
+	for leg: Array in [[_LEFT_LEG, _LEFT_LEG_HANGING], [_RIGHT_LEG, _RIGHT_LEG_HANGING]]:
+		var standing: Array = leg[0]
+		var loose: Array = leg[1]
+		var points := PackedVector2Array([body * (standing[0] as Vector2)])
+		for i in range(1, standing.size()):
+			points.append((standing[i] as Vector2).lerp(hanging * (loose[i] as Vector2), dangle))
 		lines.append(InkLine.along(InkBrush.resample_polyline(points, spacing), tint))
 	lines.append(_line(tail, _TAIL, tint, spacing))
 	lines.append(_closed_line(tail, _TAIL_TIP, tint, spacing, 0.85))

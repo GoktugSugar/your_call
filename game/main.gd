@@ -142,17 +142,17 @@ func _check_start(chapters: Array[ChapterData]) -> void:
 
 
 ## Each page of the imp's sets his face (his grin unless the line asks for another) and may send him
-## hopping; a new line may send him roaming, when the page is his. While someone else speaks in the box,
-## such as a confessor, he keeps still and listens.
+## drifting to a fresh spot; a new line may send him roaming, when the page is his. While someone else
+## speaks in the box, such as a confessor, he keeps still and listens.
 func _on_page_shown(line: LineData, page: int, _page_count: int) -> void:
 	_speaker = line.speaker
 	if _speaker != &"imp":
 		return
 	imp.set_face(ImpDrawing.face_named(line.face))
 	if page == 0:
-		imp.hop_for_line()
+		imp.move_for_line()
 	else:
-		imp.hop_if_settled()
+		imp.move_if_settled()
 
 
 ## The imp talks while his own pages ink on and their voice plays, and only then.

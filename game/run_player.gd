@@ -2,7 +2,7 @@ class_name RunPlayer
 extends Node
 ## Plays the run: its chapters in order, and each chapter's beats in order, cinematics, the imp's
 ## narration and questions, until the run ends or a choice fires a secret ending. The page is the imp's
-## to roam while he narrates, and he hops home to his wing before each question's stage. An ending is an
+## to roam while he narrates, and he warps home to his wing before each question's stage. An ending is an
 ## ending, never a loss: the imp's reaction is his last line, he fades, the stage goes, and the credits
 ## roll. The imp takes his leave at the end of each chapter, and the next opens on the player waking.
 ## A chapter with a wallet, such as the money chapter, opens it as its first words are said and puts it

@@ -5,7 +5,7 @@ extends Stage
 ## inks on large in the middle of the page: a lever, a plea's words, the booth's curtain, the gavel at
 ## last, the trolley, the rails, a clerk with forms, a push button, the die, the crowd's bars, the map's
 ## pin, or nothing at all, the paper itself. A portrait that leans nowhere far takes the imp's own job,
-## and he steps out into the middle of the page. A tableau; its outcome names the posting, and the
+## and he warps into the middle of the page. A tableau; its outcome names the posting, and the
 ## question's endings fire by it.
 ## Stage data:
 ## [codeblock]
@@ -76,7 +76,7 @@ func posting_for(profile: Profile) -> StringName:
 	return StringName(str(pair[0 if best_lean < 0.0 else 1]))
 
 
-## The posting inks on, the imp stepping into the middle when it is his job.
+## The posting inks on, the imp warping into the middle when it is his job.
 func play_consequence(_index: int) -> StringName:
 	if _plea != null:
 		_plea.write_on()
@@ -86,7 +86,7 @@ func play_consequence(_index: int) -> StringName:
 		if node is InkDrawing:
 			tween.tween_property(node, ^"reveal", 1.0, ink_time).from(0.0)
 	if _posting == StringName(str(question.stage.get("nowhere_posting", "imp"))) and imp != null:
-		await imp.travel_to(posting_spot)
+		await imp.warp_to(posting_spot)
 	await tween.finished
 	await get_tree().create_timer(after_hold, false).timeout
 	return _posting

@@ -97,6 +97,15 @@ func dissolve_away(duration: float) -> Tween:
 	return tween
 
 
+## A still copy of the drawing as it is right now, its line wobbling the same way, for an effect that
+## leaves the drawing behind, such as the imp soaking away where he was while he inks himself on
+## somewhere else. The caller adds it to the page and frees it.
+func ghost() -> InkDrawing:
+	var copy := duplicate(DUPLICATE_SCRIPTS) as InkDrawing
+	copy.wobble_seed = _seed
+	return copy
+
+
 func _width_compensation() -> float:
 	if not constant_line_width or not is_inside_tree():
 		return 1.0

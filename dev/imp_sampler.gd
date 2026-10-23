@@ -1,7 +1,7 @@
 extends Node2D
 ## Development only: the imp in each expression, big and at his size in the game, every one moving his
 ## mouth along with a dialogue box that says a few voiced lines by itself, over and over; and one live
-## imp, wired to the box as the game wires him, who appears, talks, changes face each page and hops.
+## imp, wired to the box as the game wires him, who appears, talks, changes face each page and drifts.
 
 ## The live imp.
 @export var imp: Imp
@@ -64,9 +64,9 @@ func _lines() -> Array[LineData]:
 	return lines
 
 
-## Each page the live imp tries the next face, and may hop.
+## Each page the live imp tries the next face, and may drift.
 func _on_page_shown(_line: LineData, _page: int, _page_count: int) -> void:
 	var faces := ImpDrawing.Face.values()
 	imp.set_face(faces[_pages % faces.size()])
 	_pages += 1
-	imp.hop_if_settled()
+	imp.move_if_settled()

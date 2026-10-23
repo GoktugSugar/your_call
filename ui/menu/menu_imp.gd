@@ -2,7 +2,7 @@ class_name MenuImp
 extends Node
 ## The imp on the menu page. Every so often he says one of his barks as ink floating over his head, in
 ## the bark's face and his own voice, never the same bark twice running and never in the way of the menu;
-## once the words clear, he hops somewhere fresh. Asked a line outright, such as whether to throw the run
+## once the words clear, he warps somewhere fresh. Asked a line outright, such as whether to throw the run
 ## away, he says it at once in place of any bark and holds it up until he is let go. Hushed, he keeps his
 ## barks to himself, as while the settings are open, though he can still be given one line to say.
 
@@ -32,7 +32,7 @@ extends Node
 @export_range(0.0, 1500.0, 1.0) var min_move := 240.0
 ## The middle of the page across, which side of it says which way he faces the menu.
 @export_range(0.0, 1920.0, 1.0) var page_middle := 960.0
-## Seed for which bark he picks and where he hops. Zero picks a new one every time.
+## Seed for which bark he picks and where he warps. Zero picks a new one every time.
 @export var bark_seed := 0
 
 var _barks: Array[LineData] = []
@@ -149,7 +149,7 @@ func _bark() -> void:
 		return
 	var spot := _fresh_spot()
 	imp.wing = Imp.Wing.LEFT if spot.x < page_middle else Imp.Wing.RIGHT
-	await imp.travel_to(spot)
+	await imp.warp_to(spot)
 
 
 ## Floats [param line] over his head and says it, his face and mouth with it. Returns once it has been
@@ -203,7 +203,7 @@ func _wait(seconds: float) -> void:
 		await get_tree().create_timer(seconds, false).timeout
 
 
-## A spot in one of [member spots], far enough from where he stands to be worth the hop.
+## A spot in one of [member spots], far enough from where he floats to be worth the warp.
 func _fresh_spot() -> Vector2:
 	var spot := imp.position
 	for attempt in 12:
