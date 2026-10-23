@@ -1,7 +1,8 @@
 extends GutTest
 ## The save: what the run remembers comes back whole through a save file, a save is only picked up while
 ## the run still has its beat, anything unreadable counts as no save, the record of endings keeps each
-## ending once, and the auto save keeps the moment each beat began and clears itself at an ending.
+## ending once, and the auto save keeps the moment each beat began and, at an ending, the moment the last
+## choice began, so the run picks up just before it.
 
 const SAVE_PATH := "user://tests/run.json"
 const RECORD_PATH := "user://tests/endings.json"
@@ -140,16 +141,38 @@ func test_the_auto_save_keeps_the_moment_each_beat_began() -> void:
 	assert_false(RunSave.load_valid(_chapters()).run.remembers(&"button_shot"), "Save keeps the beat's start again")
 
 
-func test_an_ending_clears_the_save_and_is_recorded() -> void:
+func test_an_ending_keeps_the_save_at_the_choice_that_fired_it_and_is_recorded() -> void:
 	var parts := _auto_save()
 	var player: RunPlayer = parts[0]
 	var saver: AutoSave = parts[1]
 	player.chapter_started.emit(_chapters()[0])
-	player.beat_started.emit(_chapters()[0].beats[0])
+	player.beat_started.emit(_chapters()[0].beats[1])
+	saver.run.remember(&"pulled_baby")
 	player.ending_reached.emit(&"baby")
-	assert_null(RunSave.load_valid(_chapters()))
+	var save := RunSave.load_valid(_chapters())
+	assert_not_null(save, "the run can be picked up after an ending")
+	if save != null:
+		assert_eq(save.beat, &"c1_q2")
+		assert_false(save.run.remembers(&"pulled_baby"), "it picks up as the choice began")
 	assert_eq(EndingsRecord.seen(), PackedStringArray(["baby"]))
-	assert_false(saver.can_save(), "nothing is left to save after an ending")
+	assert_false(saver.can_save(), "the pause has nothing to save after an ending")
+
+
+func test_an_ending_a_tableau_fires_picks_up_at_the_last_choice_before_it() -> void:
+	var parts := _auto_save()
+	var player: RunPlayer = parts[0]
+	var saver: AutoSave = parts[1]
+	var chapter: ChapterData = _chapters()[1]
+	player.chapter_started.emit(chapter)
+	player.beat_started.emit(chapter.beats[3])
+	saver.run.remember(&"pulled_lever")
+	player.beat_started.emit(chapter.beats[4])
+	player.ending_reached.emit(&"posted_lever")
+	var save := RunSave.load_valid(_chapters())
+	assert_not_null(save)
+	if save != null:
+		assert_eq(save.beat, &"c2_q4", "the posting is no choice: the lever before it is")
+		assert_false(save.run.remembers(&"pulled_lever"))
 
 
 func test_an_auto_save_turned_off_never_touches_the_save() -> void:
@@ -196,7 +219,8 @@ func _remembering_run() -> RunState:
 	return run
 
 
-## Two chapters of three and five questions, ids c1 and c2, beats c1_q1 and on.
+## Two chapters of three and five questions, ids c1 and c2, beats c1_q1 and on. Each has an option to
+## choose, but the second chapter's last, a tableau.
 func _chapters() -> Array[ChapterData]:
 	var chapters: Array[ChapterData] = []
 	for count in [3, 5]:
@@ -205,6 +229,8 @@ func _chapters() -> Array[ChapterData]:
 		for i in count:
 			var question := QuestionData.new()
 			question.id = StringName("%s_q%d" % [chapter.id, i + 1])
+			if not (count == 5 and i == count - 1):
+				question.options.append(OptionData.new())
 			chapter.beats.append(question)
 		chapters.append(chapter)
 	return chapters
