@@ -166,7 +166,7 @@ func _say(line: LineData, turn: int) -> void:
 	imp.set_talking(true)
 	Music.duck(true)
 	words.write_on(VoiceLibrary.clip_for(line))
-	while turn == _turn and is_instance_valid(words) and words.is_saying():
+	while turn == _turn and is_inside_tree() and is_instance_valid(words) and words.is_saying():
 		await get_tree().process_frame
 	if turn == _turn:
 		_quiet()
@@ -199,7 +199,8 @@ func _next_turn() -> int:
 
 
 func _wait(seconds: float) -> void:
-	await get_tree().create_timer(seconds, false).timeout
+	if is_inside_tree():
+		await get_tree().create_timer(seconds, false).timeout
 
 
 ## A spot in one of [member spots], far enough from where he stands to be worth the hop.
