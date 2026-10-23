@@ -14,5 +14,65 @@
     "name": "Your Call: button (wounded_whiner_3)",
     "description": "A small, whiny, deeply wounded voice. Young adult male, high but never childlike, wobbling with outrage and close to tears. Melodramatic and sniffy, feels terribly hard done by. Neutral American accent. Perfect audio quality.",
     "designed_with": "eleven_ttv_v3"
+  },
+  "confessor.recliner": {
+    "voice_id": "bWKmfYu6emNJr713voGD",
+    "name": "Your Call: confessor.recliner (frequent_flyer)",
+    "description": "A middle aged American man, a frequent flyer with a firm sense of entitlement. Mid pitch, slightly nasal, defensive and exasperated, explaining what he thinks is obvious. Natural, conversational. Perfect audio quality.",
+    "designed_with": "eleven_ttv_v3"
+  },
+  "confessor.wedding": {
+    "voice_id": "z4akekY9qP4AxsuPqTJT",
+    "name": "Your Call: confessor.wedding (sweet_southern_2)",
+    "description": "A fiery woman in her late twenties with a Southern American accent. Quick and indignant, sweetly vicious. Perfect audio quality.",
+    "designed_with": "eleven_ttv_v3"
+  },
+  "confessor.loan": {
+    "voice_id": "waLHPkJkvC7EIU4FyyRe",
+    "name": "Your Call: confessor.loan (blunt_northerner_3)",
+    "description": "A blunt man in his fifties with a Northern English accent. Plain spoken and stubborn, hurt underneath, never raises his voice. Perfect audio quality.",
+    "designed_with": "eleven_ttv_v3"
+  },
+  "confessor.secret": {
+    "voice_id": "rGAEUi2TSHapuToavFjn",
+    "name": "Your Call: confessor.secret (weary_irish)",
+    "description": "A gentle Irish woman in her forties. Warm and low, weary with regret, slow and sincere. Perfect audio quality.",
+    "designed_with": "eleven_ttv_v3"
+  },
+  "confessor.promise": {
+    "voice_id": "PlaZjqQzgGBA6ZLOoS4E",
+    "name": "Your Call: confessor.promise (soft_scot_3)",
+    "description": "A gentle Scottish man in his fifties. Soft, heavy with grief and guilt, plain spoken. Perfect audio quality.",
+    "designed_with": "eleven_ttv_v3"
+  },
+  "confessor.favorite": {
+    "voice_id": "WMNpBHpeYQfifjkzza63",
+    "name": "Your Call: confessor.favorite (cold_daughter)",
+    "description": "A woman in her forties, neutral American accent. Calm and cold on the surface, decades of hurt underneath, bitter and precise. Perfect audio quality.",
+    "designed_with": "eleven_ttv_v3"
+  },
+  "confessor.good_deed": {
+    "voice_id": "p6pQwVkwBmMmRwjo7tpJ",
+    "name": "Your Call: confessor.good_deed (proud_rescuer_2)",
+    "description": "A big hearted, boastful American man in his fifties. Loud and warm, proud of himself, wounded that he is not appreciated. Perfect audio quality.",
+    "designed_with": "eleven_ttv_v3"
+  },
+  "confessor.whistle": {
+    "voice_id": "CJ45VJtgu4U4ldlXwfZg",
+    "name": "Your Call: confessor.whistle (firm_professional)",
+    "description": "A precise, intense American woman in her thirties. Controlled and articulate, shaken but firm, anger held in. Perfect audio quality.",
+    "designed_with": "eleven_ttv_v3"
+  },
+  "confessor.her": {
+    "voice_id": "jx5tkVPF198z3NEnuXoN",
+    "name": "Your Call: confessor.her (raw_betrayed)",
+    "description": "A woman in her thirties, neutral American accent. Raw and emotional, betrayed, sincere, on the edge of tears. Perfect audio quality.",
+    "designed_with": "eleven_ttv_v3"
+  },
+  "confessor.him": {
+    "voice_id": "0GIkrsTLM9aFycSMz7fi",
+    "name": "Your Call: confessor.him (steady_sad)",
+    "description": "A man in his thirties, neutral American accent. Calm, steady and sad, quietly insistent and sincere. Perfect audio quality.",
+    "designed_with": "eleven_ttv_v3"
   }
 }

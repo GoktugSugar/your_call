@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=14 format=3]
 
 [ext_resource type="Script" path="res://stages/booth/booth_stage.gd" id="1_stage"]
 [ext_resource type="Script" path="res://stages/booth/confession_booth.gd" id="2_booth"]
@@ -12,6 +12,7 @@
 [ext_resource type="Resource" path="res://figures/walking_button/arms/flinch.tres" id="10_flinch"]
 [ext_resource type="Resource" path="res://figures/walking_button/arms/startled.tres" id="11_startled"]
 [ext_resource type="Resource" path="res://figures/walking_button/arms/shrug.tres" id="12_shrug_arms"]
+[ext_resource type="AudioStream" path="res://assets/sfx/gavel.mp3" id="13_gavel"]
 
 [node name="BoothStage" type="Node2D" node_paths=PackedStringArray("booth", "gavel")]
 script = ExtResource("1_stage")
@@ -34,4 +35,5 @@ position = Vector2(960, 640)
 script = ExtResource("2_booth")
 
 [node name="Gavel" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_gavel")
 bus = &"SFX"

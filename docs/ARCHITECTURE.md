@@ -181,7 +181,7 @@ Lines are voiced with ElevenLabs. Each line is one take, so its delivery flows a
 
 ## Audio (`game/audio/`, `default_bus_layout.tres`)
 
-Buses: Master, with Music, SFX and Voice under it. Sound effects are made with ElevenLabs: `tools/sfx/sound_takes.py` makes a batch of takes of a sound described in `tools/sfx/sounds.json` into `sfx_auditions/` (git ignores it), and saves the one picked by ear into `assets/sfx/`, through Git LFS. The gunshot is the first. The Voice bus starts with a pitch shift, which the dialogue box sets so a voice played faster keeps its pitch (`voice_speed`). The `Music` autoload loops one quiet track under everything, carried across scene changes, fading it in and dipping it while someone talks. A missing track is silence.
+Buses: Master, with Music, SFX and Voice under it. Sound effects are made with ElevenLabs: `tools/sfx/sound_takes.py` makes a batch of takes of a sound described in `tools/sfx/sounds.json` into `sfx_auditions/` (git ignores it), and saves the one picked by ear into `assets/sfx/`, through Git LFS. The gunshot is the first, and the gavel's knock in the confession booth the second. The Voice bus starts with a pitch shift, which the dialogue box sets so a voice played faster keeps its pitch (`voice_speed`). The `Music` autoload loops one quiet track under everything, carried across scene changes, fading it in and dipping it while someone talks. A missing track is silence.
 
 ## Development tools (`dev/`)
 
