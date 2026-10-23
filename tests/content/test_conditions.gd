@@ -2,9 +2,13 @@ extends GutTest
 ## Options and lines that only some runs see: walking each chapter through every set of facts a run can
 ## reach, every question offers at least two options whose shares add up to about the whole crowd and
 ## whose words fit the choice row, every line with a condition is said on some run, and every fact a
-## condition names is one an option remembers or the run knows.
+## condition names is one an option remembers or the run knows. Each chapter's walk starts from every
+## mix of the facts earlier chapters in the run can leave that its own conditions name.
 
 const CHAPTERS_DIR := "res://content/chapters"
+const RUN_PATH := "res://content/run.json"
+## The most facts from earlier chapters a walk starts from every mix of.
+const MOST_CARRIED := 8
 ## How far a run's shown shares may stray from the whole crowd before they are scaled to it.
 const SLACK := 6.0
 ## The choice row, for measuring.
@@ -17,17 +21,21 @@ var _chapters: Array[ChapterData] = []
 
 func before_all() -> void:
 	var loader := ContentLoader.new(Profile.axis_ids())
-	for file in DirAccess.get_files_at(CHAPTERS_DIR):
-		if file.get_extension() == "json":
-			var chapter := loader.load_chapter(CHAPTERS_DIR.path_join(file))
-			if chapter != null:
-				_chapters.append(chapter)
+	_chapters = loader.load_run(RUN_PATH, CHAPTERS_DIR)
 
 
 ## Every set of facts a run can have reached at each question of [param chapter], by question id, as
-## lists of runs, starting from a run that remembers nothing.
+## lists of runs, starting from every mix of the facts it carries in from earlier chapters.
 func _reachable(chapter: ChapterData) -> Dictionary:
-	var runs: Array[PackedStringArray] = [PackedStringArray()]
+	var runs: Array[PackedStringArray] = []
+	var carried := _carried(chapter)
+	for mask in 1 << mini(carried.size(), MOST_CARRIED):
+		var facts := PackedStringArray()
+		for i in mini(carried.size(), MOST_CARRIED):
+			if mask & (1 << i):
+				facts.append(carried[i])
+		facts.sort()
+		runs.append(facts)
 	var at := {}
 	for beat in chapter.beats:
 		var question := beat as QuestionData
@@ -53,6 +61,34 @@ func _reachable(chapter: ChapterData) -> Dictionary:
 					next.append(after)
 		runs = next
 	return at
+
+
+## The facts earlier chapters in the run can leave, or the run's stages remember, that [param chapter]'s
+## own conditions name.
+func _carried(chapter: ChapterData) -> PackedStringArray:
+	var earlier := PackedStringArray(STAGE_FACTS)
+	for each in _chapters:
+		if each == chapter:
+			break
+		for beat in each.beats:
+			if beat is QuestionData:
+				for option in (beat as QuestionData).options:
+					earlier.append_array(option.remember)
+	var named := PackedStringArray()
+	for beat in chapter.beats:
+		var conditions: Array[PackedStringArray] = []
+		if beat is QuestionData:
+			for option in (beat as QuestionData).options:
+				conditions.append(option.requires)
+				conditions.append(option.excludes)
+		for line in beat.all_lines():
+			conditions.append(line.requires)
+			conditions.append(line.excludes)
+		for facts in conditions:
+			for fact in facts:
+				if fact in earlier and not fact in named:
+					named.append(fact)
+	return named
 
 
 func _run_of(facts: PackedStringArray) -> RunState:
