@@ -338,6 +338,7 @@ The user asked for three tracks they can release on itch.io whether they charge 
 - **Each loop is cut from a take by measuring it.** Dev: no music model makes a seamless loop, so `music_takes.py --save` finds the tempo, then the longest stretch of whole bars (at least 90 seconds for the main theme, 45 for the others) whose end runs back into its start best, crossfades the seam, levels it to the placeholder's loudness, and writes an Ogg Vorbis that loops end to start; Godot loops Ogg to the sample, where an MP3 leaves a gap. The listening page with every take and its seam is `music_auditions/index.html` in the worktree.
 - **A track per chapter.** User, from the request; dev, the shape: a chapter names its track in its data, the music crossfades over 2 seconds as it starts, and a chapter that names none keeps the main theme, which therefore plays unbroken from the menu into the run. The credits roll over whatever track plays as the ending fires.
 - **Stand ins until the user picks.** Dev, by measuring the seams: the main theme's take 1 (an 84 bar loop, 2 minutes 13), The Show's take 3 (73 seconds) and The Campaign's take 3 (77 seconds).
+- **The credits have no music line.** User, of the wordings offered (made with Eleven Music, the user with Eleven Music, music and sound made with ElevenLabs, or none): the placeholder's line goes and nothing takes its place; the terms ask for no credit.
 
 ## 2026-10-23: the Endings page, and continuing after an ending
 
