@@ -133,6 +133,10 @@ Built on 2026-10-23. The script, the music, the swear, the end card and the leng
 - The tall framing: the imp floating above each stage as the host, and the booth's and the dragon's rows kept to the options that fit.
 - The trolley rolling quicker than in the game, and the question player's shorter pauses.
 
+## To review: the voice's starts
+
+- Voicing again the 58 takes whose recordings begin partway into their first word: about 7,300 characters, or 4,600 for the 35 that start loudest. They fade in for now (2026-10-23), which takes the click away but not the start of the sound they never had. A new take can begin that way too, about one in thirteen did, and would fade in the same way.
+
 ## Carried over from the earlier build
 
 These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus the points sections 9 and 14 leave to the user.
