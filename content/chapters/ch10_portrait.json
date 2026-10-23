@@ -1,0 +1,148 @@
+{
+  "id": "ch10",
+  "title": "The Portrait",
+  "beats": [
+    { "kind": "cinematic", "id": "waking", "scene": "waking" },
+    {
+      "kind": "narration",
+      "id": "intro",
+      "lines": [
+        "Last stop. No trolleys, no buttons, no guns. Just you, me, and this.",
+        { "text": "You thought I was making it up as I went. I was. I was also writing it all down.", "face": "smug" },
+        "Every choice. Every hesitation. Every time you hovered. I have it here, in very small handwriting."
+      ]
+    },
+    {
+      "kind": "tableau",
+      "id": "notebook",
+      "number": "10.01",
+      "title": "The Notebook",
+      "weight": "medium",
+      "stage": {
+        "type": "notebook", "most_rows": 3,
+        "line": { "text": "{number} {pick}" }, "share": { "text": "{share} in 100" },
+        "count": { "text": "the odd one out {count} times" }
+      },
+      "ask": [ "Let us start with the strange ones. The choices hardly anybody made." ],
+      "lines": {
+        "notebook": [
+          "That is either character or bad luck. I have stopped being able to tell.",
+          { "text": "And the car, of course. We will not talk about the car.", "face": "smug" }
+        ]
+      }
+    },
+    {
+      "kind": "tableau",
+      "id": "portrait",
+      "number": "10.02",
+      "title": "Your Portrait",
+      "weight": "heavy",
+      "stage": { "type": "portrait", "middle": 0.15 },
+      "ask": [ "Now. Hold still. This is you." ],
+      "lines": {
+        "one_many_first": [ "The [amber]one[/amber] over the [amber]many[/amber], again and again. You kept seeing a face where the rest saw a number. Very human. Terrible at arithmetic." ],
+        "one_many_second": [ "The [amber]many[/amber], every time. [amber]Five[/amber] beats [amber]one[/amber]. Lovely maths. Terrible dinner guest." ],
+        "one_many_middle": [ "The one or the many, you could never settle. You counted every time, and hated the answer every time." ],
+        "mercy_justice_first": [ "For a judge, you let a lot of people off. A late conversion, or the robe was hiding it all along." ],
+        "mercy_justice_second": [ { "text": "Still a judge. Death did not take it out of you. Nothing will.", "face": "smug" } ],
+        "mercy_justice_middle": [ "Mercy some days, justice others. Depending, I suspect, on lunch." ],
+        "ends_rules_first": [ "The rules were suggestions. The outcome was the point. Whatever it took." ],
+        "ends_rules_second": [ "You kept the rules. Even mine. Even the stupid ones. Especially the stupid ones." ],
+        "ends_rules_middle": [ "Rules when they suited you, ends when they did not. Most people call that common sense. I call it a lawyer." ],
+        "order_freedom_first": [ "You like things in rows. Forms filled in. A queue that moves." ],
+        "order_freedom_second": [ "You do not like being told. I told you all game. It must have been agony." ],
+        "order_freedom_middle": [ "Order or freedom. You never picked. You waited to see which one the room liked." ],
+        "self_others_first": [ "You put yourself at the centre. Everybody does. You just did not bother to hide it." ],
+        "self_others_second": [ "You kept putting other people first. Exhausting to watch. Exhausting to be, I imagine." ],
+        "self_others_middle": [ "You and them, half and half. Like a sandwich nobody ordered." ],
+        "risk_safety_first": [ "You pressed. You bid. You spun. You never once left a button alone." ],
+        "risk_safety_second": [ "You kept the money, lowered the gun and backed away from every edge. Nobody has ever had a safer time being [red]dead[/red]." ],
+        "risk_safety_middle": [ "Some risks, some safety. A gambler who reads the small print." ]
+      }
+    },
+    {
+      "kind": "question",
+      "id": "lever_again",
+      "number": "10.03",
+      "title": "The Lever, Again",
+      "verb": "binary",
+      "weight": "heavy",
+      "stage": { "type": "trolley", "tracks": [ { "figures": [ "stranger", "stranger", "stranger", "stranger", "stranger" ] }, { "figures": [ "stranger" ] } ] },
+      "ask": [
+        "One more. The first real one, again. Same five. Same one. Same lever.",
+        "Everything you have been through since. Let us see if any of it got in."
+      ],
+      "options": [
+        {
+          "id": "pull",
+          "label": "Pull the lever",
+          "outcome": { "track": 1 },
+          "crowd": 79,
+          "profile": { "one_many": 1, "ends_rules": -1 },
+          "reaction": [
+            { "text": "You pulled then. You pull now. Nothing I did touched you. I am almost impressed.", "if": "pulled_lever" },
+            { "text": "You would not touch it at the start. Now you pull. I broke something in you. Or fixed it. I never know which.", "unless": "pulled_lever" }
+          ]
+        },
+        {
+          "id": "nothing",
+          "label": "Do nothing",
+          "outcome": { "track": 0 },
+          "crowd": 21,
+          "profile": { "one_many": -1, "ends_rules": 1 },
+          "reaction": [
+            { "text": "You left it then. You leave it now. Hands clean, both times. Same man, start to finish.", "unless": "pulled_lever" },
+            { "text": "You pulled at the start. Now you will not. Something got in. I would love to know what. No I would not.", "if": "pulled_lever" }
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose, the second time" }
+    },
+    {
+      "kind": "tableau",
+      "id": "posting",
+      "number": "10.04",
+      "title": "The Posting",
+      "weight": "heavy",
+      "stage": {
+        "type": "posting", "nowhere": 0.2, "nowhere_posting": "imp",
+        "plea": { "text": "Please, not me." },
+        "postings": {
+          "one_many": [ "plea", "lever" ],
+          "mercy_justice": [ "curtain", "gavel" ],
+          "ends_rules": [ "trolley", "rails" ],
+          "order_freedom": [ "clerk", "button" ],
+          "self_others": [ "die", "crowd" ],
+          "risk_safety": [ "pin", "paper" ]
+        }
+      },
+      "ask": [
+        "Now. Where to put you. Everybody here becomes something. The void does not waste a soul.",
+        { "text": "I have looked at the way you leaned, and I know exactly what you are for.", "face": "smug" }
+      ],
+      "lines": {
+        "lever": [ "A lever. You will stand at a fork forever, and every so often someone will pull you. You will love it." ],
+        "plea": [ "The words on the tracks. Please, not me. You will be said by strangers at their worst moment. You will be very moving." ],
+        "curtain": [ "The curtain in the booth. You will hang there, tied back, hiding people while they confess. You will hear everything and tell no one." ],
+        "gavel": [ "The gavel. Nobody ever sees it. Everybody hears it. You will be banged on a desk for eternity, and you will find it very satisfying." ],
+        "trolley": [ "The trolley. You go where you are sent, and you never look back at what you hit." ],
+        "rails": [ "The rails. Everything runs along you, and nothing ever asks you anything. Bliss." ],
+        "clerk": [ "My clerk. Forms, dockets, queues in rows. You will be happier [red]dead[/red] than you ever were alive." ],
+        "button": [ "A button. Pressed by strangers, day and night. And one day, if you are very lucky, you will get up and walk away. It has happened. Once." ],
+        "die": [ "The die. Everyone blows on you for luck. You will think it is all about you. It is." ],
+        "crowd": [ "The crowd. One grey bar among the many. Every time anyone asks how others chose, they will be asking about you." ],
+        "pin": [ "The pin. Spun round and round over the map and dropped wherever. You will adore it." ],
+        "paper": [ "The paper. Everything is drawn on you, and nothing ever happens to you." ],
+        "imp": [
+          "You leaned on nothing. Even, careful, impossible to read. Perfect. You will take my job.",
+          { "text": "Every one of them gets a little game. Be cruel. Be fair. Be whatever you like. It is your call.", "face": "smug" }
+        ]
+      },
+      "ending": {
+        "lever": "posted_lever", "plea": "posted_plea", "curtain": "posted_curtain", "gavel": "posted_gavel",
+        "trolley": "posted_trolley", "rails": "posted_rails", "clerk": "posted_clerk", "button": "posted_button",
+        "die": "posted_die", "crowd": "posted_crowd", "pin": "posted_pin", "paper": "posted_paper", "imp": "posted_imp"
+      }
+    }
+  ]
+}
