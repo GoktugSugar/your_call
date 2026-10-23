@@ -1,0 +1,89 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://dev/trailer/trailer.gd" id="1_trailer"]
+[ext_resource type="PackedScene" path="res://ink/paper/paper.tscn" id="2_paper"]
+[ext_resource type="Script" path="res://dev/trailer/trailer_camera.gd" id="3_camera"]
+[ext_resource type="PackedScene" path="res://figures/imp/imp.tscn" id="4_imp"]
+[ext_resource type="PackedScene" path="res://ui/balance/balance_readout.tscn" id="5_balance"]
+[ext_resource type="PackedScene" path="res://ui/reveal/crowd_reveal.tscn" id="6_reveal"]
+[ext_resource type="PackedScene" path="res://ui/choices/choice_row.tscn" id="7_choices"]
+[ext_resource type="PackedScene" path="res://ui/dialogue/dialogue_box.tscn" id="8_dialogue"]
+[ext_resource type="PackedScene" path="res://dev/trailer/title_card.tscn" id="9_card"]
+[ext_resource type="PackedScene" path="res://cinematics/eyelids.tscn" id="10_eyelids"]
+[ext_resource type="Script" path="res://game/question_player.gd" id="11_player"]
+
+[node name="Trailer" type="Node" node_paths=PackedStringArray("question_player", "dialogue", "voice_over", "choices", "reveal", "balance", "imp", "camera", "words_layer", "words_frame", "eyelids", "title_card", "set_root")]
+script = ExtResource("1_trailer")
+question_player = NodePath("QuestionPlayer")
+dialogue = NodePath("Words/Frame/DialogueBox")
+voice_over = NodePath("Words/Frame/VoiceOver")
+choices = NodePath("Words/Frame/ChoiceRow")
+reveal = NodePath("Words/Frame/CrowdReveal")
+balance = NodePath("Words/Frame/BalanceReadout")
+imp = NodePath("World/Imp")
+camera = NodePath("World/Camera")
+words_layer = NodePath("Words")
+words_frame = NodePath("Words/Frame")
+eyelids = NodePath("Lids/Eyelids")
+title_card = NodePath("Card/TitleCard")
+set_root = NodePath("World/Set")
+
+[node name="Paper" parent="." instance=ExtResource("2_paper")]
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Camera" type="Camera2D" parent="World"]
+script = ExtResource("3_camera")
+
+[node name="Set" type="Node2D" parent="World"]
+
+[node name="StageRoot" type="Node2D" parent="World"]
+
+[node name="Imp" parent="World" instance=ExtResource("4_imp")]
+move_seed = 7
+
+[node name="Words" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="Frame" type="Control" parent="Words"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+
+[node name="BalanceReadout" parent="Words/Frame" instance=ExtResource("5_balance")]
+layout_mode = 1
+
+[node name="CrowdReveal" parent="Words/Frame" instance=ExtResource("6_reveal")]
+layout_mode = 1
+
+[node name="ChoiceRow" parent="Words/Frame" instance=ExtResource("7_choices")]
+layout_mode = 1
+
+[node name="DialogueBox" parent="Words/Frame" instance=ExtResource("8_dialogue")]
+layout_mode = 1
+
+[node name="VoiceOver" parent="Words/Frame" instance=ExtResource("8_dialogue")]
+layout_mode = 1
+
+[node name="Card" type="CanvasLayer" parent="."]
+layer = 12
+
+[node name="TitleCard" parent="Card" instance=ExtResource("9_card")]
+
+[node name="Lids" type="CanvasLayer" parent="."]
+layer = 20
+
+[node name="Eyelids" parent="Lids" instance=ExtResource("10_eyelids")]
+
+[node name="QuestionPlayer" type="Node" parent="." node_paths=PackedStringArray("stage_root", "dialogue", "choices", "reveal", "imp")]
+script = ExtResource("11_player")
+stage_root = NodePath("../World/StageRoot")
+dialogue = NodePath("../Words/Frame/DialogueBox")
+choices = NodePath("../Words/Frame/ChoiceRow")
+reveal = NodePath("../Words/Frame/CrowdReveal")
+imp = NodePath("../World/Imp")
+before_consequence = 0.2
+before_reaction = 0.15
+before_reveal = 0.15

@@ -1,0 +1,72 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://dev/trailer/title_card.gd" id="1_card"]
+[ext_resource type="Script" path="res://ui/menu/menu_title.gd" id="2_title"]
+[ext_resource type="Script" path="res://ui/ink_underline.gd" id="3_line"]
+
+[node name="TitleCard" type="Control" node_paths=PackedStringArray("title", "release")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_card")
+title = NodePath("Column/Title")
+release = NodePath("Column/Release")
+
+[node name="Column" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -520.0
+offset_top = -200.0
+offset_right = 520.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="Title" type="VBoxContainer" parent="Column" node_paths=PackedStringArray("words", "stroke")]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = -18
+script = ExtResource("2_title")
+words = NodePath("Words")
+stroke = NodePath("Stroke")
+
+[node name="Words" type="RichTextLabel" parent="Column/Title"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 220
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+
+[node name="Stroke" type="Control" parent="Column/Title"]
+custom_minimum_size = Vector2(800, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+script = ExtResource("3_line")
+sag = 4.0
+width_scale = 1.6
+color_role = &"ink"
+
+[node name="Release" type="RichTextLabel" parent="Column"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 68
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false

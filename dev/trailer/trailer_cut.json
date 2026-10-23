@@ -1,0 +1,1060 @@
+{
+  "note": "The trailers' cut. formats: each format's size and how its words lie. shots: what each recording of res://dev/trailer/trailer.tscn plays (see trailer.gd and trailer_steps.gd); a setting can differ by format, as {\"wide\": ..., \"tall\": ...}. cut: the pieces of the shots that make each trailer, in order, from and to a time in the shot: seconds, or a moment its log names (page:<line> when a line of the trailers' starts, said:<line> when it has been said, mark:<name>, phase:<phase>) with plus seconds after it. A piece can run backwards (reverse) and faster (speed). sound: the music and the sounds laid over the cut.",
+  "fps": 30,
+  "formats": {
+    "wide": {
+      "size": [
+        1920,
+        1080
+      ],
+      "words": {
+        "scale": 1.15,
+        "reveal_y": 380
+      }
+    },
+    "tall": {
+      "size": [
+        1080,
+        1920
+      ],
+      "words": {
+        "scale": 1.3,
+        "clear_below": 380,
+        "box_width": 700,
+        "reveal_y": 700,
+        "clear_above": 210
+      }
+    }
+  },
+  "shots": {
+    "open": {
+      "eyes_shut": true,
+      "imp": {
+        "at": [
+          960,
+          600
+        ],
+        "face": "smug",
+        "line": 0.8
+      },
+      "camera": {
+        "wide": {
+          "zoom": 4.6,
+          "at": [
+            960,
+            505
+          ]
+        },
+        "tall": {
+          "zoom": 5.6,
+          "at": [
+            960,
+            560
+          ]
+        }
+      },
+      "steps": [
+        {
+          "wait": 0.3,
+          "eyes": "open"
+        },
+        {
+          "wait": 1.2,
+          "say": "wondering",
+          "keep": true,
+          "hold": 0.25
+        },
+        {
+          "wait": 0.15,
+          "say": "died"
+        }
+      ],
+      "seconds": 8
+    },
+    "welcome": {
+      "studio": {
+        "wide": {
+          "draw": 0.8
+        },
+        "tall": {
+          "draw": 0.8,
+          "audience": [
+            [
+              440,
+              880,
+              1040,
+              130
+            ]
+          ]
+        }
+      },
+      "imp": {
+        "at": [
+          960,
+          690
+        ],
+        "scale": 2.2,
+        "line": 1.76
+      },
+      "camera": {
+        "wide": {
+          "zoom": 2.09,
+          "at": [
+            960,
+            481
+          ]
+        },
+        "tall": {
+          "zoom": 2.545,
+          "at": [
+            960,
+            602
+          ]
+        }
+      },
+      "steps": [
+        {
+          "wait": 0.05,
+          "mark": "music",
+          "camera": {
+            "wide": {
+              "zoom": 1.0,
+              "at": [
+                960,
+                540
+              ],
+              "seconds": 1.1
+            },
+            "tall": {
+              "zoom": 1.0,
+              "at": [
+                960,
+                700
+              ],
+              "seconds": 1.1
+            }
+          },
+          "applaud": 2.2
+        },
+        {
+          "wait": 0.35,
+          "say": "welcome",
+          "hold": 0.2
+        },
+        {
+          "applaud": 2.4
+        }
+      ],
+      "seconds": 11
+    },
+    "lever_pull": {
+      "question": "ch1.lever",
+      "ask": [
+        "rules"
+      ],
+      "react": {
+        "pull": [
+          "pulled"
+        ]
+      },
+      "stage": {
+        "roll_duration": 1.5,
+        "lever_pause": 0.1
+      },
+      "imp": {
+        "wide": {
+          "wing": "right"
+        },
+        "tall": {
+          "at": [
+            960,
+            100
+          ],
+          "scale": 2.0,
+          "line": 1.6
+        }
+      },
+      "camera": {
+        "wide": {
+          "zoom": 1.12,
+          "at": [
+            1000,
+            480
+          ]
+        },
+        "tall": {
+          "zoom": 0.88,
+          "at": [
+            990,
+            470
+          ]
+        }
+      },
+      "steps": [
+        {
+          "on": "choosing",
+          "wait": 0.4,
+          "mark": "choosing",
+          "highlight": 0
+        },
+        {
+          "wait": 0.4,
+          "mark": "pick",
+          "commit": 0
+        }
+      ],
+      "seconds": 13
+    },
+    "lever_nothing": {
+      "question": "ch1.lever",
+      "ask": [
+        "rules"
+      ],
+      "react": {
+        "nothing": [
+          "left"
+        ]
+      },
+      "stage": {
+        "roll_duration": 1.5,
+        "lever_pause": 0.1
+      },
+      "imp": {
+        "wide": {
+          "wing": "right"
+        },
+        "tall": {
+          "at": [
+            960,
+            100
+          ],
+          "scale": 2.0,
+          "line": 1.6
+        }
+      },
+      "camera": {
+        "wide": {
+          "zoom": 1.12,
+          "at": [
+            1000,
+            480
+          ]
+        },
+        "tall": {
+          "zoom": 0.88,
+          "at": [
+            990,
+            470
+          ]
+        }
+      },
+      "steps": [
+        {
+          "on": "choosing",
+          "wait": 0.4,
+          "mark": "choosing",
+          "highlight": 1
+        },
+        {
+          "wait": 0.4,
+          "mark": "pick",
+          "commit": 1
+        },
+        {
+          "on": "revealing",
+          "wait": 0.3,
+          "say": "crowd"
+        }
+      ],
+      "seconds": 22
+    },
+    "m_trolleys": {
+      "question": "ch1.full_track",
+      "imp": {
+        "wide": {
+          "wing": "right"
+        },
+        "tall": {
+          "at": [
+            960,
+            116
+          ],
+          "scale": 2.0,
+          "line": 1.6
+        }
+      },
+      "camera": {
+        "wide": {
+          "zoom": 1.12,
+          "at": [
+            1000,
+            480
+          ]
+        },
+        "tall": {
+          "zoom": 0.88,
+          "at": [
+            990,
+            480
+          ]
+        }
+      },
+      "steps": [
+        {
+          "at": 1.2,
+          "highlight": 2
+        },
+        {
+          "at": 1.45,
+          "commit": 2
+        },
+        {
+          "at": 3.0,
+          "say": "list"
+        }
+      ],
+      "seconds": 9,
+      "park": "list"
+    },
+    "m_buttons": {
+      "question": "ch2.red_blue",
+      "imp": {
+        "wide": {
+          "wing": "right"
+        },
+        "tall": {
+          "at": [
+            985,
+            293
+          ],
+          "scale": 1.5,
+          "line": 1.3
+        }
+      },
+      "camera": {
+        "wide": {
+          "zoom": 1.1,
+          "at": [
+            960,
+            480
+          ]
+        },
+        "tall": {
+          "zoom": 1.2,
+          "at": [
+            985,
+            560
+          ]
+        }
+      },
+      "steps": [
+        {
+          "at": 3.0,
+          "say": "list"
+        }
+      ],
+      "picks": [
+        {
+          "at": 3.5,
+          "highlight": 0
+        },
+        {
+          "at": 3.95,
+          "commit": 0
+        }
+      ],
+      "seconds": 9,
+      "park": "list"
+    },
+    "m_money": {
+      "question": "ch3.iq",
+      "wallet": 10000,
+      "imp": {
+        "wide": {
+          "wing": "right"
+        },
+        "tall": {
+          "at": [
+            975,
+            350
+          ],
+          "scale": 1.3,
+          "line": 1.15
+        }
+      },
+      "camera": {
+        "wide": {
+          "zoom": 1.1,
+          "at": [
+            960,
+            470
+          ]
+        },
+        "tall": {
+          "zoom": 1.35,
+          "at": [
+            975,
+            540
+          ]
+        }
+      },
+      "steps": [
+        {
+          "at": 3.0,
+          "say": "list"
+        }
+      ],
+      "picks": [
+        {
+          "at": 4.3,
+          "highlight": 0
+        },
+        {
+          "at": 4.6,
+          "commit": 0
+        }
+      ],
+      "seconds": 9,
+      "park": "list"
+    },
+    "m_guns": {
+      "question": "ch4.duel",
+      "imp": {
+        "wide": {
+          "wing": "right"
+        },
+        "tall": {
+          "at": [
+            960,
+            432
+          ],
+          "scale": 1.0,
+          "line": 1.0
+        }
+      },
+      "camera": {
+        "wide": {
+          "zoom": 1.1,
+          "at": [
+            960,
+            480
+          ]
+        },
+        "tall": {
+          "zoom": 1.8,
+          "at": [
+            960,
+            610
+          ]
+        }
+      },
+      "steps": [
+        {
+          "at": 3.0,
+          "say": "list"
+        }
+      ],
+      "picks": [
+        {
+          "at": 4.0,
+          "highlight": 0
+        },
+        {
+          "at": 4.3,
+          "commit": 0
+        }
+      ],
+      "seconds": 9,
+      "park": "list"
+    },
+    "m_gorillas": {
+      "question": "ch5.men_gorilla",
+      "imp": {
+        "wide": {
+          "wing": "right"
+        },
+        "tall": {
+          "at": [
+            955,
+            175
+          ],
+          "scale": 1.7,
+          "line": 1.4
+        }
+      },
+      "camera": {
+        "wide": {
+          "zoom": 1.1,
+          "at": [
+            960,
+            480
+          ]
+        },
+        "tall": {
+          "zoom": 1.05,
+          "at": [
+            955,
+            480
+          ]
+        }
+      },
+      "steps": [
+        {
+          "at": 3.0,
+          "say": "list"
+        }
+      ],
+      "picks": [
+        {
+          "at": 5.6,
+          "highlight": 1
+        },
+        {
+          "at": 5.95,
+          "commit": 1
+        }
+      ],
+      "seconds": 9,
+      "park": "list"
+    },
+    "knives": {
+      "question": "ch5.gorilla_knife",
+      "imp": {
+        "wide": {
+          "wing": "right"
+        },
+        "tall": {
+          "at": [
+            955,
+            175
+          ],
+          "scale": 1.7,
+          "line": 1.4
+        }
+      },
+      "camera": {
+        "wide": {
+          "zoom": 1.1,
+          "at": [
+            960,
+            480
+          ]
+        },
+        "tall": {
+          "zoom": 1.05,
+          "at": [
+            955,
+            480
+          ]
+        }
+      },
+      "steps": [
+        {
+          "on": "choosing",
+          "wait": 0.2,
+          "say": "knives",
+          "hold": 0.6
+        }
+      ],
+      "picks": [
+        {
+          "on": "choosing",
+          "wait": 1.9,
+          "highlight": 1
+        },
+        {
+          "wait": 0.35,
+          "commit": 1
+        }
+      ],
+      "seconds": 8,
+      "park": "knives"
+    },
+    "audience": {
+      "question": "ch6.applause",
+      "imp": {
+        "wide": {
+          "wing": "right"
+        },
+        "tall": {
+          "at": [
+            1380,
+            660
+          ],
+          "scale": 1.4,
+          "line": 1.2
+        }
+      },
+      "camera": {
+        "wide": {
+          "zoom": 1.0,
+          "at": [
+            960,
+            540
+          ]
+        },
+        "tall": {
+          "zoom": 1.0,
+          "at": [
+            960,
+            600
+          ]
+        }
+      },
+      "steps": [
+        {
+          "on": "choosing",
+          "wait": 0.1,
+          "say": "audience",
+          "hold": 0.6
+        }
+      ],
+      "seconds": 13,
+      "audience": {
+        "tall": [
+          [
+            440,
+            760,
+            1040,
+            120
+          ]
+        ]
+      },
+      "park": "audience"
+    },
+    "booth": {
+      "question": "ch7.recliner",
+      "ask": [
+        3
+      ],
+      "react": {
+        "everyone": [
+          "job"
+        ]
+      },
+      "imp": {
+        "wide": {
+          "wing": "right"
+        },
+        "tall": {
+          "at": [
+            800,
+            60
+          ],
+          "scale": 1.8,
+          "line": 1.5
+        }
+      },
+      "camera": {
+        "wide": {
+          "zoom": 1.1,
+          "at": [
+            960,
+            470
+          ]
+        },
+        "tall": {
+          "zoom": 0.95,
+          "at": [
+            960,
+            500
+          ]
+        }
+      },
+      "steps": [
+        {
+          "on": "choosing",
+          "wait": 0.5,
+          "mark": "choosing",
+          "highlight": 2
+        },
+        {
+          "wait": 0.4,
+          "mark": "pick",
+          "commit": 2
+        }
+      ],
+      "seconds": 17,
+      "row": {
+        "tall": [
+          2
+        ]
+      }
+    },
+    "dragon": {
+      "question": "ch8.boss",
+      "imp": {
+        "wide": {
+          "wing": "right"
+        },
+        "tall": {
+          "at": [
+            1350,
+            520
+          ],
+          "scale": 1.4,
+          "line": 1.2
+        }
+      },
+      "camera": {
+        "wide": {
+          "zoom": 1.0,
+          "at": [
+            960,
+            520
+          ]
+        },
+        "tall": {
+          "zoom": 1.0,
+          "at": [
+            960,
+            560
+          ]
+        }
+      },
+      "steps": [
+        {
+          "wait": 0.35,
+          "say": "dragon",
+          "hold": 0.6
+        }
+      ],
+      "seconds": 5,
+      "row": {
+        "tall": [
+          0,
+          1,
+          2
+        ]
+      },
+      "park": "dragon"
+    },
+    "call": {
+      "imp": {
+        "at": [
+          960,
+          600
+        ],
+        "face": "smug",
+        "line": 0.8
+      },
+      "camera": {
+        "wide": {
+          "zoom": 5.4,
+          "at": [
+            960,
+            545
+          ]
+        },
+        "tall": {
+          "zoom": 6.6,
+          "at": [
+            960,
+            560
+          ]
+        }
+      },
+      "steps": [
+        {
+          "wait": 0.25,
+          "say": "call",
+          "hold": 0.5
+        }
+      ],
+      "seconds": 4
+    },
+    "title": {
+      "imp": {
+        "wide": {
+          "at": [
+            1560,
+            620
+          ]
+        },
+        "tall": {
+          "at": [
+            960,
+            230
+          ],
+          "scale": 2.4,
+          "line": 1.8
+        }
+      },
+      "camera": {
+        "wide": {
+          "zoom": 1.0,
+          "at": [
+            960,
+            540
+          ]
+        },
+        "tall": {
+          "zoom": 1.0,
+          "at": [
+            960,
+            540
+          ]
+        }
+      },
+      "steps": [
+        {
+          "wait": 0.2,
+          "title": "Coming soon to itch.io"
+        },
+        {
+          "wait": 2.1,
+          "say": "waiting",
+          "keep": true,
+          "hold": 0.2
+        },
+        {
+          "wait": 0.1,
+          "say": "right",
+          "hold": 1.2
+        }
+      ],
+      "seconds": 11
+    }
+  },
+  "cut": [
+    {
+      "name": "open",
+      "shot": "open",
+      "from": 0.0,
+      "to": {
+        "at": "said:died",
+        "plus": 0.25
+      }
+    },
+    {
+      "name": "welcome",
+      "shot": "welcome",
+      "from": 0.0,
+      "to": {
+        "at": "said:welcome",
+        "plus": 0.9
+      }
+    },
+    {
+      "name": "lever",
+      "shot": "lever_pull",
+      "from": 0.6,
+      "to": {
+        "at": "said:pulled",
+        "plus": 0.2
+      }
+    },
+    {
+      "name": "rewind",
+      "shot": "lever_pull",
+      "from": {
+        "at": "mark:choosing",
+        "plus": -0.1
+      },
+      "to": {
+        "at": "said:pulled",
+        "plus": 0.2
+      },
+      "reverse": true,
+      "speed": 4
+    },
+    {
+      "name": "nothing",
+      "shot": "lever_nothing",
+      "from": {
+        "at": "mark:choosing",
+        "plus": -0.1
+      },
+      "to": {
+        "at": "said:left",
+        "plus": 0.35
+      }
+    },
+    {
+      "name": "crowd",
+      "shot": "lever_nothing",
+      "from": {
+        "at": "phase:revealing",
+        "plus": -0.05
+      },
+      "to": {
+        "at": "said:crowd",
+        "plus": 0.4
+      }
+    },
+    {
+      "name": "trolleys",
+      "shot": "m_trolleys",
+      "from": {
+        "at": "page:list",
+        "plus": -0.3
+      },
+      "to": {
+        "at": "page:list",
+        "plus": 0.92
+      }
+    },
+    {
+      "name": "buttons",
+      "shot": "m_buttons",
+      "from": {
+        "at": "page:list",
+        "plus": 0.92
+      },
+      "to": {
+        "at": "page:list",
+        "plus": 1.76
+      }
+    },
+    {
+      "name": "money",
+      "shot": "m_money",
+      "from": {
+        "at": "page:list",
+        "plus": 1.76
+      },
+      "to": {
+        "at": "page:list",
+        "plus": 2.2
+      }
+    },
+    {
+      "name": "guns",
+      "shot": "m_guns",
+      "from": {
+        "at": "page:list",
+        "plus": 2.2
+      },
+      "to": {
+        "at": "page:list",
+        "plus": 3.14
+      }
+    },
+    {
+      "name": "gorillas",
+      "shot": "m_gorillas",
+      "from": {
+        "at": "page:list",
+        "plus": 3.14
+      },
+      "to": {
+        "at": "said:list",
+        "plus": 0.3
+      }
+    },
+    {
+      "name": "knives",
+      "shot": "knives",
+      "from": {
+        "at": "page:knives",
+        "plus": -0.4
+      },
+      "to": {
+        "at": "said:knives",
+        "plus": 0.9
+      }
+    },
+    {
+      "name": "audience",
+      "shot": "audience",
+      "from": {
+        "at": "page:audience",
+        "plus": -2.4
+      },
+      "to": {
+        "at": "said:audience",
+        "plus": 0.6
+      }
+    },
+    {
+      "name": "booth",
+      "shot": "booth",
+      "from": {
+        "at": "page:ch7.recliner.ask.3",
+        "plus": -1.0
+      },
+      "to": {
+        "at": "page:ch7.recliner.ask.3",
+        "plus": 1.52
+      }
+    },
+    {
+      "name": "verdict",
+      "shot": "booth",
+      "from": {
+        "at": "mark:pick",
+        "plus": -0.3
+      },
+      "to": {
+        "at": "said:job",
+        "plus": 0.4
+      }
+    },
+    {
+      "name": "dragon",
+      "shot": "dragon",
+      "from": 0.0,
+      "to": {
+        "at": "said:dragon",
+        "plus": 0.4
+      }
+    },
+    {
+      "name": "call",
+      "shot": "call",
+      "from": 0.0,
+      "to": {
+        "at": "said:call",
+        "plus": 0.5
+      }
+    },
+    {
+      "name": "title",
+      "shot": "title",
+      "from": 0.0,
+      "to": {
+        "at": "said:right",
+        "plus": 1.0
+      }
+    }
+  ],
+  "sound": {
+    "voice_gain_db": 0.0,
+    "music": [
+      {
+        "file": "res://assets/audio/music/show.ogg",
+        "at": {
+          "piece": "welcome",
+          "plus": 0.05
+        },
+        "until": {
+          "piece": "call"
+        },
+        "from": 0.0,
+        "gain_db": -6.0,
+        "fade_out": 0.08
+      }
+    ],
+    "duck": {
+      "threshold": 0.02,
+      "ratio": 5,
+      "attack": 15,
+      "release": 350
+    },
+    "loudness": -14.0,
+    "sounds": [
+      {
+        "file": "res://assets/sfx/imp_scribble.wav",
+        "at": {
+          "piece": "title",
+          "plus": 0.2
+        },
+        "gain_db": -8.0
+      }
+    ]
+  },
+  "fade": {
+    "in": 0.0,
+    "out": 0.5
+  }
+}
