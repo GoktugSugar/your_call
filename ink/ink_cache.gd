@@ -4,7 +4,8 @@ extends RefCounted
 ## again can lay them down as they were instead of working them out afresh. A line comes back from here
 ## only while it is just as it was: the same path, width, colour, wash and share drawn on, painted with
 ## the same settings. A drawing standing still costs next to nothing at each boil; one moving pays only
-## for the lines that moved. Each drawing keeps its own.
+## for the lines that moved. Each drawing keeps its own. Only whole variants are kept, as only they come
+## round again.
 
 ## Line slots by boil variant: for each variant, a slot per line, [what the line was, its triangles].
 var _variants := {}

@@ -25,6 +25,9 @@ static func paint(node: CanvasItem, lines: Array[InkLine], line_width: float, se
 	var item := node.get_canvas_item()
 	var thinnest := style.min_screen_width / screen_scale(node)
 	var shares := _reveal_shares(lines, reveal)
+	# Only the whole variants come round again: a blend between two is worked out afresh each time.
+	if variant != floorf(variant):
+		cache = null
 	if cache != null:
 		cache.begin([line_width, seed, style, recolor, thinnest])
 	for i in lines.size():
