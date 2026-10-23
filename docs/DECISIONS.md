@@ -308,3 +308,12 @@ The user picked three of the chapter ideas to build (The Show, Everyone Else, Th
 ## 2026-10-23: where the game is released
 
 - **itch.io, as a Windows download and to play in the browser. No Steam release.** User. CLAUDE.md and PREMISE say so now. The browser build has needs of its own (the Compatibility renderer, since Forward+ does not run in the browser; saves kept in the browser's storage inside itch.io's frame; no sound before the first click; the download size with every voice clip), which the performance work takes on.
+
+## 2026-10-23: the imp floats and warps
+
+The user asked for the imp to stop hopping and to teleport and float instead, sly and slippery rather than a frog, the menu imp too. Built on `feat/imp-warp`, in a worktree of its own (`.claude/worktrees/polish`), on top of Chapter 10.
+
+- **He floats all the time and never hops.** User, of the options put: always afloat, a hand's width off the ground with a slow bob and his feet hanging loose, on the menu too; no hop left anywhere, not even a settle on arriving. This replaces PREMISE section 12's "hops springily to a new spot once per dialogue box".
+- **The warp is a soak out and an ink on.** User, of four looks offered: he soaks into the paper in blotches where he is, the dissolve every drawing leaves by, while his lines draw themselves back on at the new spot and pop shut. Dev: a still copy of him (`InkDrawing.ghost()`, wobbling as he did) does the soaking, so the two overlap and he is never quite gone.
+- **Warp far, drift near.** User: the small move to a fresh spot for each page is a drift, an eased glide that leans into the way he goes; going to the middle, roaming, going home before a stage, the job posting in The Portrait and every move on the menu are warps.
+- **His movement is a component of its own.** Dev: `ImpMotion`, a child of the imp, floats him, drifts him and warps him, and `Imp` keeps deciding where to and when. The hop's code and exports are gone. A move stopped short (he is shot, or a new move starts) finishes a warp at once and lets whoever waited on it go, so nothing awaiting him can hang. Starting numbers, to tune in play: he floats 24 pixels up and bobs 4 either way every 2.6 seconds, his legs swaying 3 degrees; he drifts at 260 pixels a second, taking 0.5 to 1.2 seconds, leaning 7 degrees with his legs trailing 12; a warp soaks out over 0.3 seconds and inks on over 0.32, starting halfway through the soak, and pops to 1.06 times his size.

@@ -409,7 +409,9 @@ There is one linear run, the same for everyone. All the content is in `SCRIPT.md
   - No strike lines, no impact puff, no blood.
 - **The imp.**
   - A small ink devil with an idle life: a bob, a lean, a breath, and a nod while he speaks.
-  - He scribbles in with a pop and hops springily to a new spot once per dialogue box. He always stays in the side wings, never on content and never in the empty centre stage.
+  - He scribbles in with a pop, and never stands on the page: he floats a little off it, bobbing, his feet hanging loose. Sly and slippery, never a frog (2026-10-23; he used to hop).
+  - For each dialogue box he drifts to a fresh spot nearby. A longer trip is a warp: he soaks into the paper where he is while his lines draw themselves back on where he goes, so he is never quite gone. Nothing about him hops.
+  - While a stage is up he stays in the side wings, never on content. When the page is his, with no stage up, he roams it now and then, warping to the empty middle or about the open floor (2026-10-22), and warps home before the next stage.
   - The last build tinted him amber (keep it, or go back to black ink: open). A small optional set of expressions (grin, smug, glare, surprised) was used sparingly.
 - **Every question gets an animated ink consequence,** scaled by weight.
 - **Breathers and matchups use a quicker two-doodle presentation** on purpose: two small labelled doodles side by side, with "or" (or "vs") between them, and a brief amber flourish on the pick.
@@ -486,7 +488,7 @@ There is one linear run, the same for everyone. All the content is in `SCRIPT.md
   - **Settings:** music, sound effects and voice volume, fullscreen, and auto skip (2026-10-23; the earlier build had music, SFX, fullscreen and language).
   - **Pause (Esc):** Resume, Save, Settings and Quit to Menu (2026-10-23: Settings added).
 - **The menu imp.**
-  - Every so often he says one short bark as floating ink text over his head, then hops to a fresh spot.
+  - Every so often he says one short bark as floating ink text over his head, then warps to a fresh spot.
   - Barks come at random from a small pool, never repeat back to back, and never block input.
 - **Credits:** a clean paper page scrolling upward, with each role in amber over its name in ink.
 
