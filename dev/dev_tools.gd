@@ -26,7 +26,11 @@ extends Node
 ## --menu-pick=CH:BEAT  with --menu, then pick that entry from it, such as ch2:timer (ch2: is its top)
 ## --chapter=ID     start the run at the chapter with this id, such as ch2, instead of the first
 ## --beat=ID        start at the beat with this id, in that chapter or the first chapter that has it
+## --profile        print how long each frame's work and the ink take, every few seconds (the menu too)
 ## [/codeblock]
+
+## Prints how long the frames and the ink take, with --profile.
+const INK_PROFILER := preload("res://dev/ink_profiler.gd")
 
 ## Seconds autoplay waits before each click.
 @export_range(0.0, 5.0, 0.05) var autoplay_delay := 0.6
@@ -64,6 +68,8 @@ func _ready() -> void:
 	overlay.visible = false
 	var args := DevArgs.parse()
 	DevArgs.apply_window(get_window(), args)
+	if args.has("profile"):
+		add_child(INK_PROFILER.new())
 	if main_menu != null:
 		_ready_on_menu(args)
 		return

@@ -2,9 +2,9 @@ class_name DevArgs
 extends RefCounted
 ## Development only: reads [code]--key=value[/code] switches given after [code]--[/code] on the command line.
 
-## The switches that leave the main menu up: the window's, and the capture runner's own. Any other drives
-## the run, so the menu steps straight into it.
-const MENU_SWITCHES: PackedStringArray = ["window", "scene", "out", "times"]
+## The switches that leave the main menu up: the window's, the profiler's, and the capture runner's own.
+## Any other drives the run, so the menu steps straight into it.
+const MENU_SWITCHES: PackedStringArray = ["window", "profile", "scene", "out", "times"]
 
 
 ## Applies [code]--window=WxH[/code] if given: a plain window of exactly that size, for checking how
