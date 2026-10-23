@@ -94,7 +94,7 @@ Built on 2026-10-23. The creative calls were the user's; these look and feel cal
 
 Built on 2026-10-23 from the outline the user picked. The copy waits for the user's sign off before it is voiced; the rest is provisional and logged in `DECISIONS.md`.
 
-- The copy, as outlined, unvoiced.
+- The copy, as outlined, voiced at the user's word.
 - The show's name, Your Call.
 - The trapdoor and the collapse: two deaths on stage in a lighter chapter, neither counted in the kill tally.
 - The studio's look: the valance, the audience from behind at the foot of the page, the trapdoor's drop.

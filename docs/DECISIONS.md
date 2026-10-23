@@ -277,6 +277,8 @@ The user picked three of the chapter ideas to build (The Show, Everyone Else, Th
 - **The trapdoor drop.** Dev, to tune: the trapdoor swings open into a dark hole, the contestant drops through and fades, and paper under the floor hides the fall.
 - **Five props.** Dev: drawn by a helper in a worktree of its own (`helper/show-props`): the APPLAUSE sign (lit amber), the prize wheel (gold doubles, plain nothings, a fixed amber pointer), the gift box (a red ribbon; it opens), the podium (box paper, a muted band) and the card (split or steal, it flips). The wheel's winnings are written on the podium's band.
 - **Contestants stand larger.** Dev: 1.75 times their size on the tracks, as the studio is nearer.
+- **More colour.** User: "for the game show, we can use more color". Dev, to tune: the curtain is a purple wash with a gold braid and tassels (not red, which means death), the audience is dressed in sky, green, orange and purple, footlights twinkle along the front of the stage, the wheel's nothing wedges are coloured with the doubles still gold, each podium's band has a colour of its own, and confetti bursts on the happy outcomes. Every colour is an export on the studio. The podiums are drawn low and wide with the contestants larger behind them, as the first ones hid them.
+- **Voiced.** User asked for all three new chapters to be voiced once built. Dev: 55 takes, 5,217 characters, the imp's lines in the wiseguy barker's voice and the walking button's in its own, with `eleven_v3`.
 
 ## 2026-10-23: building Chapter 9, Everyone Else
 
