@@ -2,7 +2,8 @@ extends Node
 ## The sound effects (autoload [code]Sfx[/code]): plays a [SoundCue] on the SFX bus from a small pool of
 ## players, one of its takes at a time with its pitch wandering a little, so nothing heard often repeats
 ## exactly or piles up. Everything it plays dips while someone talks, the way the music does, so the
-## voices stay on top. A sound held on, such as a loop, plays until it is let go.
+## voices stay on top. A sound held on, such as a loop, plays until it is let go by the number it was
+## played under.
 
 ## The bus every sound plays on, which the player's sound effects volume sets.
 @export var bus := &"SFX"
@@ -18,6 +19,10 @@ extends Node
 var _players: Array[AudioStreamPlayer] = []
 ## When each player started, by player, so the oldest gives way when every one is busy.
 var _started := {}
+## The number of the sound each busy player is playing, by player, as [method play] handed it out.
+var _plays := {}
+## The number the next sound played is handed.
+var _next_play := 1
 ## Each playing player's own level before the dip, by player.
 var _levels := {}
 ## The fade of each player being let go, by player.
@@ -39,20 +44,22 @@ func _ready() -> void:
 	for i in pool_size:
 		var player := AudioStreamPlayer.new()
 		player.bus = bus
-		player.finished.connect(func() -> void: _levels.erase(player))
+		player.finished.connect(func() -> void:
+			_levels.erase(player)
+			_plays.erase(player))
 		add_child(player)
 		_players.append(player)
 
 
 ## Plays [param cue] once, [param volume_offset] decibels louder or quieter than it sets, and returns the
-## player it plays on, for a sound to be let go later; null when the cue has nothing to play or is
+## number it plays under, for the sound to be let go later; 0 when the cue has nothing to play or is
 ## cooling down.
-func play(cue: SoundCue, volume_offset := 0.0) -> AudioStreamPlayer:
+func play(cue: SoundCue, volume_offset := 0.0) -> int:
 	if cue == null or cue.takes.is_empty():
-		return null
+		return 0
 	var now := Time.get_ticks_msec()
 	if cue.cool_down > 0.0 and now - int(_played_at.get(cue, -1000000)) < cue.cool_down * 1000.0:
-		return null
+		return 0
 	_played_at[cue] = now
 	var player := _free_player()
 	var fade: Tween = _fades.get(player)
@@ -66,14 +73,17 @@ func play(cue: SoundCue, volume_offset := 0.0) -> AudioStreamPlayer:
 	_levels[player] = cue.volume_db + volume_offset
 	player.volume_db = _levels[player] - _dip
 	_started[player] = now
+	_plays[player] = _next_play
+	_next_play += 1
 	player.play()
-	return player
+	return _plays[player]
 
 
-## Lets go of a sound [method play] started, [param after] seconds from now, fading it out over
-## [param seconds] ([member release_fade] when below zero). Does nothing to a player that has gone on to
-## another sound since.
-func release(player: AudioStreamPlayer, seconds := -1.0, after := 0.0) -> void:
+## Lets go of the sound [method play] handed the number [param sound], [param after] seconds from now,
+## fading it out over [param seconds] ([member release_fade] when below zero). Does nothing once that
+## sound has ended, or its player has gone on to another.
+func release(sound: int, seconds := -1.0, after := 0.0) -> void:
+	var player: AudioStreamPlayer = _plays.find_key(sound) if sound != 0 else null
 	if player == null or not player.playing or not _levels.has(player):
 		return
 	var fade := create_tween()
