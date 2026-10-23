@@ -1,0 +1,21 @@
+{
+  "id": "trailer",
+  "title": "The trailers",
+  "beats": [
+    {"kind": "narration", "id": "wondering", "lines": [{"text": "You are probably wondering how you ended up here.", "face": "smug", "direction": "[slyly]"}]},
+    {"kind": "narration", "id": "died", "lines": [{"text": "You died. Anyway!", "direction": "[cheerfully]"}]},
+    {"kind": "narration", "id": "welcome", "lines": [{"text": "Welcome to Your Call! Tonight's contestant: a judge. Recently deceased. Slightly over the limit.", "direction": "[excited]"}]},
+    {"kind": "narration", "id": "rules", "lines": [{"text": "I ask the questions. None of them has a right answer.", "face": "smug", "direction": "[smugly]"}]},
+    {"kind": "narration", "id": "pulled", "lines": [{"text": "[red]Murderer[/red].", "face": "smug", "direction": "[deadpan]"}]},
+    {"kind": "narration", "id": "left", "lines": [{"text": "Also [red]murderer[/red].", "face": "smug", "direction": "[deadpan]"}]},
+    {"kind": "narration", "id": "crowd", "lines": [{"text": "Then you see what everyone else did. [red]Murderers[/red], the lot of them.", "direction": "[dryly]"}]},
+    {"kind": "narration", "id": "list", "lines": [{"text": "We have trolleys! Buttons! Money! Guns! Gorillas!", "direction": "[excited]"}]},
+    {"kind": "narration", "id": "knives", "lines": [{"text": "Gorillas with fucking knives!", "face": "surprised", "direction": "[excited]"}]},
+    {"kind": "narration", "id": "audience", "lines": [{"text": "A live studio audience!", "direction": "[excited]"}]},
+    {"kind": "narration", "id": "job", "lines": [{"text": "Your old job back!", "face": "smug", "direction": "[cheerfully]"}]},
+    {"kind": "narration", "id": "dragon", "lines": [{"text": "And a dragon, for some reason!", "direction": "[excited]"}]},
+    {"kind": "narration", "id": "call", "lines": [{"text": "Your call.", "face": "smug", "direction": "[smugly]"}]},
+    {"kind": "narration", "id": "waiting", "lines": [{"text": "Coming soon. Try not to die waiting.", "face": "smug", "direction": "[smugly]"}]},
+    {"kind": "narration", "id": "right", "lines": [{"text": "Oh. Right.", "face": "surprised", "direction": "[dryly]"}]}
+  ]
+}

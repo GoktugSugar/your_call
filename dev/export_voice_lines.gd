@@ -1,6 +1,6 @@
 extends SceneTree
-## Development only: writes every line of content to JSON for the voice tools, the chapters' and the
-## main menu's, with its id, its speaker, the voice that says it, its plain text (colour tags stripped,
+## Development only: writes every line of content to JSON for the voice tools, the chapters', the
+## main menu's and the trailers', with its id, its speaker, the voice that says it, its plain text (colour tags stripped,
 ## as it is spoken) and that text's SHA-1. The game checks the same hash before it plays a clip, so a clip never plays over text
 ## it was not made from.
 ## A line with placeholders is written once for every way its stage fills it, each under its own id,
@@ -12,6 +12,8 @@ extends SceneTree
 
 const CHAPTERS_DIR := "res://content/chapters"
 const MENU_PATH := "res://content/menu.json"
+## Files of lines outside the run, in the chapter form: the trailers' (dev/trailer/).
+const OTHER_LINES: PackedStringArray = ["res://dev/trailer/trailer_lines.json"]
 
 
 func _initialize() -> void:
@@ -44,6 +46,12 @@ func _initialize() -> void:
 	for line in menu.all_lines() if menu != null else []:
 		if line.voiced:
 			lines.append(_entry(line))
+	for path in OTHER_LINES:
+		var other := loader.load_chapter(path)
+		for beat in other.beats if other != null else []:
+			for line in beat.all_lines():
+				if line.voiced:
+					lines.append(_entry(line))
 	for problem in loader.problems:
 		printerr(problem)
 	for line_id in unfilled:
