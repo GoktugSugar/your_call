@@ -15,7 +15,7 @@ extends Stage
 ## Where the stage floor runs across the page: the ground every contestant stands on.
 @export_range(0.0, 1080.0, 1.0) var floor_y := 700.0
 ## How much bigger than on the tracks the contestants stand, the studio being nearer.
-@export_range(0.5, 3.0, 0.01) var figure_scale := 1.45
+@export_range(0.5, 3.0, 0.01) var figure_scale := 1.75
 ## Size of the words on the studio's boards, such as a prize.
 @export_range(8, 200) var board_size := 50
 ## Palette role of the words on the boards.

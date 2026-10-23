@@ -14,8 +14,8 @@ extends StudioStage
 ## Where its trophy stands, and how big.
 @export var trophy_x := 1130.0
 @export_range(0.2, 3.0, 0.01) var trophy_scale := 0.8
-## How far over the floor its board sits.
-@export_range(0.0, 600.0, 1.0) var board_height := 360.0
+## How far over the floor its board sits, over the trophy, clear of the words over the button.
+@export_range(0.0, 600.0, 1.0) var board_height := 210.0
 ## Seconds after its line before the round goes on.
 @export_range(0.0, 3.0, 0.05) var button_beat := 0.25
 ## Seconds the stage holds once the room has spoken.
@@ -39,7 +39,7 @@ func setup(for_question: QuestionData) -> void:
 	_walker.alive = true
 	_walker.hold_arms(HIPS)
 	add_prop("trophy", trophy_x, trophy_scale)
-	add_board("board", Vector2(walker_x, floor_y - board_height))
+	add_board("board", Vector2(trophy_x, floor_y - board_height))
 
 
 func speaks(line: LineData) -> bool:
