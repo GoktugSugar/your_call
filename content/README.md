@@ -209,6 +209,39 @@ The confession booth, for Chapter 7. A confessor files into the booth, the words
 - `{ "button": true }` is the walking button, which slides in as a plain button and comes alive in the booth. A line of the ask with `"speaker": "button"` floats over it in its own voice while the box is away, and it says the question's `leave` lines as it files out.
 - An option's outcome is `{ "verdict": "guilty" }`, `cleared` or `everyone`, or one per confessor by voice: `{ "verdict": { "her": "cleared", "him": "guilty" } }`.
 
+## Looking back at an earlier chapter
+
+A line's `if` and `unless` can name a fact any earlier chapter in the run remembers; the tests walk each chapter from every mix of the facts earlier chapters can leave. A stage can also pick one of the question's keyed asks by what the run remembers, the first that holds: `"asks": [ { "if": "pulled_lever", "ask": "pulled" }, { "ask": "left" } ]`, with `"ask": { "pulled": [...], "left": [...] }`. The picks earlier chapters remember for Everyone Else: `pulled_lever` (1.02), `pressed_blue` or `pressed_red` (2.01), `shot_man` or `shot_bear` (4.01).
+
+## Everyone Else's stages
+
+### The guess stage
+
+```json
+"stage": { "type": "guess", "truth": 87, "of": "ch1.lever.pull", "about": "strangers", "close": 10,
+  "show": [ { "doodle": "wallet" }, { "kind": "bear" }, { "button": "blue" }, { "lever": true } ],
+  "gap": { "text": "off by {gap}" }, "exact": { "text": "spot on" } }
+```
+
+A tableau: the player marks where they think the room was on an empty bar, then the true bar inks in to `truth`. `show` lays out what the guess is about over the bar. `of` names the option whose share `truth` repeats, as chapter, question and option ids, and the tests check the two match. `about` files the guess for the tally. Outcomes `close` (within `close` of the truth, 10 when the stage does not say), `low` and `high`, which name the question's sets of lines. Placeholders, in its words only: `{gap}`.
+
+### The tally stage
+
+```json
+"stage": { "type": "tally", "about": "strangers", "close": 8 }
+```
+
+A tableau recapping the guesses filed under `about`, each a small true bar with the guess marked across it. Outcomes `close`, `low` or `high` by the average gap.
+
+### The odds stage
+
+```json
+"stage": { "type": "odds", "most_rows": 6, "title": { "text": "the odds of you" }, "line": { "text": "{number}  {pick}" },
+  "more": { "text": "and {more} more" }, "total": { "text": "one in {odds}" } }
+```
+
+A tableau: a slip prints the rarest `most_rows` picks of the run with their shares, how many more there were, and the share of the room that made every pick, as one in so many. Outcome `odds`. Placeholders, in its words only: `{number}`, `{pick}`, `{more}`, `{odds}`.
+
 ## The Show's stages
 
 Chapter 6 is a game show, every round staged in the same studio: the curtain valance, the floor and the audience along the foot of the page. In every round the room votes: its share for the first option is that option's `crowd`, with `random` percent of the room voting at random instead (drawn again every play), and the room picks the first option when its share passes `line` (50 when the stage does not say). The reveal shows the room's vote as it fell, with `reveal.mark` naming the line. A `board` is words on the studio, such as a prize, with `{prize}` or `{pot}` filled in as money.

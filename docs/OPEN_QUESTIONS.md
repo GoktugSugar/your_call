@@ -101,6 +101,15 @@ Built on 2026-10-23 from the outline the user picked. The copy waits for the use
 - The props' colours: the wheel's amber pointer and grey stand, the podium's grey band, the card's grey back, the white gift box with a red ribbon.
 - Every crowd seed and the room's random share in each round.
 
+## To review: Chapter 9
+
+Built on 2026-10-23 from the outline the user picked. The copy waits for the user's sign off before it is voiced; the rest is provisional and logged in `DECISIONS.md`.
+
+- The copy, as outlined, unvoiced, with 9.10's odds printed on the slip instead of said.
+- The guess's feel: where the mark starts (half), a step of 1 on the keys, close meaning within 10.
+- The closer's read: the guesses about strangers only (the two wallets and the change), close within 8 on average.
+- The wallet study's numbers, to check; 9.06 and 9.09's seeds are placeholders (9.09's eleven is the imp's joke).
+
 ## Carried over from the earlier build
 
 These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus the points sections 9 and 14 leave to the user.
