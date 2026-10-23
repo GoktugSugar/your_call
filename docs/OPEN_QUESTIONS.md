@@ -85,7 +85,6 @@ Built on 2026-10-23. The creative calls were the user's; these look and feel cal
 
 ## Parked: the frame
 
-- An endings gallery. The record of endings reached is kept (`user://endings.json`); nothing shows it yet.
 - Whether Chapter 8's closer should roll the credits until the real endings exist. For now the game goes back to the menu.
 - A text speed, a master volume and a language setting, left off the settings for now (2026-10-23).
 

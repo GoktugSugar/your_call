@@ -349,7 +349,7 @@ Tags only belong in narration.
   - **In the remake, provisionally (2026-10-23):** The Portrait closes the run. The imp reads his notebook, shows the portrait as a scale per axis with no numbers, asks 1.02's lever again, and posts the player somewhere in the void: the posting for the pole of the axis they leaned on hardest (a lever, a plea, the booth's curtain, the gavel, the trolley, the rails, his clerk, a button, the die, the crowd, the map's pin, the paper), or his own job when they lean nowhere far. Thirteen endings, each mocked, none a verdict.
   - The earlier build only had a reusable ending shape: an optional line, an effect, then a credits roll. Only the five secret endings used it.
   - Still open: how many endings there are, what each says, and how the profile maps to one (per-axis thresholds, a dominant-axis read, or a combination).
-- **The secret endings are part of that set.** The five breaks (section 8) end the run early, each with its own line and the credits. Reaching any ending ends the run.
+- **The secret endings are part of that set.** The five breaks (section 8) end the run early, each with its own line and the credits. Reaching any ending ends the run, and the player can pick it up again just before the ending to go after the others (section 15).
 
 ---
 
@@ -484,7 +484,8 @@ There is one linear run, the same for everyone. All the content is in `SCRIPT.md
 - **Readouts appear only where a chapter needs a running number,** such as the money chapter's amber balance and price tags.
 - **Composed, centred tableaux.** Each question is laid out balanced above the dialogue box, on a consistent baseline.
 - **The sanctioned menu exception.** The main menu, settings and pause are the one place a real menu belongs, kept hand-drawn and spare.
-  - **Main menu:** a hand-lettered title, then New Game, Continue, Settings and Quit, with the current option in amber (2026-10-23: Quit added).
+  - **Main menu:** a hand-lettered title, then New Game, Continue, Endings, Settings and Quit, with the current option in amber (2026-10-23: Quit added, then Endings).
+  - **Endings:** every ending of the game, the five secret ones beside the thirteen postings, the ones found by name and the rest a faded hand-drawn blank, then how many are found ("4 of 18") and Back. The imp keeps quiet while it is open (2026-10-23).
   - **Settings:** music, sound effects and voice volume, fullscreen, and auto skip (2026-10-23; the earlier build had music, SFX, fullscreen and language).
   - **Pause (Esc):** Resume, Save, Settings and Quit to Menu (2026-10-23: Settings added).
 - **The menu imp.**
@@ -557,7 +558,8 @@ There is one linear run, the same for everyone. All the content is in `SCRIPT.md
   - A manual save also lives in the pause menu.
 - **Continue** resumes at the exact beat with the run state restored. It is greyed out when there is no valid save, and a missing or corrupt save simply counts as no save.
 - **New Game** asks for confirmation first if a run exists, then clears the save and the profile.
-- **Reaching any ending clears the run save,** because the run is over. The earlier build kept a rough record of which endings were seen, with a possible endings gallery in mind.
+- **Reaching an ending keeps the save just before it** (2026-10-23; it used to clear the save, the run being over). Continue picks the run up at the start of the last choice before the ending, with everything the run remembered then: the question that fired a secret ending, or the lever again (10.03) before a posting. So the player can go back and find the others without playing the whole game again. New Game still asks before throwing it away.
+- **A record of the endings reached** is kept across runs, once each, and the Endings page on the menu shows it. The earlier build kept a rough one with a possible endings gallery in mind.
 - **Settings.**
   - **The remake has (2026-10-23):** music, sound effect and voice volume, fullscreen, and auto skip, kept between sessions.
   - **The earlier build had:** music volume, SFX volume, fullscreen and language.

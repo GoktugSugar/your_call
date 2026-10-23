@@ -438,6 +438,11 @@ Stage data can hold words the player reads on the stage. They follow the text ru
   "lines": {
     "barks": [ { "text": "Still here, are we?", "face": "smug" } ],
     "new_game": [ { "text": "Starting over? The run you have goes in the bin.", "face": "smug" } ]
+  },
+  "endings": {
+    "heading": "Endings",
+    "count": "{found} of {total}",
+    "groups": [ [ { "id": "baby", "name": "The Baby" } ], [ { "id": "posted_lever", "name": "The Lever" } ] ]
   }
 }
 ```
@@ -446,6 +451,7 @@ Stage data can hold words the player reads on the stage. They follow the text ru
 - `lines` holds named sets of the imp's lines, each a list of lines as anywhere else, with ids like `menu.barks.1`. `barks` are said now and then, one at a time and never the same twice running; `new_game` is the question New Game puts when there is a run to lose.
 - A line can hang on what the menu knows, with `if` and `unless` as in a chapter: `run_saved` is there to continue. "Continue is greyed out" is said `unless` it.
 - They are voiced like any line, by `tools/voice/voice_lines.py`.
+- `endings` is the Endings page's words: its `heading`, its `count` (filling `{found}` and `{total}`), and every ending of the game by its id in the chapters, with the `name` the page shows once it is found, in `groups` shown side by side. The tests check every ending a chapter can fire is named here once, and nothing else.
 
 ## The text rules
 
