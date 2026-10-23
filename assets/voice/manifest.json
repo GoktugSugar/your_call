@@ -5938,5 +5938,115 @@
     "text_sha1": "09827442d5b75302d5ef7e9bffeee56f06c94f51",
     "timing": "res://assets/voice/imp/ch8.village.wizard.1.json",
     "voice": "c95aad52ae0b"
+  },
+  "menu.barks.1": {
+    "audio": "res://assets/voice/imp/menu.barks.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 1.68,
+    "speaker": "imp",
+    "text_sha1": "d353fa91f5f2c858605cfc8998d2cd805f0b607f",
+    "timing": "res://assets/voice/imp/menu.barks.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "menu.barks.10": {
+    "audio": "res://assets/voice/imp/menu.barks.10.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.52,
+    "speaker": "imp",
+    "text_sha1": "343413b574486f198bce46ac95fcbe020f851696",
+    "timing": "res://assets/voice/imp/menu.barks.10.json",
+    "voice": "c95aad52ae0b"
+  },
+  "menu.barks.2": {
+    "audio": "res://assets/voice/imp/menu.barks.2.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.68,
+    "speaker": "imp",
+    "text_sha1": "260847d9cf73cdd6722c04c508a2b6ab65137887",
+    "timing": "res://assets/voice/imp/menu.barks.2.json",
+    "voice": "c95aad52ae0b"
+  },
+  "menu.barks.3": {
+    "audio": "res://assets/voice/imp/menu.barks.3.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 2.8,
+    "speaker": "imp",
+    "text_sha1": "33bbcf30d0b5d02cdf5225e9fdf73946c9a2a258",
+    "timing": "res://assets/voice/imp/menu.barks.3.json",
+    "voice": "c95aad52ae0b"
+  },
+  "menu.barks.4": {
+    "audio": "res://assets/voice/imp/menu.barks.4.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.76,
+    "speaker": "imp",
+    "text_sha1": "4860f50736ceb8694cc740bc2324cd71dbc55305",
+    "timing": "res://assets/voice/imp/menu.barks.4.json",
+    "voice": "c95aad52ae0b"
+  },
+  "menu.barks.5": {
+    "audio": "res://assets/voice/imp/menu.barks.5.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.68,
+    "speaker": "imp",
+    "text_sha1": "b4569272ba83af4a6dffec246aebf9bcc9bcb80f",
+    "timing": "res://assets/voice/imp/menu.barks.5.json",
+    "voice": "c95aad52ae0b"
+  },
+  "menu.barks.6": {
+    "audio": "res://assets/voice/imp/menu.barks.6.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.2,
+    "speaker": "imp",
+    "text_sha1": "70b9d39b14c0a3c7315d6abd3839789b8e3a5541",
+    "timing": "res://assets/voice/imp/menu.barks.6.json",
+    "voice": "c95aad52ae0b"
+  },
+  "menu.barks.7": {
+    "audio": "res://assets/voice/imp/menu.barks.7.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.52,
+    "speaker": "imp",
+    "text_sha1": "fdc8bebb626cc45eddf4b61020653e58817e66fe",
+    "timing": "res://assets/voice/imp/menu.barks.7.json",
+    "voice": "c95aad52ae0b"
+  },
+  "menu.barks.8": {
+    "audio": "res://assets/voice/imp/menu.barks.8.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 2.88,
+    "speaker": "imp",
+    "text_sha1": "9c4dd0d7124fb08132055104c85ba417ceafa182",
+    "timing": "res://assets/voice/imp/menu.barks.8.json",
+    "voice": "c95aad52ae0b"
+  },
+  "menu.barks.9": {
+    "audio": "res://assets/voice/imp/menu.barks.9.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.28,
+    "speaker": "imp",
+    "text_sha1": "56fb7d851007e6d63ced4f9eaeb734773a8daef8",
+    "timing": "res://assets/voice/imp/menu.barks.9.json",
+    "voice": "c95aad52ae0b"
+  },
+  "menu.new_game.1": {
+    "audio": "res://assets/voice/imp/menu.new_game.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.36,
+    "speaker": "imp",
+    "text_sha1": "d6298d760ff935886223270525522829203ad940",
+    "timing": "res://assets/voice/imp/menu.new_game.1.json",
+    "voice": "c95aad52ae0b"
   }
 }
