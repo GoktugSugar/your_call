@@ -70,6 +70,8 @@ func _open_box() -> void:
 	tween.tween_property(cucumber, ^"position:y", floor_y - rise, rise_time).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tween.tween_property(cucumber, ^"reveal", 1.0, rise_time * 0.6).from(0.0)
 	await tween.finished
+	# Risen clear of the box, it comes in front of the open lid.
+	cucumber.z_index = _box.z_index + 1
 
 
 ## The finalist's kind: the stage data's, or another when the run remembers a fact that names one.
