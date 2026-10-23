@@ -12,6 +12,16 @@ var starts := PackedFloat32Array()
 var ends := PackedFloat32Array()
 
 
+## Seconds to add to a player's playback position to know what is being heard right now: the position
+## only moves on when the mixer runs, so the time since then is added, and what is heard trails the
+## mixer by the output's latency. While a movie is recorded the mixer runs once a frame, in step with
+## the picture, so there is nothing to make up.
+static func mixer_lag() -> float:
+	if not Engine.get_write_movie_path().is_empty():
+		return 0.0
+	return AudioServer.get_time_since_last_mix() - AudioServer.get_output_latency()
+
+
 ## The stretch of the take that speaks characters [param from] up to (not including) [param to], as
 ## start and end seconds. Without timings, the take is shared out in proportion to the characters.
 func span(from: int, to: int) -> Vector2:

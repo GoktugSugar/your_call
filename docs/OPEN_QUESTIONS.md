@@ -53,6 +53,20 @@ Creative calls made overnight on 2026-10-22, while the user slept. Each is provi
 - 5.10's lead in still says "whoever you put a bullet in" on a run that shot nothing in Chapter 4. Alternative: a version for a run with no shots.
 - Both "You" and the button in green in 5.06's reveal. Alternative: another colour for one of them.
 
+## To review: the first trailer
+
+Made on 2026-10-22 without the user, who asked for no questions. Each call is provisional, logged in `DECISIONS.md` and described in `docs/TRAILER.md`; confirm or change it, then re-render (`python tools/trailer/render_trailer.py`).
+
+- The twelve lines. Alternatives: rewrite any of them; let the imp swear once; say more of the premise ("a little game", "no right answer") in words rather than through the lever line.
+- The shots: the lever, the nuke on Monaco, the burritos, the five colours under the gun, a hundred men or one gorilla. Alternatives: another country for the pin, another shop item or gun question, a would you rather, or more crowd reveals.
+- The walking button is held back, as the user wanted to be asked before showing it come alive. Alternative: show it, in 2.11 or charging in 4.05.
+- The portrait is held back: the imp only says he is reading you.
+- The title card: "Your Call" (the working title) with "Coming to itch.io" and no date. The final title, a date, or other words for the call to action are one line each in the cut.
+- The music: Eleven Music, a dark carnival waltz and a title sting. Alternatives: other takes (in `music_auditions/`), a new prompt or plan, a licensed track, or no music.
+- The waltz take 1, sting take 3, crash take 2 and pen scribble take 2 were picked by measurement, not by ear. Pick again with `python tools/music/music_takes.py <piece> --save <take>` or `python tools/sfx/sound_takes.py <sound> --save <take>`.
+- How long it runs: 63 seconds. Alternatives: trim the cold open or the montage to land under a minute.
+- A custom thumbnail for the upload (a frame of the video, 1920x1080, without text), if the video site's own pick is not wanted.
+
 ## Carried over from the earlier build
 
 These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus the points sections 9 and 14 leave to the user.

@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://trailer/title_card.gd" id="1_card"]
+[ext_resource type="Script" path="res://ui/ink_underline.gd" id="2_underline"]
+
+[node name="TitleCard" type="CanvasLayer" node_paths=PackedStringArray("title_label", "underline", "line_label")]
+layer = 5
+script = ExtResource("1_card")
+title_label = NodePath("Title")
+underline = NodePath("Underline")
+line_label = NodePath("Line")
+
+[node name="Title" type="RichTextLabel" parent="."]
+offset_right = 1920.0
+offset_bottom = 260.0
+mouse_filter = 2
+clip_contents = false
+bbcode_enabled = true
+scroll_active = false
+shortcut_keys_enabled = false
+autowrap_mode = 0
+horizontal_alignment = 1
+
+[node name="Underline" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 600.0
+offset_bottom = 24.0
+mouse_filter = 2
+script = ExtResource("2_underline")
+width_scale = 1.8
+
+[node name="Line" type="RichTextLabel" parent="."]
+offset_right = 1920.0
+offset_bottom = 80.0
+mouse_filter = 2
+clip_contents = false
+bbcode_enabled = true
+scroll_active = false
+shortcut_keys_enabled = false
+autowrap_mode = 0
+horizontal_alignment = 1

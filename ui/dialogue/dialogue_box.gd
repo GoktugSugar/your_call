@@ -121,8 +121,7 @@ func _process(delta: float) -> void:
 	var voice := _voice()
 	if _voiced and voice.playing:
 		# The playback position is in the take's own time; the mixer's lag is in real time.
-		var lag := AudioServer.get_time_since_last_mix() - AudioServer.get_output_latency()
-		_elapsed = voice.get_playback_position() + lag * voice.pitch_scale - _voice_start
+		_elapsed = voice.get_playback_position() + VoiceClip.mixer_lag() * voice.pitch_scale - _voice_start
 		if _voice_start + _elapsed >= _voice_end:
 			voice.stop()
 	else:

@@ -1,0 +1,18 @@
+{
+  "id": "trailer",
+  "title": "The first trailer",
+  "beats": [
+    {"kind": "narration", "id": "wonder", "lines": ["You probably wonder why you ended up here."]},
+    {"kind": "narration", "id": "wine", "lines": [{"text": "Mostly the wine.", "face": "smug", "direction": "[dryly]"}]},
+    {"kind": "narration", "id": "questions", "lines": ["You are [red]dead[/red], Your Honour. And I have questions."]},
+    {"kind": "narration", "id": "lever", "lines": ["Pull it, and you are a [red]killer[/red] with a calculator. Leave it, and you are a [red]killer[/red] with an alibi."]},
+    {"kind": "narration", "id": "crowd", "lines": ["Then I show you how everyone else chose."]},
+    {"kind": "narration", "id": "nuke", "lines": ["Cure [red]cancer[/red], lose [amber]one country[/amber]. Chosen at random."]},
+    {"kind": "narration", "id": "burritos", "lines": ["Eternal [amber]burritos[/amber]. You do not even have a stomach."]},
+    {"kind": "narration", "id": "gun", "lines": ["Eventually, I give you a gun."]},
+    {"kind": "narration", "id": "matter", "lines": ["And the questions that really matter."]},
+    {"kind": "narration", "id": "reading", "lines": ["I am not judging you, Your Honour. I am [amber]reading[/amber] you."]},
+    {"kind": "narration", "id": "call", "lines": [{"text": "Your call.", "face": "smug", "direction": "[smugly]"}]},
+    {"kind": "narration", "id": "play", "lines": ["Play it, or do not. It all goes in the book."]}
+  ]
+}
