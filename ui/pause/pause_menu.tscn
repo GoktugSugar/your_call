@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://ui/pause/pause_menu.gd" id="1_pause"]
+[ext_resource type="Script" path="res://ui/menu/menu_list.gd" id="2_list"]
+[ext_resource type="PackedScene" path="res://ui/menu/menu_word.tscn" id="3_word"]
+[ext_resource type="PackedScene" path="res://ui/settings/settings_page.tscn" id="4_settings"]
+[ext_resource type="PackedScene" path="res://cinematics/eyelids.tscn" id="5_eyelids"]
+
+[node name="PauseMenu" type="CanvasLayer" node_paths=PackedStringArray("veil", "column", "resume_word", "save_word", "settings_word", "quit_word", "settings", "eyelids")]
+process_mode = 3
+layer = 40
+script = ExtResource("1_pause")
+veil = NodePath("Veil")
+column = NodePath("Center/Column")
+resume_word = NodePath("Center/Column/Resume")
+save_word = NodePath("Center/Column/Save")
+settings_word = NodePath("Center/Column/Settings")
+quit_word = NodePath("Center/Column/QuitToMenu")
+settings = NodePath("Center/Settings")
+eyelids = NodePath("Eyelids")
+
+[node name="Veil" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.9607843, 0.9490196, 0.9137255, 0)
+
+[node name="Center" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Column" type="VBoxContainer" parent="Center"]
+layout_mode = 2
+theme_override_constants/separation = 14
+script = ExtResource("2_list")
+
+[node name="Resume" parent="Center/Column" instance=ExtResource("3_word")]
+layout_mode = 2
+text = "Resume"
+
+[node name="Save" parent="Center/Column" instance=ExtResource("3_word")]
+layout_mode = 2
+text = "Save"
+
+[node name="Settings" parent="Center/Column" instance=ExtResource("3_word")]
+layout_mode = 2
+text = "Settings"
+
+[node name="QuitToMenu" parent="Center/Column" instance=ExtResource("3_word")]
+layout_mode = 2
+text = "Quit to Menu"
+
+[node name="Settings" parent="Center" instance=ExtResource("4_settings")]
+layout_mode = 2
+
+[node name="Eyelids" parent="." instance=ExtResource("5_eyelids")]
