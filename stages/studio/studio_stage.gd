@@ -16,12 +16,29 @@ extends Stage
 @export_range(0.0, 1080.0, 1.0) var floor_y := 700.0
 ## How much bigger than on the tracks the contestants stand, the studio being nearer.
 @export_range(0.5, 3.0, 0.01) var figure_scale := 1.75
+## A podium's size across and up, as a multiple of its own: low and wide, so whoever stands behind it
+## shows from the waist up.
+@export var podium_size := Vector2(1.15, 0.72)
+## How much bigger than on the tracks a contestant behind a podium stands, so they show over it.
+@export_range(0.5, 4.0, 0.01) var podium_figure_scale := 2.2
 ## Size of the words on the studio's boards, such as a prize.
 @export_range(8, 200) var board_size := 50
 ## Palette role of the words on the boards.
 @export var board_role := &"amber"
 ## Seconds the boards take to fade in and out with the stage.
 @export_range(0.0, 3.0, 0.05) var board_fade := 0.4
+
+@export_group("Colour")
+## Palette role of the curtain's wash, how strongly it takes it, and the role of its braid and tassels.
+@export var curtain_role := &"purple"
+@export_range(0.0, 1.0, 0.01) var curtain_wash := 0.5
+@export var trim_role := &"gold"
+## Palette roles the audience's clothes take in turn. Empty dresses them all in paper.
+@export var audience_clothes: Array[StringName] = [&"sky", &"green", &"orange", &"purple"]
+## Palette roles of the footlights along the front of the stage, in turn. Empty lights none.
+@export var footlights: Array[StringName] = [&"gold", &"sky", &"purple", &"green", &"orange"]
+## Whether the happy moments of a round throw confetti.
+@export var confetti := true
 
 @export_group("The room")
 ## The line the room must pass, as a share, when the question does not say.
@@ -47,13 +64,18 @@ func setup(for_question: QuestionData) -> void:
 	super.setup(for_question)
 	valance = StudioValance.new()
 	valance.z_index = -1
+	valance.wash_role = curtain_role
+	valance.wash_strength = curtain_wash
+	valance.trim_role = trim_role
 	add_child(valance)
 	studio_floor = StudioFloor.new()
 	studio_floor.position = Vector2(0.0, floor_y)
 	studio_floor.z_index = 2
+	studio_floor.footlights = footlights
 	add_child(studio_floor)
 	audience = Audience.new()
 	audience.z_index = 3
+	audience.clothes = audience_clothes
 	add_child(audience)
 
 
@@ -103,13 +125,14 @@ func count_votes() -> void:
 	await get_tree().create_timer(counting, false).timeout
 
 
-## A soul of the kind [param kind_id] standing on the floor at [param x], at the studio's size.
-func add_contestant(kind_id: StringName, x: float) -> Soul:
+## A soul of the kind [param kind_id] standing on the floor at [param x], at the studio's size, or at
+## [param size] times its size on the tracks when that is given.
+func add_contestant(kind_id: StringName, x: float, size := -1.0) -> Soul:
 	var kind := SoulKind.find(kind_id)
 	if kind == null:
 		kind = SoulKind.find(&"stranger")
 	var soul := kind.make()
-	soul.scale *= figure_scale
+	soul.scale *= figure_scale if size < 0.0 else size
 	soul.position = Vector2(x, floor_y)
 	add_child(soul)
 	return soul
@@ -126,6 +149,29 @@ func add_prop(id: String, x: float, size := 1.0, at := Vector2.INF) -> InkDrawin
 	prop.position = at if at.is_finite() else Vector2(x, floor_y)
 	add_child(prop)
 	return prop
+
+
+## Throws confetti up from [param at], when the studio throws it.
+func celebrate(at: Vector2) -> void:
+	if not confetti:
+		return
+	var pieces := Confetti.new()
+	pieces.position = at
+	pieces.z_index = 5
+	add_child(pieces)
+	pieces.burst()
+
+
+## A podium standing on the floor at [param x], at the studio's podium size, in front of whoever
+## stands behind it, its band in [param band_role]. Null when there is no podium doodle yet.
+func add_podium(x: float, band_role: StringName) -> InkDrawing:
+	var podium := add_prop("podium", x)
+	if podium == null:
+		return null
+	podium.scale = podium_size
+	podium.z_index = 1
+	podium.set(&"panel_role", band_role)
+	return podium
 
 
 ## Hops [param node] up by [param height] and back down over [param seconds].

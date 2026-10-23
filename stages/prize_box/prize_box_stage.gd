@@ -23,6 +23,8 @@ extends StudioStage
 @export_range(0.05, 3.0, 0.05) var rise_time := 0.7
 ## Seconds the box takes to open.
 @export_range(0.05, 3.0, 0.05) var open_time := 0.5
+## How far over the floor the confetti bursts, over the money or the cucumber.
+@export_range(0.0, 800.0, 1.0) var confetti_height := 280.0
 ## How high the finalist hops.
 @export_range(0.0, 200.0, 1.0) var hop_height := 36.0
 ## Seconds the stage holds at the end.
@@ -47,6 +49,7 @@ func setup(for_question: QuestionData) -> void:
 func play_consequence(_index: int) -> StringName:
 	await count_votes()
 	if room_picks_first():
+		celebrate(Vector2(money_x, floor_y - confetti_height))
 		await hop(_finalist, hop_height, 0.5)
 		await get_tree().create_timer(after_hold, false).timeout
 		return &"money"
@@ -70,8 +73,9 @@ func _open_box() -> void:
 	tween.tween_property(cucumber, ^"position:y", floor_y - rise, rise_time).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tween.tween_property(cucumber, ^"reveal", 1.0, rise_time * 0.6).from(0.0)
 	await tween.finished
-	# Risen clear of the box, it comes in front of the open lid.
+	# Risen clear of the box, it comes in front of the open lid, to a shower of confetti.
 	cucumber.z_index = _box.z_index + 1
+	celebrate(Vector2(box_x, floor_y - confetti_height))
 
 
 ## The finalist's kind: the stage data's, or another when the run remembers a fact that names one.

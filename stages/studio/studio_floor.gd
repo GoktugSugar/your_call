@@ -37,6 +37,29 @@ extends InkDrawing
 	set(value):
 		hinge_mark = value
 		queue_redraw()
+## Palette roles of the footlights along the front of the stage, in turn. Empty lights none.
+@export var footlights: Array[StringName] = []:
+	set(value):
+		footlights = value
+		queue_redraw()
+## The gap between footlights, how far below the floor line they hang, and their size.
+@export_range(10.0, 400.0, 1.0) var footlight_gap := 64.0:
+	set(value):
+		footlight_gap = value
+		queue_redraw()
+@export_range(0.0, 80.0, 0.5) var footlight_drop := 16.0:
+	set(value):
+		footlight_drop = value
+		queue_redraw()
+@export_range(0.5, 30.0, 0.5) var footlight_radius := 5.5:
+	set(value):
+		footlight_radius = value
+		queue_redraw()
+## How far toward the paper a footlight fades while it is down, as they twinkle on the boil.
+@export_range(0.0, 1.0, 0.01) var footlight_dim := 0.65:
+	set(value):
+		footlight_dim = value
+		queue_redraw()
 ## Palette role of the line.
 @export var role := &"ink":
 	set(value):
@@ -82,4 +105,12 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 		for end in [left, left + trapdoor_width]:
 			lines.append(InkLine.along(PackedVector2Array([Vector2(end, -hinge_mark * 0.5), Vector2(end, hinge_mark)]), color, 0.7))
 	lines.append(InkLine.along(InkBrush.resample_polyline(PackedVector2Array([Vector2.ZERO, Vector2(floor_width, 0.0)]), spacing), color))
+	if not footlights.is_empty():
+		var phase := roundi(InkPainter.current_variant())
+		var count := floori(floor_width / footlight_gap)
+		for i in count:
+			var lit := palette.color(footlights[i % footlights.size()])
+			if (i + phase) % 3 == 0:
+				lit = lit.lerp(palette.paper, footlight_dim)
+			lines.append(InkLine.dot(Vector2(footlight_gap * (i + 0.5), footlight_drop), footlight_radius, lit))
 	return lines

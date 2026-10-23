@@ -40,6 +40,11 @@ extends InkDrawing
 	set(value):
 		wedge_role = value
 		queue_redraw()
+## Palette roles the other wedges, the nothings, take in turn. Empty leaves them plain paper.
+@export var other_roles: Array[StringName] = []:
+	set(value):
+		other_roles = value
+		queue_redraw()
 ## Palette role of the pointer.
 @export var pointer_role := &"amber":
 	set(value):
@@ -113,6 +118,10 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 	for k in range(0, segments, 2):
 		var face := _wedge(middle, radius, _edge_angle(k, wedge, turned), wedge, spacing)
 		lines.append(_washed(face, Color.TRANSPARENT, gold))
+	if not other_roles.is_empty():
+		for k in range(1, segments, 2):
+			var other := palette.paper.lerp(palette.color(other_roles[floori(k / 2.0) % other_roles.size()]), wash_strength)
+			lines.append(_washed(_wedge(middle, radius, _edge_angle(k, wedge, turned), wedge, spacing), Color.TRANSPARENT, other))
 	for k in segments:
 		var out := Vector2.from_angle(_edge_angle(k, wedge, turned))
 		var spoke := PackedVector2Array([middle + out * hub, middle + out * radius])
