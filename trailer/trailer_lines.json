@@ -13,6 +13,6 @@
     {"kind": "narration", "id": "matter", "lines": ["And the questions that really matter."]},
     {"kind": "narration", "id": "reading", "lines": ["I am not judging you, Your Honour. I am [amber]reading[/amber] you."]},
     {"kind": "narration", "id": "call", "lines": [{"text": "Your call.", "face": "smug", "direction": "[smugly]"}]},
-    {"kind": "narration", "id": "wishlist", "lines": ["Wishlist it, or do not. It all goes in the book."]}
+    {"kind": "narration", "id": "play", "lines": ["Play it, or do not. It all goes in the book."]}
   ]
 }

@@ -14,8 +14,8 @@ trailer_renders/shots/<shot>/ (git ignores trailer_renders/, and Godot does too)
 when its settings, its length, the trailer's lines or the voice clips change. Shots are recorded a few at
 a time, each in its own window; nothing plays out loud.
 
-The encodes go to trailer_renders/: your_call_trailer_steam.mp4 (1920x1080, H.264 High at a high bit rate
-with AAC stereo at 48 kHz, as Steam asks), your_call_trailer.mp4 (a smaller one to share) and
+The encodes go to trailer_renders/: your_call_trailer_upload.mp4 (1920x1080, H.264 High at a high bit rate
+with AAC stereo at 48 kHz, for a video site the itch.io page embeds), your_call_trailer.mp4 (a smaller one to share) and
 your_call_trailer_draft.mp4 (960x540, for a quick look), with a contact sheet of the cut beside them.
 The project's window size for the recording is set by an override.cfg that exists only while recording.
 """
@@ -43,7 +43,7 @@ FRAME_NAME = "f"
 # Seconds recorded past the last moment the cut takes from a shot, so a piece never runs short.
 TAIL = 0.2
 
-STEAM = {"name": "your_call_trailer_steam.mp4", "crf": 10, "maxrate": "24M", "bufsize": "48M", "audio": "192k", "scale": None}
+UPLOAD = {"name": "your_call_trailer_upload.mp4", "crf": 10, "maxrate": "24M", "bufsize": "48M", "audio": "192k", "scale": None}
 SHARE = {"name": "your_call_trailer.mp4", "crf": 20, "maxrate": "10M", "bufsize": "20M", "audio": "160k", "scale": None}
 DRAFT = {"name": "your_call_trailer_draft.mp4", "crf": 24, "maxrate": "3M", "bufsize": "6M", "audio": "128k", "scale": (960, 540)}
 
@@ -377,7 +377,7 @@ def main() -> None:
     if missing:
         sys.exit(f"These shots have no recording long enough to cut: {', '.join(missing)}")
     sound = master_sound(cut)
-    for encode in [DRAFT] if args.draft else [STEAM, SHARE, DRAFT]:
+    for encode in [DRAFT] if args.draft else [UPLOAD, SHARE, DRAFT]:
         out = encode_one(cut, encode, sound)
         print("  " + describe(out))
         if encode is DRAFT:
