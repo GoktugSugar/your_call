@@ -120,6 +120,7 @@ func play(to_play: QuestionData, run: RunState) -> StringName:
 		await _say(least_popular)
 		await dialogue.close()
 	phase = Phase.REVEALING
+	run.record_pick(to_play, split)
 	await reveal.present(split)
 	await _finish(false)
 	return &""
@@ -137,13 +138,20 @@ func clear_stage() -> void:
 
 
 ## A tableau: the imp says its ask over the stage, if it has one, the stage plays out and says how it
-## came out, and the imp says the question's lines for that, the click on the last page the gate.
+## came out, and the imp says the question's lines for that, the click on the last page the gate. A
+## stage that [method Stage.holds_ask] keeps the ask's last page up while the player answers on it.
 func _play_tableau(ask: Array[LineData]) -> void:
+	var holding := stage.holds_ask()
 	if not ask.is_empty():
-		await _say(ask)
-		await dialogue.close()
+		await _say(ask, holding)
+		if not holding:
+			await dialogue.close()
+	if holding:
+		phase = Phase.CHOOSING
+		choosing_started.emit()
 	phase = Phase.CONSEQUENCE
 	var result := await stage.play_consequence(-1)
+	await dialogue.close()
 	await _pause(before_reaction)
 	phase = Phase.REACTING
 	var lines := stage.fill(question.lines_in(result))

@@ -1,8 +1,9 @@
 class_name RunState
 extends RefCounted
 ## What one run remembers from beat to beat and chapter to chapter: the silent profile, the money
-## chapter's wallet while it is open, everything the player has killed, and facts later beats look back
-## on, such as the walking button having come alive. A new run starts with a fresh one. The run player
+## chapter's wallet while it is open, everything the player has killed, facts later beats look back
+## on, such as the walking button having come alive, every pick with the share of the room that made
+## the same one, and every guess at the room. A new run starts with a fresh one. The run player
 ## hands it to every question, and the question player to every stage. A run started part way through,
 ## from the dev menu, takes what each skipped chapter would have left behind ([method assume]).
 
@@ -26,6 +27,13 @@ var profile := Profile.new()
 var wallet: Wallet
 ## Everything the player has killed so far.
 var kills := KillTally.new()
+## Every pick so far, in order: the question's [code]chapter[/code] and [code]id[/code], its
+## [code]number[/code] and [code]title[/code], the [code]pick[/code] as the reveal labelled it, and the
+## [code]share[/code] of the room that picked the same, from 0 to 100.
+var picks: Array[Dictionary] = []
+## Every guess at the room so far, by question id: what it was [code]about[/code], the
+## [code]guess[/code], the [code]truth[/code] and the [code]gap[/code] (the guess less the truth).
+var guesses: Dictionary[StringName, Dictionary] = {}
 
 var _facts: Dictionary[StringName, bool] = {}
 
@@ -66,14 +74,53 @@ static func holds(run: RunState, required: PackedStringArray, excluded: PackedSt
 	return true
 
 
+## Remembers the pick the player made in [param question], as [param split] showed it.
+func record_pick(question: QuestionData, split: RevealSplit) -> void:
+	if split.pick < 0 or split.pick >= split.shares.size():
+		return
+	picks.append({"chapter": String(question.chapter), "id": String(question.id), "number": question.number,
+			"title": question.title, "pick": split.labels[split.pick] if split.pick < split.labels.size() else "",
+			"share": split.shares[split.pick]})
+
+
+## Remembers the player's guess at the room in [param question]: [param guess] against [param truth],
+## what it was [param about].
+func record_guess(question: QuestionData, about: StringName, guess: float, truth: float) -> void:
+	guesses[question.id] = {"about": String(about), "guess": guess, "truth": truth, "gap": guess - truth}
+
+
+## The average gap of the guesses [param about] something, such as strangers: below 0 when they ran
+## low, above when they ran high. 0 when there were none.
+func guess_lean(about: StringName) -> float:
+	var total := 0.0
+	var count := 0
+	for each: Dictionary in guesses.values():
+		if StringName(str(each.get("about", ""))) == about:
+			total += float(each.get("gap", 0.0))
+			count += 1
+	return total / count if count > 0 else 0.0
+
+
+## The share of the room that made every pick the player made, from 0 to 1: each pick's share,
+## multiplied.
+func odds_of_every_pick() -> float:
+	var odds := 1.0
+	for each in picks:
+		odds *= clampf(float(each.get("share", 100.0)) / 100.0, 0.0, 1.0)
+	return odds
+
+
 ## Everything the run remembers as plain data, for the save: the profile, the wallet if one is open,
-## the kill tally and the facts.
+## the kill tally, the facts, the picks and the guesses.
 func to_data() -> Dictionary:
 	var facts: Array[String] = []
 	for fact in _facts:
 		facts.append(String(fact))
+	var guessed := {}
+	for id in guesses:
+		guessed[String(id)] = guesses[id].duplicate()
 	return {"profile": profile.to_data(), "wallet": wallet.to_data() if wallet != null else null,
-			"kills": kills.to_data(), "facts": facts}
+			"kills": kills.to_data(), "facts": facts, "picks": picks.duplicate(true), "guesses": guessed}
 
 
 ## A run that remembers what [method to_data] wrote, or null when [param data] is not that.
@@ -97,6 +144,17 @@ static func from_data(data: Variant) -> RunState:
 		if not fact is String:
 			return null
 		run.remember(StringName(fact))
+	for each: Variant in data.get("picks", []):
+		if not each is Dictionary or not SaveData.has_numbers(each, ["share"]):
+			return null
+		run.picks.append(each)
+	var guessed: Variant = data.get("guesses", {})
+	if not guessed is Dictionary:
+		return null
+	for id: Variant in guessed:
+		if not guessed[id] is Dictionary or not SaveData.has_numbers(guessed[id], ["guess", "truth", "gap"]):
+			return null
+		run.guesses[StringName(str(id))] = guessed[id]
 	return run
 
 
