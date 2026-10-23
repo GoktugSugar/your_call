@@ -1,5 +1,5 @@
 {
-  "note": "Sound effects made with ElevenLabs by sound_takes.py. prompt: what to ask for. seconds: how long each take is. influence: how closely a take follows the prompt, from 0 to 1. takes: how many to make in a batch. file: where the chosen take goes in the game.",
+  "note": "Sound effects made with ElevenLabs by sound_takes.py. prompt: what to ask for. seconds: how long each take is. influence: how closely a take follows the prompt, from 0 to 1. takes: how many to make in a batch. file: where the chosen take goes in the game; several takes kept for one sound go beside it, numbered. loop: the sound runs seamlessly back into its start, for as long as it is held.",
   "gunshot": {
     "prompt": "A single pistol gunshot fired close by: one sharp, dry, punchy crack with a short tail. No echo, no reverb, no shell casing, no music.",
     "seconds": 1.0,
@@ -13,5 +13,175 @@
     "influence": 0.5,
     "takes": 4,
     "file": "assets/sfx/gavel.mp3"
+  },
+  "menu_point": {
+    "prompt": "A single soft pencil tick on paper: one tiny, dry graphite tap, very short and quiet. No music, no voices.",
+    "seconds": 0.5,
+    "influence": 0.6,
+    "takes": 3,
+    "file": "assets/sfx/menu_point.wav"
+  },
+  "menu_press": {
+    "prompt": "A single firm tap of a pen nib on a sheet of paper lying on a wooden desk: one short, crisp, dry tap. No music, no voices.",
+    "seconds": 0.5,
+    "influence": 0.6,
+    "takes": 3,
+    "file": "assets/sfx/menu_press.wav"
+  },
+  "breath_out": {
+    "prompt": "One slow, tired breath out through the nose, very close and intimate, a man drifting off to sleep. Soft and quiet. No voice, no music.",
+    "seconds": 2.0,
+    "influence": 0.5,
+    "takes": 3,
+    "file": "assets/sfx/breath_out.wav"
+  },
+  "breath_in": {
+    "prompt": "One slow, deep breath in through the nose, very close and intimate, a man waking up. Soft and quiet. No voice, no music.",
+    "seconds": 2.0,
+    "influence": 0.5,
+    "takes": 3,
+    "file": "assets/sfx/breath_in.wav"
+  },
+  "veil_down": {
+    "prompt": "A single sheet of paper gently laid down flat over a desk: a soft papery swish and settle. No music, no voices.",
+    "seconds": 1.0,
+    "influence": 0.5,
+    "takes": 3,
+    "file": "assets/sfx/veil_down.wav"
+  },
+  "veil_up": {
+    "prompt": "A single sheet of paper lifted off a desk: one quick, soft papery swish. No music, no voices.",
+    "seconds": 0.8,
+    "influence": 0.5,
+    "takes": 3,
+    "file": "assets/sfx/veil_up.wav"
+  },
+  "choice_commit": {
+    "prompt": "A quick, confident stroke of a felt pen underlining a word on paper: one short, scratchy swipe. No music, no voices.",
+    "seconds": 0.6,
+    "influence": 0.6,
+    "takes": 3,
+    "file": "assets/sfx/choice_commit.wav"
+  },
+  "advance": {
+    "prompt": "A very soft, short tap of a fingertip on a sheet of paper: one gentle, muted tap. No music, no voices.",
+    "seconds": 0.5,
+    "influence": 0.6,
+    "takes": 3,
+    "file": "assets/sfx/advance.wav"
+  },
+  "count_tick": {
+    "prompt": "A single tiny mechanical tally counter click: one crisp, very short, quiet click. No music, no voices.",
+    "seconds": 0.5,
+    "influence": 0.6,
+    "takes": 3,
+    "file": "assets/sfx/count_tick.wav"
+  },
+  "imp_scribble": {
+    "prompt": "A fast scribble of a pen on paper ending in a small cartoon pop: quick scratchy scribbling, then one soft pop. No music, no voices.",
+    "seconds": 0.9,
+    "influence": 0.5,
+    "takes": 3,
+    "file": "assets/sfx/imp_scribble.wav"
+  },
+  "imp_dissolve": {
+    "prompt": "A soft, wet fizzing hiss of ink soaking into paper, like water sinking into a sponge, fading away to silence. Gentle and quiet. No music, no voices.",
+    "seconds": 0.8,
+    "influence": 0.5,
+    "takes": 3,
+    "file": "assets/sfx/imp_dissolve.wav"
+  },
+  "button_press": {
+    "prompt": "A single chunky plastic push button pressed down and released: one satisfying, solid click and clack. No music, no voices.",
+    "seconds": 0.5,
+    "influence": 0.6,
+    "takes": 3,
+    "file": "assets/sfx/button_press.wav"
+  },
+  "pin_whirr": {
+    "prompt": "A small metal pin spinning fast in circles on a table: a steady, light, whirring rattle, even and continuous from start to end. No music, no voices.",
+    "seconds": 2.0,
+    "influence": 0.5,
+    "takes": 3,
+    "loop": true,
+    "file": "assets/sfx/pin_whirr.wav"
+  },
+  "pin_drop": {
+    "prompt": "A small metal pin dropping and sticking into a cork board: one short, solid thunk. No music, no voices.",
+    "seconds": 0.6,
+    "influence": 0.6,
+    "takes": 3,
+    "file": "assets/sfx/pin_drop.wav"
+  },
+  "boom": {
+    "prompt": "A distant cartoon explosion heard muffled through a wall: one deep, soft boom with a low rumble that fades out. No music, no voices.",
+    "seconds": 2.5,
+    "influence": 0.5,
+    "takes": 3,
+    "file": "assets/sfx/boom.wav"
+  },
+  "charge_steps": {
+    "prompt": "Heavy footsteps of something big running straight at the listener across a wooden floor, getting closer and louder all the way: thundering, fast, building. No music, no voices.",
+    "seconds": 6.0,
+    "influence": 0.5,
+    "takes": 3,
+    "file": "assets/sfx/charge_steps.wav"
+  },
+  "applause": {
+    "prompt": "A small television studio audience bursting into enthusiastic applause and cheering, a few whoops, then dying down. No music.",
+    "seconds": 5.0,
+    "influence": 0.5,
+    "takes": 3,
+    "file": "assets/sfx/applause.wav"
+  },
+  "murmur": {
+    "prompt": "A television studio audience murmuring and whispering to each other in anticipation: low, indistinct, no words heard clearly, steady and even from start to end. No music.",
+    "seconds": 4.0,
+    "influence": 0.5,
+    "takes": 3,
+    "loop": true,
+    "file": "assets/sfx/murmur.wav"
+  },
+  "win_ding": {
+    "prompt": "A game show correct answer sound: two bright, cheerful bell dings. No music, no voices.",
+    "seconds": 1.2,
+    "influence": 0.5,
+    "takes": 3,
+    "file": "assets/sfx/win_ding.wav"
+  },
+  "lose_buzzer": {
+    "prompt": "A game show wrong answer buzzer: one short, flat, comic electric buzz. No music, no voices.",
+    "seconds": 1.2,
+    "influence": 0.5,
+    "takes": 3,
+    "file": "assets/sfx/lose_buzzer.wav"
+  },
+  "party_popper": {
+    "prompt": "A single party popper going off: one sharp little pop and a rustle of paper confetti falling. No music, no voices.",
+    "seconds": 1.0,
+    "influence": 0.5,
+    "takes": 3,
+    "file": "assets/sfx/party_popper.wav"
+  },
+  "gift_box": {
+    "prompt": "A cardboard gift box being opened: a ribbon pulled loose and a lid lifted off, a quick papery rustle. No music, no voices.",
+    "seconds": 1.2,
+    "influence": 0.5,
+    "takes": 3,
+    "file": "assets/sfx/gift_box.wav"
+  },
+  "die_roll": {
+    "prompt": "A single wooden die thrown across a wooden table, tumbling and clattering, then settling to a stop. No music, no voices.",
+    "seconds": 1.5,
+    "influence": 0.5,
+    "takes": 3,
+    "file": "assets/sfx/die_roll.wav"
+  },
+  "die_chime": {
+    "prompt": "One small, bright chime, like a tiny bell struck once: clear and sweet, with a short ring. No music, no voices.",
+    "seconds": 1.0,
+    "influence": 0.5,
+    "takes": 3,
+    "file": "assets/sfx/die_chime.wav"
   }
 }
