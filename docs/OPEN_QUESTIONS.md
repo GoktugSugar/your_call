@@ -159,7 +159,7 @@ These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus t
 - Whether the imp's per-chapter register shifts are one voice or distinct takes.
 
 **Music**
-- Which takes become the three tracks (stand ins picked by measurement for now), and what the credits' music line says once they are in.
+- Which takes become the three tracks (stand ins picked by measurement for now).
 
 **Language**
 - Whether to localize again, and into which languages. If yes, the text and voice pipelines should be designed for it from the start.
