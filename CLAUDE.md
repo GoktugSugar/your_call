@@ -1,6 +1,6 @@
 # Your Call
 
-A narrative dark comedy for PC and Steam, remade from scratch in Godot 4.7 with GDScript. You are dead. A small ink imp runs you through a long line of questions with no right answer, and quietly builds a portrait of who you are. Only the premise and the questions carried over from the first version, which was built in Unity.
+A narrative dark comedy for PC, released on itch.io as a Windows download and to play in the browser, remade from scratch in Godot 4.7 with GDScript. You are dead. A small ink imp runs you through a long line of questions with no right answer, and quietly builds a portrait of who you are. Only the premise and the questions carried over from the first version, which was built in Unity.
 
 **Read first:** `docs/PREMISE.md` (pillars, core loop, the imp, writing rules, art direction), `docs/ARCHITECTURE.md` (how it is built), `docs/DECISIONS.md` (what was decided and why) and `docs/OPEN_QUESTIONS.md` (what is not settled). The content draft is `docs/SCRIPT.md`.
 
@@ -49,7 +49,7 @@ The editor is the 4.7.2 standard build in `C:/Program Files/Godot/`. There is no
 
 The trailer (`docs/TRAILER.md`; ffmpeg is installed with winget, `Gyan.FFmpeg`):
 
-- Make it: `python tools/trailer/render_trailer.py` records the shots that changed (six windows at a time, silent) and writes the Steam upload, a smaller MP4 and a draft to `trailer_renders/` (git and Godot ignore it). `--dry-run` shows the cut and what would be recorded; `--shots a,b` records those again; `--fresh` records all of them after a change to the game's code; `--cut-only` only cuts and encodes.
+- Make it: `python tools/trailer/render_trailer.py` records the shots that changed (six windows at a time, silent) and writes the upload, a smaller MP4 and a draft to `trailer_renders/` (git and Godot ignore it). `--dry-run` shows the cut and what would be recorded; `--shots a,b` records those again; `--fresh` records all of them after a change to the game's code; `--cut-only` only cuts and encodes.
 - Play one shot live: `"C:/Program Files/Godot/Godot.exe" --path . res://trailer/trailer.tscn -- --shot=<shot> --log`
 - Music: `python tools/music/music_takes.py <piece>` makes takes of a piece in `tools/music/music.json` (`--dry-run` first to see what it will spend), and `--save <take>` puts the pick in place, through Git LFS.
 
