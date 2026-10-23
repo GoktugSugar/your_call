@@ -1,6 +1,6 @@
 # Your Call
 
-A narrative dark comedy for PC and Steam, remade from scratch in Godot 4.7 with GDScript. You are dead. A small ink imp runs you through a long line of questions with no right answer, and quietly builds a portrait of who you are. Only the premise and the questions carried over from the first version, which was built in Unity.
+A narrative dark comedy for PC, released on itch.io as a Windows download and to play in the browser, remade from scratch in Godot 4.7 with GDScript. You are dead. A small ink imp runs you through a long line of questions with no right answer, and quietly builds a portrait of who you are. Only the premise and the questions carried over from the first version, which was built in Unity.
 
 **Read first:** `docs/PREMISE.md` (pillars, core loop, the imp, writing rules, art direction), `docs/ARCHITECTURE.md` (how it is built), `docs/DECISIONS.md` (what was decided and why) and `docs/OPEN_QUESTIONS.md` (what is not settled). The content draft is `docs/SCRIPT.md`.
 

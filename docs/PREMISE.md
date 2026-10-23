@@ -19,7 +19,7 @@ The full question script lives in `SCRIPT.md`: every question in play order, its
 
 **Logline.** You die. In a formless afterlife, a chaotic trickster runs you through his game of questions with no right answer, and quietly builds a portrait of who you really are.
 
-- **The format.** A single-player narrative dark comedy for PC and Steam: one linear run of about 5 to 6 hours.
+- **The format.** A single-player narrative dark comedy for PC, released on itch.io as a Windows download and to play in the browser: one linear run of about 5 to 6 hours. There is no Steam release (2026-10-23).
 - **The player character is a judge** who spent his career deciding what other people deserved.
   - He died drunk driving, killing only himself, so there is no victim and nothing to investigate.
   - That past is fixed. His present is blank, and the player's choices fill it in.
@@ -90,6 +90,7 @@ The user held these across the whole earlier project. Treat them as hard constra
 
 ## 3. What changed for the remake
 
+- **The release is itch.io** (2026-10-23): a Windows download and a build that plays in the browser, not Steam. The browser build has its own needs: the Compatibility renderer, saves kept in the browser's storage, and no sound before the first click.
 - **The engine is now Godot 4.7.**
   - For context: the very first prototype was in Godot 4.6. The project then moved to Unity out of personal preference, and now it returns to Godot.
   - Nothing from either earlier codebase carries over.

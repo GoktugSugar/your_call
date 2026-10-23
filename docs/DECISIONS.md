@@ -304,3 +304,7 @@ The user picked three of the chapter ideas to build (The Show, Everyone Else, Th
 - **The portrait stage says its own lines.** Dev: one line set per axis and pole, said from the dialogue box as each scale lights, so no line needs a condition on a fact a stage remembers.
 - **Four props.** Dev: drawn by a helper in a worktree of its own (`helper/portrait-props`), with Everyone Else's two: the notebook, the gavel (seen at last), the booth's curtain on its own, and a clipboard of forms for the clerk.
 - **Voiced.** User. Dev: 47 takes, 4,021 characters, with `eleven_v3`: all eighteen of the portrait's lines and all thirteen postings, though each run hears six and one.
+
+## 2026-10-23: where the game is released
+
+- **itch.io, as a Windows download and to play in the browser. No Steam release.** User. CLAUDE.md and PREMISE say so now. The browser build has needs of its own (the Compatibility renderer, since Forward+ does not run in the browser; saves kept in the browser's storage inside itch.io's frame; no sound before the first click; the download size with every voice clip), which the performance work takes on.
