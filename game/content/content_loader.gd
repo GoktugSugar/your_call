@@ -15,7 +15,7 @@ const _SKIPPED_KEYS: PackedStringArray = ["remember", "kills"]
 const _QUESTION_KEYS: PackedStringArray = ["kind", "id", "number", "title", "verb", "weight", "stage", "ask", "lines",
 		"options", "reveal"]
 ## A tableau is a stage the imp talks over, with nothing to choose and no reveal.
-const _TABLEAU_KEYS: PackedStringArray = ["kind", "id", "number", "title", "weight", "stage", "ask", "lines"]
+const _TABLEAU_KEYS: PackedStringArray = ["kind", "id", "number", "title", "weight", "stage", "ask", "lines", "ending"]
 const _NARRATION_KEYS: PackedStringArray = ["kind", "id", "lines"]
 const _CINEMATIC_KEYS: PackedStringArray = ["kind", "id", "scene"]
 const _MENU_KEYS: PackedStringArray = ["id", "title", "lines"]
@@ -205,7 +205,14 @@ func _question(data: Dictionary, chapter_id: StringName, id: StringName, where: 
 		problems.append("%s: lines needs an object of named lists" % where)
 	var reveal: Variant = data.get("reveal", {})
 	if tableau:
-		pass
+		var ending: Variant = data.get("ending", "")
+		if ending is String:
+			question.ending = StringName(ending)
+		elif ending is Dictionary:
+			for result: Variant in ending:
+				question.endings[StringName(str(result))] = StringName(str(ending[result]))
+		else:
+			problems.append("%s: ending needs a name, or an object of names by outcome" % where)
 	elif reveal is Dictionary:
 		_check_keys(reveal, _REVEAL_KEYS, where + " reveal")
 		question.reveal_heading = str(reveal.get("heading", question.reveal_heading))

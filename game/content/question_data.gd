@@ -35,9 +35,18 @@ var reveal_heading := "how others chose"
 var reveal_labels := PackedStringArray()
 ## The name of the line a coordination gamble's crowd had to cross, such as [code]half[/code]. Empty for none.
 var reveal_mark := ""
+## The ending a tableau fires, or empty for none, as the run's main endings do.
+var ending := &""
+## Endings a tableau fires only on some outcomes, keyed by the outcome its stage reports.
+var endings: Dictionary[StringName, StringName] = {}
 
 
 ## Whether it is a tableau, with nothing to choose.
+## The ending a tableau fires when its stage reports [param result], or an empty name.
+func ending_for(result: StringName) -> StringName:
+	return endings.get(result, ending)
+
+
 func is_tableau() -> bool:
 	return options.is_empty()
 

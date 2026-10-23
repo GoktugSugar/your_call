@@ -71,8 +71,7 @@ func play(to_play: QuestionData, run: RunState) -> StringName:
 	await stage.enter()
 	var ask := stage.fill(to_play.ask_for(stage.ask_key()))
 	if to_play.is_tableau():
-		await _play_tableau(ask)
-		return &""
+		return await _play_tableau(ask)
 	if not stage.offers_choice():
 		await _say(ask)
 		await dialogue.close()
@@ -140,7 +139,9 @@ func clear_stage() -> void:
 ## A tableau: the imp says its ask over the stage, if it has one, the stage plays out and says how it
 ## came out, and the imp says the question's lines for that, the click on the last page the gate. A
 ## stage that [method Stage.holds_ask] keeps the ask's last page up while the player answers on it.
-func _play_tableau(ask: Array[LineData]) -> void:
+## Returns the ending the tableau fires for how it came out, leaving the stage up for the run player
+## to take down, or an empty name.
+func _play_tableau(ask: Array[LineData]) -> StringName:
 	var holding := stage.holds_ask()
 	if not ask.is_empty():
 		await _say(ask, holding)
@@ -158,7 +159,12 @@ func _play_tableau(ask: Array[LineData]) -> void:
 	if not lines.is_empty():
 		await _say(lines)
 	await dialogue.close()
+	var ending := question.ending_for(result)
+	if ending != &"":
+		phase = Phase.DONE
+		return ending
 	await _finish()
+	return &""
 
 
 ## Lets go of the question: the stage dissolves away first when [param leaving].
