@@ -3849,6 +3849,556 @@
     "timing": "res://assets/voice/imp/ch5.you_button.you.1.json",
     "voice": "c95aad52ae0b"
   },
+  "ch6.applause.ask.1": {
+    "audio": "res://assets/voice/imp/ch6.applause.ask.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 4.8,
+    "speaker": "imp",
+    "text_sha1": "f37b02168dcfb6510b8604dc73f0a5e668155794",
+    "timing": "res://assets/voice/imp/ch6.applause.ask.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.applause.ask.2": {
+    "audio": "res://assets/voice/imp/ch6.applause.ask.2.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 5.76,
+    "speaker": "imp",
+    "text_sha1": "748d108fe4d1da315e64d5081b24ec5c3d1865d6",
+    "timing": "res://assets/voice/imp/ch6.applause.ask.2.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.applause.clap.1": {
+    "audio": "res://assets/voice/imp/ch6.applause.clap.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 6.48,
+    "speaker": "imp",
+    "text_sha1": "236c86f46e17946b5eddaed9356da00d40fb7f8f",
+    "timing": "res://assets/voice/imp/ch6.applause.clap.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.applause.sit.1": {
+    "audio": "res://assets/voice/imp/ch6.applause.sit.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 11.76,
+    "speaker": "imp",
+    "text_sha1": "8fd6edbbeb40109fb65200a9738320b781811b14",
+    "timing": "res://assets/voice/imp/ch6.applause.sit.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.box.ask.1": {
+    "audio": "res://assets/voice/imp/ch6.box.ask.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 10.0,
+    "speaker": "imp",
+    "text_sha1": "b2f679214d047e80843592b7f93ee3fd9e46dee9",
+    "timing": "res://assets/voice/imp/ch6.box.ask.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.box.ask.2": {
+    "audio": "res://assets/voice/imp/ch6.box.ask.2.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.68,
+    "speaker": "imp",
+    "text_sha1": "aa755ad2ac83fe5f8d7ef329463e17fc1e522010",
+    "timing": "res://assets/voice/imp/ch6.box.ask.2.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.box.box.box.1": {
+    "audio": "res://assets/voice/imp/ch6.box.box.box.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 8.88,
+    "speaker": "imp",
+    "text_sha1": "705e88e751f0c4458b987e5240b4372526070774",
+    "timing": "res://assets/voice/imp/ch6.box.box.box.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.box.box.money.1": {
+    "audio": "res://assets/voice/imp/ch6.box.box.money.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 8.4,
+    "speaker": "imp",
+    "text_sha1": "fb74f98fb4c1eafd75a363526c241339afb8dc66",
+    "timing": "res://assets/voice/imp/ch6.box.box.money.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.box.money.box.1": {
+    "audio": "res://assets/voice/imp/ch6.box.money.box.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 9.04,
+    "speaker": "imp",
+    "text_sha1": "1edf43727fb63e42390e4edd9207b594af299e0d",
+    "timing": "res://assets/voice/imp/ch6.box.money.box.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.box.money.money.1": {
+    "audio": "res://assets/voice/imp/ch6.box.money.money.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 10.8,
+    "speaker": "imp",
+    "text_sha1": "ba0f0eae176ea0a28e07b55821fa7ed98d945389",
+    "timing": "res://assets/voice/imp/ch6.box.money.money.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.champion.ask.1": {
+    "audio": "res://assets/voice/imp/ch6.champion.ask.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 8.16,
+    "speaker": "imp",
+    "text_sha1": "c521ea2e57eef9c00854ff233ab940dce077bc2a",
+    "timing": "res://assets/voice/imp/ch6.champion.ask.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.champion.ask.2": {
+    "audio": "res://assets/voice/button/ch6.champion.ask.2.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 2.16,
+    "speaker": "button",
+    "text_sha1": "9e63ec41d81ed17a9d364678af3179bc625bc5b0",
+    "timing": "res://assets/voice/button/ch6.champion.ask.2.json",
+    "voice": "c02aa7b55de3"
+  },
+  "ch6.champion.ask.3": {
+    "audio": "res://assets/voice/imp/ch6.champion.ask.3.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.84,
+    "speaker": "imp",
+    "text_sha1": "8a204e796de73ee708fe65bbc2bee397ae2d2c31",
+    "timing": "res://assets/voice/imp/ch6.champion.ask.3.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.champion.off.off.1": {
+    "audio": "res://assets/voice/button/ch6.champion.off.off.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.84,
+    "speaker": "button",
+    "text_sha1": "5b3ab9cc1de1d39f0a3538460b799ceb090fbc3e",
+    "timing": "res://assets/voice/button/ch6.champion.off.off.1.json",
+    "voice": "c02aa7b55de3"
+  },
+  "ch6.champion.off.off.2": {
+    "audio": "res://assets/voice/imp/ch6.champion.off.off.2.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 2.96,
+    "speaker": "imp",
+    "text_sha1": "dfdd22c6b93885e95b2770f78cafb865a81f04a0",
+    "timing": "res://assets/voice/imp/ch6.champion.off.off.2.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.champion.off.stays.1": {
+    "audio": "res://assets/voice/button/ch6.champion.off.stays.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 4.08,
+    "speaker": "button",
+    "text_sha1": "de4b2223f929374f9f8f98500084021b4fbc3aed",
+    "timing": "res://assets/voice/button/ch6.champion.off.stays.1.json",
+    "voice": "c02aa7b55de3"
+  },
+  "ch6.champion.off.stays.2": {
+    "audio": "res://assets/voice/imp/ch6.champion.off.stays.2.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.2,
+    "speaker": "imp",
+    "text_sha1": "939f373c98346008feb98b3e9abfa12a3bf4623b",
+    "timing": "res://assets/voice/imp/ch6.champion.off.stays.2.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.champion.play.off.1": {
+    "audio": "res://assets/voice/button/ch6.champion.play.off.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 4.24,
+    "speaker": "button",
+    "text_sha1": "e6adfcd431a6f01ec84d1d0f094c57d65b63d2b0",
+    "timing": "res://assets/voice/button/ch6.champion.play.off.1.json",
+    "voice": "c02aa7b55de3"
+  },
+  "ch6.champion.play.off.2": {
+    "audio": "res://assets/voice/imp/ch6.champion.play.off.2.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.84,
+    "speaker": "imp",
+    "text_sha1": "43f91929affdec63ec01f7e95d3cd5657874855d",
+    "timing": "res://assets/voice/imp/ch6.champion.play.off.2.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.champion.play.stays.1": {
+    "audio": "res://assets/voice/button/ch6.champion.play.stays.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 4.88,
+    "speaker": "button",
+    "text_sha1": "de4b2223f929374f9f8f98500084021b4fbc3aed",
+    "timing": "res://assets/voice/button/ch6.champion.play.stays.1.json",
+    "voice": "c02aa7b55de3"
+  },
+  "ch6.champion.play.stays.2": {
+    "audio": "res://assets/voice/imp/ch6.champion.play.stays.2.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 5.28,
+    "speaker": "imp",
+    "text_sha1": "7f0ba9f805f8d86169678ac4e162e414b8aa5569",
+    "timing": "res://assets/voice/imp/ch6.champion.play.stays.2.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.closer.lines.1": {
+    "audio": "res://assets/voice/imp/ch6.closer.lines.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 6.64,
+    "speaker": "imp",
+    "text_sha1": "925c89b438badab702c2f00c06d5663848136ccb",
+    "timing": "res://assets/voice/imp/ch6.closer.lines.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.closer.lines.2": {
+    "audio": "res://assets/voice/imp/ch6.closer.lines.2.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 11.36,
+    "speaker": "imp",
+    "text_sha1": "3df787bf29ddb50127d4d6badbd68d533a465010",
+    "timing": "res://assets/voice/imp/ch6.closer.lines.2.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.closer.lines.3": {
+    "audio": "res://assets/voice/imp/ch6.closer.lines.3.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 8.24,
+    "speaker": "imp",
+    "text_sha1": "cae368bf0db96117498d3bea4ccaf14149795b46",
+    "timing": "res://assets/voice/imp/ch6.closer.lines.3.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.collapse.ask.1": {
+    "audio": "res://assets/voice/imp/ch6.collapse.ask.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 6.48,
+    "speaker": "imp",
+    "text_sha1": "de40266e59609d3d6b44796f34d0113c545226a8",
+    "timing": "res://assets/voice/imp/ch6.collapse.ask.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.collapse.ask.2": {
+    "audio": "res://assets/voice/imp/ch6.collapse.ask.2.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 5.76,
+    "speaker": "imp",
+    "text_sha1": "9e39ce47ff8c9d2eaada1ba3bbc265566507beeb",
+    "timing": "res://assets/voice/imp/ch6.collapse.ask.2.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.collapse.ask.3": {
+    "audio": "res://assets/voice/imp/ch6.collapse.ask.3.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 3.04,
+    "speaker": "imp",
+    "text_sha1": "a27529a63a7e13f3efbf339d6ed3c13405c55099",
+    "timing": "res://assets/voice/imp/ch6.collapse.ask.3.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.collapse.up.dies.1": {
+    "audio": "res://assets/voice/imp/ch6.collapse.up.dies.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 9.76,
+    "speaker": "imp",
+    "text_sha1": "306734708d7a904ec4dd73c0bf210125d2d6ba0f",
+    "timing": "res://assets/voice/imp/ch6.collapse.up.dies.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.collapse.up.lives.1": {
+    "audio": "res://assets/voice/imp/ch6.collapse.up.lives.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 10.88,
+    "speaker": "imp",
+    "text_sha1": "a88b6abdebcd4fc4ea23426170ae72e6605c6c13",
+    "timing": "res://assets/voice/imp/ch6.collapse.up.lives.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.collapse.wait.dies.1": {
+    "audio": "res://assets/voice/imp/ch6.collapse.wait.dies.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 8.0,
+    "speaker": "imp",
+    "text_sha1": "208268a32c5da07ef9642cfe6bffc58b2944b445",
+    "timing": "res://assets/voice/imp/ch6.collapse.wait.dies.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.collapse.wait.lives.1": {
+    "audio": "res://assets/voice/imp/ch6.collapse.wait.lives.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 8.24,
+    "speaker": "imp",
+    "text_sha1": "19981b90581367a5eb6e1b3d5256f87bb63bf026",
+    "timing": "res://assets/voice/imp/ch6.collapse.wait.lives.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.intro.lines.1": {
+    "audio": "res://assets/voice/imp/ch6.intro.lines.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 9.12,
+    "speaker": "imp",
+    "text_sha1": "4676d718414d28df3a08eedb250e607f984a7749",
+    "timing": "res://assets/voice/imp/ch6.intro.lines.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.intro.lines.2": {
+    "audio": "res://assets/voice/imp/ch6.intro.lines.2.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 7.52,
+    "speaker": "imp",
+    "text_sha1": "93ac05093ef04e12befe5010bdda7bfa4dcff2a6",
+    "timing": "res://assets/voice/imp/ch6.intro.lines.2.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.intro.lines.3": {
+    "audio": "res://assets/voice/imp/ch6.intro.lines.3.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 12.32,
+    "speaker": "imp",
+    "text_sha1": "e4c46cff31ad72b866bc0a745a28ebe25271f1f9",
+    "timing": "res://assets/voice/imp/ch6.intro.lines.3.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.split.ask.1": {
+    "audio": "res://assets/voice/imp/ch6.split.ask.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 12.24,
+    "speaker": "imp",
+    "text_sha1": "fb56673ba54657f4e08b9ff0ecbeeb984f9dba62",
+    "timing": "res://assets/voice/imp/ch6.split.ask.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.split.ask.2": {
+    "audio": "res://assets/voice/imp/ch6.split.ask.2.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 6.48,
+    "speaker": "imp",
+    "text_sha1": "da13fd8e5c68d56b0ce9cd07b9b4373fb9687b5b",
+    "timing": "res://assets/voice/imp/ch6.split.ask.2.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.split.split.robbed.1": {
+    "audio": "res://assets/voice/imp/ch6.split.split.robbed.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 10.96,
+    "speaker": "imp",
+    "text_sha1": "fb72897ac4236cbd83be3d3bac14f23bd99bec0d",
+    "timing": "res://assets/voice/imp/ch6.split.split.robbed.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.split.split.shared.1": {
+    "audio": "res://assets/voice/imp/ch6.split.split.shared.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 10.8,
+    "speaker": "imp",
+    "text_sha1": "f3da96992717f1564457efbe32e325484f872b96",
+    "timing": "res://assets/voice/imp/ch6.split.split.shared.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.split.steal.nothing.1": {
+    "audio": "res://assets/voice/imp/ch6.split.steal.nothing.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 8.16,
+    "speaker": "imp",
+    "text_sha1": "afc136f5fedd3183e74c370cf3b093ceb05057ff",
+    "timing": "res://assets/voice/imp/ch6.split.steal.nothing.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.split.steal.took_all.1": {
+    "audio": "res://assets/voice/imp/ch6.split.steal.took_all.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 8.0,
+    "speaker": "imp",
+    "text_sha1": "3d42e5df70bcb77f2ec7a1d4211acc042824ee68",
+    "timing": "res://assets/voice/imp/ch6.split.steal.took_all.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.trapdoors.ask.1": {
+    "audio": "res://assets/voice/imp/ch6.trapdoors.ask.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 5.2,
+    "speaker": "imp",
+    "text_sha1": "7ce759003079ae368e38847c83740b73f19e1dbf",
+    "timing": "res://assets/voice/imp/ch6.trapdoors.ask.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.trapdoors.ask.2": {
+    "audio": "res://assets/voice/imp/ch6.trapdoors.ask.2.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 9.36,
+    "speaker": "imp",
+    "text_sha1": "2820117c6593a7951bbe7ab2bc42b96cf6c51e01",
+    "timing": "res://assets/voice/imp/ch6.trapdoors.ask.2.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.trapdoors.ask.3": {
+    "audio": "res://assets/voice/imp/ch6.trapdoors.ask.3.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 6.8,
+    "speaker": "imp",
+    "text_sha1": "f584e990e6bce39b3a0770bc7518db72034d6e5b",
+    "timing": "res://assets/voice/imp/ch6.trapdoors.ask.3.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.trapdoors.charmer.left.1": {
+    "audio": "res://assets/voice/imp/ch6.trapdoors.charmer.left.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 6.72,
+    "speaker": "imp",
+    "text_sha1": "c83fdc8969b5127b6ed93881b089e0594eccc59a",
+    "timing": "res://assets/voice/imp/ch6.trapdoors.charmer.left.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.trapdoors.charmer.right.1": {
+    "audio": "res://assets/voice/imp/ch6.trapdoors.charmer.right.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 8.48,
+    "speaker": "imp",
+    "text_sha1": "fb0297887e1400bc5d753146a91cba97b1e59e57",
+    "timing": "res://assets/voice/imp/ch6.trapdoors.charmer.right.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.trapdoors.old.left.1": {
+    "audio": "res://assets/voice/imp/ch6.trapdoors.old.left.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 8.4,
+    "speaker": "imp",
+    "text_sha1": "4179d0c180b724cd0c56f454c5efc1e9df3fb437",
+    "timing": "res://assets/voice/imp/ch6.trapdoors.old.left.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.trapdoors.old.right.1": {
+    "audio": "res://assets/voice/imp/ch6.trapdoors.old.right.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 9.44,
+    "speaker": "imp",
+    "text_sha1": "2f1c7de39f247326e2529af5b6c95d069db70399",
+    "timing": "res://assets/voice/imp/ch6.trapdoors.old.right.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.wheel.ask.1": {
+    "audio": "res://assets/voice/imp/ch6.wheel.ask.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 7.52,
+    "speaker": "imp",
+    "text_sha1": "220143967f18ee538a2020df883282c854dc9abc",
+    "timing": "res://assets/voice/imp/ch6.wheel.ask.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.wheel.ask.2": {
+    "audio": "res://assets/voice/imp/ch6.wheel.ask.2.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 9.76,
+    "speaker": "imp",
+    "text_sha1": "285683165dd96473ee4bbf362e1a567a0e683759",
+    "timing": "res://assets/voice/imp/ch6.wheel.ask.2.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.wheel.spin.doubled.1": {
+    "audio": "res://assets/voice/imp/ch6.wheel.spin.doubled.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 14.4,
+    "speaker": "imp",
+    "text_sha1": "c5b3d1758865a1e6f1b6948372daf8bbe1e6a69f",
+    "timing": "res://assets/voice/imp/ch6.wheel.spin.doubled.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.wheel.spin.kept.1": {
+    "audio": "res://assets/voice/imp/ch6.wheel.spin.kept.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 6.8,
+    "speaker": "imp",
+    "text_sha1": "987df1cede90d94f091c5ee59873c8e8eb7dbe8b",
+    "timing": "res://assets/voice/imp/ch6.wheel.spin.kept.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.wheel.spin.lost.1": {
+    "audio": "res://assets/voice/imp/ch6.wheel.spin.lost.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 11.2,
+    "speaker": "imp",
+    "text_sha1": "fbcaac7a8027e1fe5b98b21bdfde2a3a58ca33fd",
+    "timing": "res://assets/voice/imp/ch6.wheel.spin.lost.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.wheel.take.doubled.1": {
+    "audio": "res://assets/voice/imp/ch6.wheel.take.doubled.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 8.16,
+    "speaker": "imp",
+    "text_sha1": "899203bfc0f13e83238760ed0478eec3595f33b6",
+    "timing": "res://assets/voice/imp/ch6.wheel.take.doubled.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.wheel.take.kept.1": {
+    "audio": "res://assets/voice/imp/ch6.wheel.take.kept.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 7.68,
+    "speaker": "imp",
+    "text_sha1": "5e96aa34578759869e713c30bf0f77dddd9180f0",
+    "timing": "res://assets/voice/imp/ch6.wheel.take.kept.1.json",
+    "voice": "c95aad52ae0b"
+  },
+  "ch6.wheel.take.lost.1": {
+    "audio": "res://assets/voice/imp/ch6.wheel.take.lost.1.mp3",
+    "direction": "",
+    "model": "eleven_v3",
+    "seconds": 9.68,
+    "speaker": "imp",
+    "text_sha1": "8dcce0044fccee22cecf4532b4102ce2ccf1a2ef",
+    "timing": "res://assets/voice/imp/ch6.wheel.take.lost.1.json",
+    "voice": "c95aad52ae0b"
+  },
   "ch7.button_confession.ask.1": {
     "audio": "res://assets/voice/imp/ch7.button_confession.ask.1.mp3",
     "direction": "",
