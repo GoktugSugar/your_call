@@ -135,7 +135,7 @@
     "file": "assets/sfx/applause.wav"
   },
   "murmur": {
-    "prompt": "A television studio audience murmuring and whispering to each other in anticipation: low, indistinct, no words heard clearly, steady and even from start to end. No music.",
+    "prompt": "A television studio audience chattering excitedly before a vote: a busy, lively hubbub of many voices talking at once, no clear words, steady and continuous from start to end. No music.",
     "seconds": 4.0,
     "influence": 0.5,
     "takes": 3,
