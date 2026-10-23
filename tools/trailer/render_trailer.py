@@ -13,9 +13,11 @@ dev/trailer/trailer.gd), the pieces of them that make the trailers in order, and
 laid over them. Each shot is one run of res://dev/trailer/trailer.tscn, recorded as an MJPEG AVI at full
 quality with its sound (the voices and the game's sound effects), as long as the shot's "seconds" say, in
 trailer_renders/shots/<format>/<shot>/ beside the log of its moments. A shot is recorded again when its
-settings, its format, the trailers' lines, or the voice clips or their timings change. The shots of a format are recorded a
-few at a time, each in its own small window; nothing plays out loud. The project's window and stretch
-settings for the recording come from an override.cfg that exists only while a format records.
+settings, its format, the trailers' lines, or the voice clips or their timings change, and when its recording
+holds fewer frames than the shot asks for, as when its window was closed or the render stopped. The shots of
+a format are recorded a few at a time, each in its own small window that never takes the keyboard; nothing
+plays out loud. The project's window and stretch settings for the recording come from an override.cfg that
+exists only while a format records.
 
 A piece runs from and to a time in its shot: seconds, or a moment the shot's log names, page:<line> (a
 line of the trailers' starts), said:<line> (it has been said), mark:<name> or phase:<phase>, with plus
@@ -124,11 +126,19 @@ def is_current(cut: dict, fmt: str, shot: str) -> bool:
     folder = shot_folder(fmt, shot)
     stamp = folder / "recipe.txt"
     return (stamp.exists() and stamp.read_text(encoding="utf-8").strip() == recipe(cut, fmt, shot)
-            and (folder / "shot.avi").exists())
+            and (folder / "shot.avi").exists() and recorded_frames(folder) >= frames_of(cut, shot))
 
 
 def frames_of(cut: dict, shot: str) -> int:
     return round(float(cut["shots"][shot].get("seconds", DEFAULT_SECONDS)) * cut["fps"])
+
+
+def recorded_frames(folder: pathlib.Path) -> int:
+    """How many frames a shot's recording holds, by its log: fewer than the shot asks for when its window was
+    closed or the render stopped before it ended, since Godot then finishes the movie early and quits as usual."""
+    log = folder / "log.txt"
+    found = re.search(r"(\d+) frames at", log.read_text(encoding="utf-8", errors="replace")) if log.exists() else None
+    return int(found.group(1)) if found else 0
 
 
 def record(cut: dict, fmt: str, shot: str) -> tuple[str, bool, str]:
@@ -141,7 +151,8 @@ def record(cut: dict, fmt: str, shot: str) -> tuple[str, bool, str]:
                "--", f"--shot={shot}", f"--format={fmt}", "--log"]
     result = subprocess.run(command, capture_output=True, text=True, encoding="utf-8", errors="replace")
     (folder / "log.txt").write_text(result.stdout + result.stderr, encoding="utf-8", newline="\n")
-    ok = result.returncode == 0 and (folder / "shot.avi").exists()
+    ok = (result.returncode == 0 and (folder / "shot.avi").exists()
+          and recorded_frames(folder) >= frames_of(cut, shot))
     if ok:
         (folder / "recipe.txt").write_text(recipe(cut, fmt, shot), encoding="utf-8", newline="\n")
     problems = [line for line in (result.stdout + result.stderr).splitlines()
@@ -157,6 +168,7 @@ def record_format(cut: dict, fmt: str, wanted: list[str], jobs: int) -> None:
         f"window/size/viewport_width={width}\nwindow/size/viewport_height={height}\n"
         f"window/size/mode=0\nwindow/size/window_width_override={round(width * WINDOW_SHARE)}\n"
         f"window/size/window_height_override={round(height * WINDOW_SHARE)}\n"
+        "window/size/no_focus=true\n"
         'window/stretch/mode="viewport"\n\n'
         "[editor]\n\nmovie_writer/mjpeg_quality=1.0\n").encode("utf-8"))
     try:

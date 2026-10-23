@@ -31,7 +31,7 @@ The wide trailer, as it is cut now; the tall one is the same cut, framed for a p
 | 1:02 | call | The imp close up again. | The music stops dead. "Your call." |
 | 1:04 | title | "Your Call" inks on with its stroke, then "Coming soon to itch.io" in amber, the imp beside it. | The scribble of the imp's pen. "Coming soon. Try not to die waiting." "Oh. Right." |
 
-It runs 73.3 seconds and fades out over its last half second.
+It runs 73.2 seconds and fades out over its last half second.
 
 ## The tall one
 

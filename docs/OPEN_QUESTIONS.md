@@ -125,7 +125,7 @@ Built on 2026-10-23 from the outline the user picked. The copy waits for the use
 
 Built on 2026-10-23. The script, the music, the swear, the end card and the length are the user's; these are the dev's, provisional and logged in `DECISIONS.md` (the treatment is `docs/TRAILERS.md`).
 
-- Their length: 73.3 seconds against about a minute (70.5 before the lines' starts were fixed). Trims on offer: the lever's ask, the booth's first piece, the dragon, the title's wait.
+- Their length: 73.2 seconds against about a minute (70.5 before the lines' starts were fixed). Trims on offer: the lever's ask, the booth's first piece, the dragon, the title's wait.
 - How each of the fifteen lines is delivered: each take's v3 direction was picked by fit, not by ear. Any line can be voiced again on its own.
 - The music: how far under the voice it sits, that it starts at the pull out, and that it stops dead at "Your call.", leaving the title card to the voice and the pen.
 - The shots standing for each chapter (1.02, 1.15, 2.01, 3.05, 4.10, 5.01, 5.08, 6.01, 7.01, 8.09) and the pick made in each.
