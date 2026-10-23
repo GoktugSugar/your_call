@@ -12,6 +12,8 @@ extends Node
 signal chapter_started(chapter: ChapterData)
 ## Emitted as each beat starts.
 signal beat_started(beat: BeatData)
+## Emitted the moment a choice fires a secret ending, before the imp fades and the credits roll.
+signal ending_reached(ending: StringName)
 
 ## Path pattern of a cinematic scene, filled with its name twice.
 const CINEMATIC_SCENE := "res://cinematics/%s/%s_cinematic.tscn"
@@ -35,14 +37,18 @@ const CREDITS_SCENE := "res://ui/credits/credits.tscn"
 
 
 ## Plays [param chapters] in order, from the chapter with the id [param from_chapter] and its beat
-## [param from_beat] (or from the start), with [param run] remembering what happens. Returns the secret
-## ending a choice fired, or an empty name when the run went to its end.
-func play_run(chapters: Array[ChapterData], run: RunState, from_chapter := &"", from_beat := &"") -> StringName:
+## [param from_beat] (or from the start), with [param run] remembering what happens. With
+## [param fill_skipped], a run started part way first takes what each chapter it skips would have left
+## behind; a continued run remembers all that already. Returns the secret ending a choice fired, or an
+## empty name when the run went to its end.
+func play_run(chapters: Array[ChapterData], run: RunState, from_chapter := &"", from_beat := &"",
+		fill_skipped := true) -> StringName:
 	var started := from_chapter == &""
 	for chapter in chapters:
 		if not started:
 			if chapter.id != from_chapter:
-				run.assume(chapter)
+				if fill_skipped:
+					run.assume(chapter)
 				continue
 			started = true
 		var ending := await play_chapter(chapter, run, from_beat)
@@ -68,11 +74,7 @@ func play_chapter(chapter: ChapterData, run: RunState, from := &"") -> StringNam
 		if not beat is CinematicData and not chapter.wallet.is_empty() and run.wallet == null:
 			run.open_wallet(int(chapter.wallet.get("start", 0)))
 		if beat is CinematicData:
-			var scene := (beat as CinematicData).scene
-			var cinematic: Variant = _add_overlay(CINEMATIC_SCENE % [scene, scene])
-			if cinematic != null:
-				await cinematic.play()
-				cinematic.queue_free()
+			await play_cinematic((beat as CinematicData).scene)
 		elif beat is NarrationData:
 			await _imp_ready()
 			imp.free_to_roam = true
@@ -84,12 +86,22 @@ func play_chapter(chapter: ChapterData, run: RunState, from := &"") -> StringNam
 			await imp.go_home()
 			var ending := await question_player.play(beat as QuestionData, run)
 			if ending != &"":
+				ending_reached.emit(ending)
 				run.close_wallet()
 				await _end(ending)
 				return ending
 		await get_tree().create_timer(between_beats, false).timeout
 	run.close_wallet()
 	return &""
+
+
+## Plays the cinematic called [param scene] over everything, such as the [code]crash[/code]. Returns once
+## it has finished, at once when it does not exist yet.
+func play_cinematic(scene: StringName) -> void:
+	var cinematic: Variant = _add_overlay(CINEMATIC_SCENE % [scene, scene])
+	if cinematic != null:
+		await cinematic.play()
+		cinematic.queue_free()
 
 
 ## The imp fades, the stage dissolves, and the credits roll.

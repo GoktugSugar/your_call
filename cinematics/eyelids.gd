@@ -90,6 +90,14 @@ func close(sway_from := 0.0) -> void:
 	await settled
 
 
+## Shuts the eyes at once, with no closing: the dark of eyes already shut, such as a scene that opens
+## with them shut.
+func shut() -> void:
+	stop()
+	_set_clear(0.0)
+	show()
+
+
 ## Stops the eyes where they are. Whoever is waiting on [method open] or [method close] carries on.
 func stop() -> void:
 	for tween: Tween in [_clearing, _focusing]:

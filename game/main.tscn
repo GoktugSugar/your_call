@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://game/main.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://ink/paper/paper.tscn" id="2_paper"]
@@ -10,14 +10,18 @@
 [ext_resource type="PackedScene" path="res://dev/dev_tools.tscn" id="8_dev"]
 [ext_resource type="Script" path="res://game/run_player.gd" id="9_run"]
 [ext_resource type="PackedScene" path="res://ui/balance/balance_readout.tscn" id="10_balance"]
+[ext_resource type="Script" path="res://game/save/auto_save.gd" id="11_save"]
+[ext_resource type="PackedScene" path="res://ui/pause/pause_menu.tscn" id="12_pause"]
 
-[node name="Main" type="Node" node_paths=PackedStringArray("run_player", "question_player", "imp", "dialogue", "balance")]
+[node name="Main" type="Node" node_paths=PackedStringArray("run_player", "question_player", "imp", "dialogue", "balance", "auto_save", "pause_menu")]
 script = ExtResource("1_main")
 run_player = NodePath("RunPlayer")
 question_player = NodePath("QuestionPlayer")
 imp = NodePath("World/Imp")
 dialogue = NodePath("UI/DialogueBox")
 balance = NodePath("UI/BalanceReadout")
+auto_save = NodePath("AutoSave")
+pause_menu = NodePath("PauseMenu")
 dev_tools_scene = ExtResource("8_dev")
 
 [node name="Paper" parent="." instance=ExtResource("2_paper")]
@@ -55,3 +59,10 @@ question_player = NodePath("../QuestionPlayer")
 dialogue = NodePath("../UI/DialogueBox")
 imp = NodePath("../World/Imp")
 overlay_root = NodePath("../Overlays")
+
+[node name="AutoSave" type="Node" parent="." node_paths=PackedStringArray("run_player")]
+script = ExtResource("11_save")
+run_player = NodePath("../RunPlayer")
+
+[node name="PauseMenu" parent="." node_paths=PackedStringArray("auto_save") instance=ExtResource("12_pause")]
+auto_save = NodePath("../AutoSave")

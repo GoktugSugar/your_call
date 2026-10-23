@@ -18,6 +18,7 @@ const _QUESTION_KEYS: PackedStringArray = ["kind", "id", "number", "title", "ver
 const _TABLEAU_KEYS: PackedStringArray = ["kind", "id", "number", "title", "weight", "stage", "ask", "lines"]
 const _NARRATION_KEYS: PackedStringArray = ["kind", "id", "lines"]
 const _CINEMATIC_KEYS: PackedStringArray = ["kind", "id", "scene"]
+const _MENU_KEYS: PackedStringArray = ["id", "title", "lines"]
 const _OPTION_KEYS: PackedStringArray = ["id", "label", "outcome", "crowd", "profile", "reaction", "ending", "hidden",
 		"if", "unless", "remember"]
 const _LINE_KEYS: PackedStringArray = ["text", "speaker", "voice", "face", "direction", "voiced", "if", "unless"]
@@ -76,6 +77,39 @@ func load_chapter(path: String) -> ChapterData:
 		seen[beat.id] = true
 		chapter.beats.append(beat)
 	return chapter
+
+
+## Reads the chapters [param run_path] lists, in its order, from the folder [param chapters_dir].
+func load_run(run_path: String, chapters_dir: String) -> Array[ChapterData]:
+	var chapters: Array[ChapterData] = []
+	var listed: Variant = read_json(run_path)
+	for file: Variant in listed.get("chapters", []) if listed is Dictionary else []:
+		var chapter := load_chapter(chapters_dir.path_join(str(file)))
+		if chapter != null:
+			chapters.append(chapter)
+	return chapters
+
+
+## Reads the main menu's words at [param path]: its title and the imp's sets of lines. Returns null
+## only when the file cannot be read as JSON.
+func load_menu(path: String) -> MenuData:
+	var data: Variant = read_json(path)
+	if data == null:
+		return null
+	if not data is Dictionary:
+		problems.append("%s: not a JSON object" % path)
+		return null
+	_check_keys(data, _MENU_KEYS, path)
+	var menu := MenuData.new()
+	menu.id = StringName(_text(data, "id", path, true))
+	menu.title = _text(data, "title", path, true)
+	var sets: Variant = data.get("lines", {})
+	if not sets is Dictionary:
+		problems.append("%s: lines needs an object of named sets" % path)
+		return menu
+	for set_name: Variant in sets:
+		menu.sets[StringName(str(set_name))] = _lines(sets, str(set_name), "%s.%s" % [menu.id, set_name], path)
+	return menu
 
 
 ## Reads a JSON file, recording a problem if it cannot be read.

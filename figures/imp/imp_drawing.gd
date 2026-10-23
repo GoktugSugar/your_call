@@ -144,6 +144,12 @@ const _SURPRISED_OPEN_RADII := Vector2(6.5, 8.5)
 const _OPEN_MOUTH_WIDTH := 0.75
 
 
+## The face called [param face_name], such as [code]smug[/code], or his grin when it names none he has.
+static func face_named(face_name: StringName) -> Face:
+	var key := String(face_name).to_upper() if face_name != &"" else "GRIN"
+	return Face.get(key, Face.GRIN)
+
+
 func _init() -> void:
 	style_override = LINE_STYLE
 
