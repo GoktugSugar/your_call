@@ -8,7 +8,8 @@
 
 What each sound asks for (its description, length, how many takes and where the chosen one goes) is in
 sounds.json beside this script. Takes are scratch audio, kept out of git; a new batch is numbered on
-from the last. Several takes kept for one sound go beside its file, numbered (button_press_1.wav and on).
+from the last. Several takes kept for one sound go beside its file, numbered (button_press_1.wav and on),
+and the sound's cue (game/audio/cues/<sound>.tres), when it has one, is pointed at every take kept.
 A sound kept as a .wav is decoded and trimmed of the silence at either end, so it plays the moment it is
 asked for; one marked "loop" is made to run seamlessly back into its own start, its loop written into
 the file for Godot to read. The key comes from the ELEVENLABS_API_KEY environment variable or .env at
@@ -20,6 +21,7 @@ import array
 import json
 import math
 import pathlib
+import re
 import shutil
 import struct
 import subprocess
@@ -33,6 +35,8 @@ from elevenlabs import API, ROOT, TIMEOUT_SECONDS, ApiError, api_key  # noqa: E4
 
 SOUNDS = pathlib.Path(__file__).with_name("sounds.json")
 AUDITIONS = ROOT / "sfx_auditions"
+# Where each sound's cue is, by the sound's name: what the game plays it with.
+CUES = ROOT / "game" / "audio" / "cues"
 OUTPUT_FORMAT = "mp3_44100_128"
 # What a take costs, by ElevenLabs' help page: a set length is charged by the second. Another of their
 # pages gives a higher rate, so the dry run shows both.
@@ -133,6 +137,24 @@ def add_loop(path: pathlib.Path, frames: int) -> None:
     path.write_bytes(bytes(data))
 
 
+def point_cue(name: str, files: list[pathlib.Path]) -> None:
+    """Points the sound's cue, when it has one, at [files], the takes just kept, so the game plays each of
+    them; the cue's level, pitch and the rest stay as they were."""
+    cue = CUES / f"{name}.tres"
+    if not cue.exists():
+        return
+    text = cue.read_text(encoding="utf-8")
+    text = re.sub(r'^\[ext_resource type="AudioStream"[^\n]*\n', "", text, flags=re.M)
+    listed = "".join(f'[ext_resource type="AudioStream" path="res://{file.relative_to(ROOT).as_posix()}" id="{i + 2}_take"]\n'
+                     for i, file in enumerate(files))
+    text = re.sub(r'^(\[ext_resource type="Script"[^\n]*\n)', lambda m: m.group(1) + listed, text, count=1, flags=re.M)
+    takes = ", ".join(f'ExtResource("{i + 2}_take")' for i in range(len(files)))
+    text = re.sub(r"^takes = .*$", f"takes = Array[AudioStream]([{takes}])", text, count=1, flags=re.M)
+    text = re.sub(r"load_steps=\d+", f"load_steps={len(files) + 2}", text, count=1)
+    cue.write_bytes(text.encode("utf-8"))
+    print(f"{cue.relative_to(ROOT).as_posix()} now plays {len(files)} take{'s' if len(files) > 1 else ''}")
+
+
 def save(name: str, sound: dict, takes: list[int]) -> None:
     """Makes the chosen takes the game's sound: one take is its file, several go beside it, numbered."""
     for number in takes:
@@ -144,13 +166,16 @@ def save(name: str, sound: dict, takes: list[int]) -> None:
     for old in [target, *target.parent.glob(f"{target.stem}_*{target.suffix}")]:
         if old.exists():
             old.unlink()
+    kept = []
     for index, number in enumerate(takes, start=1):
         destination = target if len(takes) == 1 else kept_path(target, index)
+        kept.append(destination)
         if destination.suffix == ".wav":
             write_wav(take_path(name, number), destination, bool(sound.get("loop", False)))
         else:
             shutil.copyfile(take_path(name, number), destination)
         print(f"{take_path(name, number).relative_to(ROOT).as_posix()} is now {destination.relative_to(ROOT).as_posix()}")
+    point_cue(name, kept)
     print("Import the project (or click into the editor) so the game can load them.")
 
 
