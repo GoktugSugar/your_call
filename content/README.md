@@ -20,7 +20,7 @@ The tests in `tests/content/` load every chapter and fail on any problem, so run
 }
 ```
 
-The facts a run remembers so far: the walking button's history (`button_woke`, `button_auctioned`, `button_shot`, `button_spared`), set by its stages, and the campaign's (`class_knight` and the other classes, `reason_gold` and the other reasons, `took_shortcut` or `took_long_road`, `companion_trusted`, `companion_used` or `companion_refused` with `companion_with_you` for either of the first two, `beast_killed` or `beast_spared`, `took_blade`, `took_gold` or `left_treasure`), set by its options.
+The facts a run remembers so far: the walking button's history (`button_woke`, `button_auctioned`, `button_shot`, `button_spared`), set by its stages, who stayed on the trapdoor in 6.02 (`kept_old_soul`, set by the stage), and the campaign's (`class_knight` and the other classes, `reason_gold` and the other reasons, `took_shortcut` or `took_long_road`, `companion_trusted`, `companion_used` or `companion_refused` with `companion_with_you` for either of the first two, `beast_killed` or `beast_spared`, `took_blade`, `took_gold` or `left_treasure`), set by its options.
 
 A chapter can say what a run started after it, from the dev menu, should take it to have left behind: `"if_skipped": { "remember": ["button_woke"], "kills": { "stranger": 1 } }`, the facts later beats look back on and the kills by kind. Later beats read the walking button's history (`button_woke`, `button_auctioned`, `button_shot`, `button_spared`) and the kill tally.
 
@@ -208,6 +208,18 @@ The confession booth, for Chapter 7. A confessor files into the booth, the words
 - A confessor with `"side": "left"` or `"right"` stands beside the booth instead of in it, with its words over its head, as the two in 7.10 do. `"kind"` names its soul kind (a stranger by default).
 - `{ "button": true }` is the walking button, which slides in as a plain button and comes alive in the booth. A line of the ask with `"speaker": "button"` floats over it in its own voice while the box is away, and it says the question's `leave` lines as it files out.
 - An option's outcome is `{ "verdict": "guilty" }`, `cleared` or `everyone`, or one per confessor by voice: `{ "verdict": { "her": "cleared", "him": "guilty" } }`.
+
+## The Show's stages
+
+Chapter 6 is a game show, every round staged in the same studio: the curtain valance, the floor and the audience along the foot of the page. In every round the room votes: its share for the first option is that option's `crowd`, with `random` percent of the room voting at random instead (drawn again every play), and the room picks the first option when its share passes `line` (50 when the stage does not say). The reveal shows the room's vote as it fell, with `reveal.mark` naming the line. A `board` is words on the studio, such as a prize, with `{prize}` or `{pot}` filled in as money.
+
+- `{ "type": "applause", "sign": { "text": "APPLAUSE" } }`: a contestant trips flat on their face and the sign lights while the audience claps. No outcome.
+- `{ "type": "trapdoors", "random": 40, "line": 50, "left": "calm", "right": "elderly", "remember_right": "kept_old_soul" }`: two contestants on trapdoors, by kind; the room keeps one (the first option keeps the left) and the other drops through the floor. Outcomes `left` or `right`, who stayed; when the right one stays the run remembers `remember_right`.
+- `{ "type": "wheel", "random": 40, "line": 50, "contestant": "stranger", "prize": 10000, "board": { "text": "{prize}" } }`: the first option spins the wheel. Outcomes `kept`, `doubled`, `lost`.
+- `{ "type": "champion", "random": 20, "line": 50, "board": { "text": "40 wins" } }`: the walking button at the podium, its lines spoken over itself (`"speaker": "button"`). The first option votes it off. Outcomes `off`, `stays`.
+- `{ "type": "split", "steal": 47, "pot": 100000, "board": { "text": "{pot}" }, "split_word": { "text": "split" }, "steal_word": { "text": "steal" } }`: split or steal. The left contestant plays the option's `outcome.card` (`split` or `steal`); the right one steals `steal` percent of the time. Outcomes `shared`, `robbed` (the left split, the right stole), `took_all`, `nothing`.
+- `{ "type": "collapse", "random": 40, "line": 30, "contestant": "stranger" }`: the share of the room standing up is the first option's crowd, give or take `random`; past `line` the contestant gets back up. Outcomes `lives`, `dies`.
+- `{ "type": "prize_box", "random": 40, "line": 50, "prize": 50000, "board": { "text": "{prize}" }, "finalist": "calm", "finalist_if": { "kept_old_soul": "elderly" } }`: the first option takes the money, the other the box, which holds a cucumber. The finalist is `finalist`, or another kind when the run remembers a fact in `finalist_if`. Outcomes `money`, `box`.
 
 ## The campaign's stages
 
