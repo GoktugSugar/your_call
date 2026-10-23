@@ -50,7 +50,7 @@ const _FINIAL := Vector3(-108.0, -225.5, 6.0)
 ## The rings the curtain hangs from: how far across each one is, and their half width and height, round
 ## the rail's middle.
 const _RINGS := [-100.0, -71.0, -42.0, -13.0, 16.0, 45.0, 74.0]
-const _RING_RADII := Vector2(5.0, 7.5)
+const _RING_RADII := Vector2(6.0, 9.5)
 ## How far below the rail's middle the curtain hangs from each ring, and how far it sags between them.
 const _HANG := 4.0
 const _SAG := 3.5
