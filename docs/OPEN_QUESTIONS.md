@@ -83,13 +83,6 @@ Built on 2026-10-23. The creative calls were the user's; these look and feel cal
 - The settings page's look: the ink bars, the on and off words, the gavel knock and the imp's bark as samples.
 - The pause's veil of paper.
 
-## To review: the browser build
-
-Built on 2026-10-23; dev calls, logged in `DECISIONS.md`.
-
-- No Quit on the menu in a browser. Alternative: keep it, leaving the page frozen.
-- A chapter waits up to 8 seconds for its voice on a slow connection, then speaks unvoiced until it arrives. Alternatives: wait longer, or show something while it waits.
-
 ## Parked: the browser build
 
 - Each line costs 40 to 60 ms in the browser as it begins (laying out its text and the imp's move): a few dropped frames per line.

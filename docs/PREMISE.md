@@ -484,7 +484,7 @@ There is one linear run, the same for everyone. All the content is in `SCRIPT.md
 - **Readouts appear only where a chapter needs a running number,** such as the money chapter's amber balance and price tags.
 - **Composed, centred tableaux.** Each question is laid out balanced above the dialogue box, on a consistent baseline.
 - **The sanctioned menu exception.** The main menu, settings and pause are the one place a real menu belongs, kept hand-drawn and spare.
-  - **Main menu:** a hand-lettered title, then New Game, Continue, Endings, Settings and Quit, with the current option in amber (2026-10-23: Quit added, then Endings).
+  - **Main menu:** a hand-lettered title, then New Game, Continue, Endings, Settings and Quit, with the current option in amber (2026-10-23: Quit added, then Endings). A browser build leaves Quit out, since a page cannot close itself (2026-10-23).
   - **Endings:** every ending of the game, the five secret ones beside the thirteen postings, the ones found by name and the rest a faded hand-drawn blank, then how many are found ("4 of 18") and Back. The imp keeps quiet while it is open (2026-10-23).
   - **Settings:** music, sound effects and voice volume, fullscreen, and auto skip (2026-10-23; the earlier build had music, SFX, fullscreen and language).
   - **Pause (Esc):** Resume, Save, Settings and Quit to Menu (2026-10-23: Settings added).
