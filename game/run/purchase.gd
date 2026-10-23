@@ -25,3 +25,20 @@ static func make(item_id: StringName, item_label: String, item_doodle: String, p
 	made.doodle = item_doodle
 	made.paid = price
 	return made
+
+
+## The purchase as plain data, for the save.
+func to_data() -> Dictionary:
+	return {"id": String(id), "label": label, "doodle": doodle, "paid": paid, "units": units,
+			"buyback_share": buyback_share}
+
+
+## A purchase from [method to_data], or null when [param data] is not one.
+static func from_data(data: Variant) -> Purchase:
+	if not data is Dictionary or not SaveData.has_text(data, ["id", "label", "doodle"]) \
+			or not SaveData.has_numbers(data, ["paid", "units", "buyback_share"]):
+		return null
+	var made := make(StringName(data["id"]), data["label"], data["doodle"], int(data["paid"]))
+	made.units = int(data["units"])
+	made.buyback_share = float(data["buyback_share"])
+	return made

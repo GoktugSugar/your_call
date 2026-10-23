@@ -66,6 +66,40 @@ static func holds(run: RunState, required: PackedStringArray, excluded: PackedSt
 	return true
 
 
+## Everything the run remembers as plain data, for the save: the profile, the wallet if one is open,
+## the kill tally and the facts.
+func to_data() -> Dictionary:
+	var facts: Array[String] = []
+	for fact in _facts:
+		facts.append(String(fact))
+	return {"profile": profile.to_data(), "wallet": wallet.to_data() if wallet != null else null,
+			"kills": kills.to_data(), "facts": facts}
+
+
+## A run that remembers what [method to_data] wrote, or null when [param data] is not that.
+static func from_data(data: Variant) -> RunState:
+	if not data is Dictionary or not data.get("profile") is Dictionary or not data.get("facts") is Array:
+		return null
+	var run := RunState.new()
+	for axis: Variant in data["profile"]:
+		if not (data["profile"][axis] is int or data["profile"][axis] is float):
+			return null
+	run.profile.load_data(data["profile"])
+	if data.get("wallet") != null:
+		run.wallet = Wallet.from_data(data["wallet"])
+		if run.wallet == null:
+			return null
+	var tally := KillTally.from_data(data.get("kills"))
+	if tally == null:
+		return null
+	run.kills = tally
+	for fact: Variant in data["facts"]:
+		if not fact is String:
+			return null
+		run.remember(StringName(fact))
+	return run
+
+
 ## Takes what [param chapter] would have left behind had it been played, for a run that starts after
 ## it: its [member ChapterData.if_skipped], the facts it would be remembered for and the kills, by kind.
 func assume(chapter: ChapterData) -> void:

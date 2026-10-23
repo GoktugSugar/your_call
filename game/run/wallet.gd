@@ -68,3 +68,31 @@ func spent() -> int:
 ## The share of the pot still left, from 0 to 1.
 func share_left() -> float:
 	return clampf(float(balance) / start, 0.0, 1.0) if start > 0 else 0.0
+
+
+## The wallet as plain data, for the save.
+func to_data() -> Dictionary:
+	return {"start": start, "balance": balance, "bought": bought.map(func(item: Purchase) -> Dictionary: return item.to_data()),
+			"passed": passed.map(func(item: Purchase) -> Dictionary: return item.to_data())}
+
+
+## A wallet from [method to_data], or null when [param data] is not one.
+static func from_data(data: Variant) -> Wallet:
+	if not data is Dictionary or not SaveData.has_numbers(data, ["start", "balance"]) \
+			or not data.get("bought") is Array or not data.get("passed") is Array:
+		return null
+	var wallet := Wallet.new(int(data["start"]))
+	wallet.balance = int(data["balance"])
+	if not _read_purchases(data["bought"], wallet.bought) or not _read_purchases(data["passed"], wallet.passed):
+		return null
+	return wallet
+
+
+## Reads every purchase in [param raw] into [param into]. False when any of them is not one.
+static func _read_purchases(raw: Array, into: Array[Purchase]) -> bool:
+	for each: Variant in raw:
+		var item := Purchase.from_data(each)
+		if item == null:
+			return false
+		into.append(item)
+	return true
