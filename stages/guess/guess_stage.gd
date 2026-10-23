@@ -79,6 +79,8 @@ func setup(for_question: QuestionData) -> void:
 	truth_bar.value = _truth()
 	truth_bar.fill = 0.0
 	truth_bar.full_length = scale_bar.length
+	# The room's number shows only once its bar starts inking in.
+	truth_bar.number_label.modulate.a = 0.0
 	var palette := InkPalette.get_default()
 	guess_label.add_theme_color_override(&"font_color", palette.color(guess_role))
 	gap_label.add_theme_color_override(&"font_color", palette.color(gap_role))
@@ -113,6 +115,7 @@ func play_consequence(_index: int) -> StringName:
 	var about := str(question.stage.get("about", ""))
 	if about != "":
 		run.record_guess(question, StringName(about), guess, truth)
+	truth_bar.number_label.modulate.a = 1.0
 	var fill := create_tween()
 	fill.tween_property(truth_bar, ^"fill", 1.0, reveal_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	await fill.finished
