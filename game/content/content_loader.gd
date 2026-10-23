@@ -18,8 +18,9 @@ const _QUESTION_KEYS: PackedStringArray = ["kind", "id", "number", "title", "ver
 const _TABLEAU_KEYS: PackedStringArray = ["kind", "id", "number", "title", "weight", "stage", "ask", "lines"]
 const _NARRATION_KEYS: PackedStringArray = ["kind", "id", "lines"]
 const _CINEMATIC_KEYS: PackedStringArray = ["kind", "id", "scene"]
-const _OPTION_KEYS: PackedStringArray = ["id", "label", "outcome", "crowd", "profile", "reaction", "ending", "hidden"]
-const _LINE_KEYS: PackedStringArray = ["text", "speaker", "voice", "face", "direction", "voiced"]
+const _OPTION_KEYS: PackedStringArray = ["id", "label", "outcome", "crowd", "profile", "reaction", "ending", "hidden",
+		"if", "unless", "remember"]
+const _LINE_KEYS: PackedStringArray = ["text", "speaker", "voice", "face", "direction", "voiced", "if", "unless"]
 ## The key that marks a line inside stage data, such as a plea over a figure.
 const _STAGE_LINE_KEY := "says"
 ## Keys in stage data whose words the player reads on the stage, such as a readout or a caption.
@@ -198,6 +199,9 @@ func _option(raw: Variant, line_prefix: String, where: String) -> OptionData:
 		option.hidden = hidden
 	else:
 		problems.append("%s: hidden needs true or false" % here)
+	option.requires = _facts(data, "if", here)
+	option.excludes = _facts(data, "unless", here)
+	option.remember = _facts(data, "remember", here)
 	var crowd: Variant = data.get("crowd")
 	if crowd is float or crowd is int:
 		option.crowd = float(crowd)
@@ -281,6 +285,8 @@ func _line(raw: Variant, line_id: String, default_speaker := &"imp") -> LineData
 		problems.append("%s: unknown face '%s'" % [line_id, face])
 	var made := LineData.make(line_id, _text(raw, "text", line_id, true), StringName(speaker), StringName(face))
 	made.voice = StringName(_text(raw, "voice", line_id))
+	made.requires = _facts(raw, "if", line_id)
+	made.excludes = _facts(raw, "unless", line_id)
 	made.direction = str(raw.get("direction", ""))
 	var voiced: Variant = raw.get("voiced", true)
 	if voiced is bool:
@@ -327,6 +333,23 @@ func _collect_stage_texts(value: Variant, into: PackedStringArray) -> void:
 	elif value is Array:
 		for item: Variant in value:
 			_collect_stage_texts(item, into)
+
+
+## The facts [param key] names: one fact, or a list of them.
+func _facts(data: Dictionary, key: String, where: String) -> PackedStringArray:
+	var value: Variant = data.get(key, [])
+	if value is String:
+		return PackedStringArray([value])
+	var facts := PackedStringArray()
+	if not value is Array:
+		problems.append("%s: %s needs a fact or a list of facts" % [where, key])
+		return facts
+	for fact: Variant in value:
+		if fact is String and not (fact as String).is_empty():
+			facts.append(fact)
+		else:
+			problems.append("%s: %s needs facts as words" % [where, key])
+	return facts
 
 
 func _list(data: Dictionary, key: String, where: String) -> Array:

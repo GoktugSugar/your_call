@@ -140,7 +140,7 @@ func fill(lines: Array[LineData]) -> Array[LineData]:
 
 ## What the crowd reveal shows once the question is over, with [param pick] as the player's last choice.
 func reveal_split(pick: int) -> RevealSplit:
-	return RevealSplit.of(question, pick)
+	return RevealSplit.of(question, pick, run)
 
 
 ## Dissolves the tableau away.

@@ -54,12 +54,16 @@ var question: QuestionData
 ## The stage on screen, or null.
 var stage: Stage
 
+## What the run remembers, for the question being played: which options it offers and which lines hold.
+var _run: RunState
+
 
 ## Plays [param to_play] from start to finish, handing its stage [param run], what the run remembers.
 ## Each pick's profile nudges are added to the run's profile. Returns the secret ending the player's
 ## choice fired, or an empty name.
 func play(to_play: QuestionData, run: RunState) -> StringName:
 	question = to_play
+	_run = run
 	stage = _make_stage(to_play, run)
 	if stage == null:
 		return &""
@@ -86,6 +90,8 @@ func play(to_play: QuestionData, run: RunState) -> StringName:
 		dialogue.close()
 		await _pause(before_consequence)
 		var result := await stage.play_consequence(pick)
+		for fact in option.remember:
+			run.remember(StringName(fact))
 		await _pause(before_reaction)
 
 		phase = Phase.REACTING
@@ -109,9 +115,9 @@ func play(to_play: QuestionData, run: RunState) -> StringName:
 	await stage.leave()
 	var split := stage.reveal_split(pick)
 	await _pause(before_reveal)
-	var least_popular := stage.fill(to_play.lines_in(LEAST_POPULAR))
+	var least_popular := LineData.for_run(stage.fill(to_play.lines_in(LEAST_POPULAR)), run)
 	if not least_popular.is_empty() and split.is_least_popular():
-		await dialogue.say(least_popular)
+		await _say(least_popular)
 		await dialogue.close()
 	phase = Phase.REVEALING
 	await reveal.present(split)
@@ -142,7 +148,7 @@ func _play_tableau(ask: Array[LineData]) -> void:
 	phase = Phase.REACTING
 	var lines := stage.fill(question.lines_in(result))
 	if not lines.is_empty():
-		await dialogue.say(lines)
+		await _say(lines)
 	await dialogue.close()
 	await _finish()
 
@@ -167,7 +173,7 @@ func _choose(to_play: QuestionData) -> int:
 		var chosen := await stage.choose()
 		stage.set_choosing(false)
 		return chosen
-	var shown := to_play.shown_options()
+	var shown := to_play.shown_options(_run)
 	var labels := PackedStringArray()
 	var all_labels := stage.option_labels()
 	for i in shown:
@@ -193,12 +199,12 @@ func _choose(to_play: QuestionData) -> int:
 	return shown[row_pick] if row_pick >= 0 else picked_on_stage[0]
 
 
-## Says [param lines] in turn in the dialogue box, except a line someone on the stage says themselves,
-## which floats over them while the box is away. With [param hold_last], the last page stays up and this
-## returns as soon as it has inked on.
+## Says those of [param lines] that hold on the run, in turn, in the dialogue box, except a line someone
+## on the stage says themselves, which floats over them while the box is away. With [param hold_last],
+## the last page stays up and this returns as soon as it has inked on.
 func _say(lines: Array[LineData], hold_last := false) -> void:
 	var in_box: Array[LineData] = []
-	for line in lines:
+	for line in LineData.for_run(lines, _run):
 		if stage == null or not stage.speaks(line):
 			in_box.append(line)
 			continue
@@ -212,7 +218,8 @@ func _say(lines: Array[LineData], hold_last := false) -> void:
 
 
 ## The imp's line after a round of an offer ladder, played the way [member round_lines] says.
-func _say_between_rounds(lines: Array[LineData]) -> void:
+func _say_between_rounds(all_lines: Array[LineData]) -> void:
+	var lines := LineData.for_run(all_lines, _run)
 	if lines.is_empty():
 		return
 	match round_lines:

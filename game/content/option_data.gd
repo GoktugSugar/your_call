@@ -9,6 +9,14 @@ var id := &""
 var label := ""
 ## Left out of the choice row: picked only on the stage, such as shooting the imp.
 var hidden := false
+## Facts the run must remember for the option to be offered at all, such as the campaign's class
+## ([code]class_knight[/code]). Empty offers it always.
+var requires := PackedStringArray()
+## Facts that keep the option back when the run remembers any of them.
+var excludes := PackedStringArray()
+## Facts the run remembers once the option is picked, such as [code]took_shortcut[/code], for later
+## beats to look back on.
+var remember := PackedStringArray()
 ## The seeded share of the crowd who chose it, shown on the reveal.
 var crowd := 0.0
 ## Silent nudges to the profile, by axis id. Negative leans toward the axis's first pole.
@@ -27,6 +35,14 @@ var reactions := {}
 var ending := &""
 ## Secret endings that fire only on some outcomes, keyed like [member reactions].
 var endings: Dictionary[StringName, StringName] = {}
+
+
+## Whether the option is offered on a run that remembers what [param run] does: not hidden, every fact it
+## requires remembered, and none it excludes. With no run, every option that is not hidden is.
+func offered_on(run: RunState) -> bool:
+	if hidden:
+		return false
+	return run == null or RunState.holds(run, requires, excludes)
 
 
 ## The reaction to [param result], the outcome the stage reported: its own lines if it has any,

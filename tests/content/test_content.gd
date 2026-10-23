@@ -83,7 +83,8 @@ func test_every_placeholder_is_one_its_stage_fills() -> void:
 func test_display_only_crowd_splits_add_up_to_the_whole_crowd() -> void:
 	var offenders := PackedStringArray()
 	for question in _questions():
-		if not String(question.verb) in DISPLAY_ONLY_VERBS:
+		# Options offered only on some runs are checked run by run, in test_conditions.gd.
+		if not String(question.verb) in DISPLAY_ONLY_VERBS or question.has_conditional_options():
 			continue
 		var total := 0.0
 		for option in question.options:
@@ -130,8 +131,9 @@ func test_every_doodle_a_stage_names_exists() -> void:
 	var offenders := PackedStringArray()
 	for question in _questions():
 		var named: Array = question.stage.get("doodles", []).duplicate()
-		if question.stage.has("item"):
-			named.append(question.stage["item"])
+		for key: String in ["item", "doodle"]:
+			if question.stage.has(key):
+				named.append(question.stage[key])
 		for key: String in ["sides", "targets"]:
 			for entry: Variant in question.stage.get(key, []):
 				if entry is Dictionary and entry.has("doodle"):

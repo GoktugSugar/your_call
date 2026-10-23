@@ -19,6 +19,10 @@ var face := &""
 var direction := ""
 ## Whether the line is spoken aloud. One that is not inks on in silence, and the voice tools skip it.
 var voiced := true
+## Facts the run must remember for the line to be said, such as the campaign's class. Empty says it always.
+var requires := PackedStringArray()
+## Facts that keep the line unsaid when the run remembers any of them.
+var excludes := PackedStringArray()
 
 
 static func make(line_id: String, line_text: String, line_speaker := &"imp", line_face := &"") -> LineData:
@@ -52,7 +56,23 @@ func filled(fills: Dictionary, keys := {}) -> LineData:
 	copy.voice = voice
 	copy.direction = direction
 	copy.voiced = voiced
+	copy.requires = requires
+	copy.excludes = excludes
 	return copy
+
+
+## Whether the line is said on a run that remembers what [param run] does. With no run, it is.
+func holds(run: RunState) -> bool:
+	return run == null or RunState.holds(run, requires, excludes)
+
+
+## The lines of [param lines] said on [param run], in order.
+static func for_run(lines: Array[LineData], run: RunState) -> Array[LineData]:
+	var said: Array[LineData] = []
+	for line in lines:
+		if line.holds(run):
+			said.append(line)
+	return said
 
 
 ## The name the voice tools know this line's voice by: the speaker's, or for a speaker with several

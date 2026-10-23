@@ -55,6 +55,17 @@ func remembers(fact: StringName) -> bool:
 	return _facts.get(fact, false)
 
 
+## Whether [param run] remembers every fact in [param required] and none in [param excluded].
+static func holds(run: RunState, required: PackedStringArray, excluded: PackedStringArray) -> bool:
+	for fact in required:
+		if not run.remembers(StringName(fact)):
+			return false
+	for fact in excluded:
+		if run.remembers(StringName(fact)):
+			return false
+	return true
+
+
 ## Takes what [param chapter] would have left behind had it been played, for a run that starts after
 ## it: its [member ChapterData.if_skipped], the facts it would be remembered for and the kills, by kind.
 func assume(chapter: ChapterData) -> void:

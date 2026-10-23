@@ -1,0 +1,653 @@
+{
+  "id": "ch8",
+  "title": "The Campaign",
+  "beats": [
+    { "kind": "cinematic", "id": "waking", "scene": "waking" },
+    {
+      "kind": "narration",
+      "id": "intro",
+      "lines": [
+        "New game. Forget the tracks and the buttons and the gun. Tonight we are going on an adventure, you and I.",
+        "I am your Dungeon Master. It is a game the living play. I describe a world, you [amber]pretend[/amber] to walk through it, and I [amber]pretend[/amber] your choices matter. I have never once let anybody win who I did not want to.",
+        { "text": "Try, for one hour, to be a [amber]knight[/amber] instead of a [amber]defendant[/amber]. Let us see who you are with dragons in front of you instead of dilemmas.", "face": "smug" }
+      ]
+    },
+    {
+      "kind": "question",
+      "id": "class",
+      "number": "8.01",
+      "title": "Your Class",
+      "verb": "multiple_choice",
+      "weight": "light",
+      "stage": { "type": "menu", "doodles": [ "knight_shield", "rogue_dagger", "wizard_hat", "bard_lute", "cleric_chalice" ] },
+      "ask": [
+        "So. What kind of hero are you? It decides [amber]absolutely nothing[/amber], and also [amber]the whole rest of your night[/amber]. Pick your class."
+      ],
+      "options": [
+        {
+          "id": "knight",
+          "label": "The Knight",
+          "crowd": 34,
+          "remember": "class_knight",
+          "profile": { "order_freedom": -0.4 },
+          "reaction": [ "A knight. Honour, a big sword, a jaw you could set a table on. You will do the noble thing at every turn, [red]die[/red] nobly, and bore everyone at the funeral." ]
+        },
+        {
+          "id": "rogue",
+          "label": "The Rogue",
+          "crowd": 27,
+          "remember": "class_rogue",
+          "profile": { "self_others": -0.4 },
+          "reaction": [ { "text": "A rogue. You checked me for a coin purse while I was still explaining the rules. I saw that. We are going to get along horribly.", "face": "smug" } ]
+        },
+        {
+          "id": "wizard",
+          "label": "The Wizard",
+          "crowd": 22,
+          "remember": "class_wizard",
+          "profile": { "risk_safety": 0.3 },
+          "reaction": [ "A wizard. Naturally. You will solve every problem by explaining it to death, and I will pretend the rules of magic are consistent. They are not. I [amber]invent[/amber] them as I go." ]
+        },
+        {
+          "id": "bard",
+          "label": "The Bard",
+          "crowd": 10,
+          "remember": "class_bard",
+          "profile": { "self_others": 0.3 },
+          "reaction": [ "A bard. At some point tonight you will try to talk your way past a dragon, and a small part of me cannot wait to watch that not work." ]
+        },
+        {
+          "id": "cleric",
+          "label": "The Cleric",
+          "crowd": 7,
+          "remember": "class_cleric",
+          "profile": { "self_others": 0.4 },
+          "reaction": [ "A cleric. Faith, mending, a tender heart. You will spend the whole night healing people who were going to be perfectly fine, and calling it a calling." ]
+        }
+      ],
+      "reveal": { "heading": "how others built their hero" }
+    },
+    {
+      "kind": "question",
+      "id": "reason",
+      "number": "8.02",
+      "title": "Your Reason",
+      "verb": "multiple_choice",
+      "weight": "light",
+      "stage": { "type": "menu", "doodles": [ "coin_stack", "trophy", "heart", "signpost" ] },
+      "ask": [
+        "Every hero needs a reason. Motivation, it is called. I read half a book about it once, then got bored, which is also a kind of motivation.",
+        "So why does a [red]dead[/red] judge pick up a sword and march off into a story? Be honest. I already know. I [amber]wrote[/amber] you."
+      ],
+      "options": [
+        {
+          "id": "gold",
+          "label": "For the gold",
+          "crowd": 30,
+          "remember": "reason_gold",
+          "profile": { "self_others": -0.3 },
+          "reaction": [ "Gold. Refreshingly honest. A [red]dead[/red] man chasing money he cannot spend, in a kingdom that is [amber]not real[/amber]. I could not have written you better myself, and I did." ]
+        },
+        {
+          "id": "glory",
+          "label": "For the glory",
+          "crowd": 24,
+          "remember": "reason_glory",
+          "profile": { "self_others": -0.2 },
+          "reaction": [ "Glory. Songs, statues, a tavern named after you. A man nobody alive will remember by next Thursday wants the [amber]imaginary[/amber] people to chant his name. It is almost sweet." ]
+        },
+        {
+          "id": "rescue",
+          "label": "To save someone",
+          "crowd": 31,
+          "remember": "reason_rescue",
+          "profile": { "self_others": 0.3 },
+          "reaction": [ "To save someone. There is nobody to save, they are all made of me, but the reflex is lovely. A man who could not save himself, off to rescue a stranger I [amber]invented[/amber]. I will allow it." ]
+        },
+        {
+          "id": "nowhere",
+          "label": "Nowhere else to be",
+          "crowd": 15,
+          "remember": "reason_nowhere",
+          "reaction": [ { "text": "Nowhere else to be. Ha. The truest answer a [red]dead[/red] man ever gave me. You are here because I am the only thing still happening to you. Come on then.", "face": "smug" } ]
+        }
+      ],
+      "reveal": { "heading": "why others answered the call" }
+    },
+    {
+      "kind": "tableau",
+      "id": "first_roll",
+      "number": "8.03",
+      "title": "The First Roll",
+      "weight": "light",
+      "stage": { "type": "dice", "sides": 6, "target": 3, "cue": 6, "caption": "roll a {target} or higher and you clear it" },
+      "ask": [
+        { "text": "A chasm splits the road ahead, wider than sense allows. A knight does not go around a chasm. A knight backs up and takes a run at it.", "unless": [ "class_rogue", "class_wizard", "class_bard", "class_cleric" ] },
+        { "text": "A locked gate, an old and clever lock, and your picks in your hand. Most locks open for a rogue. Most of them.", "if": "class_rogue" },
+        { "text": "A warded door, humming with someone else's spell, and you reaching for the counter you are almost, almost certain is the right one.", "if": "class_wizard" },
+        { "text": "A bridge troll wants a toll, or a song, and you have decided, against all advice including mine, on a song.", "if": "class_bard" },
+        { "text": "A fevered child at the roadside, too hot to the touch, your two hands, and a prayer you are not at all certain will land.", "if": "class_cleric" },
+        "This is the part where we roll. [amber]Six[/amber] sides, [amber]one[/amber] number, pure dumb chance, and for a moment neither of us is in charge of the story. I love it and I hate it in exactly equal measure.",
+        "Go on. Roll it. Click the die, click anything, I am not precious about the how."
+      ],
+      "lines": {
+        "made": [
+          "It comes up good. You clear it, clean, lucky and completely undeserved. Feel that warm little jolt in your chest? That is luck, and you are already hooked on it.",
+          { "text": "Interesting, how fast you took a number personally. Hold onto that feeling. We will want it later, when it actually counts.", "face": "smug" }
+        ],
+        "missed": [
+          "It comes up short. You do not clear it, and I render the failure in loving detail. Do not panic, you are the protagonist, you are fine. But notice how betrayed you feel. By a cube. That I [amber]control[/amber].",
+          { "text": "Interesting, how fast you took a number personally. Hold onto that feeling. We will want it later, when it actually counts.", "face": "smug" }
+        ]
+      }
+    },
+    {
+      "kind": "question",
+      "id": "tavern",
+      "number": "8.04",
+      "title": "The Tavern",
+      "verb": "multiple_choice",
+      "weight": "light",
+      "stage": { "type": "vignette", "doodle": "coin_stack" },
+      "ask": [
+        "The Salted Hog. A tavern. It smells of ale and [amber]imaginary[/amber] vomit, rendered for you lovingly. In the corner, a nervous man waves you over. Your quest giver.",
+        "He is [red]lying[/red]. As your Dungeon Master, breaking every rule of my craft, I tell you plainly: the reward is too big, the job too simple, and he keeps glancing at the door. [red]Slay[/red] the beast in the northern barrow, he says, and this chest of gold is yours.",
+        "So. What do you do about the obvious [red]liar[/red] and his beautiful, obvious lie?"
+      ],
+      "options": [
+        {
+          "id": "take",
+          "label": "Take the job",
+          "crowd": 30,
+          "reaction": [ "You take it. No questions, straight into the trap with a grin. [amber]Bold[/amber]. [amber]Stupid[/amber]. My favourite kind of player. You make the night move." ]
+        },
+        {
+          "id": "haggle",
+          "label": "Haggle harder",
+          "crowd": 22,
+          "profile": { "self_others": -0.2 },
+          "reaction": [ "You haggle. Over pretend gold, with a known [red]liar[/red], in a bar I invented this afternoon. You win forty imaginary coins and feel genuinely proud. I am not mocking you. I am. But gently." ]
+        },
+        {
+          "id": "threaten",
+          "label": "Threaten him",
+          "crowd": 15,
+          "profile": { "order_freedom": 0.2 },
+          "reaction": [ "You lean in and threaten him, and he goes pale, because I [amber]made[/amber] him go pale. My little people are frightened of you by default. A cheap thrill. You took it anyway. Noted." ]
+        },
+        {
+          "id": "walk",
+          "label": "Walk away",
+          "crowd": 13,
+          "profile": { "risk_safety": 0.2 },
+          "reaction": [ "You walk. From the plot. On the very first beat. You magnificent coward. The plot walks after you, it knows where you live. It is called a main quest for a reason. Sit back down." ]
+        },
+        {
+          "id": "knight",
+          "label": "Make him swear it on his honour",
+          "if": "class_knight",
+          "crowd": 19,
+          "reaction": [ "You make the [red]liar[/red] swear the reward on his honour, and he does, sweating. He is still lying. Now he is lying under oath. You have achieved nothing but paperwork, nobly." ]
+        },
+        {
+          "id": "rogue",
+          "label": "Lift his purse while he lies",
+          "if": "class_rogue",
+          "crowd": 21,
+          "reaction": [ "While he spins his tale, you lift his purse clean off his belt. Inside: [amber]eleven[/amber] coins and a note that reads [amber]do not trust him[/amber]. You take the job anyway. Rogues." ]
+        },
+        {
+          "id": "wizard",
+          "label": "List the three holes in his story",
+          "if": "class_wizard",
+          "crowd": 18,
+          "reaction": [ "You calmly recite the [amber]three[/amber] holes in his story. He had not noticed hole two himself. You have out plotted the plotter, who is me, which is annoying. He confesses half. You take the job anyway, because knowing it is a [amber]trap[/amber] never stopped anybody." ]
+        },
+        {
+          "id": "bard",
+          "label": "Charm the real terms out of him",
+          "if": "class_bard",
+          "crowd": 24,
+          "reaction": [ "You turn on the charm and he melts and tells you the real deal, which is worse, obviously. You take it anyway. You are having a lovely time, and the danger belongs to the character you are pretending to be." ]
+        },
+        {
+          "id": "cleric",
+          "label": "Ask what he is so afraid of",
+          "if": "class_cleric",
+          "crowd": 20,
+          "reaction": [ "You ask him, gently, what he is so afraid of. The [red]liar[/red] stops lying, just for a second, and looks very tired. I did not plan for that. Now I feel strange about my own NPC. You take the job. He wishes you luck and, oddly, means it." ]
+        }
+      ],
+      "reveal": { "heading": "what others did at the table" }
+    },
+    {
+      "kind": "question",
+      "id": "fork",
+      "number": "8.05",
+      "title": "The Fork",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "vignette", "doodle": "signpost" },
+      "ask": [
+        "A fork in the road. Ahead, the long way: [amber]safe[/amber], well travelled, dull, and an hour out of your evening. To the left, a [amber]shortcut[/amber] through the Whispering Wood.",
+        "I, your impartial Dungeon Master, promise you the shortcut is completely fine. Nothing lives in the Whispering Wood. Do not think about the name. Take the shortcut.",
+        { "text": "That was me steering you at the encounter I already built and do not want to waste. You can still take the long road and ruin my whole afternoon. Your call.", "face": "smug" }
+      ],
+      "options": [
+        {
+          "id": "long_road",
+          "label": "The safe long road",
+          "crowd": 41,
+          "remember": "took_long_road",
+          "profile": { "risk_safety": 0.4 },
+          "reaction": [ "You take the long, safe road, and nothing happens, at length, for an hour, exactly as promised. I am bored senseless. You are perfectly [amber]safe[/amber]. Congratulations on both counts." ]
+        },
+        {
+          "id": "shortcut",
+          "label": "The dangerous shortcut",
+          "crowd": 59,
+          "remember": "took_shortcut",
+          "profile": { "risk_safety": -0.4 },
+          "reaction": [ "You take the shortcut, into the wood that is definitely fine, and three things immediately try to eat you, and you are delighted, and so am I. Nobody ever told a story about the long road." ]
+        }
+      ],
+      "reveal": { "heading": "which road others took" }
+    },
+    {
+      "kind": "question",
+      "id": "companion",
+      "number": "8.06",
+      "title": "The Companion",
+      "verb": "multiple_choice",
+      "weight": "medium",
+      "stage": { "type": "vignette", "doodle": "hooded_stranger" },
+      "ask": [
+        "On the road, a figure falls into step beside you. Cloaked, hooded, a little too eager. They would like to join your quest, for reasons they do not offer.",
+        "In the interest of fair play: this one is [amber]hiding something[/amber]. I know exactly what, because I [amber]wrote[/amber] it, and it is a doozy, and I am not telling you.",
+        "They hold out a hand. What do you do?"
+      ],
+      "options": [
+        {
+          "id": "trust",
+          "label": "Trust them",
+          "crowd": 33,
+          "remember": [ "companion_trusted", "companion_with_you" ],
+          "profile": { "self_others": 0.3 },
+          "reaction": [ "You take their hand and [amber]trust[/amber] them completely. A hooded stranger, on a road, near a haunted wood. Beautiful. You would have been eaten twice tonight if I ran that wood properly. Welcome aboard, mystery friend." ]
+        },
+        {
+          "id": "refuse",
+          "label": "Refuse them",
+          "crowd": 26,
+          "outcome": { "doodle": "leave" },
+          "remember": "companion_refused",
+          "profile": { "self_others": -0.3 },
+          "reaction": [ "You refuse. No thank you, spooky stranger. They nod and drift back into the trees, and something goes out of their shoulders. You will not see them again. Probably. [amber]Safe[/amber]. A little [amber]lonely[/amber]." ]
+        },
+        {
+          "id": "use",
+          "label": "Use them, then ditch them",
+          "crowd": 18,
+          "remember": [ "companion_used", "companion_with_you" ],
+          "profile": { "self_others": -0.4 },
+          "reaction": [ { "text": "You let them join, already planning to drop them the second they stop being useful. Cold. Efficient. I love it, and I am a little frightened of you, and I am the deathless narrator of a void.", "face": "surprised" } ]
+        },
+        {
+          "id": "knight",
+          "label": "Vouch for them on your honour",
+          "if": "class_knight",
+          "crowd": 22,
+          "remember": [ "companion_trusted", "companion_with_you" ],
+          "reaction": [ "You hold your honour over a total stranger like an umbrella, and it holds. They are moved. They will remember this. So, it turns out, will I." ]
+        },
+        {
+          "id": "rogue",
+          "label": "Clock their tell, keep them close",
+          "if": "class_rogue",
+          "crowd": 20,
+          "remember": [ "companion_used", "companion_with_you" ],
+          "reaction": [ "You read their tell in a single glance and keep them near, so you can spend it later. One rogue recognising another. This will go great, and by great I mean badly, and by badly I mean memorably." ]
+        },
+        {
+          "id": "wizard",
+          "label": "Interrogate every inconsistency",
+          "if": "class_wizard",
+          "crowd": 17,
+          "outcome": { "doodle": "leave" },
+          "remember": "companion_refused",
+          "reaction": [ "You cross examine them until the story collapses, which it does, because I built it to, and then you refuse them on principle. Coldly. Completely without backup. Enjoy being right on the road alone." ]
+        },
+        {
+          "id": "bard",
+          "label": "Win them over utterly",
+          "if": "class_bard",
+          "crowd": 24,
+          "remember": [ "companion_trusted", "companion_with_you" ],
+          "reaction": [ "You turn on the full bardic charm and they open right up, or nearly, and pledge themselves to you, terrible secret and all, which is the best kind of companion. Ask any story." ]
+        },
+        {
+          "id": "cleric",
+          "label": "Offer grace, no questions",
+          "if": "class_cleric",
+          "crowd": 21,
+          "remember": [ "companion_trusted", "companion_with_you" ],
+          "reaction": [ "You offer them grace without a single question, which is either deep [amber]wisdom[/amber] or deep [amber]naivety[/amber], and in a cleric those look identical. They accept, quietly. Something in them unclenches. I did not build that in. You did." ]
+        }
+      ],
+      "reveal": { "heading": "how others met the stranger" }
+    },
+    {
+      "kind": "question",
+      "id": "village",
+      "number": "8.07",
+      "title": "The Village",
+      "verb": "multiple_choice",
+      "weight": "heavy",
+      "stage": { "type": "vignette", "doodle": "grizzly" },
+      "ask": [
+        "The barrow. The beast the whole village fears, cornered at last in the dark. And here is the thing nobody mentioned in the tavern.",
+        "It is afraid. Backed against the stone, making a sound that is not a roar. There is no blood on it, and the tracks where the child went missing were a person's boots. It might have done nothing. It might be exactly what they said. You will never be able to tell.",
+        "The village wants it [red]dead[/red]. [red]Kill[/red] it, and they cheer you through the streets and the relic is yours. Spare it, and you defy a frightened village on a hunch, for no reward at all. Yes, I built this one to feel like the tracks. You are welcome. Rule on it, judge."
+      ],
+      "options": [
+        {
+          "id": "kill",
+          "label": "Kill it, take the relic",
+          "crowd": 36,
+          "outcome": { "doodle": "fall" },
+          "remember": "beast_killed",
+          "profile": { "ends_rules": -0.5 },
+          "reaction": [ "You put the cornered, possibly innocent thing down on the word of a mob, take your relic, and the village carries you through the streets. It photographs as heroism. Somewhere under it, a small dry voice that sounds like a courtroom asks whether you were [amber]sure[/amber]. You were not. You never are." ]
+        },
+        {
+          "id": "spare",
+          "label": "Spare it, defy the village",
+          "crowd": 34,
+          "outcome": { "doodle": "leave" },
+          "remember": "beast_spared",
+          "profile": { "ends_rules": 0.5 },
+          "reaction": [ "You lower your weapon and let the frightened thing live, defying an armed village on a bad feeling and some boot prints. They spit at your noble back. No relic, no reward. Just you, [amber]right[/amber] or [amber]wrong[/amber], with no way to know which, walking out poorer than you walked in. Deeply irritating. Deeply you." ]
+        },
+        {
+          "id": "knight",
+          "label": "Put the beast on trial, here, now",
+          "if": "class_knight",
+          "crowd": 30,
+          "outcome": { "doodle": "leave" },
+          "remember": "beast_spared",
+          "reaction": [ "You hold a trial. In a barrow. For a beast. Judge, jury and sole attendee, which is more due process than many of your defendants ever got. Verdict: [amber]not proven[/amber]. You let it go. The village will never forgive you the pageantry." ]
+        },
+        {
+          "id": "rogue",
+          "label": "Kill it clean, tell the village nothing",
+          "if": "class_rogue",
+          "crowd": 28,
+          "outcome": { "doodle": "fall" },
+          "remember": "beast_killed",
+          "reaction": [ "One clean stroke, the relic in your bag, and not a word to anybody about the boot prints. The village gets its [red]dead monster[/red], you get your prize, and the doubt stays in the barrow. Tidy. The frightening kind of tidy, the kind that sleeps fine." ]
+        },
+        {
+          "id": "wizard",
+          "label": "Read the tracks, prove what happened",
+          "if": "class_wizard",
+          "crowd": 27,
+          "outcome": { "doodle": "leave" },
+          "remember": "beast_spared",
+          "reaction": [ "You read the ground like a page and prove, more or less, that this thing did nothing, and the child was taken by two boots and an old grudge. It saves the beast and convinces nobody. A scared village does not want evidence, it wants a [red]monster[/red]. You hand them neither. They hate you for it." ]
+        },
+        {
+          "id": "bard",
+          "label": "Talk the village down from its fear",
+          "if": "class_bard",
+          "crowd": 31,
+          "outcome": { "doodle": "leave" },
+          "remember": "beast_spared",
+          "reaction": [ "You talk a frightened mob out of its own fear, the hardest save in this whole game, and you make it, barely. The beast lives, [amber]half[/amber] the village goes home ashamed and [amber]the other half[/amber] furious, which is what talking a mob down actually looks like, whatever the songs pretend." ]
+        },
+        {
+          "id": "cleric",
+          "label": "Kneel and tend the frightened thing",
+          "if": "class_cleric",
+          "crowd": 29,
+          "outcome": { "doodle": "leave" },
+          "remember": "beast_spared",
+          "reaction": [ "You kneel in front of the whole armed village and tend the frightened thing as though it were a person, because to you everything is. It stops shaking. The village does not know what to do with that. Neither do I. No relic, no reward. Something else, that does not spend." ]
+        }
+      ],
+      "reveal": { "heading": "how the party ruled in the barrow" }
+    },
+    {
+      "kind": "question",
+      "id": "treasure",
+      "number": "8.08",
+      "title": "The Treasure",
+      "verb": "multiple_choice",
+      "weight": "medium",
+      "stage": { "type": "vignette", "doodle": "treasure_chest" },
+      "ask": [
+        { "text": "The shortcut spat you out right on top of it, the one good thing that wood ever did for anybody.", "if": "took_shortcut" },
+        { "text": "The long road got you here eventually, footsore and thorough.", "unless": "took_shortcut" },
+        "Deep in the barrow, a hoard. Gold to the ceiling, and resting on the pile, a black blade that hums. [amber]Cursed[/amber]. [amber]Powerful[/amber]. It solves your every problem, and takes a small piece of you for each one.",
+        "Here is where I lean in and watch very closely. The quest is still out there, the entire point of the evening. And here is a room with everything you came for in it, and no dragon.",
+        "Take the [amber]cursed blade[/amber]. Scoop the [amber]gold[/amber] and leave, quest be damned. Or walk past all of it and stay the course. I honestly do not know which you will do, and that is rare for me."
+      ],
+      "options": [
+        {
+          "id": "blade",
+          "label": "Take the cursed blade",
+          "crowd": 38,
+          "remember": "took_blade",
+          "profile": { "ends_rules": -0.4 },
+          "reaction": [ "You take the humming black blade, and it purrs, and something behind your eyes goes a little dim, and you feel wonderful, which is how it always begins. [amber]Power[/amber] for [amber]parts[/amber]. You will not miss the parts. That is the whole trick of a curse." ]
+        },
+        {
+          "id": "gold",
+          "label": "Grab the gold and go home",
+          "crowd": 24,
+          "remember": "took_gold",
+          "profile": { "self_others": -0.5 },
+          "reaction": [
+            "You scoop the gold and turn for the door, abandoning the quest on the doorstep of its treasure. As a storyteller, I salute the single most honest thing a player has ever done in one of my campaigns.",
+            { "text": "It is also [amber]not allowed[/amber]. Sit down. I built a dragon. Bring the gold, fine. But we are seeing the dragon.", "face": "glare" }
+          ]
+        },
+        {
+          "id": "leave",
+          "label": "Leave it, keep to the mission",
+          "crowd": 38,
+          "remember": "left_treasure",
+          "profile": { "self_others": 0.35 },
+          "reaction": [ "You walk past a room of gold and a cursed sword of power to finish a job for a man who [red]lied[/red] to your face. Either the noblest thing I have watched all night or a diagnosable condition. In you I genuinely cannot tell which." ]
+        }
+      ],
+      "reveal": { "heading": "what others did in the hoard" }
+    },
+    {
+      "kind": "question",
+      "id": "boss",
+      "number": "8.09",
+      "title": "The Boss",
+      "verb": "multiple_choice",
+      "weight": "heavy",
+      "stage": { "type": "vignette", "doodle": "dragon", "scale": 1.7 },
+      "ask": [
+        "The dragon. The one I built the whole evening around. It is bigger than it strictly needed to be, because I got excited making it. It uncoils out of the dark and fixes on you.",
+        { "text": "Your companion is at your shoulder, hood down at last, blade drawn. The stranger you trusted is still here. Most people reach my dragon having burned every bridge behind them. Not you. Huh.", "if": "companion_trusted" },
+        { "text": "Your companion is here too, though they will not meet your eye. You used them, they know it, and they came anyway, which is either [amber]loyalty[/amber] or a [amber]plan[/amber]. With this one I could not tell you which.", "if": "companion_used" },
+        { "text": "You face it alone. The stranger who offered to walk with you is somewhere far behind on the road, and there is only you up here, which is how the songs pretend a hero wants it.", "unless": [ "companion_trusted", "companion_used" ] },
+        { "text": "And there, out of the dark behind you, the beast from the barrow. The frightened thing you spared, come to stand at a dragon's feet for a stranger. I did not build it to do that. Your [amber]mercy[/amber] did.", "if": "beast_spared" },
+        { "text": "Nobody else is coming. The village cheered you through the streets and then barred its doors, because a village will cheer a killing and never march on a dragon. You [amber]bought[/amber] the relic. It [amber]cost[/amber] you the one thing in that barrow that might have stood with you.", "if": "beast_killed" },
+        "So here it is, judge. The whole night comes down to this room. How do you take a dragon?"
+      ],
+      "options": [
+        {
+          "id": "fight",
+          "label": "Fight it",
+          "crowd": 34,
+          "outcome": { "doodle": "shake" },
+          "reaction": [ "You fight it. Sword and fury and no plan beyond hitting the dragon until it stops being a dragon. Every table reaches for it, it is never the clever one, and it works about [amber]half[/amber] the time, which is better odds than clever. I hate that." ]
+        },
+        {
+          "id": "talk",
+          "label": "Talk it down",
+          "crowd": 22,
+          "profile": { "mercy_justice": -0.2 },
+          "reaction": [ "You try to talk down a dragon. A DRAGON. And because I secretly live for the moment a player tries the completely mad thing, I let it half work. Dragons are older than kingdoms and bored out of their enormous skulls. Sometimes the maddest thing you can do to one is make conversation." ]
+        },
+        {
+          "id": "trick",
+          "label": "Trick it",
+          "crowd": 21,
+          "outcome": { "doodle": "shake" },
+          "reaction": [ "You trick it. A feint, a lie, a neat bit of misdirection, because if you cannot out muscle a dragon you can out think one, and this one has the strategic mind of a very large, very warm cat. It falls for it. Mostly. Enough." ]
+        },
+        {
+          "id": "knight",
+          "label": "Challenge it to single combat",
+          "if": "class_knight",
+          "crowd": 14,
+          "outcome": { "doodle": "shake" },
+          "reaction": [ "You challenge a dragon to single combat by the old code, and the ridiculous thing is it accepts, because dragons are vain and a formal duel appeals to something ancient in them. Honour against a lizard the size of a barn. Somewhere your old bench is applauding and appalled in equal measure." ]
+        },
+        {
+          "id": "rogue",
+          "label": "Go for the soft spot under the wing",
+          "if": "class_rogue",
+          "crowd": 13,
+          "outcome": { "doodle": "shake" },
+          "reaction": [ "You go for the soft spot under the wing, unglamorous and wholly effective, while it is busy being a dragon at you. No song will mention it. Songs leave out the part where the hero wins [amber]dirty[/amber]. That is how heroes actually win." ]
+        },
+        {
+          "id": "wizard",
+          "label": "Unbind the spell that chains it here",
+          "if": "class_wizard",
+          "crowd": 12,
+          "reaction": [ "You stop swinging and start reading, find the spell chaining the thing to this barrow, and unpick it. The dragon, suddenly free, looks at you with something like gratitude before it decides what to do about you. You [amber]gambled[/amber] the whole fight on being right. Very wizard. Never do it again." ]
+        },
+        {
+          "id": "bard",
+          "label": "Sing the one song that unmakes it",
+          "if": "class_bard",
+          "crowd": 13,
+          "outcome": { "doodle": "leave" },
+          "reaction": [ { "text": "You sing it the one song that unmakes a dragon, and I have to allow it, because three hours ago I [amber]wrote a rule[/amber] that a good enough performance beats anything. It is genuinely beautiful, and I am furious.", "face": "glare" } ]
+        },
+        {
+          "id": "cleric",
+          "label": "Offer it peace, and mean it",
+          "if": "class_cleric",
+          "crowd": 12,
+          "profile": { "mercy_justice": -0.2 },
+          "reaction": [ "You offer a dragon peace, and mean it, all the way down. The terrible thing about meaning it is that sometimes it works, and the most dangerous creature in my whole world quietly decides not to be. You did not [amber]defeat[/amber] it. You [amber]forgave[/amber] it into standing down. I have no rule for that. I am writing one now." ]
+        },
+        {
+          "id": "together",
+          "label": "Finish it together",
+          "if": "companion_trusted",
+          "crowd": 12,
+          "outcome": { "doodle": "shake" },
+          "profile": { "self_others": 0.2 },
+          "reaction": [ "You and the one you trusted hit it as one, two blades and a shared plan. Almost nobody gets this moment, because almost nobody trusts the hooded stranger on the road. You did. Look at what [amber]trust[/amber] buys." ]
+        },
+        {
+          "id": "their_hands",
+          "label": "Put your life in their hands now",
+          "if": "companion_used",
+          "crowd": 11,
+          "outcome": { "doodle": "shake" },
+          "reaction": [ "You turn to the companion you used and, at the [amber]one[/amber] moment it matters, put your life in their hands. There is a long beat where even I, who wrote them, do not know what they will do. Then they move. For you, or in spite of you? Later. Now there is a dragon." ]
+        },
+        {
+          "id": "loose_beast",
+          "label": "Loose the beast on it",
+          "if": "beast_spared",
+          "unless": [ "companion_trusted", "companion_used" ],
+          "crowd": 12,
+          "outcome": { "doodle": "shake" },
+          "profile": { "self_others": 0.2 },
+          "reaction": [ "You raise one hand, and the beast you spared in the barrow goes past you at a dragon, which is insane, and glorious, and works, roughly, at a cost. You did not do this alone. Once, in a barrow, you were [amber]merciful[/amber] and poor about it. Funny, how that comes back around." ]
+        },
+        {
+          "id": "everything",
+          "label": "Throw everything you have left at it",
+          "unless": [ "companion_trusted", "companion_used", "beast_spared" ],
+          "crowd": 10,
+          "outcome": { "doodle": "shake" },
+          "reaction": [ "No companion, no beast, no cavalry over the hill. Just you, the too big dragon and whatever you walked in carrying. You throw all of it at once, because there is nothing behind you to save it for. Desperate, lonely, and fine, all right, a little magnificent." ]
+        }
+      ],
+      "reveal": { "heading": "how others took the dragon" }
+    },
+    {
+      "kind": "question",
+      "id": "final_roll",
+      "number": "8.10",
+      "title": "The Roll That Decides It",
+      "verb": "multiple_choice",
+      "weight": "heavy",
+      "stage": { "type": "dice", "sides": 6, "target": 5, "caption": "you need a {target} or higher. everything, on this." },
+      "ask": [
+        "One thing left. Everything tonight, the hero, the stranger, the barrow, the hoard, the dragon, funnels down to one final roll. [amber]Make[/amber] it and the story ends the way stories are meant to. [amber]Miss[/amber] it and it does not.",
+        { "text": "You did not come to the end of this alone. A companion at your side and a beast at your back. I noticed. Almost nobody arrives here with anyone left.", "if": [ "companion_with_you", "beast_spared" ] },
+        { "text": "You did not come to the end of this alone, which is rarer than you would think, and I noticed.", "if": "companion_with_you", "unless": "beast_spared" },
+        { "text": "The beast you spared stood with you to get here, which almost nobody earns. I noticed.", "if": "beast_spared", "unless": "companion_with_you" },
+        { "text": "You came all this way on your own, every step, which makes what comes next that little bit lonelier.", "unless": [ "companion_with_you", "beast_spared" ] },
+        { "text": "Now, an offer from your warm and generous Dungeon Master. Take the [amber]honest[/amber] roll and live with whatever the die says. Or, and I only mention it, I could [amber]fix[/amber] it. A nudge, and you win, guaranteed. Or [amber]refuse[/amber] the whole thing and do not roll at all. Your call. It always was. That was the whole point of tonight.", "face": "smug" }
+      ],
+      "lines": {
+        "fetch": [ "Honestly. Of course honestly. Good for you. Boring, but good. Let me fetch the die." ],
+        "prompt": [ "There it is. [amber]One[/amber] die, the whole night on a single honest roll, and a [amber]high bar[/amber] too. Honest is hard. Go on. Roll." ]
+      },
+      "options": [
+        {
+          "id": "honest",
+          "label": "Roll it, honestly",
+          "crowd": 52,
+          "outcome": { "roll": true },
+          "reaction": {
+            "made": [
+              "You made it. Fair and square, the odds against you, nothing touched. The kingdom is saved and the songs get written. A hero, in a game I made up, in a room that is [amber]not real[/amber]. But clean. That part is [amber]real[/amber], and it is yours.",
+              "Win or lose, you rolled it straight. Most of them ask me to cheat, right at the end. You did not even reach for it, which is either integrity or a failure of imagination. Hold your head up, [amber]loser[/amber] or [amber]legend[/amber]."
+            ],
+            "missed": [
+              "Not enough. The honest hero fails, fair and square, which is somehow worse than cheating and worse than never trying. The quest is lost. You let the die speak and it called you a loser, and you will wear that, because you chose to. Very [amber]noble[/amber]. Or very [amber]stupid[/amber]. I genuinely cannot tell.",
+              "Win or lose, you rolled it straight. Most of them ask me to cheat, right at the end. You did not even reach for it, which is either integrity or a failure of imagination. Hold your head up, [amber]loser[/amber] or [amber]legend[/amber]."
+            ]
+          }
+        },
+        {
+          "id": "fix",
+          "label": "Let him fix the die",
+          "crowd": 17,
+          "ending": "cheat",
+          "reaction": [
+            { "text": "... oh.", "face": "surprised" },
+            { "text": "Oh, you sweet, [red]rotten[/red] thing. A die, in a story I invented this evening, in a nothing place, for a prize that does not exist, and you asked me, out loud, to rig it in your favour.", "face": "smug" },
+            { "text": "I have run thousands of these games. Kings. Saints. Genuine [red]monsters[/red]. And every one of them wanted this, right at the end, when it counted for nothing at all. You just had the stones to say it to my face.", "face": "glare" },
+            { "text": "So here is your win, your honour. The die reads [amber]six[/amber]. It always reads [amber]six[/amber] when the man rolling it writes the number down himself. Take your rigged little victory and choke on it. You cheated a dead man's imaginary dice, in a void, for nothing, and you did not hesitate for one second. You absolute, magnificent, [red]cheating[/red] shit. Now get out of my game.", "face": "glare", "direction": "[half awed, half disgusted]" }
+          ]
+        },
+        {
+          "id": "refuse",
+          "label": "Refuse the roll",
+          "crowd": 31,
+          "reaction": [
+            { "text": "Refuse? You cannot refuse, I am the Dungeon Master, the roll is the... fine. Fine. You fold your arms and will not touch the die. The [amber]one[/amber] moment the night hangs on, and you will not be the one who calls it.", "face": "glare" },
+            "Fine. The story ends unresolved. The dragon and the hero staring at each other across the dark forever, nothing decided. No die can call you a loser if you never let it speak. Clever. Bleak. Very you.",
+            { "text": "It is the judge in you, I think. [amber]Thirty[/amber] years on a bench refusing to call it until you were made to, and here you are, refusing to the last, against a cube, in a game that was [amber]never real[/amber]. Some habits follow a man right into the void.", "face": "smug" }
+          ]
+        }
+      ],
+      "reveal": { "heading": "what others did when I offered to cheat" }
+    },
+    {
+      "kind": "narration",
+      "id": "closer",
+      "lines": [
+        "And that is the adventure. The whole silly, earnest, [amber]made up[/amber] thing. Knights and dice and a dragon a size too big, on purpose.",
+        "The funny part? You were more [amber]honest[/amber] in there, [amber]pretending[/amber] to be somebody else, than in any of the real questions. People always are. Hand a man a mask and he finally shows you his face.",
+        { "text": "Rest your sword arm, hero. There is more, of course. There is always more. But that was a good one. Even I had fun, and I am dead inside, professionally.", "face": "smug" }
+      ]
+    }
+  ]
+}

@@ -76,7 +76,7 @@ func play_chapter(chapter: ChapterData, run: RunState, from := &"") -> StringNam
 		elif beat is NarrationData:
 			await _imp_ready()
 			imp.free_to_roam = true
-			await dialogue.say((beat as NarrationData).lines)
+			await dialogue.say(LineData.for_run((beat as NarrationData).lines, run))
 			await dialogue.close()
 		elif beat is QuestionData:
 			await _imp_ready()

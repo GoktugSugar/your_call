@@ -19,6 +19,8 @@ The tests in `tests/content/` load every chapter and fail on any problem, so run
 }
 ```
 
+The facts a run remembers so far: the walking button's history (`button_woke`, `button_auctioned`, `button_shot`, `button_spared`), set by its stages, and the campaign's (`class_knight` and the other classes, `reason_gold` and the other reasons, `took_shortcut` or `took_long_road`, `companion_trusted`, `companion_used` or `companion_refused` with `companion_with_you` for either of the first two, `beast_killed` or `beast_spared`, `took_blade`, `took_gold` or `left_treasure`), set by its options.
+
 A chapter can say what a run started after it, from the dev menu, should take it to have left behind: `"if_skipped": { "remember": ["button_woke"], "kills": { "stranger": 1 } }`, the facts later beats look back on and the kills by kind. Later beats read the walking button's history (`button_woke`, `button_auctioned`, `button_shot`, `button_spared`) and the kill tally.
 
 A chapter that hands the player money, like The Money, has a `wallet`: `"wallet": { "start": 10000 }`. The wallet opens as the chapter's first words are said, its balance shows at the top of the screen until the chapter ends, and the shop, the auction, the buyback and the receipt spend from it and read it.
@@ -206,6 +208,34 @@ The confession booth, for Chapter 7. A confessor files into the booth, the words
 - `{ "button": true }` is the walking button, which slides in as a plain button and comes alive in the booth. A line of the ask with `"speaker": "button"` floats over it in its own voice while the box is away, and it says the question's `leave` lines as it files out.
 - An option's outcome is `{ "verdict": "guilty" }`, `cleared` or `everyone`, or one per confessor by voice: `{ "verdict": { "her": "cleared", "him": "guilty" } }`.
 
+## The campaign's stages
+
+### The menu stage
+
+```json
+"stage": { "type": "menu", "doodles": [ "knight_shield", "rogue_dagger", "wizard_hat", "bard_lute", "cleric_chalice" ] }
+```
+
+A row of doodles, one per option left to right, each over its label: the doodles stage for three or more, with no "or". Options need no `outcome`.
+
+### The vignette stage
+
+```json
+"stage": { "type": "vignette", "doodle": "dragon" }
+```
+
+One doodle sets the scene while the imp narrates, at `scale` times its own size if the stage says (1.3 otherwise); the options are in the choice row. An option's `outcome` can say how the doodle answers the pick: `{ "doodle": "fall" }` (it topples and dissolves), `"shake"`, `"leave"` (it backs away, fading), or it hops.
+
+### The dice stage
+
+```json
+"stage": { "type": "dice", "sides": 6, "target": 3, "cue": 6, "caption": "roll a {target} or higher and you clear it" }
+```
+
+A hand drawn die with its `caption` under it, `{target}` in amber. The click that moves on from the imp's last page before the roll rolls it, and it lands on a face with an amber flash. Outcomes: `made` when the face reaches `target`, `missed` otherwise.
+- As a tableau, the die inks in on line `cue` of the ask (counting from 1, every line counted), and the click on the ask's last page rolls it; the question's `made` or `missed` lines follow.
+- As a question, an option whose outcome has `"roll": true` rolls: the stage says the question's `fetch` lines, inks the die in, says its `prompt` lines, and the click on their last page rolls it; the option's reaction is keyed `made` or `missed`. Any other option leaves the die out of it.
+
 ## The money chapter's stages
 
 These spend from and read the chapter's `wallet`. Amounts show in the money format, such as `$1,750`.
@@ -272,6 +302,8 @@ A tableau. It prints what is owned, the dearest `most_rows` when there are more,
 - `crowd` is the seeded share who chose it. For binary and multiple choice questions the shares add up to 100. Every number so far is a placeholder chosen to divide people.
 - `profile` nudges axes from `profile_axes.json`. Negative leans toward the axis's first pole, positive toward its second. Leave it out for questions that feed no axis. An option picked again and again, as on an offer ladder, nudges every time. An entry whose value is an object instead of a number replaces the nudges for one outcome: `{ "self_others": -0.05, "broke": {} }` nudges on buying and not at all on trying without the money.
 - `ending` names a secret ending the option fires; leave it out otherwise.
+- `if` names a fact, or a list of facts, the run must remember for the option to be offered at all, and `unless` facts that keep it back: `"if": "class_knight"`, `"unless": [ "companion_trusted", "companion_used" ]`. Without them the option is always offered. The reveal shows bars only for the options offered, their shares scaled to add up to 100.
+- `remember` names a fact, or a list, the run remembers once the option is picked, for later beats to look back on: `"remember": [ "companion_trusted", "companion_with_you" ]`. The tests walk every set of facts a run can reach and check each question still offers at least two options whose shares add up to about 100.
 
 When how the consequence comes out decides what the imp says, `reaction` is an object keyed by the outcome the stage reports, and `ending` can be keyed the same way to fire only on some outcomes:
 
@@ -304,6 +336,7 @@ or an object, when someone else says it or the imp's face should change:
 - `voice` names whose voice says the line when its speaker is one of several, as each confessor has a voice of its own: `"voice": "recliner"` is voiced as `confessor.recliner` in `tools/voice/voices.json`.
 - `face` is `grin`, `smug`, `glare` or `surprised`. A line without one shows his grin.
 - `direction` is a delivery note for the voice, such as `"[furious]"`, sent ahead of the line when it is voiced. It is never shown.
+- `if` and `unless` say the line only on a run that remembers every `if` fact and none of the `unless` ones, as an option's do: `{ "text": "A locked gate...", "if": "class_rogue" }`. A line with neither is always said; the tests check every line with a condition is said on some run.
 - `"voiced": false` keeps a line silent: it inks on with no voice, and the voice tools leave it out. The dollar break uses it for the moment the imp stops doing the voice.
 - Each line becomes one or more dialogue boxes: long lines are paged by whole sentences.
 - Every line gets an id from where it sits, `<chapter>.<beat>.<part>.<number>`, such as `ch1.lever.pull.1`.
