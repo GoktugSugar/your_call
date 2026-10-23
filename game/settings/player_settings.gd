@@ -50,7 +50,8 @@ static func read() -> void:
 		if level is int or level is float:
 			volumes[bus] = clampi(int(level), 0, FULL_VOLUME)
 	var screen: Variant = file.get_value(_DISPLAY, "fullscreen", fullscreen)
-	if screen is bool:
+	# A browser fills the screen only just after a click, so a page always opens in its frame.
+	if screen is bool and not OS.has_feature("web"):
 		fullscreen = screen
 	var auto: Variant = file.get_value(_PLAY, "auto_skip", auto_advance)
 	if auto is bool:
@@ -110,9 +111,11 @@ static func apply_volume(bus: StringName) -> void:
 		AudioServer.set_bus_volume_db(index, linear_to_db(level))
 
 
-## Fills the screen with the game's window, or gives it back as a maximized window.
+## Fills the screen with the game's window, or gives it back as a maximized window; in a browser, back to
+## its place on the page.
 static func apply_screen() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	if tree == null or DisplayServer.get_name() == "headless":
 		return
-	tree.root.mode = Window.MODE_FULLSCREEN if fullscreen else Window.MODE_MAXIMIZED
+	var back := Window.MODE_WINDOWED if OS.has_feature("web") else Window.MODE_MAXIMIZED
+	tree.root.mode = Window.MODE_FULLSCREEN if fullscreen else back

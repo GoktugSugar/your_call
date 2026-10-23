@@ -126,6 +126,9 @@ func _process(_delta: float) -> void:
 
 
 func _keep_barking() -> void:
+	if not Music.can_sound:
+		# In a browser, nothing can be heard before the player's first click or key: he waits for it.
+		await Music.sound_allowed
 	await _wait(first_bark)
 	while is_inside_tree():
 		if not _asking:

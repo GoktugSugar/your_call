@@ -37,6 +37,8 @@ func _ready() -> void:
 	label.install_effect(_effect)
 	_effect.edge = ink_edge
 	_rest = position
+	# Streamed, as the dialogue box's voice is, so a browser never stalls to decode a take whole.
+	voice_player.playback_type = AudioServer.PLAYBACK_TYPE_STREAM
 	Ink.boiled.connect(_on_boiled.unbind(1))
 	set_process(false)
 
@@ -74,7 +76,7 @@ func write_on(voice: VoiceClip = null) -> void:
 	var count := label.get_total_character_count()
 	_elapsed = 0.0
 	_saying = true
-	if voice != null:
+	if voice != null and Music.can_sound:
 		_schedule = voice.schedule(0, count)
 		voice_player.stream = voice.stream
 		voice_player.play()

@@ -111,6 +111,9 @@ func _ready() -> void:
 	measure_label.size = Vector2(max_text_width, 0.0)
 	measure_label.text = "\n".join(PackedStringArray(range(max_lines).map(func(_i: int) -> String: return "Ag")))
 	_max_height = measure_label.get_content_height()
+	# Streamed, as the music is: a browser would otherwise decode each take whole as its page began, a
+	# stall at every line.
+	voice_player.playback_type = AudioServer.PLAYBACK_TYPE_STREAM
 	var second := voice_player.duplicate() as AudioStreamPlayer
 	add_child(second)
 	_players = [voice_player, second]
@@ -275,9 +278,11 @@ func _show_page(line: LineData, page: String, index: int, count: int, clip: Voic
 
 
 ## Plays the stretch of [param clip] that speaks [param length] characters from [param from], and
-## inks the page on to its timings. Without a clip the page stays unvoiced.
+## inks the page on to its timings. Without a clip the page stays unvoiced, as it does while a browser
+## holds sound back, before the player's first click or key: a voice's clock would stand still and so
+## would the page.
 func _start_voice(clip: VoiceClip, from: int, length: int) -> void:
-	_voiced = clip != null and from >= 0
+	_voiced = clip != null and from >= 0 and Music.can_sound
 	if not _voiced:
 		return
 	var stretch := clip.span(from, from + length)

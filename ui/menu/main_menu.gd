@@ -36,8 +36,9 @@ extends Node
 @export var menu_imp: MenuImp
 ## The eyes that close on the page as it is left, and open on it after the run was quit.
 @export var eyelids: Eyelids
-## Development tools added in debug builds only.
-@export var dev_tools_scene: PackedScene
+## Development tools, added in debug builds only. Kept as a path, so a build that leaves them out still
+## loads.
+@export_file("*.tscn") var dev_tools_path := "res://dev/dev_tools.tscn"
 
 @export_group("Timing")
 ## Seconds after the title starts inking on before the entries come up.
@@ -46,6 +47,8 @@ extends Node
 @export_range(0.0, 3.0, 0.05) var column_fade := 0.35
 ## Seconds after the entries before the imp scribbles in.
 @export_range(0.0, 10.0, 0.05) var imp_delay := 0.6
+## Whether Quit shows in a browser, where quitting would only leave the page frozen.
+@export var quit_on_web := false
 
 ## Whether the eyes open on the page as it comes up: they had closed on the run that was left for it.
 static var opens_eyes := false
@@ -72,8 +75,8 @@ func _ready() -> void:
 	for problem in loader.problems:
 		push_error(problem)
 	_save = RunSave.load_valid(chapters)
-	if OS.is_debug_build() and dev_tools_scene != null:
-		var tools := dev_tools_scene.instantiate()
+	if OS.is_debug_build() and ResourceLoader.exists(dev_tools_path):
+		var tools := (load(dev_tools_path) as PackedScene).instantiate()
 		tools.set(&"main_menu", self)
 		add_child(tools)
 	if _leaving:
@@ -107,6 +110,7 @@ func _wire() -> void:
 	endings.closed.connect(_on_endings_closed)
 	settings.volume_changed.connect(_on_volume_changed)
 	continue_word.set_greyed(_save == null)
+	quit_word.visible = quit_on_web or not OS.has_feature("web")
 	confirm.hide()
 	column.modulate.a = 0.0
 
@@ -178,6 +182,8 @@ func _on_keep() -> void:
 func _on_continue() -> void:
 	if _leaving or not has_save():
 		return
+	# In a browser, that chapter's voice is fetched first, while the eyes close.
+	VoicePacks.want(_save.chapter)
 	_leave_for_run(_save)
 
 

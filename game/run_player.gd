@@ -6,7 +6,8 @@ extends Node
 ## ending, never a loss: the imp's reaction is his last line, he fades, the stage goes, and the credits
 ## roll. The imp takes his leave at the end of each chapter, and the next opens on the player waking.
 ## A chapter with a wallet, such as the money chapter, opens it as its first words are said and puts it
-## away at its end.
+## away at its end. In a browser, a chapter whose voice is still on its way waits a little for it before
+## its first line ([VoicePacks]).
 
 ## Emitted as each chapter starts.
 signal chapter_started(chapter: ChapterData)
@@ -31,6 +32,9 @@ const CREDITS_SCENE := "res://ui/credits/credits.tscn"
 @export_range(0.0, 5.0, 0.01) var between_beats := 0.35
 ## Seconds between the imp's last line of an ending and his fading away.
 @export_range(0.0, 5.0, 0.01) var before_ending := 0.6
+## Seconds a chapter waits for its voice to arrive, in a browser, before its first line; past that its
+## lines are said unvoiced until it does.
+@export_range(0.0, 60.0, 0.5) var voice_wait := 8.0
 
 ## The wing the imp keeps when no stage asks for another.
 @export var imp_wing := Imp.Wing.RIGHT
@@ -65,12 +69,16 @@ func play_run(chapters: Array[ChapterData], run: RunState, from_chapter := &"", 
 func play_chapter(chapter: ChapterData, run: RunState, from := &"") -> StringName:
 	chapter_started.emit(chapter)
 	var started := from == &""
+	var waited := false
 	for beat in chapter.beats:
 		if not started:
 			if beat.id != from:
 				continue
 			started = true
 		beat_started.emit(beat)
+		if not beat is CinematicData and not waited:
+			waited = true
+			await VoicePacks.wait_for(chapter.id, voice_wait)
 		if not beat is CinematicData and not chapter.wallet.is_empty() and run.wallet == null:
 			run.open_wallet(int(chapter.wallet.get("start", 0)))
 		if beat is CinematicData:

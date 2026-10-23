@@ -3,7 +3,12 @@ extends Node
 ## carried unbroken from scene to scene. The main theme plays on the menu and in every chapter that names
 ## no track of its own; a chapter that names one crossfades to it as it starts, and back again after.
 ## It fades in when it starts, and dips while someone talks so the voice stays clear. A missing track is
-## simply silence.
+## simply silence. A browser lets no sound play until the player first clicks or presses a key, so in
+## one the music waits for that and fades in then; anything else that should wait for sound can too
+## ([signal sound_allowed]).
+
+## Emitted when sound may play: in a browser, at the player's first click or key.
+signal sound_allowed
 
 ## Where the tracks are: a track called [code]campaign[/code] is [code]campaign.ogg[/code] there.
 @export_dir var tracks_dir := "res://assets/audio/music"
@@ -27,6 +32,8 @@ const _TRACK_FILE := "%s/%s.ogg"
 
 ## The track playing, or giving way to the next, by name. Empty when none is.
 var playing := &""
+## Whether sound may play yet. Always, but in a browser before the player's first click or key.
+var can_sound := not OS.has_feature("web")
 
 var _players: Array[AudioStreamPlayer] = []
 ## How far each player is faded in, from 0 to 1, by player. Tweened.
@@ -43,10 +50,26 @@ func _ready() -> void:
 	for i in 2:
 		var player := AudioStreamPlayer.new()
 		player.bus = &"Music"
+		# Streamed, a little at a time: a browser would otherwise decode a whole track before it played,
+		# holding the game still for half a second and keeping minutes of sound in memory.
+		player.playback_type = AudioServer.PLAYBACK_TYPE_STREAM
 		add_child(player)
 		_players.append(player)
 		_fades[player] = 0.0
+	set_process_input(not can_sound)
 	play(main_track)
+
+
+func _input(event: InputEvent) -> void:
+	var gesture := event is InputEventMouseButton or event is InputEventKey or event is InputEventScreenTouch
+	if can_sound or not gesture or not event.is_pressed():
+		return
+	can_sound = true
+	set_process_input(false)
+	var waiting := playing
+	playing = &""
+	play(waiting)
+	sound_allowed.emit()
 
 
 func _process(_delta: float) -> void:
@@ -73,6 +96,9 @@ func play(track: StringName = &"") -> void:
 		stream.set(&"loop", true)
 	var first := playing == &""
 	playing = track
+	if not can_sound:
+		# Asked for before the browser lets sound play: it starts, faded in, at the first gesture.
+		return
 	var incoming := _players[0] if not _players[0].playing or _fades[_players[0]] < _fades[_players[1]] else _players[1]
 	var outgoing := _players[1] if incoming == _players[0] else _players[0]
 	incoming.stream = stream
