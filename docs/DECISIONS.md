@@ -291,3 +291,4 @@ The user picked three of the chapter ideas to build (The Show, Everyone Else, Th
 - **The odds are printed, not said.** Provisional. The outline had the imp say "One in {odds}"; a per run number would need a voice take for every run, so the slip prints the odds and he says "There. The bottom line." instead, as the map is read for the country in 2.10. Big counts read in words to their leading figure ("a thousand billion billion").
 - **The lost wallet's two numbers are from the 2019 lost wallet study** (51 in a hundred handed back with a little money, 72 with more), still to be checked. Every other seed is a placeholder.
 - **The closer is a tableau** that recaps the guesses about strangers and reads them low, high or close (within 8 on average).
+- **Voiced.** User. Dev: 65 takes, 5,301 characters, with `eleven_v3`; every keyed ask is voiced on its own.
