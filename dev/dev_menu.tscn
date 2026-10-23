@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://dev/dev_menu.gd" id="1_menu"]
 
-[node name="DevMenu" type="CanvasLayer" node_paths=PackedStringArray("panel", "stack", "body", "chapter_list", "scroll", "pages", "auto_skip")]
+[node name="DevMenu" type="CanvasLayer" node_paths=PackedStringArray("panel", "stack", "body", "chapter_list", "scroll", "pages")]
 process_mode = 3
 layer = 110
 visible = false
@@ -13,7 +13,6 @@ body = NodePath("Screen/Center/Panel/Margin/Stack/Body")
 chapter_list = NodePath("Screen/Center/Panel/Margin/Stack/Body/Chapters")
 scroll = NodePath("Screen/Center/Panel/Margin/Stack/Body/Scroll")
 pages = NodePath("Screen/Center/Panel/Margin/Stack/Body/Scroll/Pages")
-auto_skip = NodePath("Screen/Center/Panel/Margin/Stack/AutoSkip")
 
 [node name="Screen" type="Control" parent="."]
 layout_mode = 3
@@ -52,10 +51,6 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.6039216, 0.5882353, 0.54901963, 1)
 theme_override_font_sizes/font_size = 28
 text = "Jump to   (F2 or Esc closes, F5 restarts at the last jump)"
-
-[node name="AutoSkip" type="CheckButton" parent="Screen/Center/Panel/Margin/Stack"]
-layout_mode = 2
-size_flags_horizontal = 0
 
 [node name="Body" type="HBoxContainer" parent="Screen/Center/Panel/Margin/Stack"]
 layout_mode = 2

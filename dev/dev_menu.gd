@@ -2,8 +2,7 @@ class_name DevMenu
 extends CanvasLayer
 ## Development only: F2 opens a list of every chapter in the run and, beside it, every question in the
 ## chapter picked from the list, with the one being played marked. Picking a question starts the run
-## there. Over the lists, a switch turns on auto skip, the player setting that moves dialogue on by itself.
-## The game holds still while the menu is open, and F2 or Esc closes it again. Mouse or keys: a chapter's
+## there. The game holds still while the menu is open, and F2 or Esc closes it again. Mouse or keys: a chapter's
 ## questions show once its name is clicked or reached, the arrows move between entries, Enter picks.
 
 ## Emitted when an entry is picked: the chapter's id, and the beat to start from, empty for its top.
@@ -21,16 +20,12 @@ signal picked(chapter: StringName, beat: StringName)
 @export var scroll: ScrollContainer
 ## Holds a page of questions per chapter, only the picked chapter's shown.
 @export var pages: Container
-## Turns auto skip on and off: [member PlayerSettings.auto_advance].
-@export var auto_skip: CheckButton
 
 @export_group("Words")
 ## What the entry for the top of a chapter says.
 @export var top_text := "From the top"
 ## What marks the entry being played now.
 @export var now_mark := "now:"
-## What the auto skip switch says.
-@export var auto_skip_text := "Auto skip: each line moves on once it is said"
 ## Size of each chapter's name.
 @export_range(8, 120) var heading_size := 34
 ## Size of the entries.
@@ -67,6 +62,8 @@ signal picked(chapter: StringName, beat: StringName)
 ## How opaque the panel is.
 @export_range(0.0, 1.0, 0.01) var panel_alpha := 0.97
 
+## Whether the game was already held still when the menu opened, by the pause menu, so closing leaves it so.
+var _was_paused := false
 var _first: Button
 var _now: Button
 ## The top of the chapter being played, focused when what is being played is not a question.
@@ -96,9 +93,6 @@ func _ready() -> void:
 	for wash: StyleBox in [_lit, _plain]:
 		wash.content_margin_left = wash_padding
 		wash.content_margin_right = wash_padding
-	auto_skip.text = auto_skip_text
-	_style_entry(auto_skip, palette.color(entry_role))
-	auto_skip.toggled.connect(func(on: bool) -> void: PlayerSettings.auto_advance = on)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -111,22 +105,22 @@ func _unhandled_input(event: InputEvent) -> void:
 ## [param now_chapter] as the one being played, and showing that chapter's questions.
 func open(chapters: Array[ChapterData], now_chapter: StringName, now_beat: StringName) -> void:
 	_fill(chapters, now_chapter, now_beat)
-	auto_skip.set_pressed_no_signal(PlayerSettings.auto_advance)
 	# Shown before it is measured, since a container sizes only what is visible.
 	visible = true
 	_fit()
 	if not chapters.is_empty():
 		_show(now_chapter if _pages.has(now_chapter) else chapters[0].id)
+	_was_paused = get_tree().paused
 	get_tree().paused = true
 	var focus := _now if _now != null else (_now_top if _now_top != null else _first)
 	if focus != null:
 		focus.grab_focus()
 
 
-## Hides the list and lets the game carry on.
+## Hides the list and lets the game carry on, unless something else was holding it still.
 func close() -> void:
 	visible = false
-	get_tree().paused = false
+	get_tree().paused = _was_paused
 
 
 ## Whether the list is up.

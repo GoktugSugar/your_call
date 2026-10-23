@@ -2,6 +2,10 @@ class_name DevArgs
 extends RefCounted
 ## Development only: reads [code]--key=value[/code] switches given after [code]--[/code] on the command line.
 
+## The switches that leave the main menu up: the window's, and the capture runner's own. Any other drives
+## the run, so the menu steps straight into it.
+const MENU_SWITCHES: PackedStringArray = ["window", "scene", "out", "times"]
+
 
 ## Applies [code]--window=WxH[/code] if given: a plain window of exactly that size, for checking how
 ## the game looks at a given resolution whatever the project's window mode.
@@ -22,3 +26,12 @@ static func parse() -> Dictionary:
 		var pair := arg.trim_prefix("--").split("=", true, 1)
 		result[pair[0]] = pair[1] if pair.size() > 1 else "true"
 	return result
+
+
+## Whether [param args] drive the run, such as [code]--autoplay[/code] or [code]--chapter[/code], rather
+## than only shape the window: a run driven so skips the menu and never touches the player's save.
+static func drives_run(args: Dictionary) -> bool:
+	for key: Variant in args:
+		if not str(key) in MENU_SWITCHES:
+			return true
+	return false

@@ -1,7 +1,9 @@
 extends Node
-## Development only: Main adds this in debug builds. F2 opens a menu to jump to any chapter or question,
-## F5 restarts (at the last jump, if there was one), F3 shows the overlay with the chapter, the
-## question's phase and the silent profile. Switches after [code]--[/code] on the command line:
+## Development only: Main and the main menu add this in debug builds. F2 opens a menu to jump to any
+## chapter or question, on the main menu too, F5 restarts (at the last jump, if there was one), F3 shows
+## the overlay with the chapter, the question's phase and the silent profile. Every switch but
+## [code]--window[/code] drives the run, so on the main menu it steps straight into the run, and a run
+## driven so never writes or clears the player's save. Switches after [code]--[/code] on the command line:
 ## [codeblock]
 ## --autoplay=N     pick option N (counting from 1) and click through everything else
 ## --autoplay=1,1,2  pick these in turn, one per choice, the last one from then on (an offer ladder
@@ -41,8 +43,10 @@ static var _menu_opened := false
 ## Screenshots taken so far, counted across restarts so a jump does not write over earlier ones.
 static var _shot_count := 0
 
-## The main scene, set by Main before this enters the tree.
+## The run, set by Main before this enters the tree.
 var main: Main
+## The main menu, set by the menu before this enters the tree, when this runs on the menu instead.
+var main_menu: MainMenu
 
 var _shot_path := ""
 var _burst := 0.0
@@ -60,6 +64,11 @@ func _ready() -> void:
 	overlay.visible = false
 	var args := DevArgs.parse()
 	DevArgs.apply_window(get_window(), args)
+	if main_menu != null:
+		_ready_on_menu(args)
+		return
+	if DevArgs.drives_run(args):
+		main.auto_save.enabled = false
 	if args.has("chapter"):
 		main.start_chapter = StringName(args["chapter"])
 	if args.has("beat"):
@@ -101,13 +110,24 @@ func _ready() -> void:
 			_shoot_every(float(args["every"]))
 
 
+## On the main menu: switches that drive the run step straight into it; otherwise the menu stays up, any
+## earlier jump is forgotten so New Game starts at the top, and F2 can still jump into the run.
+func _ready_on_menu(args: Dictionary) -> void:
+	menu.picked.connect(_jump_to)
+	if DevArgs.drives_run(args):
+		main_menu.go_to_run()
+		return
+	_jump_chapter = &""
+	_jump_beat = &""
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"dev_menu"):
 		get_viewport().set_input_as_handled()
 		if menu.is_open():
 			menu.close()
 		else:
-			menu.open(main.chapters, _chapter, _beat)
+			menu.open(main.chapters if main != null else main_menu.chapters, _chapter, _beat)
 	elif event.is_action_pressed(&"dev_restart"):
 		_restart()
 	elif event.is_action_pressed(&"dev_overlay"):
@@ -119,7 +139,11 @@ func _unhandled_input(event: InputEvent) -> void:
 func _jump_to(chapter: StringName, beat: StringName) -> void:
 	_jump_chapter = chapter
 	_jump_beat = beat
-	_restart()
+	if main_menu != null:
+		menu.close()
+		main_menu.go_to_run()
+	else:
+		_restart()
 
 
 func _restart() -> void:
@@ -141,7 +165,7 @@ func _open_menu_after(seconds: float, pick: String) -> void:
 
 
 func _process(_delta: float) -> void:
-	if not overlay.visible:
+	if not overlay.visible or main == null:
 		return
 	var player: QuestionPlayer = main.question_player
 	var lines := PackedStringArray()
