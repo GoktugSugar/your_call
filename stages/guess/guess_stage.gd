@@ -110,7 +110,8 @@ func play_consequence(_index: int) -> StringName:
 	_marking = true
 	var guess: float = await guessed
 	_marking = false
-	dialogue.close()
+	if dialogue != null:
+		dialogue.close()
 	var truth := _truth()
 	var about := str(question.stage.get("about", ""))
 	if about != "":
