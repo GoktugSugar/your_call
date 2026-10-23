@@ -1,0 +1,285 @@
+{
+  "id": "ch6",
+  "title": "The Show",
+  "beats": [
+    { "kind": "cinematic", "id": "waking", "scene": "waking" },
+    {
+      "kind": "narration",
+      "id": "intro",
+      "lines": [
+        { "text": "Good evening, and welcome, welcome, welcome to Your Call! The only show in the void where the audience decides and nobody goes home.", "face": "grin" },
+        "Because nobody has a home. Because you are all [red]dead[/red]. Give it up for being [red]dead[/red]!",
+        { "text": "Tonight you are in the audience. One vote in a [amber]thousand[/amber]. Your vote counts exactly as much as everyone else's, which is barely at all. Let us meet our contestants!", "face": "smug" }
+      ]
+    },
+    {
+      "kind": "question",
+      "id": "applause",
+      "number": "6.01",
+      "title": "Applause",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "applause", "sign": { "text": "APPLAUSE" } },
+      "ask": [
+        "Our first contestant, ladies and gentlemen! Watch the step. Ooh.",
+        "The sign says applause. The whole room is clapping. Do you clap?"
+      ],
+      "options": [
+        {
+          "id": "clap",
+          "label": "Clap",
+          "outcome": { "clap": true },
+          "crowd": 74,
+          "profile": { "order_freedom": -0.3 },
+          "reaction": [ "You clapped. The sign said clap, and you clapped. Good audience. Good, good audience." ]
+        },
+        {
+          "id": "sit",
+          "label": "Sit on your hands",
+          "crowd": 26,
+          "profile": { "order_freedom": 0.3 },
+          "reaction": [ "You sat on your hands while a thousand [red]dead[/red] people clapped at a man on his face. Nobody saw. Nobody will ever know. Very brave. Very invisible." ]
+        }
+      ],
+      "reveal": { "heading": "who clapped" }
+    },
+    {
+      "kind": "question",
+      "id": "trapdoors",
+      "number": "6.02",
+      "title": "The Trapdoors",
+      "verb": "coordination_gamble",
+      "weight": "heavy",
+      "stage": { "type": "trapdoors", "random": 40, "line": 50, "left": "calm", "right": "elderly", "remember_right": "kept_old_soul" },
+      "ask": [
+        "Round one! Two contestants, two trapdoors, one vote.",
+        "On the left, a charmer. Dances, waves, remembers your name. On the right, a sweet old soul who has forgotten why they came.",
+        "The audience keeps one. The other goes through the floor. You are one vote in a [amber]thousand[/amber]. Vote."
+      ],
+      "options": [
+        {
+          "id": "charmer",
+          "label": "Keep the charmer",
+          "outcome": { "keep": "left" },
+          "crowd": 61,
+          "reaction": {
+            "left": [ "You and six hundred others kept the charmer. Down goes the old one. You were a rounding error." ],
+            "right": [ "You voted for the charmer. The room did not. Down goes the dancer, still waving. Your vote went through the floor with him." ]
+          }
+        },
+        {
+          "id": "old",
+          "label": "Keep the old soul",
+          "outcome": { "keep": "right" },
+          "crowd": 39,
+          "reaction": {
+            "left": [ "You voted for the old one. So did nearly four hundred others. Lovely of you all. Down she goes anyway." ],
+            "right": [ "You voted for the old one, and the room agreed. Down goes the dancer, still waving. You did not swing it. You never do." ]
+          }
+        }
+      ],
+      "reveal": { "heading": "how the audience voted", "mark": "half" }
+    },
+    {
+      "kind": "question",
+      "id": "wheel",
+      "number": "6.03",
+      "title": "The Wheel",
+      "verb": "coordination_gamble",
+      "weight": "medium",
+      "stage": { "type": "wheel", "random": 40, "line": 50, "contestant": "stranger", "prize": 10000, "board": { "text": "{prize}" } },
+      "ask": [
+        "Round two! Our contestant has won [amber]ten thousand dollars[/amber]. She is playing for her son's operation.",
+        "One spin of the wheel: double it, or lose the lot. She has left it to you. All of you. Spin, or take the money?"
+      ],
+      "options": [
+        {
+          "id": "spin",
+          "label": "Spin",
+          "outcome": { "spin": true },
+          "crowd": 38,
+          "profile": { "risk_safety": -0.5 },
+          "reaction": {
+            "doubled": [ "Spun, and doubled! [amber]Twenty thousand[/amber]. Her son gets his operation and a pony. You gambled with a stranger's child and won. Enjoy that. She will not sleep for a week." ],
+            "lost": [ "Spun, and lost. Every penny. She is smiling, because the camera is on her. You did that. Well. You and four hundred others." ],
+            "kept": [ "You wanted the spin. The room did not. Saved from yourself by a crowd of [red]dead[/red] strangers." ]
+          }
+        },
+        {
+          "id": "take",
+          "label": "Take the money",
+          "crowd": 62,
+          "profile": { "risk_safety": 0.5 },
+          "reaction": {
+            "kept": [ "The room took the money. Safe, sensible, [amber]ten thousand[/amber]. Somewhere a pony weeps." ],
+            "doubled": [ "You said take the money. The room spun anyway, and it doubled. She is rich, and you look like an accountant." ],
+            "lost": [ "You said take the money. The room spun. Gone. You can tell her you voted the other way. She will not care." ]
+          }
+        }
+      ],
+      "reveal": { "heading": "how the audience voted", "mark": "half" }
+    },
+    {
+      "kind": "question",
+      "id": "champion",
+      "number": "6.04",
+      "title": "The Returning Champion",
+      "verb": "coordination_gamble",
+      "weight": "light",
+      "stage": { "type": "champion", "random": 20, "line": 50, "board": { "text": "40 wins" } },
+      "ask": [
+        "And now, our returning champion! [amber]Forty[/amber] wins in a row! You know it, you loathe it, it is the button!",
+        { "text": "Forty one tonight. Write it down.", "speaker": "button" },
+        "The audience can vote it off. Vote it off, or let it play?"
+      ],
+      "options": [
+        {
+          "id": "off",
+          "label": "Vote it off",
+          "outcome": { "off": true },
+          "crowd": 71,
+          "reaction": {
+            "off": [ { "text": "RIGGED! This show is RIGGED! I want to see the votes!", "speaker": "button" }, "It wants to see the votes. Show it the votes." ],
+            "stays": [ { "text": "Ha! Forty one! You love me. You all love me.", "speaker": "button" }, "Nobody loves you. They just hate change more." ]
+          }
+        },
+        {
+          "id": "play",
+          "label": "Let it play",
+          "crowd": 29,
+          "reaction": {
+            "off": [ { "text": "RIGGED! You! I saw you! You were the only one!", "speaker": "button" }, "It is right, for once. You were nearly the only one." ],
+            "stays": [ { "text": "Ha! Forty one! You love me. You all love me.", "speaker": "button" }, "You kept it. The room kept it. Nobody wanted this, and here we all are." ]
+          }
+        }
+      ],
+      "reveal": { "heading": "how the audience voted", "mark": "half" }
+    },
+    {
+      "kind": "question",
+      "id": "split",
+      "number": "6.05",
+      "title": "Split or Steal",
+      "verb": "coordination_gamble",
+      "weight": "medium",
+      "stage": {
+        "type": "split", "steal": 47, "random": 30, "pot": 100000,
+        "board": { "text": "{pot}" }, "split_word": { "text": "split" }, "steal_word": { "text": "steal" }
+      },
+      "ask": [
+        "Split or steal! [amber]A hundred thousand dollars[/amber] in the pot. Both split, they share it. One steals, the thief takes it all. Both steal, nobody gets a penny.",
+        "The producers have put you in the left one's earpiece. He will do whatever you say. Tell him."
+      ],
+      "options": [
+        {
+          "id": "split",
+          "label": "Split",
+          "outcome": { "card": "split" },
+          "crowd": 56,
+          "profile": { "risk_safety": -0.3 },
+          "reaction": {
+            "shared": [ "Both split! [amber]Fifty thousand[/amber] each. Hugs. Tears. You told a stranger to trust a stranger, and it worked. Do not get used to it." ],
+            "robbed": [ "He split. The other one stole. Every penny, and a wave to camera. You told him to trust. He did. He is going home with a keyring." ]
+          }
+        },
+        {
+          "id": "steal",
+          "label": "Steal",
+          "outcome": { "card": "steal" },
+          "crowd": 44,
+          "profile": { "risk_safety": 0.3 },
+          "reaction": {
+            "took_all": [ "He stole. The other one split. All of it. The other one is crying on the floor. Television." ],
+            "nothing": [ "Both stole. Nobody gets anything. Two thieves and a pot of nothing. The most honest thing that has happened on this show." ]
+          }
+        }
+      ],
+      "reveal": { "heading": "what the audience told him" }
+    },
+    {
+      "kind": "question",
+      "id": "collapse",
+      "number": "6.06",
+      "title": "The Collapse",
+      "verb": "coordination_gamble",
+      "weight": "heavy",
+      "stage": { "type": "collapse", "random": 40, "line": 30, "contestant": "stranger" },
+      "ask": [
+        "And while we take a short break. Oh. Oh dear. Contestant down. Stage left.",
+        "Somebody should help. A thousand people saw it. He needs [amber]three hundred[/amber] of you on your feet.",
+        "Do you get up, or wait for somebody else to?"
+      ],
+      "options": [
+        {
+          "id": "up",
+          "label": "Get up",
+          "outcome": { "help": true },
+          "crowd": 24,
+          "profile": { "self_others": 0.5 },
+          "reaction": {
+            "lives": [ "You got up. So did enough others. He is sitting up and asking for water. A thousand [red]dead[/red] people saved a [red]dead[/red] man. Do not ask me what that means." ],
+            "dies": [ "You got up. Not enough of the others did. He [red]died[/red] waiting for the three hundred and first. You were there. You were just not enough." ]
+          }
+        },
+        {
+          "id": "wait",
+          "label": "Wait",
+          "crowd": 76,
+          "profile": { "self_others": -0.5 },
+          "reaction": {
+            "lives": [ "You waited. Enough of the others did not. He lives, and you get to feel fine about it. You will." ],
+            "dies": [ "You waited. So did everyone. He [red]died[/red] with a thousand people watching, each of them sure somebody else would go." ]
+          }
+        }
+      ],
+      "reveal": { "heading": "how many got up", "mark": "enough" }
+    },
+    {
+      "kind": "question",
+      "id": "box",
+      "number": "6.07",
+      "title": "The Mystery Box",
+      "verb": "coordination_gamble",
+      "weight": "light",
+      "stage": { "type": "prize_box", "random": 40, "line": 50, "prize": 50000, "board": { "text": "{prize}" }, "finalist": "calm", "finalist_if": { "kept_old_soul": "elderly" } },
+      "ask": [
+        "The final! Our finalist can take [amber]fifty thousand dollars[/amber], or the box. Nobody knows what is in the box. Well. I know.",
+        "The audience decides. The money, or the box?"
+      ],
+      "options": [
+        {
+          "id": "money",
+          "label": "The money",
+          "outcome": { "take": "money" },
+          "crowd": 55,
+          "profile": { "risk_safety": 0.3 },
+          "reaction": {
+            "money": [ "The money. Sensible. [amber]Fifty thousand[/amber]. The box stays shut forever, and you will never know. It was a cucumber. Now you know." ],
+            "box": [ "You said the money. The room said the box. Open it. Open it! It is a cucumber. Of course it is a cucumber." ]
+          }
+        },
+        {
+          "id": "box",
+          "label": "The box",
+          "outcome": { "take": "box" },
+          "crowd": 45,
+          "profile": { "risk_safety": -0.3 },
+          "reaction": {
+            "box": [ "The box! Open it. Open it! It is a cucumber. Of course it is a cucumber. It is always a cucumber." ],
+            "money": [ "You wanted the box. The room took the money. You will never know. It was a cucumber. Now you know." ]
+          }
+        }
+      ],
+      "reveal": { "heading": "how the audience voted", "mark": "half" }
+    },
+    {
+      "kind": "narration",
+      "id": "closer",
+      "lines": [
+        { "text": "And that is the show! Thank you, thank you, you have been a [amber]thousand[/amber] wonderful corpses.", "face": "grin" },
+        "One last thing, off air. Every vote you cast tonight, the room would have gone exactly the same way without you. Every single one. Your vote changed [amber]nothing[/amber].",
+        { "text": "And you voted anyway. Or you did not. I wrote down which. We will be right back. We will not.", "face": "smug" }
+      ]
+    }
+  ]
+}
