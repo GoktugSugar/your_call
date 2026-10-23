@@ -9,7 +9,7 @@ const WEIGHTS: PackedStringArray = ["light", "medium", "heavy"]
 const SPEAKERS: PackedStringArray = ["imp", "button", "plea", "headline", "confessor"]
 const FACES: PackedStringArray = ["grin", "smug", "glare", "surprised"]
 
-const _CHAPTER_KEYS: PackedStringArray = ["id", "title", "wallet", "if_skipped", "beats"]
+const _CHAPTER_KEYS: PackedStringArray = ["id", "title", "music", "wallet", "if_skipped", "beats"]
 const _WALLET_KEYS: PackedStringArray = ["start"]
 const _SKIPPED_KEYS: PackedStringArray = ["remember", "kills"]
 const _QUESTION_KEYS: PackedStringArray = ["kind", "id", "number", "title", "verb", "weight", "stage", "ask", "lines",
@@ -52,6 +52,7 @@ func load_chapter(path: String) -> ChapterData:
 	var chapter := ChapterData.new()
 	chapter.id = StringName(_text(data, "id", path, true))
 	chapter.title = _text(data, "title", path)
+	chapter.music = StringName(_text(data, "music", path))
 	_check_keys(data, _CHAPTER_KEYS, path)
 	var wallet: Variant = data.get("wallet", {})
 	if wallet is Dictionary:

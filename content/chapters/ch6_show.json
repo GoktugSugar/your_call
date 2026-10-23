@@ -1,6 +1,7 @@
 {
   "id": "ch6",
   "title": "The Show",
+  "music": "show",
   "beats": [
     { "kind": "cinematic", "id": "waking", "scene": "waking" },
     {

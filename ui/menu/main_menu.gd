@@ -58,6 +58,7 @@ var _leaving := false
 func _ready() -> void:
 	PlayerSettings.load_saved()
 	get_tree().paused = false
+	Music.play()
 	Music.duck(false)
 	Sfx.duck(false)
 	var loader := ContentLoader.new(Profile.axis_ids())

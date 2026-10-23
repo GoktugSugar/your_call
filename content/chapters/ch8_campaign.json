@@ -1,6 +1,7 @@
 {
   "id": "ch8",
   "title": "The Campaign",
+  "music": "campaign",
   "beats": [
     { "kind": "cinematic", "id": "waking", "scene": "waking" },
     {

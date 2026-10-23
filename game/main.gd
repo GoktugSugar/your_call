@@ -2,9 +2,9 @@ class_name Main
 extends Node
 ## The run, once the menu hands over to it: it plays the chapters in content/run.json in order, from the
 ## crash, or from the beat a continued run was saved at, the eyes opening on it first. It wires the imp to
-## the dialogue box, saves as each beat begins, holds the run still on Esc, and goes back to the main menu
-## when the run is over, after an ending's credits or the last chapter's closing line, or when the player
-## quits to it.
+## the dialogue box, plays each chapter's music as it starts, saves as each beat begins, holds the run
+## still on Esc, and goes back to the main menu when the run is over, after an ending's credits or the
+## last chapter's closing line, or when the player quits to it.
 
 ## The run: which chapters play, in order.
 @export_file("*.json") var run_path := "res://content/run.json"
@@ -66,6 +66,7 @@ func _ready() -> void:
 		start_beat = resumed.beat
 		run = resumed.run
 	_check_start(chapters)
+	run_player.chapter_started.connect(func(chapter: ChapterData) -> void: Music.play(chapter.music))
 	dialogue.page_shown.connect(_on_page_shown)
 	question_player.imp_face_cued.connect(_on_imp_face_cued)
 	dialogue.talking_changed.connect(_on_talking_changed)

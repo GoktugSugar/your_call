@@ -10,6 +10,9 @@ var title := ""
 var beats: Array[BeatData] = []
 ## The pot of money the chapter hands the player, such as [code]{"start": 10000}[/code], or empty for none.
 var wallet := {}
+## The track the music plays through the chapter, such as [code]campaign[/code], or empty for the main
+## theme.
+var music := &""
 ## What a run that starts after this chapter takes it to have left behind: facts to remember and kills
 ## by kind, such as [code]{"remember": ["button_woke"], "kills": {"soul": 7}}[/code]. For the dev menu.
 var if_skipped := {}

@@ -114,6 +114,17 @@ func test_every_cinematic_has_a_scene() -> void:
 	assert_eq(offenders, PackedStringArray(), "\n".join(offenders))
 
 
+func test_every_chapter_plays_a_track_there_is() -> void:
+	var offenders := PackedStringArray()
+	var music: Node = (load("res://game/audio/music.tscn") as PackedScene).instantiate()
+	for chapter in _chapters:
+		var track := chapter.music if chapter.music != &"" else StringName(music.get(&"main_track"))
+		if not ResourceLoader.exists("%s/%s.ogg" % [music.get(&"tracks_dir"), track]):
+			offenders.append("%s: no track '%s'" % [chapter.id, track])
+	music.free()
+	assert_eq(offenders, PackedStringArray(), "\n".join(offenders))
+
+
 func test_every_soul_on_a_track_is_a_known_kind() -> void:
 	var offenders := PackedStringArray()
 	for question in _questions():
