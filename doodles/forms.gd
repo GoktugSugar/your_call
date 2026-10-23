@@ -86,6 +86,11 @@ const _SIGNATURE := [Vector2(-8.0, -31.0), Vector2(-3.0, -46.0), Vector2(1.0, -3
 const _PEN := Vector4(63.0, -176.0, -140.0, -72.0)
 const _PEN_POINT := -60.0
 const _PEN_WIDTH := 11.0
+## How wide the pen's point is where it leaves the body, as a share of the pen's thickness, and how dark
+## it is: how far its wash goes from the body's toward the line's colour.
+const _POINT := Vector2(0.7, 0.5)
+## Radius of the rounded ends of the pen's body and its cap, as shares of half its thickness.
+const _PEN_ROUNDING := Vector2(0.4, 0.8)
 ## The clip on the pen's cap, down its left side: how far in from the cap's edge, and how far down it runs.
 const _PEN_CLIP := Vector2(2.5, 26.0)
 ## Widths of the printing, the boxes, the ticks, the signature and the pen's clip, as multiples of the
@@ -151,13 +156,14 @@ func _pen(ink: Color, body: Color, cap: Color, spacing: float) -> Array[InkLine]
 	var lines: Array[InkLine] = []
 	var half := _PEN_WIDTH * 0.5
 	var across := _PEN.x
-	var point := PackedVector2Array([Vector2(across - half * 0.7, _PEN.w), Vector2(across + half * 0.7, _PEN.w),
-			Vector2(across, _PEN_POINT), Vector2(across - half * 0.7, _PEN.w)])
-	lines.append(_washed(InkBrush.resample_polyline(point, spacing * 0.5), ink, ink.lerp(body, 0.5)))
+	var point_half := half * _POINT.x
+	var point := PackedVector2Array([Vector2(across - point_half, _PEN.w), Vector2(across + point_half, _PEN.w),
+			Vector2(across, _PEN_POINT), Vector2(across - point_half, _PEN.w)])
+	lines.append(_washed(InkBrush.resample_polyline(point, spacing * 0.5), ink, body.lerp(ink, _POINT.y)))
 	var stick := Rect2(across - half, _PEN.z - _CLIP_CORNER, _PEN_WIDTH, _PEN.w - _PEN.z + _CLIP_CORNER)
-	lines.append(_washed(InkBrush.rounded_rect(stick, half * 0.4, spacing), ink, body))
+	lines.append(_washed(InkBrush.rounded_rect(stick, half * _PEN_ROUNDING.x, spacing), ink, body))
 	var top := Rect2(across - half, _PEN.y, _PEN_WIDTH, _PEN.z - _PEN.y)
-	lines.append(_washed(InkBrush.rounded_rect(top, half * 0.8, spacing), ink, cap))
+	lines.append(_washed(InkBrush.rounded_rect(top, half * _PEN_ROUNDING.y, spacing), ink, cap))
 	var clip := PackedVector2Array([Vector2(across - half + _PEN_CLIP.x, _PEN.y + _PEN_CLIP.x),
 			Vector2(across - half + _PEN_CLIP.x, _PEN.y + _PEN_CLIP.y)])
 	lines.append(InkLine.along(InkBrush.resample_polyline(clip, spacing * 0.5), ink, _PEN_CLIP_LINE))

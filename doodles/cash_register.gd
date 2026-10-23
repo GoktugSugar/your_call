@@ -80,9 +80,10 @@ const _DECK_FRONT := Vector2(84.0, -86.0)
 const _KEY_ROWS := [[-111.0, [-39.0, -13.0, 13.0, 39.0]], [-97.0, [-52.0, -26.0, 0.0, 26.0, 52.0]]]
 ## The half width and height of a key seen from above.
 const _KEY_RADII := Vector2(8.0, 5.0)
-## The stalk from the deck up to the display, its ends tucked behind both; and the display box on it, its
-## window, and the radius of their rounded corners.
+## The stalk from the deck up to the display, its ends tucked behind both, and the radius of its corners;
+## and the display box on it, its window, and the radius of their rounded corners.
 const _STALK := Rect2(-5.0, -152.0, 10.0, 36.0)
+const _STALK_CORNER := 2.5
 const _DISPLAY := Rect2(-36.0, -180.0, 72.0, 32.0)
 const _WINDOW := Rect2(-26.0, -173.0, 52.0, 17.0)
 const _DISPLAY_CORNER := 5.0
@@ -116,7 +117,7 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 	for side: float in [-1.0, 1.0]:
 		var foot := Rect2(_FOOT.position.x if side < 0.0 else -_FOOT.end.x, _FOOT.position.y, _FOOT.size.x, _FOOT.size.y)
 		lines.append(_washed(InkBrush.rounded_rect(foot, _FOOT_CORNER, spacing), color, wash))
-	lines.append(_washed(InkBrush.rounded_rect(_STALK, _STALK.size.x * 0.25, spacing), color, metal))
+	lines.append(_washed(InkBrush.rounded_rect(_STALK, _STALK_CORNER, spacing), color, metal))
 	lines.append(_washed(InkBrush.rounded_rect(_DISPLAY, _DISPLAY_CORNER, spacing), color, wash))
 	lines.append(_washed(InkBrush.rounded_rect(_WINDOW, _DISPLAY_CORNER * 0.5, spacing), color, pale, _KEY_LINE))
 	var deck := PackedVector2Array([Vector2(-_DECK_BACK.x, _DECK_BACK.y), Vector2(_DECK_BACK.x, _DECK_BACK.y),

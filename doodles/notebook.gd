@@ -95,8 +95,16 @@ const _PENCIL := Vector2(90.0, 12.0)
 ## Along the pencil from its point: where the bare wood of its sharpened end starts, where its painted
 ## body starts, where its metal band starts, and where its rubber starts.
 const _PENCIL_PARTS := Vector4(7.0, 22.0, 76.0, 84.0)
-## How much thicker the band is than the pencil.
+## How much thicker the band is than the pencil, and where along it its two rings run, as shares of it.
 const _BAND_LIP := 1.0
+const _BAND_RINGS := [0.35, 0.65]
+## How far off the middle of the pencil's body the line along one of its flat sides runs, as a share of
+## half its thickness.
+const _FACET := 0.3
+## Radius of the rubber's rounded end, as a share of half the pencil's thickness, and how far the rubber
+## reaches in under the band.
+const _RUBBER_ROUNDING := 0.5
+const _RUBBER_TUCK := 1.0
 ## Points along each straight edge of the pages, so they can bend into the gutter.
 const _EDGE_SPACING := 2.0
 ## Widths of the pages' line, the ruled lines, the line along the pencil's body and the band's rings,
@@ -227,13 +235,13 @@ func _pencil(palette: InkPalette, spacing: float) -> Array[InkLine]:
 	lines.append(_washed(lay * InkBrush.resample_polyline(point, spacing * 0.5), ink, ink))
 	var stick := Rect2(paint, -half, band - paint, _PENCIL.y)
 	lines.append(_washed(lay * InkBrush.resample_polyline(_rect(stick), spacing), ink, body))
-	var facet := PackedVector2Array([Vector2(paint, -half * 0.3), Vector2(band, -half * 0.3)])
+	var facet := PackedVector2Array([Vector2(paint, -half * _FACET), Vector2(band, -half * _FACET)])
 	lines.append(InkLine.along(lay * InkBrush.resample_polyline(facet, spacing), ink, _FACET_LINE))
-	var tip := Rect2(rubber - 1.0, -half, finish - rubber + 1.0, _PENCIL.y)
-	lines.append(_washed(lay * InkBrush.rounded_rect(tip, half * 0.5, spacing * 0.5), ink, ends))
+	var tip := Rect2(rubber - _RUBBER_TUCK, -half, finish - rubber + _RUBBER_TUCK, _PENCIL.y)
+	lines.append(_washed(lay * InkBrush.rounded_rect(tip, half * _RUBBER_ROUNDING, spacing * 0.5), ink, ends))
 	var ferrule := Rect2(band, -half - _BAND_LIP, rubber - band, _PENCIL.y + _BAND_LIP * 2.0)
 	lines.append(_washed(lay * InkBrush.resample_polyline(_rect(ferrule), spacing * 0.5), ink, ends))
-	for share: float in [0.35, 0.65]:
+	for share: float in _BAND_RINGS:
 		var x := lerpf(band, rubber, share)
 		var ring := PackedVector2Array([Vector2(x, -half - _BAND_LIP), Vector2(x, half + _BAND_LIP)])
 		lines.append(InkLine.along(lay * InkBrush.resample_polyline(ring, spacing * 0.5), ink, _RING_LINE))

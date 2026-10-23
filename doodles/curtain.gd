@@ -85,6 +85,8 @@ const _KNOT_RADIUS := 5.0
 const _STRING := 16.0
 const _TASSEL := Vector3(4.0, 9.0, 22.0)
 const _STRANDS := 3
+## How far down the tassel's skirt its strands start, as a share of its height.
+const _STRANDS_FROM := 0.3
 ## Widths of the curtain's line, its folds, the hem's dips and the tassel's strands, as multiples of the
 ## drawing's line width.
 const _CURTAIN_LINE := 0.8
@@ -124,7 +126,7 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 	lines.append(_washed(InkBrush.resample_smooth(skirt, true, spacing * 0.5), ink, dark, _CURTAIN_LINE))
 	for strand in _STRANDS:
 		var share := (strand + 1.0) / (_STRANDS + 1.0)
-		var line := PackedVector2Array([Vector2(knot.x + lerpf(-_TASSEL.x, _TASSEL.x, share), top + _TASSEL.z * 0.3),
+		var line := PackedVector2Array([Vector2(knot.x + lerpf(-_TASSEL.x, _TASSEL.x, share), top + _TASSEL.z * _STRANDS_FROM),
 				Vector2(knot.x + lerpf(-_TASSEL.y, _TASSEL.y, share), top + _TASSEL.z)])
 		lines.append(InkLine.along(InkBrush.resample_polyline(line, spacing * 0.5), ink, _STRAND_LINE))
 	lines.append(_washed(InkBrush.ellipse(knot, Vector2.ONE * _KNOT_RADIUS, spacing * 0.5), ink, dark, _CURTAIN_LINE))

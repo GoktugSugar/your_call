@@ -81,6 +81,8 @@ const _COVER_CORNER := 7.0
 const _BORDER := Vector2(9.0, 4.0)
 ## How high up the side of the pages each line between them runs, as shares of the pages' thickness.
 const _PAGE_EDGES := [0.35, 0.68]
+## How far out from the spine the lines between the open diary's stacked pages start, as a share of a page.
+const _STACK_EDGE_FROM := 0.15
 ## How much of each line between the pages is left off at either end, so they stop short of the corners.
 const _PAGE_EDGE_TRIM := 7.0
 ## The strap across the cover, from just past its edge on the right, and the lock plate at its end; with
@@ -226,7 +228,7 @@ func _open_lines(palette: InkPalette, color: Color, spacing: float) -> Array[Ink
 		stack.append(Vector2(side * _PAGE.x, 0.0))
 		lines.append(_washed(InkBrush.resample_polyline(_closed(stack), spacing), color, palette.paper, _PAGES_LINE))
 		for share: float in _PAGE_EDGES:
-			var edge := _page_edge(side, 1.0, 0.15, 1.0)
+			var edge := _page_edge(side, 1.0, _STACK_EDGE_FROM, 1.0)
 			for i in edge.size():
 				edge[i] = Vector2(edge[i].x, edge[i].y * share)
 			lines.append(InkLine.along(InkBrush.resample_smooth(edge, false, spacing), color, _PAGE_EDGE_LINE))
