@@ -289,3 +289,14 @@ The user picked three of the chapter ideas to build (The Show, Everyone Else, Th
 - **The odds are printed, not said.** Provisional. The outline had the imp say "One in {odds}"; a per run number would need a voice take for every run, so the slip prints the odds and he says "There. The bottom line." instead, as the map is read for the country in 2.10. Big counts read in words to their leading figure ("a thousand billion billion").
 - **The lost wallet's two numbers are from the 2019 lost wallet study** (51 in a hundred handed back with a little money, 72 with more), still to be checked. Every other seed is a placeholder.
 - **The closer is a tableau** that recaps the guesses about strangers and reads them low, high or close (within 8 on average).
+
+## 2026-10-23: building Chapter 10, The Portrait
+
+- **The Portrait closes the run.** User, from the outline, numbered Chapter 10 for now.
+- **The last question is 1.02 again.** User: the same five, the same one, the same lever; the reaction is keyed by what the player did the first time, and it still ends on how others chose.
+- **Kept from the outline, provisional.** The portrait is shown, once, as a scale per axis with no numbers; thirteen postings, one per pole of the six axes and the imp's own job for a portrait that leans nowhere far; the one wink at the car in the notebook.
+- **The main endings, provisionally, are the postings.** Dev, from the user's pick of the outline. This answers the open question of how the profile picks an ending with a dominant axis read: the axis leaned on hardest, read against how often it came up (`Profile.lean`, with two nudges' worth of doubt so an axis that came up once does not read as all the way over), picks its pole's posting; a strongest lean under 0.2 takes the imp's job. Each posting is an ending (`posted_lever` and so on), recorded like the secret ones, and the credits roll after it. Every full run now ends on one.
+- **The profile keeps how much each axis was nudged.** Dev: `reach` beside the leanings, saved with them; an older save of leanings alone still loads, each leaning taken as its own reach.
+- **Tableaux can fire endings.** Dev: a tableau's `ending`, keyed by outcome like an option's.
+- **The portrait stage says its own lines.** Dev: one line set per axis and pole, said from the dialogue box as each scale lights, so no line needs a condition on a fact a stage remembers.
+- **Four props.** Dev: drawn by a helper in a worktree of its own (`helper/portrait-props`), with Everyone Else's two: the notebook, the gavel (seen at last), the booth's curtain on its own, and a clipboard of forms for the clerk.

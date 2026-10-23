@@ -345,6 +345,7 @@ Tags only belong in narration.
   - the class and choices in the campaign
 - **Endings.**
   - There are multiple endings. Each is chosen by the portrait and delivered by the imp, never as a score.
+  - **In the remake, provisionally (2026-10-23):** The Portrait closes the run. The imp reads his notebook, shows the portrait as a scale per axis with no numbers, asks 1.02's lever again, and posts the player somewhere in the void: the posting for the pole of the axis they leaned on hardest (a lever, a plea, the booth's curtain, the gavel, the trolley, the rails, his clerk, a button, the die, the crowd, the map's pin, the paper), or his own job when they lean nowhere far. Thirteen endings, each mocked, none a verdict.
   - The earlier build only had a reusable ending shape: an optional line, an effect, then a credits roll. Only the five secret endings used it.
   - Still open: how many endings there are, what each says, and how the profile maps to one (per-axis thresholds, a dominant-axis read, or a combination).
 - **The secret endings are part of that set.** The five breaks (section 8) end the run early, each with its own line and the credits. Reaching any ending ends the run.
@@ -368,6 +369,8 @@ There is one linear run, the same for everyone. All the content is in `SCRIPT.md
 - **Chapter 6, The Show.** New in the remake (2026-10-23). The imp hosts a game show called Your Call and the player is one vote in a studio audience of a thousand: clapping on cue, the trapdoors, double or nothing on a stranger's winnings, voting off the walking button, split or steal, a collapse nobody gets up for, and a mystery box that holds a cucumber. The coordination gamble for a whole chapter; the closer points out that the room would have gone the same way without the player, every time.
 - **Chapter 7, The Confession Booth.** The dead judge does his old job. "Am I the asshole" disputes go from petty to heavy, with three verdicts each and the room's agreement as the payoff. It ends on two contradictory accounts, with no truth ever revealed.
 - **Chapter 8, The Campaign.** A tiny DnD adventure with the imp as a bad Dungeon Master. It is linear with the illusion of choice, and ends on a roll he offers to fudge (a secret ending).
+- **Chapter 9, Everyone Else.** New in the remake (2026-10-23). No choices of the player's own: the imp has them guess what the room did, marking a bar, from lost wallets to the questions of the run so far, and reads how they see people. It closes on the odds of anyone having made every choice they made.
+- **Chapter 10, The Portrait.** New in the remake (2026-10-23), the finale: the imp's notebook, the portrait, the first lever again, and the posting that ends the run.
 - **Breathers.** A shared pool of twelve illustrated would-you-rathers, placed between the heavy beats: four in Chapter 1, two in 2, three each in 3 and 4, and none in 5, 7 or 8. Stats-only by default.
 - **The running gag.** The walking button debuts in Chapter 2 and keeps coming back, indestructible: as the auction rival, the charging mystery, an opponent and a confessor.
 - **Not yet wired.** Chapters 7 and 8 were built ahead of Chapter 6 and never chained into the run, and the real endings didn't exist yet. In the remake the run goes from Chapter 5 to The Show and on to Chapter 7.

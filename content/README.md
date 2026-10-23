@@ -242,6 +242,36 @@ A tableau recapping the guesses filed under `about`, each a small true bar with 
 
 A tableau: a slip prints the rarest `most_rows` picks of the run with their shares, how many more there were, and the share of the room that made every pick, as one in so many. Outcome `odds`. Placeholders, in its words only: `{number}`, `{pick}`, `{more}`, `{odds}`.
 
+## The Portrait's stages
+
+### The notebook stage
+
+```json
+"stage": { "type": "notebook", "most_rows": 3, "line": { "text": "{number} {pick}" },
+  "share": { "text": "{share} in 100" }, "count": { "text": "the odd one out {count} times" } }
+```
+
+A tableau: the imp's notebook writes the run's rarest `most_rows` picks with their shares, and how many times the player picked what the fewest picked. Outcome `notebook`. Placeholders, in its words only: `{number}`, `{pick}`, `{share}`, `{count}`.
+
+### The portrait stage
+
+```json
+"stage": { "type": "portrait", "middle": 0.15 }
+```
+
+A tableau: a scale for each axis, its poles named from `profile_axes.json`, a mark where the player leans. The stage says a line set per axis as its scale lights: `<axis>_first`, `<axis>_second` or `<axis>_middle` (a lean nearer the middle than `middle`), such as `one_many_first`. Outcome `portrait`.
+
+### The posting stage
+
+```json
+"stage": { "type": "posting", "nowhere": 0.2, "nowhere_posting": "imp", "plea": { "text": "Please, not me." },
+  "postings": { "one_many": [ "plea", "lever" ], "mercy_justice": [ "curtain", "gavel" ] } }
+```
+
+A tableau: the posting for the pole of the axis the player leaned on hardest, first pole first, or `nowhere_posting` when no lean reaches `nowhere`. Outcome: the posting's name, which names the question's lines and its `ending`. The postings drawn: `lever`, `plea` (its words from `plea`), `curtain`, `gavel`, `trolley`, `rails`, `clerk`, `button`, `die`, `crowd`, `pin`, `paper` (nothing at all) and `imp`.
+
+A tableau can fire an ending, named by its outcome like an option's: `"ending": { "lever": "posted_lever", "imp": "posted_imp" }`.
+
 ## The Show's stages
 
 Chapter 6 is a game show, every round staged in the same studio: the curtain valance, the floor and the audience along the foot of the page. In every round the room votes: its share for the first option is that option's `crowd`, with `random` percent of the room voting at random instead (drawn again every play), and the room picks the first option when its share passes `line` (50 when the stage does not say). The reveal shows the room's vote as it fell, with `reveal.mark` naming the line. A `board` is words on the studio, such as a prize, with `{prize}` or `{pot}` filled in as money.

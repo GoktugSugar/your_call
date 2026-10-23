@@ -72,7 +72,6 @@ Built on 2026-10-23. The copy is signed off and voiced; the rest is provisional 
 - The die's look and roll, and its captions.
 - The scene's doodle answering the pick (a hop, a shake, a fall, backing away). Alternative: a fuller scene for the heavy beats, such as the beast cornered in the barrow or the dragon.
 - The twelve new doodles and their colours, from the old build's descriptions.
-- After 8.10 and the closer, the run starts over from the crash: there is no ending yet.
 
 ## To review: the frame
 
@@ -110,6 +109,15 @@ Built on 2026-10-23 from the outline the user picked. The copy waits for the use
 - The closer's read: the guesses about strangers only (the two wallets and the change), close within 8 on average.
 - The wallet study's numbers, to check; 9.06 and 9.09's seeds are placeholders (9.09's eleven is the imp's joke).
 
+## To review: Chapter 10
+
+Built on 2026-10-23 from the outline the user picked. The copy waits for the user's sign off before it is voiced; the rest is provisional and logged in `DECISIONS.md`.
+
+- The copy, as outlined, unvoiced. The notebook writes the run's rarest picks; the imp does not read them out.
+- The thirteen postings, and how the posting is picked: the strongest lean against two nudges' worth of doubt, the imp's job under 0.2.
+- Showing the portrait at all, as scales with no numbers.
+- The order of the six scales and their poles' names, straight from `content/profile_axes.json`.
+
 ## Carried over from the earlier build
 
 These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus the points sections 9 and 14 leave to the user.
@@ -118,7 +126,7 @@ These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus t
 - The final title. *Your Call* is the working title; check that it's available before release.
 - The final profile axes (how many, and their names), which questions feed which axes and how heavily, and how to keep every axis sampled when most of the volume is light.
 - The endings:
-  - how many there are, what each says, how the profile picks one, and how the imp's delivery shifts between them
+  - how many there are, what each says, how the profile picks one, and how the imp's delivery shifts between them (provisionally the thirteen postings of The Portrait, picked by the strongest leaning; see "To review: Chapter 10")
   - whether Yourself or The Person Who Wants You To should become secret endings too
 - The total question count, and the light/medium/heavy ratio, for 5 to 6 hours. The original estimate of 25 to 35 full scenes predates the shift to mostly light questions.
 - Whether allocation and self-sacrifice get dedicated beats, or the presentations in section 5 of `PREMISE.md` already cover that ground.
