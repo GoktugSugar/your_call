@@ -92,6 +92,9 @@ func enter() -> void:
 	for label in _labels():
 		label.modulate.a = 0.0
 		fade.tween_property(label, ^"modulate:a", 1.0, enter_duration)
+	# With nothing bought there is nothing to fade, and a tween left empty complains.
+	if not fade.has_tweeners():
+		fade.kill()
 	await super.enter()
 
 
@@ -146,6 +149,8 @@ func leave() -> void:
 	var fade := create_tween().set_parallel(true)
 	for label in _labels():
 		fade.tween_property(label, ^"modulate:a", 0.0, leave_duration)
+	if not fade.has_tweeners():
+		fade.kill()
 	await super.leave()
 
 
