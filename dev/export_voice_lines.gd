@@ -1,7 +1,7 @@
 extends SceneTree
-## Development only: writes every line of content to JSON for the voice tools, with its id, its
-## speaker, the voice that says it, its plain text (colour tags stripped, as it is spoken) and that
-## text's SHA-1. The game checks the same hash before it plays a clip, so a clip never plays over text
+## Development only: writes every line of content to JSON for the voice tools, the chapters' and the
+## main menu's, with its id, its speaker, the voice that says it, its plain text (colour tags stripped,
+## as it is spoken) and that text's SHA-1. The game checks the same hash before it plays a clip, so a clip never plays over text
 ## it was not made from.
 ## A line with placeholders is written once for every way its stage fills it, each under its own id,
 ## with [code]fills[/code] naming the line it fills. A line marked not voiced is left out.
@@ -11,6 +11,7 @@ extends SceneTree
 ## Exits with code 1 if the content has problems.
 
 const CHAPTERS_DIR := "res://content/chapters"
+const MENU_PATH := "res://content/menu.json"
 
 
 func _initialize() -> void:
@@ -35,13 +36,14 @@ func _initialize() -> void:
 				for spoken_line: LineData in spoken_lines:
 					if not spoken_line.voiced:
 						continue
-					var spoken := Markup.strip(spoken_line.text)
-					var entry := {"id": spoken_line.id, "speaker": String(spoken_line.speaker),
-							"voice": spoken_line.voice_name(), "text": spoken, "sha1": spoken.sha1_text(),
-							"direction": spoken_line.direction}
+					var entry := _entry(spoken_line)
 					if spoken_line.id != line.id:
 						entry["fills"] = line.id
 					lines.append(entry)
+	var menu := loader.load_menu(MENU_PATH)
+	for line in menu.all_lines() if menu != null else []:
+		if line.voiced:
+			lines.append(_entry(line))
 	for problem in loader.problems:
 		printerr(problem)
 	for line_id in unfilled:
@@ -51,3 +53,11 @@ func _initialize() -> void:
 	json.close()
 	print("export_voice_lines: %d lines to %s" % [lines.size(), out])
 	quit(1 if not loader.problems.is_empty() else 0)
+
+
+## What the voice tools need of [param line]: its id, who says it in which voice, and its spoken text
+## with that text's hash.
+func _entry(line: LineData) -> Dictionary:
+	var spoken := Markup.strip(line.text)
+	return {"id": line.id, "speaker": String(line.speaker), "voice": line.voice_name(), "text": spoken,
+			"sha1": spoken.sha1_text(), "direction": line.direction}
