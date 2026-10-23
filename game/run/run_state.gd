@@ -28,8 +28,9 @@ var wallet: Wallet
 ## Everything the player has killed so far.
 var kills := KillTally.new()
 ## Every pick so far, in order: the question's [code]chapter[/code] and [code]id[/code], its
-## [code]number[/code] and [code]title[/code], the [code]pick[/code] as the reveal labelled it, and the
-## [code]share[/code] of the room that picked the same, from 0 to 100.
+## [code]number[/code] and [code]title[/code], the [code]pick[/code] as the reveal labelled it, the
+## [code]share[/code] of the room that picked the same, from 0 to 100, and whether it was the
+## [code]least[/code] popular pick.
 var picks: Array[Dictionary] = []
 ## Every guess at the room so far, by question id: what it was [code]about[/code], the
 ## [code]guess[/code], the [code]truth[/code] and the [code]gap[/code] (the guess less the truth).
@@ -80,7 +81,7 @@ func record_pick(question: QuestionData, split: RevealSplit) -> void:
 		return
 	picks.append({"chapter": String(question.chapter), "id": String(question.id), "number": question.number,
 			"title": question.title, "pick": split.labels[split.pick] if split.pick < split.labels.size() else "",
-			"share": split.shares[split.pick]})
+			"share": split.shares[split.pick], "least": split.is_least_popular()})
 
 
 ## Remembers the player's guess at the room in [param question]: [param guess] against [param truth],
@@ -125,12 +126,9 @@ func to_data() -> Dictionary:
 
 ## A run that remembers what [method to_data] wrote, or null when [param data] is not that.
 static func from_data(data: Variant) -> RunState:
-	if not data is Dictionary or not data.get("profile") is Dictionary or not data.get("facts") is Array:
+	if not data is Dictionary or not Profile.is_valid_data(data.get("profile")) or not data.get("facts") is Array:
 		return null
 	var run := RunState.new()
-	for axis: Variant in data["profile"]:
-		if not (data["profile"][axis] is int or data["profile"][axis] is float):
-			return null
 	run.profile.load_data(data["profile"])
 	if data.get("wallet") != null:
 		run.wallet = Wallet.from_data(data["wallet"])
