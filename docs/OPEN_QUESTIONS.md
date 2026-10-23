@@ -68,9 +68,8 @@ Built on 2026-10-23. The copy and the voices wait on the user before anything is
 
 ## To review: Chapter 8
 
-Built on 2026-10-23. The copy waits on the user before anything is voiced; the rest is provisional and logged in `DECISIONS.md`.
+Built on 2026-10-23. The copy is signed off and voiced; the rest is provisional and logged in `DECISIONS.md`.
 
-- The trimmed copy, 19% shorter (review page: https://claude.ai/artifact/MG8Gvx3epiPF1dmVZ8oJ28), and its fixes to the old copy: the beast you spared comes to the dragon in place of the village, 8.03's miss line fits every class, and the honest roll's closing line needles instead of praising.
 - The die's look and roll, and its captions.
 - The scene's doodle answering the pick (a hop, a shake, a fall, backing away). Alternative: a fuller scene for the heavy beats, such as the beast cornered in the barrow or the dragon.
 - The twelve new doodles and their colours, from the old build's descriptions.
