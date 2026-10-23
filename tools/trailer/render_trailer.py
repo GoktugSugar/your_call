@@ -266,6 +266,10 @@ def graph(cut: dict, fmt: str, placed: list[dict], encode: dict) -> tuple[list[s
             audio += f",asetrate={round(SAMPLE_RATE * speed)},aresample={SAMPLE_RATE}"
         audio += f",volume={decibels(float(piece.get('gain_db', 0.0)))}"
         frames = piece["frames"]
+        # A breath of a fade at either edge, so a cut never clicks.
+        edge = float(cut.get("sound", {}).get("edge_fade", 0.0))
+        if edge > 0.0:
+            audio += f",afade=t=in:st=0:d={edge:.4f},afade=t=out:st={max(frames / fps - edge, 0.0):.4f}:d={edge:.4f}"
         video += (f",trim=end_frame={frames},scale={width}:{height}:in_range=full:out_range=limited:flags=lanczos,"
                   f"setsar=1,format=yuv420p[v{i}]")
         audio += f",apad=whole_dur={frames / fps:.4f},atrim=end={frames / fps:.4f}[a{i}]"

@@ -53,6 +53,11 @@ Exports (into `builds/`, which git ignores):
 - Windows: `G --headless --path . --export-release "Windows" builds/windows/YourCall.exe`
 - Browser: `python tools/web/export_web.py` makes `builds/web` and `builds/your_call_web.zip` to upload; `python tools/web/serve.py` serves it as itch.io does at http://localhost:8060/.
 
+Trailers (into `trailer_renders/`, which git and Godot ignore; `docs/TRAILERS.md` is the treatment):
+
+- `python tools/trailer/render_trailer.py` records the shots that changed and cuts both trailers, wide (16:9) and tall (9:16); `--format tall` makes one, `--dry-run` shows the plan and its times, `--shots a,b` records those shots again (after a change to code, which the cache cannot see), `--cut-only` cuts from the recordings there are.
+- The cut is `dev/trailer/trailer_cut.json`; the imp's lines are `dev/trailer/trailer_lines.json`, voiced with `tools/voice/voice_lines.py` like any line.
+
 Voice (Python 3, standard library only; the key comes from `.env`, which git ignores):
 
 - Design candidate voices: `python tools/voice/design_auditions.py --speaker <speaker>` (`--dry-run` first to see what it will spend; takes land in `voice_auditions/`)

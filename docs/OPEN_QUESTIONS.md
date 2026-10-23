@@ -121,6 +121,18 @@ Built on 2026-10-23 from the outline the user picked. The copy waits for the use
 - Showing the portrait at all, as scales with no numbers.
 - The order of the six scales and their poles' names, straight from `content/profile_axes.json`.
 
+## To review: the new trailers
+
+Built on 2026-10-23. The script, the music, the swear, the end card and the length are the user's; these are the dev's, provisional and logged in `DECISIONS.md` (the treatment is `docs/TRAILERS.md`).
+
+- Their length: 70.5 seconds against about a minute. Trims on offer: the lever's ask, the booth's first piece, the dragon, the title's wait.
+- How each of the fifteen lines is delivered: each take's v3 direction was picked by fit, not by ear. Any line can be voiced again on its own.
+- The music: how far under the voice it sits, that it starts at the pull out, and that it stops dead at "Your call.", leaving the title card to the voice and the pen.
+- The shots standing for each chapter (1.02, 1.15, 2.01, 3.05, 4.10, 5.01, 5.08, 6.01, 7.01, 8.09) and the pick made in each.
+- The close ups: how close, and the imp's line thickening as the camera comes in.
+- The tall framing: the imp floating above each stage as the host, and the booth's and the dragon's rows kept to the options that fit.
+- The trolley rolling quicker than in the game, and the question player's shorter pauses.
+
 ## Carried over from the earlier build
 
 These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus the points sections 9 and 14 leave to the user.
