@@ -140,13 +140,14 @@ func hop(node: Node2D, height: float, seconds: float) -> void:
 
 
 ## A board of words centred on [param at], from the stage data's [param key] (its [code]text[/code],
-## filled), in the board colour. It fades in and out with the stage. Null when the data has none.
-func add_board(key: String, at: Vector2) -> Label:
+## filled), in the board colour, at [param size] (the boards' own size when below 0). It fades in and out
+## with the stage. Null when the data has none.
+func add_board(key: String, at: Vector2, size := -1) -> Label:
 	var data: Variant = question.stage.get(key)
 	if not data is Dictionary or not data.has("text"):
 		return null
 	var board := Label.new()
-	board.add_theme_font_size_override(&"font_size", board_size)
+	board.add_theme_font_size_override(&"font_size", board_size if size < 0 else size)
 	board.add_theme_color_override(&"font_color", InkPalette.get_default().color(board_role))
 	board.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	board.mouse_filter = Control.MOUSE_FILTER_IGNORE
