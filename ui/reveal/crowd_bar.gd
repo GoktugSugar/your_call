@@ -41,6 +41,8 @@ signal counted(number: int)
 @export var number_label: Label
 
 var _seed := 0
+## The ink of this control's lines, kept to lay down again while they stay as they were.
+var _cache := InkCache.new()
 ## The number shown past the bar's end.
 var _shown := -1
 
@@ -63,7 +65,8 @@ func _draw() -> void:
 	var edge := InkLine.along(outline, color, 0.8, true)
 	edge.fill = color
 	var lines: Array[InkLine] = [edge]
-	InkPainter.paint(self, lines, style.width, _seed, InkPainter.current_variant(), style)
+	InkPainter.paint(self, lines, style.width, _seed, InkPainter.current_variant(), style, 1.0, Color.TRANSPARENT,
+			_cache)
 
 
 func _get_minimum_size() -> Vector2:

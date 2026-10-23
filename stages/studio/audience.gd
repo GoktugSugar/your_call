@@ -140,17 +140,22 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 	for i in _seats.size():
 		var bob := sin(_clock * TAU * clap_rate + _phase[i]) * clap_bob if _clapping > 0.0 else 0.0
 		var drift := sin(variant * 2.1 + _phase[i]) * sway
-		var head := _seats[i] + Vector2(drift, -_risen[i] - absf(bob))
+		# A head only moves about as it sways and bobs, so it moves by offset and its ink is laid down
+		# again unchanged; rising out of its seat stretches it, so that is in its shape.
+		var moved := Vector2(drift, -absf(bob))
+		var head := _seats[i] + Vector2(0.0, -_risen[i])
 		var body := PackedVector2Array([head + Vector2(-shoulders.x, shoulders.y + _risen[i] + head_radius),
 				head + Vector2(-shoulders.x * 0.85, head_radius * 0.9), head + Vector2(0.0, head_radius * 0.55),
 				head + Vector2(shoulders.x * 0.85, head_radius * 0.9),
 				head + Vector2(shoulders.x, shoulders.y + _risen[i] + head_radius)])
 		var torso := InkLine.along(InkBrush.resample_smooth(body, false, spacing_step), color, 0.8)
+		torso.offset = moved
 		torso.fill = palette.paper
 		if not clothes.is_empty():
 			torso.fill = palette.paper.lerp(palette.color(clothes[(i * 7) % clothes.size()]), clothes_wash)
 		lines.append(torso)
 		var skull := InkLine.along(InkBrush.ellipse(head, Vector2.ONE * head_radius, spacing_step), color, 0.8, true)
+		skull.offset = moved
 		skull.fill = palette.paper
 		lines.append(skull)
 	return lines

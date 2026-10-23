@@ -3,6 +3,8 @@ extends RefCounted
 ## Paints a list of [InkLine]s into a canvas item, drawn on in order. Each line's wash goes down just
 ## before the line itself, so later lines and their washes sit on top of earlier ones: list what is
 ## behind first. No line gets thinner on screen than the style allows, however small the window or the node.
+## Given the drawing's [InkCache], a line just as it was the last time this boil variant was painted is
+## laid down again from there rather than worked out afresh.
 ## Also hooks any canvas item up to the ink material and the boil clock, for nodes that cannot extend [InkDrawing], such as Controls.
 
 ## Seed step between the lines of one drawing, so neighbouring lines wobble differently.
@@ -13,27 +15,35 @@ const _DOT_TO_WIDTH := 0.6
 
 ## Paints [param lines] into [param node]. [param reveal] puts only the first part of the drawing on
 ## the page, line by line. A colour in [param recolor] (alpha above zero) replaces every line's own colour.
-## [param variant] picks the boil shape; a fraction between two blends them.
+## [param variant] picks the boil shape; a fraction between two blends them. [param cache], the drawing's
+## own, keeps the ink of lines that come back unchanged.
 static func paint(node: CanvasItem, lines: Array[InkLine], line_width: float, seed: int, variant: float,
-		style: InkStyle, reveal := 1.0, recolor := Color.TRANSPARENT) -> void:
+		style: InkStyle, reveal := 1.0, recolor := Color.TRANSPARENT, cache: InkCache = null) -> void:
 	if reveal <= 0.0 or lines.is_empty():
 		return
+	var started := Time.get_ticks_usec() if InkStats.enabled else 0
 	var item := node.get_canvas_item()
 	var thinnest := style.min_screen_width / screen_scale(node)
 	var shares := _reveal_shares(lines, reveal)
+	if cache != null:
+		cache.begin([line_width, seed, style, recolor, thinnest])
 	for i in lines.size():
 		if shares[i] <= 0.0:
 			break
 		var line := lines[i]
-		if line.fill.a > 0.0 and shares[i] >= 1.0:
-			InkBrush.fill(item, line.path, line.fill)
-		var color := recolor if recolor.a > 0.0 else line.color
-		var line_seed := seed + i * _LINE_SEED_STEP
-		if line.dot_radius > 0.0:
-			InkBrush.dot(item, line.path[0], maxf(line.dot_radius, thinnest * _DOT_TO_WIDTH), color, line_seed, variant, style)
-		else:
-			InkBrush.stroke(item, line.path, line.closed, maxf(line_width * line.width, thinnest), color, line_seed,
-					variant, style, shares[i])
+		var key: Array = []
+		var shapes: Variant = null
+		if cache != null:
+			key = [line.path, line.closed, line.width, line.color, line.fill, line.dot_radius, shares[i]]
+			shapes = cache.shapes(variant, i, key)
+		if shapes == null:
+			shapes = _shapes_of(line, maxf(line_width * line.width, thinnest), thinnest,
+					recolor if recolor.a > 0.0 else line.color, seed + i * _LINE_SEED_STEP, variant, style, shares[i])
+			if cache != null:
+				cache.keep(variant, i, key, shapes)
+		_lay(item, shapes, line.offset)
+	if InkStats.enabled:
+		InkStats.record_paint(node, Time.get_ticks_usec() - started)
 
 
 ## Gives [param node] the ink material and redraws it on every boil tick. Call it from the node's [code]_ready[/code].
@@ -64,6 +74,31 @@ static func seed_for(node: Node) -> int:
 	if node.owner != null:
 		place = String(node.owner.get_path_to(node))
 	return place.hash()
+
+
+## The triangles of [param line], [param share] of it drawn on: its wash under it, when it is whole,
+## then the line itself or its dot.
+static func _shapes_of(line: InkLine, width: float, thinnest: float, color: Color, line_seed: int, variant: float,
+		style: InkStyle, share: float) -> Array:
+	var shapes: Array = []
+	if line.fill.a > 0.0 and share >= 1.0:
+		shapes.append(InkBrush.fill_shape(line.path, line.fill))
+	if line.dot_radius > 0.0:
+		shapes.append(InkBrush.dot_shape(line.path[0], maxf(line.dot_radius, thinnest * _DOT_TO_WIDTH), color, line_seed,
+				variant, style))
+	else:
+		shapes.append(InkBrush.stroke_shape(line.path, line.closed, width, color, line_seed, variant, style, share))
+	return shapes
+
+
+## Lays [param shapes] into [param item], moved by [param offset].
+static func _lay(item: RID, shapes: Array, offset: Vector2) -> void:
+	if offset != Vector2.ZERO:
+		RenderingServer.canvas_item_add_set_transform(item, Transform2D(0.0, offset))
+	for shape: Array in shapes:
+		InkBrush.add_shape(item, shape)
+	if offset != Vector2.ZERO:
+		RenderingServer.canvas_item_add_set_transform(item, Transform2D.IDENTITY)
 
 
 static func _reveal_shares(lines: Array[InkLine], reveal: float) -> PackedFloat32Array:

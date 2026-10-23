@@ -49,6 +49,8 @@ extends Node2D
 
 var _seed := 0
 var _dissolve_material: ShaderMaterial
+## The ink of this drawing's lines, kept to lay down again while they stay as they were.
+var _cache := InkCache.new()
 
 
 func _ready() -> void:
@@ -58,13 +60,18 @@ func _ready() -> void:
 
 
 func _draw() -> void:
+	var counting := InkStats.enabled
+	var started := Time.get_ticks_usec() if counting else 0
 	var style := style_override if style_override != null else InkStyle.get_default()
 	var lines := _build_lines(style, InkPalette.get_default())
+	var built := Time.get_ticks_usec() if counting else 0
 	var recolor := Color.TRANSPARENT
 	if color_override != &"":
 		recolor = InkPalette.get_default().color(color_override)
+	if counting:
+		InkStats.record_build(self, built - started)
 	InkPainter.paint(self, lines, style.width * width_scale * _width_compensation(),
-			_seed, _variant(), style, reveal, recolor)
+			_seed, _variant(), style, reveal, recolor, _cache)
 
 
 ## Which boil variant to draw. The default follows the page's boil clock. A fraction between two

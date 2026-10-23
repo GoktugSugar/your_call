@@ -15,6 +15,9 @@ var color := Color.BLACK
 var fill := Color.TRANSPARENT
 ## When above zero, the line is a round dot of this radius at the first point of its path.
 var dot_radius := 0.0
+## How far the line is moved where it is painted. A line that only moves about, such as a head in a
+## crowd bobbing, keeps its path still and moves here, so the painter can lay down the same ink again.
+var offset := Vector2.ZERO
 
 
 ## A line along [param points] (already sampled densely).

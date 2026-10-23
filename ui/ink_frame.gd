@@ -31,6 +31,8 @@ extends Control
 		queue_redraw()
 
 var _seed := 0
+## The ink of this control's lines, kept to lay down again while they stay as they were.
+var _cache := InkCache.new()
 
 
 func _ready() -> void:
@@ -55,4 +57,5 @@ func _draw() -> void:
 	var turn := second.size() / 3
 	second = second.slice(turn) + second.slice(0, turn)
 	lines.append(InkLine.along(second, palette.ink, 0.7, true))
-	InkPainter.paint(self, lines, style.width * width_scale, _seed, InkPainter.current_variant(), style, reveal)
+	InkPainter.paint(self, lines, style.width * width_scale, _seed, InkPainter.current_variant(), style, reveal,
+			Color.TRANSPARENT, _cache)

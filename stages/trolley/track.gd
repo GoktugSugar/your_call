@@ -9,31 +9,37 @@ extends InkDrawing
 	set(value):
 		path_points = value
 		_centerline = PackedVector2Array()
+		_built.clear()
 		queue_redraw()
 ## Distance between the two rails.
 @export_range(2.0, 60.0, 0.5) var gauge := 14.0:
 	set(value):
 		gauge = value
+		_built.clear()
 		queue_redraw()
 ## Distance between sleepers.
 @export_range(4.0, 200.0, 0.5) var sleeper_spacing := 30.0:
 	set(value):
 		sleeper_spacing = value
+		_built.clear()
 		queue_redraw()
 ## How far each sleeper reaches past the rails.
 @export_range(0.0, 40.0, 0.5) var sleeper_overhang := 6.0:
 	set(value):
 		sleeper_overhang = value
+		_built.clear()
 		queue_redraw()
 ## Width of the sleepers, as a multiple of the line width.
 @export_range(0.0, 4.0, 0.05) var sleeper_width := 0.7:
 	set(value):
 		sleeper_width = value
+		_built.clear()
 		queue_redraw()
 ## Length at the start left without sleepers, where this track leaves another.
 @export_range(0.0, 400.0, 1.0) var bare_start := 0.0:
 	set(value):
 		bare_start = value
+		_built.clear()
 		queue_redraw()
 
 ## Sampling of the centre line used for distances along the track.
@@ -41,6 +47,11 @@ const _CENTERLINE_SPACING := 2.0
 
 var _centerline := PackedVector2Array()
 var _distances := PackedFloat32Array()
+## The lines last built, kept until a setting of the track changes: a long track is slow to build, and
+## it is built again at every boil.
+var _built: Array[InkLine] = []
+## The sampling and the ink the kept lines were built with.
+var _built_with: Array = []
 
 
 ## The track's length along its centre line.
@@ -90,6 +101,8 @@ func distance_at_x(x: float) -> float:
 
 
 func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
+	if not _built.is_empty() and _built_with == [style.sample_spacing, palette.ink]:
+		return _built
 	_ensure_centerline()
 	var lines: Array[InkLine] = []
 	if _centerline.size() < 2:
@@ -115,6 +128,8 @@ func _build_lines(style: InkStyle, palette: InkPalette) -> Array[InkLine]:
 		var sleeper := InkBrush.resample_polyline(PackedVector2Array([center + normal * reach, center - normal * reach]), spacing)
 		lines.append(InkLine.along(sleeper, palette.ink, sleeper_width))
 		d += sleeper_spacing
+	_built = lines
+	_built_with = [style.sample_spacing, palette.ink]
 	return lines
 
 

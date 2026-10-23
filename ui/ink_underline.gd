@@ -25,6 +25,8 @@ extends Control
 		queue_redraw()
 
 var _seed := 0
+## The ink of this control's lines, kept to lay down again while they stay as they were.
+var _cache := InkCache.new()
 
 
 func _ready() -> void:
@@ -41,4 +43,5 @@ func _draw() -> void:
 	var points := PackedVector2Array([Vector2(0.0, y), Vector2(size.x * 0.5, y + sag), Vector2(size.x, y - sag * 0.3)])
 	var lines: Array[InkLine] = [InkLine.along(InkBrush.resample_smooth(points, false, style.sample_spacing),
 			InkPalette.get_default().color(color_role))]
-	InkPainter.paint(self, lines, style.width * width_scale, _seed, InkPainter.current_variant(), style, reveal)
+	InkPainter.paint(self, lines, style.width * width_scale, _seed, InkPainter.current_variant(), style, reveal,
+			Color.TRANSPARENT, _cache)

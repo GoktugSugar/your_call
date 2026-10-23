@@ -25,6 +25,8 @@ var length := 0.0:
 		queue_redraw()
 
 var _seed := 0
+## The ink of this control's lines, kept to lay down again while they stay as they were.
+var _cache := InkCache.new()
 
 
 func _ready() -> void:
@@ -51,4 +53,5 @@ func _draw() -> void:
 	var path := InkBrush.resample_polyline(PackedVector2Array([Vector2(0.0, -overhang), Vector2(0.0, length + overhang)]),
 			style.sample_spacing)
 	var lines: Array[InkLine] = [InkLine.along(path, InkPalette.get_default().color(role), 1.0)]
-	InkPainter.paint(self, lines, style.width * line_width, _seed, InkPainter.current_variant(), style)
+	InkPainter.paint(self, lines, style.width * line_width, _seed, InkPainter.current_variant(), style, 1.0,
+			Color.TRANSPARENT, _cache)
