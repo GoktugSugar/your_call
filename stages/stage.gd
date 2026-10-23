@@ -68,9 +68,23 @@ func highlight_option(_index: int) -> void:
 
 
 ## Which of the question's asks to pose, by name, such as [code]nothing[/code] when there is nothing
-## to sell back. Empty poses the plain ask.
+## to sell back. Empty poses the plain ask. By default the stage data's [code]asks[/code] picks it by
+## what the run remembers, the first that holds: [code][{"if": "pulled_lever", "ask": "pulled"},
+## {"ask": "left"}][/code]. A fact from an earlier chapter is named this way rather than on a line.
 func ask_key() -> StringName:
+	for entry: Variant in question.stage.get("asks", []):
+		if not entry is Dictionary:
+			continue
+		var fact := str(entry.get("if", ""))
+		if fact == "" or run.remembers(StringName(fact)):
+			return StringName(str(entry.get("ask", "")))
 	return &""
+
+
+## Whether a tableau's ask stays up while the stage plays out, because the player answers on the stage
+## itself, as when they mark a guess. Such a stage closes the dialogue box once it has its answer.
+func holds_ask() -> bool:
+	return false
 
 
 ## Whether someone on the stage says [param line] themselves, in words floating over them, instead of

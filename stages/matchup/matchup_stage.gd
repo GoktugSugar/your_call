@@ -66,16 +66,6 @@ func setup(for_question: QuestionData) -> void:
 	_place_or()
 
 
-func ask_key() -> StringName:
-	for entry: Variant in question.stage.get("asks", []):
-		if not entry is Dictionary:
-			continue
-		var fact := str(entry.get("if", ""))
-		if fact == "" or run.remembers(StringName(fact)):
-			return StringName(str(entry.get("ask", "")))
-	return &""
-
-
 func fills() -> Dictionary:
 	return {"kills": Numbers.grouped(maxi(run.kills.count, 1))}
 
