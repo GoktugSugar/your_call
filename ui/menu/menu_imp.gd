@@ -55,8 +55,7 @@ func _ready() -> void:
 ## Scribbles him in at a fresh spot and sets him barking from [param barks], saying only those that
 ## hold for what [param facts] remembers, such as there being a run to continue.
 func start(barks: Array[LineData], facts: RunState) -> void:
-	_barks = barks
-	_facts = facts
+	use_barks(barks, facts)
 	imp.wing = Imp.Wing.LEFT if _rng.randf() < 0.5 else Imp.Wing.RIGHT
 	await imp.appear(imp.wing)
 	_keep_barking()
@@ -102,12 +101,23 @@ func is_saying() -> bool:
 	return _words != null and is_instance_valid(_words) and _words.is_saying()
 
 
-## The bark he says next: one that holds, never the last one again while there is another.
+## Barks from [param barks] from now on, those that hold for what [param facts] remembers.
+func use_barks(barks: Array[LineData], facts: RunState) -> void:
+	_barks = barks
+	_facts = facts
+	_last = null
+
+
+## The bark he says next: one that holds, never the last one again while there is another. Picking it
+## counts it as said, for the next pick.
 func pick_bark() -> LineData:
 	var holding := LineData.for_run(_barks, _facts)
 	if holding.size() > 1:
 		holding.erase(_last)
-	return holding[_rng.randi_range(0, holding.size() - 1)] if not holding.is_empty() else null
+	if holding.is_empty():
+		return null
+	_last = holding[_rng.randi_range(0, holding.size() - 1)]
+	return _last
 
 
 func _process(_delta: float) -> void:
@@ -127,7 +137,6 @@ func _bark() -> void:
 	var line := pick_bark()
 	if line == null:
 		return
-	_last = line
 	var turn := _next_turn()
 	await _say(line, turn)
 	if turn != _turn:
