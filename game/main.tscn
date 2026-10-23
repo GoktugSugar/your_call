@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://game/main.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://ink/paper/paper.tscn" id="2_paper"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" path="res://ui/choices/choice_row.tscn" id="5_choices"]
 [ext_resource type="PackedScene" path="res://ui/dialogue/dialogue_box.tscn" id="6_dialogue"]
 [ext_resource type="Script" path="res://game/question_player.gd" id="7_player"]
-[ext_resource type="PackedScene" path="res://dev/dev_tools.tscn" id="8_dev"]
 [ext_resource type="Script" path="res://game/run_player.gd" id="9_run"]
 [ext_resource type="PackedScene" path="res://ui/balance/balance_readout.tscn" id="10_balance"]
 [ext_resource type="Script" path="res://game/save/auto_save.gd" id="11_save"]
@@ -22,7 +21,6 @@ dialogue = NodePath("UI/DialogueBox")
 balance = NodePath("UI/BalanceReadout")
 auto_save = NodePath("AutoSave")
 pause_menu = NodePath("PauseMenu")
-dev_tools_scene = ExtResource("8_dev")
 
 [node name="Paper" parent="." instance=ExtResource("2_paper")]
 

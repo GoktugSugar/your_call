@@ -31,8 +31,9 @@ extends Node
 @export var auto_save: AutoSave
 ## Holds the run still on Esc.
 @export var pause_menu: PauseMenu
-## Development tools added in debug builds only.
-@export var dev_tools_scene: PackedScene
+## Development tools, added in debug builds only. Kept as a path, so a build that leaves them out still
+## loads.
+@export_file("*.tscn") var dev_tools_path := "res://dev/dev_tools.tscn"
 
 ## What the run remembers, the silent portrait among it: fresh for a new run, the save's for a
 ## continued one.
@@ -52,8 +53,8 @@ var _left := false
 
 func _ready() -> void:
 	PlayerSettings.load_saved()
-	if OS.is_debug_build() and dev_tools_scene != null:
-		var tools := dev_tools_scene.instantiate()
+	if OS.is_debug_build() and ResourceLoader.exists(dev_tools_path):
+		var tools := (load(dev_tools_path) as PackedScene).instantiate()
 		tools.set(&"main", self)
 		add_child(tools)
 	chapters = _load_run()

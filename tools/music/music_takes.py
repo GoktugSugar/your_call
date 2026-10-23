@@ -343,6 +343,9 @@ def main() -> None:
     if args.dry_run:
         return
     key = api_key()
+    AUDITIONS.mkdir(parents=True, exist_ok=True)
+    # Takes are scratch audio: Godot leaves the folder alone, so it never imports them or ships them.
+    (AUDITIONS / ".gdignore").touch()
     for name in names:
         track = tracks[name]
         folder = AUDITIONS / name
