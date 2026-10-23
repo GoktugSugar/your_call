@@ -339,11 +339,15 @@ func _wait_for_player(auto := false) -> void:
 ## it on takes the page along.
 func _move_on_by_itself(page: int, auto: bool) -> void:
 	while not (auto or PlayerSettings.auto_advance):
-		if not _waiting or page != _page_count:
+		if not _waiting or page != _page_count or not is_inside_tree():
 			return
 		await get_tree().process_frame
 	while _voiced and _voice().playing and page == _page_count:
+		if not is_inside_tree():
+			return
 		await get_tree().process_frame
+	if not is_inside_tree():
+		return
 	await get_tree().create_timer(auto_hold, false).timeout
 	if _waiting and page == _page_count and (auto or PlayerSettings.auto_advance):
 		advance()
