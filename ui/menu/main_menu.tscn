@@ -1,0 +1,160 @@
+[gd_scene load_steps=14 format=3]
+
+[ext_resource type="Script" path="res://ui/menu/main_menu.gd" id="1_menu"]
+[ext_resource type="PackedScene" path="res://ink/paper/paper.tscn" id="2_paper"]
+[ext_resource type="PackedScene" path="res://figures/imp/imp.tscn" id="3_imp"]
+[ext_resource type="Script" path="res://ui/menu/menu_title.gd" id="4_title"]
+[ext_resource type="Script" path="res://ui/ink_underline.gd" id="5_line"]
+[ext_resource type="Script" path="res://ui/menu/menu_list.gd" id="6_list"]
+[ext_resource type="PackedScene" path="res://ui/menu/menu_word.tscn" id="7_word"]
+[ext_resource type="PackedScene" path="res://ui/settings/settings_page.tscn" id="8_settings"]
+[ext_resource type="Script" path="res://ui/menu/menu_imp.gd" id="9_imp"]
+[ext_resource type="PackedScene" path="res://stages/trolley/plea.tscn" id="10_words"]
+[ext_resource type="PackedScene" path="res://cinematics/eyelids.tscn" id="11_eyelids"]
+[ext_resource type="PackedScene" path="res://dev/dev_tools.tscn" id="12_dev"]
+
+[node name="MainMenu" type="Node" node_paths=PackedStringArray("title", "column", "new_game_word", "continue_word", "settings_word", "quit_word", "confirm", "start_over_word", "keep_word", "settings", "menu_imp", "eyelids")]
+script = ExtResource("1_menu")
+title = NodePath("UI/Screen/Title")
+column = NodePath("UI/Screen/Column")
+new_game_word = NodePath("UI/Screen/Column/NewGame")
+continue_word = NodePath("UI/Screen/Column/Continue")
+settings_word = NodePath("UI/Screen/Column/Settings")
+quit_word = NodePath("UI/Screen/Column/Quit")
+confirm = NodePath("UI/Screen/Confirm")
+start_over_word = NodePath("UI/Screen/Confirm/StartOver")
+keep_word = NodePath("UI/Screen/Confirm/Keep")
+settings = NodePath("UI/Screen/Settings")
+menu_imp = NodePath("MenuImp")
+eyelids = NodePath("Eyes/Eyelids")
+dev_tools_scene = ExtResource("12_dev")
+
+[node name="Paper" parent="." instance=ExtResource("2_paper")]
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Imp" parent="World" instance=ExtResource("3_imp")]
+left_wing = Rect2(260, 600, 300, 300)
+right_wing = Rect2(1360, 600, 300, 300)
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="Screen" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Title" type="VBoxContainer" parent="UI/Screen" node_paths=PackedStringArray("words", "stroke")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -700.0
+offset_top = 110.0
+offset_right = 700.0
+offset_bottom = 330.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_constants/separation = -18
+script = ExtResource("4_title")
+words = NodePath("Words")
+stroke = NodePath("Stroke")
+
+[node name="Words" type="RichTextLabel" parent="UI/Screen/Title"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 168
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+
+[node name="Stroke" type="Control" parent="UI/Screen/Title"]
+custom_minimum_size = Vector2(620, 26)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+script = ExtResource("5_line")
+sag = 4.0
+width_scale = 1.6
+color_role = &"ink"
+
+[node name="Column" type="VBoxContainer" parent="UI/Screen"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 450.0
+offset_right = 300.0
+offset_bottom = 800.0
+grow_horizontal = 2
+theme_override_constants/separation = 14
+script = ExtResource("6_list")
+
+[node name="NewGame" parent="UI/Screen/Column" instance=ExtResource("7_word")]
+layout_mode = 2
+text = "New Game"
+
+[node name="Continue" parent="UI/Screen/Column" instance=ExtResource("7_word")]
+layout_mode = 2
+text = "Continue"
+
+[node name="Settings" parent="UI/Screen/Column" instance=ExtResource("7_word")]
+layout_mode = 2
+text = "Settings"
+
+[node name="Quit" parent="UI/Screen/Column" instance=ExtResource("7_word")]
+layout_mode = 2
+text = "Quit"
+
+[node name="Confirm" type="VBoxContainer" parent="UI/Screen"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 520.0
+offset_right = 300.0
+offset_bottom = 720.0
+grow_horizontal = 2
+theme_override_constants/separation = 14
+script = ExtResource("6_list")
+
+[node name="StartOver" parent="UI/Screen/Confirm" instance=ExtResource("7_word")]
+layout_mode = 2
+text = "Start over"
+
+[node name="Keep" parent="UI/Screen/Confirm" instance=ExtResource("7_word")]
+layout_mode = 2
+text = "Keep it"
+
+[node name="Settings" parent="UI/Screen" instance=ExtResource("8_settings")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -490.0
+offset_top = 390.0
+offset_right = 490.0
+offset_bottom = 900.0
+grow_horizontal = 2
+
+[node name="MenuImp" type="Node" parent="." node_paths=PackedStringArray("imp", "words_parent")]
+script = ExtResource("9_imp")
+imp = NodePath("../World/Imp")
+words_scene = ExtResource("10_words")
+words_parent = NodePath("../World")
+spots = Array[Rect2]([Rect2(260, 600, 300, 300), Rect2(1360, 600, 300, 300)])
+
+[node name="Eyes" type="CanvasLayer" parent="."]
+layer = 20
+
+[node name="Eyelids" parent="Eyes" instance=ExtResource("11_eyelids")]

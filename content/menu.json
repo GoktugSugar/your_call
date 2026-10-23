@@ -1,0 +1,21 @@
+{
+  "id": "menu",
+  "title": "Your Call",
+  "lines": {
+    "barks": [
+      { "text": "Still here, are we?", "face": "smug" },
+      { "text": "You already know which one you will pick, and so do I.", "face": "smug" },
+      { "text": "Take your time. No one is waiting for you now.", "face": "grin" },
+      { "text": "A new game. As if the last one went so well for you.", "face": "glare" },
+      { "text": "Go on, press something. I love to watch you decide.", "face": "grin" },
+      { "text": "All this hovering. You were always a staller.", "face": "smug" },
+      { "text": "Continue is greyed out. Nothing back there for you.", "face": "grin", "unless": "run_saved" },
+      { "text": "I can hear the little cogs grinding from here.", "face": "grin" },
+      { "text": "Choose, or do not. It is all the same to me.", "face": "grin" },
+      { "text": "You judged so many, and look who is squirming now.", "face": "glare" }
+    ],
+    "new_game": [
+      { "text": "Starting over? The run you have goes in the bin.", "face": "smug" }
+    ]
+  }
+}

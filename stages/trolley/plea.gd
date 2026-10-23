@@ -91,6 +91,22 @@ func is_saying() -> bool:
 	return _saying
 
 
+## The character being said [param lead] seconds from now, or an empty string when nothing is, by the
+## schedule the words ink on by, which is the voice's own while it plays. A mouth follows it, as the
+## imp's does on the menu page.
+func spoken_character(lead := 0.0) -> String:
+	if not _saying:
+		return ""
+	return DialogueBox.character_at(label.get_parsed_text(), _schedule, _elapsed + lead)
+
+
+## Stops saying the words at once, voice and all, leaving them as far as they had inked on.
+func stop_saying() -> void:
+	voice_player.stop()
+	set_process(false)
+	_saying = false
+
+
 ## Fades the words away.
 func fade_out() -> void:
 	var tween := create_tween()
