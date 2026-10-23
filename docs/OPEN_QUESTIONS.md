@@ -121,6 +121,10 @@ Built on 2026-10-23 from the outline the user picked. The copy waits for the use
 - Showing the portrait at all, as scales with no numbers.
 - The order of the six scales and their poles' names, straight from `content/profile_axes.json`.
 
+## To review: the voice's starts
+
+- Voicing again the 58 takes whose recordings begin partway into their first word: about 7,300 characters, or 4,600 for the 35 that start loudest. They fade in for now (2026-10-23), which takes the click away but not the start of the sound they never had. A new take can begin that way too, about one in thirteen did, and would fade in the same way.
+
 ## Carried over from the earlier build
 
 These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus the points sections 9 and 14 leave to the user.
