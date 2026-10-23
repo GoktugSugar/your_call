@@ -55,11 +55,10 @@ Creative calls made overnight on 2026-10-22, while the user slept. Each is provi
 
 ## To review: Chapter 7
 
-Built on 2026-10-23. The copy and the voices wait on the user before anything is voiced; the rest is provisional and logged in `DECISIONS.md`.
+Built on 2026-10-23. The copy is signed off and voiced; the rest is provisional and logged in `DECISIONS.md`.
 
-- The trimmed copy, 26% shorter, the confessors' lines included (review page: https://claude.ai/artifact/SfGaY3eM3PoPUQgfzeRPZq).
-- Each confessor's voice, picked from `voice_auditions/confessors.html` in the Chapter 7 worktree. 7.07's confessor is a woman or a man by the voice picked.
-- The gavel's knock, picked from four takes.
+- Each confessor's voice, picked by the dev by fit and measurement, not by ear: swap any from `voice_auditions/confessors.html` in the Chapter 7 worktree. 7.07's confessor is a woman for now.
+- The gavel's knock, take 3 of four, picked by measurement.
 - The booth's look: a tall open booth with a peaked roof, an arched opening and a curtain tied back. Alternatives: a waist high dock with the confessor seen from the waist up, or one booth held for the whole chapter as in the old build.
 - The gavel heard and not seen. Alternative: a gavel drawn on the page.
 - The headlines unvoiced. Alternative: each confessor mutters its headline as it walks in.
