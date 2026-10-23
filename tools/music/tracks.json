@@ -1,0 +1,27 @@
+{
+  "note": "Music made with Eleven Music by music_takes.py. prompt: the style to ask for, never naming an artist, a song or a label (the Music Terms forbid it). seconds: how long each take is; the loop is cut from its middle. bpm: the tempo asked for, a hint for finding the loop's bar lines. least: the shortest loop worth keeping, in seconds; a loop repeats for as long as its chapter lasts. takes: how many to make in a batch. file: where the loop cut from the chosen take goes in the game.",
+  "main": {
+    "prompt": "A playful, mischievous instrumental groove for a quirky rhythm game: bouncy and catchy, around 150 bpm with a laid back half time feel. A round, funky bass line leads, over a crisp drum machine with tight kicks, handclaps and finger snaps. Jazzy minor seventh chords on a bright electric piano in short staccato stabs, and a cheeky little lead hook on a whistle or a toy synth that comes and goes. Sly, cheerful and a little sneaky. Steady energy all the way through: no big build up, no breakdown, no ending and no fade out, so it can loop.",
+    "seconds": 150,
+    "bpm": 150,
+    "least": 90,
+    "takes": 3,
+    "file": "assets/audio/music/main.ogg"
+  },
+  "show": {
+    "prompt": "Instrumental background music for a cheesy television game show while the contestants think and the host talks: bright and bouncy, swinging at around 120 bpm, a big band kept light. Punchy brass stabs, a jazzy organ, a walking upright bass, brushed swing drums, and a glockenspiel twinkling now and then. Glitzy, cheerful, a little tense and comic. Steady and unobtrusive under talking: no big fanfare, no ending and no fade out, so it can loop.",
+    "seconds": 90,
+    "bpm": 120,
+    "least": 45,
+    "takes": 3,
+    "file": "assets/audio/music/show.ogg"
+  },
+  "campaign": {
+    "prompt": "Instrumental music for a lighthearted tabletop fantasy adventure: whimsical medieval folk at around 110 bpm. A plucked lute and a wooden recorder trade a playful tune over a fiddle drone, light hand drums and a tambourine, with a cheeky bassoon now and then. Bouncy, adventurous and a little silly, like a tavern band on the way to fight a dragon. Steady energy all the way through: no ending and no fade out, so it can loop.",
+    "seconds": 90,
+    "bpm": 110,
+    "least": 45,
+    "takes": 3,
+    "file": "assets/audio/music/campaign.ogg"
+  }
+}
