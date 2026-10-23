@@ -16,6 +16,8 @@ extends StudioStage
 @export_range(0.2, 3.0, 0.01) var trophy_scale := 0.8
 ## How far over the floor its board sits, over the trophy, clear of the words over the button.
 @export_range(0.0, 600.0, 1.0) var board_height := 210.0
+## How far over the floor the confetti bursts when it is kept.
+@export_range(0.0, 800.0, 1.0) var confetti_height := 300.0
 ## Seconds after its line before the round goes on.
 @export_range(0.0, 3.0, 0.05) var button_beat := 0.25
 ## Seconds the stage holds once the room has spoken.
@@ -56,6 +58,8 @@ func play_consequence(_index: int) -> StringName:
 	await count_votes()
 	_voted_off = room_picks_first()
 	_walker.hold_arms(FLINCH if _voted_off else FISTS)
+	if not _voted_off:
+		celebrate(Vector2(walker_x, floor_y - confetti_height))
 	await get_tree().create_timer(after_hold, false).timeout
 	return &"off" if _voted_off else &"stays"
 

@@ -12,11 +12,15 @@ extends StudioStage
 @export var contestant_x := 800.0
 ## Where the wheel stands.
 @export var wheel_x := 1240.0
-## How big the podium is drawn, and the size of the winnings on the band across its front.
-@export_range(0.2, 3.0, 0.01) var podium_scale := 1.3
-@export_range(8, 200) var winnings_size := 42
+## The size of the winnings on the band across the podium's front.
+@export_range(8, 200) var winnings_size := 40
 ## How far over the floor the winnings sit when the podium cannot say where its band is.
 @export_range(0.0, 600.0, 1.0) var board_height := 130.0
+## Palette role of the podium's band, and the roles the wheel's nothing wedges take in turn.
+@export var podium_role := &"purple"
+@export var wedge_roles: Array[StringName] = [&"sky", &"purple", &"green", &"orange"]
+## How far over the floor the confetti bursts for a double.
+@export_range(0.0, 800.0, 1.0) var confetti_height := 330.0
 ## Whole turns the wheel makes before it settles.
 @export_range(0, 12) var spin_turns := 4
 ## Seconds the spin takes.
@@ -41,14 +45,16 @@ static func fill_names() -> PackedStringArray:
 func setup(for_question: QuestionData) -> void:
 	super.setup(for_question)
 	_prize = int(question.stage.get("prize", 0))
-	_contestant = add_contestant(StringName(str(question.stage.get("contestant", "stranger"))), contestant_x)
-	var podium := add_prop("podium", contestant_x, podium_scale)
+	_contestant = add_contestant(StringName(str(question.stage.get("contestant", "stranger"))), contestant_x,
+			podium_figure_scale)
+	var podium := add_podium(contestant_x, podium_role)
 	var board_at := Vector2(contestant_x, floor_y - board_height)
 	if podium != null:
-		podium.z_index = 1
 		if podium.has_method(&"band_middle"):
 			board_at = podium.position + (podium.call(&"band_middle") as Vector2) * podium.scale
 	_wheel = add_prop("prize_wheel", wheel_x)
+	if _wheel != null:
+		_wheel.set(&"other_roles", wedge_roles)
 	_board = add_board("board", board_at, winnings_size)
 
 
@@ -63,6 +69,7 @@ func play_consequence(_index: int) -> StringName:
 	if _board != null:
 		set_board(_board, Numbers.money(won), _board.position + _board.size * 0.5)
 	if doubled:
+		celebrate(Vector2(contestant_x, floor_y - confetti_height))
 		await hop(_contestant, hop_height, 0.5)
 	await get_tree().create_timer(after_hold, false).timeout
 	return &"doubled" if doubled else &"lost"
