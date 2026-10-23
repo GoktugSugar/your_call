@@ -5,6 +5,7 @@
     python tools/voice/voice_lines.py --only ch1.lever
     python tools/voice/voice_lines.py --force      voice again even lines that are up to date
     python tools/voice/voice_lines.py --prune      also delete clips whose lines are gone
+    python tools/voice/voice_lines.py --fix-starts time the first word of takes led by a direction again
 
 Godot exports the lines from content (dev/export_voice_lines.gd), so line ids are built in one place.
 A line is voiced when its voice has an entry in voices.json, which also sets the model, its settings,
@@ -14,12 +15,20 @@ voices the speaker's and its own, such as "confessor.recliner". The direction is
 assets/voice/<speaker>/<line id>.mp3, with <line id>.json beside it holding the timings, and
 assets/voice/manifest.json records the text and voice settings each clip was made from. A clip is
 out of date when either changes. The game plays a clip only while its line's text still matches.
+
+v3 times a direction's characters over the first moments of the take, which are already the line's
+first word, so that word comes back timed late and squeezed, and the game, which starts a page where
+its first character is timed, would skip the start of it. A take led by a direction has its first word
+timed again from its sound (which needs ffmpeg on the path); --fix-starts does the same for the takes
+made before.
 """
 
 import argparse
+import array
 import base64
 import hashlib
 import json
+import math
 import os
 import pathlib
 import subprocess
@@ -40,6 +49,17 @@ DEFAULT_SETTINGS = {
     "eleven_v3": {"stability": 0.5},
     "eleven_multilingual_v2": {"stability": 0.4, "similarity_boost": 0.8, "style": 0.3, "use_speaker_boost": True},
 }
+# Timing a first word from the take's sound: a frame of the take louder than SOUND_DB is sound; QUIET_GAP
+# seconds of quiet part the word from anything before it, such as a click (a stop inside a word is
+# shorter); a word timed less than LATE_ENOUGH seconds after its sound begins loses nothing you hear and
+# is left alone; and a word timed again starts FIRST_WORD_LEAD seconds before its sound gets that loud,
+# as the first word of a take with no direction is timed.
+SOUND_RATE = 44100
+SOUND_FRAME = 0.005
+SOUND_DB = -45.0
+QUIET_GAP = 0.06
+LATE_ENOUGH = 0.02
+FIRST_WORD_LEAD = 0.05
 
 
 def export_lines() -> list[dict]:
@@ -100,16 +120,93 @@ def synthesize(text: str, voice: dict, key: str, line_direction: str = "") -> tu
     raise RuntimeError("no model left to try")
 
 
+def is_led(direction: str, model: str) -> bool:
+    """Whether a take was voiced with a direction said before its line, which only v3 reads."""
+    return bool(direction) and model == "eleven_v3"
+
+
+def sound_levels(take: pathlib.Path, seconds: float) -> list[float]:
+    """The take's loudness in dB over its first seconds, a frame at a time."""
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-t", f"{seconds:.3f}", "-i", str(take), "-ac", "1",
+                          "-ar", str(SOUND_RATE), "-f", "s16le", "-"], capture_output=True, check=True).stdout
+    samples = array.array("h")
+    samples.frombytes(raw)
+    size = round(SOUND_FRAME * SOUND_RATE)
+    levels = []
+    for at in range(0, len(samples) - size + 1, size):
+        power = sum(sample * sample for sample in samples[at:at + size]) / size
+        levels.append(10 * math.log10(power) - 20 * math.log10(32768) if power > 0 else -120.0)
+    return levels
+
+
+def sound_start(levels: list[float], at: float) -> float:
+    """When the sound heard at the moment [at], or starting within LATE_ENOUGH of it, began: back from it
+    to the first quiet long enough to part words, in seconds into the take. [at] itself when there is no
+    such sound, as for a word timed again, which starts in the quiet before its sound."""
+    frame = min(int(at / SOUND_FRAME), len(levels))
+    if all(level < SOUND_DB for level in levels[frame:frame + round(LATE_ENOUGH / SOUND_FRAME) + 1]):
+        return at
+    quiet = 0
+    while frame > 0:
+        frame -= 1
+        quiet = quiet + 1 if levels[frame] < SOUND_DB else 0
+        if quiet * SOUND_FRAME >= QUIET_GAP:
+            break
+    return (frame + quiet) * SOUND_FRAME
+
+
+def time_first_word(timing: dict, take: pathlib.Path) -> bool:
+    """If the first word is timed to start after its sound does, spreads its letters evenly from just
+    before that sound to where they end; the stop after them keeps its time. Returns whether the timings
+    changed."""
+    starts, ends, text = timing["starts"], timing["ends"], timing["characters"]
+    last = (text.find(" ") if " " in text else len(text)) - 1
+    if last < 0 or len(starts) != len(text) or len(ends) != len(text):
+        return False
+    while last > 0 and not text[last].isalnum():
+        last -= 1
+    letters_end = ends[last]
+    sound = sound_start(sound_levels(take, max(letters_end, starts[0]) + LATE_ENOUGH), starts[0])
+    if starts[0] - sound < LATE_ENOUGH:
+        return False
+    begin = round(max(0.0, sound - FIRST_WORD_LEAD), 3)
+    step = (letters_end - begin) / (last + 1)
+    for i in range(last + 1):
+        starts[i] = round(begin + step * i, 3)
+        if i < last:
+            ends[i] = round(begin + step * (i + 1), 3)
+    return True
+
+
+def fix_starts(manifest: dict) -> None:
+    """Times the first word of every take whose line has a direction again from its sound, as a new take is."""
+    fixed = []
+    for line_id, entry in sorted(manifest.items()):
+        if not is_led(entry.get("direction", ""), entry.get("model", "")):
+            continue
+        timing_path = ROOT / entry["timing"].removeprefix("res://")
+        timing = json.loads(timing_path.read_text(encoding="utf-8"))
+        if time_first_word(timing, ROOT / entry["audio"].removeprefix("res://")):
+            timing_path.write_text(json.dumps(timing), encoding="utf-8", newline="\n")
+            fixed.append(line_id)
+    print(f"Timed the first word again in {len(fixed)} takes" + (f": {', '.join(fixed)}" if fixed else ""))
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--only", help="voice only lines whose id starts with this")
     parser.add_argument("--force", action="store_true", help="voice again even lines that are up to date")
     parser.add_argument("--prune", action="store_true", help="delete clips whose lines no longer exist")
     parser.add_argument("--dry-run", action="store_true", help="list what would be voiced and stop")
+    parser.add_argument("--fix-starts", action="store_true",
+                        help="time the first word of the takes led by a direction again, from their sound, and stop")
     args = parser.parse_args()
 
     voices = json.loads(VOICES.read_text(encoding="utf-8")) if VOICES.exists() else {}
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8")) if MANIFEST.exists() else {}
+    if args.fix_starts:
+        fix_starts(manifest)
+        return
     lines = export_lines()
 
     todo = []
@@ -137,6 +234,8 @@ def main() -> None:
         folder = VOICE_DIR / line["speaker"]
         folder.mkdir(parents=True, exist_ok=True)
         (folder / f"{line['id']}.mp3").write_bytes(audio)
+        if is_led(line.get("direction") or voice_setup(voice)[2], model):
+            time_first_word(timing, folder / f"{line['id']}.mp3")
         (folder / f"{line['id']}.json").write_text(json.dumps(timing), encoding="utf-8", newline="\n")
         if timing["characters"] != line["text"]:
             print(f"  note: {line['id']}'s timings cover slightly different characters; the game will spread them evenly")
