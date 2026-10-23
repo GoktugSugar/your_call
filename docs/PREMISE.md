@@ -365,12 +365,12 @@ There is one linear run, the same for everyone. All the content is in `SCRIPT.md
   - a closing receipt and the imp's read
 - **Chapter 4, The Gun.** The killing is literally in your hands: first person, aim and fire. It opens on the man and the last bear (the shoot-the-imp secret ending).
 - **Chapter 5, Who Would Win.** A deliberate change of pace, not a dilemma at all. Barroom fight matchups where the crowd split is the whole payoff, ending on everything you have killed against you.
-- **Chapter 6. Never made.** No content or brief exists.
+- **Chapter 6. Never made.** No content or brief exists. Chapters 7 and 8 keep their numbers in the remake, so one can slot in later (2026-10-23).
 - **Chapter 7, The Confession Booth.** The dead judge does his old job. "Am I the asshole" disputes go from petty to heavy, with three verdicts each and the room's agreement as the payoff. It ends on two contradictory accounts, with no truth ever revealed.
 - **Chapter 8, The Campaign.** A tiny DnD adventure with the imp as a bad Dungeon Master. It is linear with the illusion of choice, and ends on a roll he offers to fudge (a secret ending).
 - **Breathers.** A shared pool of twelve illustrated would-you-rathers, placed between the heavy beats: four in Chapter 1, two in 2, three each in 3 and 4, and none in 5, 7 or 8. Stats-only by default.
 - **The running gag.** The walking button debuts in Chapter 2 and keeps coming back, indestructible: as the auction rival, the charging mystery, an opponent and a confessor.
-- **Not yet wired.** Chapters 7 and 8 were built ahead of Chapter 6 and never chained into the run, and the real endings didn't exist yet.
+- **Not yet wired.** Chapters 7 and 8 were built ahead of Chapter 6 and never chained into the run, and the real endings didn't exist yet. In the remake, Chapter 7 follows Chapter 5 in the run.
 
 ---
 
@@ -533,7 +533,7 @@ There is one linear run, the same for everyone. All the content is in `SCRIPT.md
   - the person who wants you to shoot them
   - the confessors filing into the booth, and the two contradictory accounts
 
-  These could be voiced, or stay as floating text.
+  These could be voiced, or stay as floating text. In the remake each confessor is voiced, with a voice of their own (2026-10-23); the pleas are still open.
 - **The player character never speaks.** He is the point of view.
 
 ---

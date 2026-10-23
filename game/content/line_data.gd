@@ -7,6 +7,9 @@ extends RefCounted
 var id := ""
 ## Who says it. The imp says almost everything.
 var speaker := &"imp"
+## Whose voice says it, when the speaker is one of several, such as a confessor: [code]recliner[/code].
+## Empty when the speaker has one voice.
+var voice := &""
 ## What they say, with colour tags such as [code][amber]five[/amber][/code].
 var text := ""
 ## The imp's expression while he says it, or empty for his usual grin.
@@ -46,9 +49,16 @@ func filled(fills: Dictionary, keys := {}) -> LineData:
 		if not key in variant:
 			variant.append(key)
 	var copy := LineData.make("%s.%s" % [id, "_".join(variant)], text.format(fills), speaker, face)
+	copy.voice = voice
 	copy.direction = direction
 	copy.voiced = voiced
 	return copy
+
+
+## The name the voice tools know this line's voice by: the speaker's, or for a speaker with several
+## voices, the speaker's and the voice's, such as [code]confessor.recliner[/code].
+func voice_name() -> String:
+	return String(speaker) if voice == &"" else "%s.%s" % [speaker, voice]
 
 
 ## [param lines] with their placeholders filled from [param fills] and [param keys].

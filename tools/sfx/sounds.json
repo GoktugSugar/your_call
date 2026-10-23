@@ -6,5 +6,12 @@
     "influence": 0.5,
     "takes": 4,
     "file": "assets/sfx/gunshot.mp3"
+  },
+  "gavel": {
+    "prompt": "A single wooden gavel struck once on a sound block in a quiet room: one sharp, solid, dry wooden knock with a short tail. No voices, no echo, no music.",
+    "seconds": 0.8,
+    "influence": 0.5,
+    "takes": 4,
+    "file": "assets/sfx/gavel.mp3"
   }
 }

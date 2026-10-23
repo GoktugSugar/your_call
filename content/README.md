@@ -60,6 +60,7 @@ or a question:
 - `stage.type` names the stage scene, `stages/<type>/<type>_stage.tscn`. The rest of `stage` is read by that stage.
 - `lines` (optional) holds named sets of the imp's lines that the stage says at moments of its own, such as the needling over the timer's countdown: `"lines": { "countdown": [ "...", "..." ] }`. A set's lines get ids like `ch2.timer.countdown.1`, so a set may not be called `ask`, `stage` or the id of an option.
 - `ask` can also be an object of named asks, `"ask": { "items": [...], "nothing": [...] }`, when the stage picks how to pose the question, as the buyback does. Their lines get ids like `ch3.buyback.ask.items.1`.
+- `lines.least_popular` (optional) is said by the imp just before the reveal when the player's pick was the least popular, such as "Not the popular call. Watch."
 - `reveal.heading` is the reveal's heading. `reveal.labels` (optional) puts other words over the bars than the option labels, one per option, such as "took the money" for "Press it". `reveal.mark` (optional) names the line a coordination gamble's crowd had to cross, such as "half".
 
 A **tableau** is a stage the imp talks over with nothing to choose, like the receipt: no options, no verb and no reveal. The stage draws on, the imp says the `ask` if there is one, the stage plays out and reports an outcome, and the imp says the question's `lines` of that name, the click on the last page moving on:
@@ -194,6 +195,17 @@ First person: an ink sight follows the pointer, amber brackets lock on to the ta
 - Outcomes: the id of the target shot, `imp`, `self`, `click` (an empty gun), `held`, `fired` and `lowered` (an armed target's answer), and for the charging thing `shot`, `shot_again` (the button woke in 2.11) or `waved`.
 - With targets that carry `crowd`, the reveal is a bar per target in its colour, then the holding option's.
 
+## The booth stage
+
+```json
+"stage": { "type": "booth", "confessors": [ { "voice": "recliner", "says": { "text": "I paid for the whole seat.", "speaker": "headline" } } ] }
+```
+
+The confession booth, for Chapter 7. A confessor files into the booth, the words it stands by (`says`, a headline) floating over the roof, and states its side in the dialogue box: its lines in the ask are `{ "text": ..., "speaker": "confessor", "voice": "recliner" }`, and the confessor with that `voice` gestures while they play. The player rules one of three ways; the gavel is heard, the page jolts, and each confessor takes its verdict, then files out once the imp has had his say.
+- A confessor with `"side": "left"` or `"right"` stands beside the booth instead of in it, with its words over its head, as the two in 7.10 do. `"kind"` names its soul kind (a stranger by default).
+- `{ "button": true }` is the walking button, which slides in as a plain button and comes alive in the booth. A line of the ask with `"speaker": "button"` floats over it in its own voice while the box is away, and it says the question's `leave` lines as it files out.
+- An option's outcome is `{ "verdict": "guilty" }`, `cleared` or `everyone`, or one per confessor by voice: `{ "verdict": { "her": "cleared", "him": "guilty" } }`.
+
 ## The money chapter's stages
 
 These spend from and read the chapter's `wallet`. Amounts show in the money format, such as `$1,750`.
@@ -288,7 +300,8 @@ or an object, when someone else says it or the imp's face should change:
 { "text": "...", "face": "smug" }
 ```
 
-- `speaker` is `imp` (the default), `button`, `plea`, `headline` or `confessor`.
+- `speaker` is `imp` (the default), `button`, `plea`, `headline` or `confessor`. A confessor speaks in the dialogue box; the imp keeps still and quiet while it does.
+- `voice` names whose voice says the line when its speaker is one of several, as each confessor has a voice of its own: `"voice": "recliner"` is voiced as `confessor.recliner` in `tools/voice/voices.json`.
 - `face` is `grin`, `smug`, `glare` or `surprised`. A line without one shows his grin.
 - `direction` is a delivery note for the voice, such as `"[furious]"`, sent ahead of the line when it is voiced. It is never shown.
 - `"voiced": false` keeps a line silent: it inks on with no voice, and the voice tools leave it out. The dollar break uses it for the moment the imp stops doing the voice.

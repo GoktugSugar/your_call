@@ -53,6 +53,18 @@ Creative calls made overnight on 2026-10-22, while the user slept. Each is provi
 - 5.10's lead in still says "whoever you put a bullet in" on a run that shot nothing in Chapter 4. Alternative: a version for a run with no shots.
 - Both "You" and the button in green in 5.06's reveal. Alternative: another colour for one of them.
 
+## To review: Chapter 7
+
+Built on 2026-10-23. The copy is signed off and voiced; the rest is provisional and logged in `DECISIONS.md`.
+
+- Each confessor's voice, picked by the dev by fit and measurement, not by ear: swap any from `voice_auditions/confessors.html` in the Chapter 7 worktree. 7.07's confessor is a woman for now.
+- The gavel's knock, take 3 of four, picked by measurement.
+- The booth's look: a tall open booth with a peaked roof, an arched opening and a curtain tied back. Alternatives: a waist high dock with the confessor seen from the waist up, or one booth held for the whole chapter as in the old build.
+- The gavel heard and not seen. Alternative: a gavel drawn on the page.
+- The headlines unvoiced. Alternative: each confessor mutters its headline as it walks in.
+- Nothing but the gesture and the voice marks a confessor's page in the box. Alternative: a mark on the box, or the confessor's words in another ink.
+- How each verdict is taken (head hung and eyes shut, arms open with a hop, a shrug), and the two in 7.10 standing either side of an empty booth.
+
 ## Carried over from the earlier build
 
 These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus the points sections 9 and 14 leave to the user.
@@ -63,7 +75,7 @@ These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus t
 - The endings:
   - how many there are, what each says, how the profile picks one, and how the imp's delivery shifts between them
   - whether Yourself or The Person Who Wants You To should become secret endings too
-- What Chapter 6 is, and the running order from Chapter 5 through to 8.
+- What Chapter 6 is, if anything. Chapters 7 and 8 keep their numbers, so one can slot in later (2026-10-23).
 - The total question count, and the light/medium/heavy ratio, for 5 to 6 hours. The original estimate of 25 to 35 full scenes predates the shift to mostly light questions.
 - Whether allocation and self-sacrifice get dedicated beats, or the presentations in section 5 of `PREMISE.md` already cover that ground.
 - Guess the crowd: how often it happens, how it's presented, and whether a right or wrong guess gets a reaction.
@@ -91,7 +103,7 @@ These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus t
 - Why player-facing text has no dashes. The rule holds either way; the reason only matters if it ever needs bending.
 
 **Voice and pacing**
-- Whether the pleas and the confessors are voiced. (The walking button gets its own voice.)
+- Whether the pleas are voiced. (The walking button has its own voice, and each confessor will have one.)
 - Whether the gibberish blip voice survives for anyone (the walking button, perhaps).
 - Whether the imp's per-chapter register shifts are one voice or distinct takes.
 

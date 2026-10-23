@@ -21,6 +21,8 @@ signal settled
 @export var mark: CrowdMark
 ## Where the middle of the reveal sits on the canvas.
 @export var center := Vector2(960.0, 420.0)
+## The least room kept above the heading, however many bars the reveal has.
+@export_range(0.0, 400.0, 1.0) var top_margin := 40.0
 ## Palette role of the player's pick.
 @export var pick_role := &"amber"
 ## Palette role of every other option.
@@ -63,6 +65,8 @@ func _unhandled_input(event: InputEvent) -> void:
 ## had to cross. Returns once the player has dismissed it.
 func present(split: RevealSplit) -> void:
 	for row in _rows:
+		# Taken out at once, so the new rows' layout never counts them.
+		content.remove_child(row)
 		row.queue_free()
 	_rows.clear()
 	heading.text = split.heading
@@ -77,6 +81,7 @@ func present(split: RevealSplit) -> void:
 		_rows.append(row)
 	content.reset_size()
 	content.position = center - content.get_combined_minimum_size() * 0.5
+	content.position.y = maxf(content.position.y, top_margin)
 	# Shown before it fades in, since a container only lays out what is visible.
 	visible = true
 	mark.visible = false

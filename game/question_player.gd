@@ -3,7 +3,8 @@ extends Node
 ## Plays one question through the core loop: the imp poses it, the player answers with the stage's
 ## control or the choice row, the ink consequence plays, the imp reacts over the world, a click lets
 ## the choice land, the crowd reveal shows how others chose, and the choice quietly nudges the profile.
-## On an offer ladder the offer comes round again after each acceptance, until the player stops. A
+## When the pick was the least popular, the imp can say so first, from the question's least popular
+## lines. On an offer ladder the offer comes round again after each acceptance, until the player stops. A
 ## tableau, a question with nothing to choose, is its stage, what the imp says over it, and a click.
 
 ## Emitted as the question moves through the loop.
@@ -21,6 +22,9 @@ enum RoundLines { HOLD, AUTO, CLICK }
 
 ## Path pattern of a stage scene, filled with the stage type twice.
 const STAGE_SCENE := "res://stages/%s/%s_stage.tscn"
+## The question's set of lines the imp says before the reveal when the player's pick was the least
+## popular, such as "Not the popular call. Watch."
+const LEAST_POPULAR := &"least_popular"
 
 ## Where stages are added.
 @export var stage_root: Node2D
@@ -66,11 +70,11 @@ func play(to_play: QuestionData, run: RunState) -> StringName:
 		await _play_tableau(ask)
 		return &""
 	if not stage.offers_choice():
-		await dialogue.say(ask)
+		await _say(ask)
 		await dialogue.close()
 		await _finish()
 		return &""
-	await dialogue.say(ask, true)
+	await _say(ask, true)
 
 	var pick := 0
 	while true:
@@ -89,7 +93,7 @@ func play(to_play: QuestionData, run: RunState) -> StringName:
 		var ending := option.ending_for(result)
 		if ending != &"":
 			# A secret ending: the reaction is the imp's last line, and the run player takes it from here.
-			await dialogue.say(reaction)
+			await _say(reaction)
 			await dialogue.close()
 			phase = Phase.DONE
 			return ending
@@ -98,14 +102,19 @@ func play(to_play: QuestionData, run: RunState) -> StringName:
 			await _say_between_rounds(reaction)
 			continue
 		if not reaction.is_empty():
-			await dialogue.say(reaction)
+			await _say(reaction)
 		await dialogue.close()
 		break
 
 	await stage.leave()
+	var split := stage.reveal_split(pick)
 	await _pause(before_reveal)
+	var least_popular := stage.fill(to_play.lines_in(LEAST_POPULAR))
+	if not least_popular.is_empty() and split.is_least_popular():
+		await dialogue.say(least_popular)
+		await dialogue.close()
 	phase = Phase.REVEALING
-	await reveal.present(stage.reveal_split(pick))
+	await reveal.present(split)
 	await _finish(false)
 	return &""
 
@@ -125,7 +134,7 @@ func clear_stage() -> void:
 ## came out, and the imp says the question's lines for that, the click on the last page the gate.
 func _play_tableau(ask: Array[LineData]) -> void:
 	if not ask.is_empty():
-		await dialogue.say(ask)
+		await _say(ask)
 		await dialogue.close()
 	phase = Phase.CONSEQUENCE
 	var result := await stage.play_consequence(-1)
@@ -182,6 +191,24 @@ func _choose(to_play: QuestionData) -> int:
 	stage.option_hovered.disconnect(stage_hovered)
 	stage.option_committed.disconnect(stage_committed)
 	return shown[row_pick] if row_pick >= 0 else picked_on_stage[0]
+
+
+## Says [param lines] in turn in the dialogue box, except a line someone on the stage says themselves,
+## which floats over them while the box is away. With [param hold_last], the last page stays up and this
+## returns as soon as it has inked on.
+func _say(lines: Array[LineData], hold_last := false) -> void:
+	var in_box: Array[LineData] = []
+	for line in lines:
+		if stage == null or not stage.speaks(line):
+			in_box.append(line)
+			continue
+		if not in_box.is_empty():
+			await dialogue.say(in_box)
+			in_box = []
+		await dialogue.close()
+		await stage.say_line(line)
+	if not in_box.is_empty():
+		await dialogue.say(in_box, hold_last)
 
 
 ## The imp's line after a round of an offer ladder, played the way [member round_lines] says.

@@ -96,6 +96,18 @@ func test_a_line_can_carry_a_voice_direction() -> void:
 	assert_eq((chapter.find_beat(&"lever") as QuestionData).options[0].reaction[0].direction, "[furious]")
 
 
+func test_a_line_can_name_the_voice_that_says_it() -> void:
+	var question := _question()
+	question.ask = ["Your call.", {"text": "I paid for the whole seat.", "speaker": "confessor", "voice": "recliner"}]
+	var loader := ContentLoader.new(AXES)
+	var chapter := loader.load_chapter(_write({"id": "ch1", "title": "The Tracks", "beats": [question]}))
+	assert_eq(loader.problems, PackedStringArray())
+	var ask := (chapter.find_beat(&"lever") as QuestionData).ask
+	assert_eq(ask[0].voice_name(), "imp", "a line with no voice of its own is said in its speaker's")
+	assert_eq(ask[1].voice, &"recliner")
+	assert_eq(ask[1].voice_name(), "confessor.recliner")
+
+
 func test_reactions_and_endings_can_be_keyed_by_outcome() -> void:
 	var question := _question()
 	question.options[0].reaction = {"lives": ["It walks."], "dies": [{"text": "Gone.", "face": "glare"}]}

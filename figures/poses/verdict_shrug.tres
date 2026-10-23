@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="FigurePose" format=3]
+
+[ext_resource type="Script" path="res://figures/figure_pose.gd" id="1_pose"]
+
+[resource]
+script = ExtResource("1_pose")
+head_tilt = 9.0
+left_shoulder = 16.0
+right_shoulder = 16.0
+left_elbow = 80.0
+right_elbow = 80.0
+arrive_duration = 0.4

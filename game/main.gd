@@ -33,6 +33,9 @@ var profile: Profile:
 ## The chapters of the run, in order.
 var chapters: Array[ChapterData] = []
 
+## Who says the page up in the dialogue box: only the imp's own pages move his mouth and his feet.
+var _speaker := &"imp"
+
 
 func _ready() -> void:
 	if OS.is_debug_build() and dev_tools_scene != null:
@@ -46,7 +49,7 @@ func _ready() -> void:
 	_check_start(chapters)
 	dialogue.page_shown.connect(_on_page_shown)
 	question_player.imp_face_cued.connect(_on_imp_face_cued)
-	dialogue.talking_changed.connect(imp.set_talking)
+	dialogue.talking_changed.connect(_on_talking_changed)
 	dialogue.talking_changed.connect(Music.duck)
 	imp.set_speech(dialogue.spoken_character)
 	while is_inside_tree():
@@ -95,14 +98,23 @@ func _check_start(chapters: Array[ChapterData]) -> void:
 		start_beat = &""
 
 
-## Each page sets the imp's face (his grin unless the line asks for another) and may send him hopping; a
-## new line may send him roaming, when the page is his.
+## Each page of the imp's sets his face (his grin unless the line asks for another) and may send him
+## hopping; a new line may send him roaming, when the page is his. While someone else speaks in the box,
+## such as a confessor, he keeps still and listens.
 func _on_page_shown(line: LineData, page: int, _page_count: int) -> void:
+	_speaker = line.speaker
+	if _speaker != &"imp":
+		return
 	imp.set_face(_face(line.face))
 	if page == 0:
 		imp.hop_for_line()
 	else:
 		imp.hop_if_settled()
+
+
+## The imp talks while his own pages ink on and their voice plays, and only then.
+func _on_talking_changed(talking: bool) -> void:
+	imp.set_talking(talking and _speaker == &"imp")
 
 
 ## A stage cues the imp's face, such as his surprise when a button comes alive. It holds until the next
