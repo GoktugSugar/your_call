@@ -1,0 +1,1007 @@
+{
+  "id": "ch3",
+  "title": "The Money",
+  "wallet": { "start": 10000 },
+  "beats": [
+    {
+      "kind": "cinematic",
+      "id": "waking",
+      "scene": "waking"
+    },
+    {
+      "kind": "narration",
+      "id": "intro",
+      "lines": [
+        "A new game. No trolleys, no buttons. Just money, and what you will and will not trade it for.",
+        "Look up. That [amber]pile[/amber] is yours, every dollar of it, and there is no more coming. Spend it well, or do not. I truly do not mind.",
+        "I offer you things. You buy them, or you keep your money. By the end I will know precisely what you are made of."
+      ]
+    },
+    {
+      "kind": "question",
+      "id": "poverty",
+      "number": "3.01",
+      "title": "End Poverty",
+      "verb": "binary",
+      "weight": "medium",
+      "stage": { "type": "shop", "item": "charity_hand", "label": "End Poverty", "price": "everything", "buyback": 100 },
+      "ask": [
+        "First offer, and it is a big one. I can [amber]end poverty[/amber]. Everywhere, forever. No child hungry ever again. The price is everything you have, down to the last dollar. The man who ended poverty, or the man who kept his money. Your call."
+      ],
+      "options": [
+        {
+          "id": "buy",
+          "label": "Buy it",
+          "outcome": { "buy": true },
+          "crowd": 34,
+          "profile": { "self_others": 0.5 },
+          "reaction": {
+            "bought": [
+              "Gone. All of it. Flat broke on your opening move, and you [amber]ended poverty[/amber]. A saint, or you did not think it through. I am going to so enjoy finding out which."
+            ]
+          }
+        },
+        {
+          "id": "keep",
+          "label": "Keep the money",
+          "crowd": 66,
+          "profile": { "self_others": -0.15 },
+          "reaction": [
+            "You kept it. Every child still hungry, your [amber]pile[/amber] still full. No wrong answers here, remember. Just you, picking your money over the whole suffering world on the first question, without a flicker. Noted."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["bought it", "kept the money"] }
+    },
+    {
+      "kind": "question",
+      "id": "free_food",
+      "number": "3.02",
+      "title": "Free food for life",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "shop", "item": "burrito", "label": "Free food for life", "price": 1800 },
+      "ask": [
+        "Free [amber]burritos[/amber] for the rest of your existence. Every craving met, forever, for one payment of [amber]{price}[/amber]. A dead man does not even need to eat, which is what makes this such a lovely little test."
+      ],
+      "options": [
+        {
+          "id": "buy",
+          "label": "Buy it",
+          "outcome": { "buy": true },
+          "crowd": 58,
+          "profile": { "self_others": -0.06, "broke": { "self_others": 0.03 } },
+          "reaction": {
+            "bought": [
+              "Bought. Eternal burritos for a corpse with no tongue to taste them. Devotion or madness, and the line was always thin with you."
+            ],
+            "broke": [
+              "With what, exactly? You have nothing. You get to just watch this one."
+            ]
+          }
+        },
+        {
+          "id": "keep",
+          "label": "Keep the money",
+          "crowd": 42,
+          "profile": { "self_others": 0.03 },
+          "reaction": [
+            "You passed on free burritos, forever. Some part of you is still counting pennies in the afterlife. Fascinating. A little sad."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["bought it", "kept the money"] }
+    },
+    {
+      "kind": "narration",
+      "id": "tease_food",
+      "lines": [
+        "Do not spend it all here. There is one more thing at the very end, and you will want money for it. Trust me."
+      ]
+    },
+    {
+      "kind": "question",
+      "id": "good_luck",
+      "number": "3.03",
+      "title": "The Good Luck",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "shop", "item": "clover", "label": "The Good Luck", "price": 3000 },
+      "ask": [
+        "Good luck. Small things go your way, quietly, forever. A green light, a found seat, a yes when you needed one. [amber]{price}[/amber]."
+      ],
+      "options": [
+        {
+          "id": "buy",
+          "label": "Buy it",
+          "outcome": { "buy": true },
+          "crowd": 44,
+          "profile": { "self_others": -0.05, "broke": {} },
+          "reaction": {
+            "bought": [
+              "Bought. And now every good thing that happens is a little suspect. Did you earn it, or did I tip it your way? You will never quite know again. Enjoy."
+            ],
+            "broke": [
+              "With what? You are skint. The luck does not stretch to affording the luck."
+            ]
+          }
+        },
+        {
+          "id": "keep",
+          "label": "Keep the money",
+          "crowd": 56,
+          "reaction": [
+            "Passed. You would rather earn your luck, or curse it, than have me weight the dice. Proud, or superstitious. Hard to tell from here."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["bought it", "kept the money"] }
+    },
+    {
+      "kind": "narration",
+      "id": "tease_luck",
+      "lines": [
+        "Keeping some back? You should be. What I have waiting at the very end is the whole point of this."
+      ]
+    },
+    {
+      "kind": "question",
+      "id": "charisma",
+      "number": "3.04",
+      "title": "Charisma",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "shop", "item": "charisma_figure", "label": "Charisma", "price": 3500 },
+      "ask": [
+        "Charisma. Everyone you meet likes you at once, helplessly, for all eternity. Warm rooms forever. [amber]{price}[/amber]."
+      ],
+      "options": [
+        {
+          "id": "buy",
+          "label": "Buy it",
+          "outcome": { "buy": true },
+          "crowd": 38,
+          "profile": { "self_others": -0.05, "broke": {} },
+          "reaction": {
+            "bought": [
+              "Sold. Every smile aimed your way is one I installed. You will never know if a single soul liked the actual you. But the rooms will be lovely."
+            ],
+            "broke": [
+              "With what? You cannot buy a drink, let alone the love of billions. Browsing only."
+            ]
+          }
+        },
+        {
+          "id": "keep",
+          "label": "Keep the money",
+          "crowd": 62,
+          "reaction": [
+            "Kept it. You would rather be disliked honestly than adored on my terms. A judge to the end, wanting the verdict to be real."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["bought it", "kept the money"] }
+    },
+    {
+      "kind": "question",
+      "id": "iq",
+      "number": "3.05",
+      "title": "Ten More IQ",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "shop", "item": "iq_head", "label": "Ten More IQ", "price": 2500 },
+      "ask": [
+        "Ten more points of IQ. Sharper, right now, smart enough to finally see it all. [amber]{price}[/amber]."
+      ],
+      "options": [
+        {
+          "id": "buy",
+          "label": "Buy it",
+          "outcome": { "buy": true },
+          "crowd": 41,
+          "profile": { "self_others": -0.05, "broke": {} },
+          "reaction": {
+            "bought": [
+              "Done. Now you are clever enough to see exactly how wrong you were on the bench, and to watch everyone you love fail to keep up. A lonely little gift."
+            ],
+            "broke": [
+              "With what? No. I will not insult the gift by discounting it. Watch this one go by."
+            ]
+          }
+        },
+        {
+          "id": "keep",
+          "label": "Keep the money",
+          "crowd": 59,
+          "reaction": [
+            "Passed. Comfortable where you are, or frightened of what you might work out. Either way, you stay exactly this clever, forever."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["bought it", "kept the money"] }
+    },
+    {
+      "kind": "narration",
+      "id": "tease_iq",
+      "lines": [
+        "The last thing on offer makes all of this look like a warm up. Do hold something in reserve."
+      ]
+    },
+    {
+      "kind": "question",
+      "id": "never_tired",
+      "number": "3.06",
+      "title": "Never Tired",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "shop", "item": "never_tired_eye", "label": "Never Tired", "price": 2600 },
+      "ask": [
+        "Never sleep, never tire again. All those hours you wasted unconscious, handed back to you. [amber]{price}[/amber]."
+      ],
+      "options": [
+        {
+          "id": "buy",
+          "label": "Buy it",
+          "outcome": { "buy": true },
+          "crowd": 33,
+          "profile": { "self_others": -0.05, "broke": {} },
+          "reaction": {
+            "bought": [
+              "Sold. No more little nightly [red]death[/red] to hide inside. Just you, awake, forever, with you. I do hope you two get along."
+            ],
+            "broke": [
+              "With what? You are penniless. And frankly, you look like you could use the sleep."
+            ]
+          }
+        },
+        {
+          "id": "keep",
+          "label": "Keep the money",
+          "crowd": 67,
+          "reaction": [
+            "Kept it. You want your oblivion. Eight hours a night away from yourself, and you would pay to protect it. Telling."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["bought it", "kept the money"] }
+    },
+    {
+      "kind": "question",
+      "id": "cigarettes",
+      "number": "3.07",
+      "title": "The Cigarette Auction",
+      "verb": "binary",
+      "weight": "medium",
+      "stage": {
+        "type": "auction",
+        "item": "cigarette_pack",
+        "price": 20,
+        "step": 10,
+        "persist": 3,
+        "bid": { "label": "Bid {bid}" },
+        "drop": { "label": "Drop out" }
+      },
+      "ask": [
+        "Here. A pack of cigarettes. Filthy habit, and you are dead, so what harm. [amber]{price}[/amber]. Go on."
+      ],
+      "lines": {
+        "arrive": [
+          { "text": "Wait! Wait. I want those. I have always wanted those. Me. Over here.", "speaker": "button" }
+        ],
+        "taunts": [
+          { "text": "[amber]{rival}[/amber]! Easy.", "speaker": "button" },
+          { "text": "[amber]{rival}[/amber]. I could do this all day. I have no wallet and no shame.", "speaker": "button" }
+        ],
+        "won": [
+          { "text": "Yesss. Mine. All mine. Thank you, sir, a pleasure doing business.", "speaker": "button" }
+        ],
+        "gloat": [
+          { "text": "Ha! Never stood a chance, mate. These are mine. Toodleoo.", "speaker": "button" }
+        ],
+        "stop": [
+          { "text": "Right. Stop. STOP. Look at you. You would bid until the stars burned out, over a packet of [red]cigarettes[/red], against a button that wants them more than you have ever wanted anything.", "face": "glare" }
+        ]
+      },
+      "options": [
+        {
+          "id": "buy",
+          "label": "Buy them",
+          "outcome": { "buy": true },
+          "crowd": 47,
+          "profile": { "risk_safety": -0.1, "bid": {}, "broke": { "risk_safety": 0.08 } },
+          "reaction": {
+            "auction": [
+              "Oh, marvellous. A rival. This is an [amber]auction[/amber] now, two bidders, one filthy little pack. The button bids [amber]{rival}[/amber]. Outbid it, or walk away."
+            ],
+            "bid": [
+              "It is a button. You are losing to a button. It bids [amber]{rival}[/amber]. Outbid it, or walk away."
+            ],
+            "broke": [
+              "With what? You cannot even afford the [amber]cigarettes[/amber], let alone a war over them."
+            ],
+            "cursed": [
+              { "text": "It did not even cost you a penny. Your money is right there, untouched, and you STILL could not walk away.", "face": "glare", "direction": "[exasperated]" },
+              { "text": "Right. Fine. I give you [red]cancer[/red]. The worst, slowest kind.", "face": "glare", "direction": "[exasperated]" },
+              { "text": "Wait. No. You are already [red]dead[/red], you idiot, that does nothing.", "face": "glare", "direction": "[exasperated]" },
+              { "text": "Hold on. New plan.", "face": "glare", "direction": "[exasperated]" },
+              { "text": "I drag you out of the grave, I stitch you back together, I give you a pulse, and the second you are breathing again, I give you [red]lung cancer[/red].", "face": "glare", "direction": "[exasperated]" },
+              { "text": "There. Now it counts.", "face": "glare", "direction": "[exasperated]" },
+              { "text": "Get out of my void.", "face": "glare", "direction": "[exasperated]" }
+            ]
+          },
+          "ending": { "cursed": "cigarettes" }
+        },
+        {
+          "id": "pass",
+          "label": "Pass",
+          "crowd": 53,
+          "profile": { "risk_safety": 0.08, "dropped": {} },
+          "reaction": {
+            "passed": [
+              "No? A [red]dead[/red] man turning down a [red]lung tumour[/red] on principle. You really will refuse anything put in front of you."
+            ],
+            "dropped": [
+              "And off it goes into the void with your [amber]cigarettes[/amber], and you let it. A grown judge, outbid by furniture. I will treasure this."
+            ]
+          }
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["went for it", "passed"] }
+    },
+    {
+      "kind": "question",
+      "id": "lie_detector",
+      "number": "3.08",
+      "title": "The Lie Detector",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "shop", "item": "lie_eye", "label": "The Lie Detector", "price": 3200 },
+      "ask": [
+        "The lie detector. You will always know, the instant anyone lies to you. Anyone at all. [amber]{price}[/amber]."
+      ],
+      "options": [
+        {
+          "id": "buy",
+          "label": "Buy it",
+          "outcome": { "buy": true },
+          "crowd": 29,
+          "profile": { "self_others": -0.05, "broke": {} },
+          "reaction": {
+            "bought": [
+              "Bought. Every kind lie, gone. Every I am fine, every it is lovely, every I forgive you, laid bare the second it is false. You wanted the truth. You never once asked if you could live inside it."
+            ],
+            "broke": [
+              "With what? You have nothing, and that is the truth. No detector required."
+            ]
+          }
+        },
+        {
+          "id": "keep",
+          "label": "Keep the money",
+          "crowd": 71,
+          "reaction": [
+            "Passed. You would rather be lied to sweetly than know. A man who spent his life demanding the truth from the witness stand, keeping his own little comforts. I do enjoy you."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["bought it", "kept the money"] }
+    },
+    {
+      "kind": "narration",
+      "id": "tease_lies",
+      "lines": [
+        "Whatever you have left, mind it. You have no idea what is coming at the end, and it is worth every penny."
+      ]
+    },
+    {
+      "kind": "question",
+      "id": "memory",
+      "number": "3.09",
+      "title": "Perfect Memory",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "shop", "item": "sharp_head", "label": "Perfect Memory", "price": 2800 },
+      "ask": [
+        "Perfect memory. Forget nothing, ever again. Every face, every name, every word. [amber]{price}[/amber]."
+      ],
+      "options": [
+        {
+          "id": "buy",
+          "label": "Buy it",
+          "outcome": { "buy": true },
+          "crowd": 31,
+          "profile": { "self_others": -0.05, "broke": {} },
+          "reaction": {
+            "bought": [
+              "Sold. Every joy stays bright, yes. So does every humiliation, every cruelty, everything you spent years letting blur. All of it, sharp, forever. There is no mercy in a perfect memory."
+            ],
+            "broke": [
+              "With what? At least you will not remember that you could not afford it. A small mercy."
+            ]
+          }
+        },
+        {
+          "id": "keep",
+          "label": "Keep the money",
+          "crowd": 69,
+          "reaction": [
+            "Kept it. You like the forgetting. The soft edges. The things time was kindly sanding off you. Fair enough. Stay blurry."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["bought it", "kept the money"] }
+    },
+    {
+      "kind": "question",
+      "id": "no_pain",
+      "number": "3.10",
+      "title": "No More Pain",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "shop", "item": "plaster", "label": "No More Pain", "price": 4500 },
+      "ask": [
+        "Never feel physical [red]pain[/red] again. Not a stubbed toe, not a broken bone, not ever. [amber]{price}[/amber]. An easy yes, until you sit with what pain is actually for."
+      ],
+      "options": [
+        {
+          "id": "buy",
+          "label": "Buy it",
+          "outcome": { "buy": true },
+          "crowd": 55,
+          "profile": { "self_others": -0.05, "broke": {} },
+          "reaction": {
+            "bought": [
+              "Done. No [red]pain[/red], ever again. Do enjoy never once knowing when something is wrong, right up until it is far too late to matter. A genuine bargain."
+            ],
+            "broke": [
+              "With what? You gave it all away. Watch this one go by."
+            ]
+          }
+        },
+        {
+          "id": "keep",
+          "label": "Keep the money",
+          "crowd": 45,
+          "reaction": [
+            "You kept your [red]pain[/red], on purpose. Would not pay a cent to be free of it. There is a whole philosophy in that, or you are simply stubborn. Both, most likely."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["bought it", "kept the money"] }
+    },
+    {
+      "kind": "question",
+      "id": "buyback",
+      "number": "3.11",
+      "title": "The Buyback",
+      "verb": "binary",
+      "weight": "medium",
+      "stage": { "type": "buyback", "share": 50, "round_to": 10, "least": 10 },
+      "ask": {
+        "items": [
+          "Second thoughts? I will buy back anything you bought. Not for what you paid, I am not a charity, but for something. Did you want the thing, or only the having of it?",
+          "One at a time, in the order you bought them. What I will give you is there on the row. Sell it, or keep it."
+        ],
+        "poverty": [
+          "Second thoughts? You bought one thing. You ended poverty, the whole grand gesture. I can undo it. Every hungry child back to hungry, and every dollar back in your pocket. Sell the good deed, or keep it."
+        ],
+        "nothing": [
+          "Nothing to sell back. You bought nothing, or nothing you regret yet. Give it time."
+        ]
+      },
+      "options": [
+        {
+          "id": "sell",
+          "label": "Sell it back",
+          "outcome": { "sell": true },
+          "crowd": 44,
+          "profile": { "self_others": -0.05, "poverty": { "self_others": -0.14 } },
+          "reaction": {
+            "sold": [
+              "Sold, just like that. So you never wanted it, you wanted to have wanted it. Next."
+            ],
+            "last": [
+              "Sold. There. What you sold back, and what you could not let go of. That tells me more than the buying did. It always does."
+            ],
+            "poverty": [
+              "And back it comes, every penny, and the children starve again. That charity lasted, what, half a chapter. I knew you had a price on other people. I just did not think it was [amber]this cheap[/amber]."
+            ]
+          }
+        },
+        {
+          "id": "keep",
+          "label": "Keep it",
+          "crowd": 56,
+          "profile": { "poverty": { "self_others": 0.14 } },
+          "reaction": {
+            "kept": [
+              "Kept it. You would rather have the thing than the money. Noted. Next."
+            ],
+            "last": [
+              "Kept. There. What you sold back, and what you could not let go of. That tells me more than the buying did."
+            ],
+            "none": [
+              "Sold nothing. Not one thing. Either you meant every purchase, or you cannot bear to admit a mistake to me. Either way, you keep the lot."
+            ],
+            "poverty": [
+              "You kept it ended. Broke, and you kept it. Either a genuinely good man, or you could not stand to look like a bad one in front of me. I still cannot tell. That is the fun of you."
+            ]
+          }
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["sold something back", "kept it all"] }
+    },
+    {
+      "kind": "question",
+      "id": "one_voice",
+      "number": "3.12",
+      "title": "One More Voice",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "shop", "item": "voice_head", "label": "One More Voice", "price": 3400 },
+      "ask": [
+        "One more voice. A wise voice in your head, always right, whenever you ask it. Never wrong again. [amber]{price}[/amber]."
+      ],
+      "options": [
+        {
+          "id": "buy",
+          "label": "Buy it",
+          "outcome": { "buy": true },
+          "crowd": 27,
+          "profile": { "self_others": -0.05, "broke": {} },
+          "reaction": {
+            "bought": [
+              "Sold. Always right, always there. And slowly, quietly, you stop deciding anything yourself, because why would you. A man who is never wrong, and never truly chooses again. Rather perfect for you."
+            ],
+            "broke": [
+              "With what? The voice would have told you to save your money. Which you did not have."
+            ]
+          }
+        },
+        {
+          "id": "keep",
+          "label": "Keep the money",
+          "crowd": 73,
+          "reaction": [
+            "Kept it. You would rather be wrong on your own than right on a lead. The judge wants to hold the gavel himself. Noted."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["bought it", "kept the money"] }
+    },
+    {
+      "kind": "narration",
+      "id": "tease_voice",
+      "lines": [
+        "The big one is coming, the one I have been building to all along. Do not tell me you are about to run out."
+      ]
+    },
+    {
+      "kind": "question",
+      "id": "deleted_memory",
+      "number": "3.13",
+      "title": "A deleted memory",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "shop", "item": "memory_cloud", "label": "A deleted memory", "price": 2200 },
+      "ask": [
+        "Your single worst [amber]memory[/amber]. The one you flinch from. I lift it out clean, as though it never happened. [amber]{price}[/amber]. And look how fast you knew exactly which one I meant."
+      ],
+      "options": [
+        {
+          "id": "buy",
+          "label": "Buy it",
+          "outcome": { "buy": true },
+          "crowd": 49,
+          "profile": { "self_others": -0.08, "broke": { "self_others": 0.04 } },
+          "reaction": {
+            "bought": [
+              "Gone. You did not hesitate for a heartbeat over which one to hand me. Whatever it was, you have wanted rid of it a long, long time, and now I know it was there."
+            ],
+            "broke": [
+              "With what, exactly? You have nothing. You keep that memory, then."
+            ]
+          }
+        },
+        {
+          "id": "keep",
+          "label": "Keep the money",
+          "crowd": 51,
+          "profile": { "self_others": 0.04 },
+          "reaction": [
+            "You kept it. Your worst [amber]memory[/amber], and you would not let me take it. Some people hold their wounds like they earned them. You are one of those, it seems."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["bought it", "kept the money"] }
+    },
+    {
+      "kind": "question",
+      "id": "cat_dog",
+      "number": "3.14",
+      "title": "Would you rather: The insulting cat, or The lying dog",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "doodles", "doodles": ["insulting_cat", "lying_dog"] },
+      "ask": [
+        "A pet that talks, forever, and only ever does the one thing. Would you rather a [amber]cat that only insults you[/amber], cutting, accurate, relentless, or a [amber]dog that only lies to you[/amber], warm, adoring, never once honest."
+      ],
+      "options": [
+        {
+          "id": "cat",
+          "label": "The insulting cat",
+          "crowd": 46,
+          "reaction": [
+            "The cat, then. The truth as a weapon over a lie as a blanket. At least you will always know where you stand. Savaged, but standing."
+          ]
+        },
+        {
+          "id": "dog",
+          "label": "The lying dog",
+          "crowd": 54,
+          "reaction": [
+            "The dog, then. You would rather be adored by a liar than told the truth by a cat. Comfort over honesty. Honestly, same."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "question",
+      "id": "feel_nothing",
+      "number": "3.15",
+      "title": "Feel Nothing",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "shop", "item": "flat_face", "label": "Feel Nothing", "price": 2800 },
+      "ask": [
+        "Feel nothing. Never grief, never heartbreak, never that particular ache again. Peace, of a kind. [amber]{price}[/amber]."
+      ],
+      "options": [
+        {
+          "id": "buy",
+          "label": "Buy it",
+          "outcome": { "buy": true },
+          "crowd": 34,
+          "profile": { "self_others": -0.05, "broke": {} },
+          "reaction": {
+            "bought": [
+              "Bought. No more heartbreak. Also no more joy at full volume, no more anything. It is the same dial, and you cannot turn down only half. A flat calm sea, forever. Fascinating."
+            ],
+            "broke": [
+              "With what? Feel that? The nothing where your money was. You cannot even numb it."
+            ]
+          }
+        },
+        {
+          "id": "keep",
+          "label": "Keep the money",
+          "crowd": 66,
+          "reaction": [
+            "Passed. You will keep the grief to keep the joy. A package deal, and you took the whole thing. More sentimental than you look, judge."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["bought it", "kept the money"] }
+    },
+    {
+      "kind": "question",
+      "id": "rewind",
+      "number": "3.16",
+      "title": "Rewind",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "shop", "item": "back_arrow", "label": "Rewind", "price": 6000 },
+      "ask": [
+        "Rewind. Once, ever, you may undo a single decision from your life and take the other road. Only the one. [amber]{price}[/amber]."
+      ],
+      "options": [
+        {
+          "id": "buy",
+          "label": "Buy it",
+          "outcome": { "buy": true },
+          "crowd": 52,
+          "profile": { "self_others": -0.05, "broke": {} },
+          "reaction": {
+            "bought": [
+              "Bought. One chance to do it over, and I know exactly which night you are picturing. You did not even hesitate. Interesting, that you would spend the most on the thing that admits the most."
+            ],
+            "broke": [
+              "With what? You would rewind to before you spent it all, I expect. You cannot. That is rather the theme of the day."
+            ]
+          }
+        },
+        {
+          "id": "keep",
+          "label": "Keep the money",
+          "crowd": 48,
+          "reaction": [
+            "Passed. Not one moment you would take back. At peace with all of it, or too proud to admit which one. The road, though. I saw you think about the road."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["bought it", "kept the money"] }
+    },
+    {
+      "kind": "question",
+      "id": "years",
+      "number": "3.17",
+      "title": "A stranger's years",
+      "verb": "binary",
+      "weight": "medium",
+      "stage": {
+        "type": "shop",
+        "item": "stranger_clock",
+        "label": "A stranger's years",
+        "price": 700,
+        "step": 100,
+        "most": 40,
+        "tag": { "text": "{price} a year" },
+        "tally": { "text": "{count} years taken", "one": { "text": "{count} year taken" } }
+      },
+      "ask": [
+        "Now this one is fun. Years. Not yours. Theirs. A stranger, alive somewhere right now, and I skim a year off their life and pour it into you. [amber]{price}[/amber] for the first, a little more for each after. Buy as many as your wallet allows. They will only wonder why they got so tired so young."
+      ],
+      "options": [
+        {
+          "id": "buy",
+          "label": "Buy a year",
+          "outcome": { "buy": true },
+          "crowd": 22,
+          "profile": { "self_others": -0.12, "ran_out": {}, "broke": {} },
+          "reaction": {
+            "first": [
+              "One year. Go on, there are billions of them."
+            ],
+            "ran_out": [
+              "That is every year your money stretches to, and you would have kept going. Every one of them skimmed off a stranger and stacked up inside you."
+            ],
+            "broke": [
+              "With what? You have nothing left to buy a single year with. The strangers keep theirs."
+            ]
+          }
+        },
+        {
+          "id": "enough",
+          "label": "Enough",
+          "crowd": 78,
+          "profile": { "none": { "self_others": 0.05 } },
+          "reaction": {
+            "some": [
+              "That many years, there on the tally, skimmed off strangers and stacked up inside you. You will not feel one of them as your own, and you bought them anyway. That may be the most honest thing you have done all day."
+            ],
+            "none": [
+              "Not one. All those cheap, stolen years, and you would not take a single one off a stranger. Squeamish, or you did not fancy the price. Noted."
+            ]
+          }
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["bought it", "kept the money"] }
+    },
+    {
+      "kind": "question",
+      "id": "drip_spike",
+      "number": "3.18",
+      "title": "Would you rather: The endless 20, or One big win",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "doodles", "doodles": ["wallet", "money_sack"] },
+      "ask": [
+        "A gift of money, one shape or the other. Would you rather a [amber]wallet that holds 20 dollars again every morning[/amber], forever, or [amber]one enormous win, right now[/amber], and never a penny more. The drip, or the spike."
+      ],
+      "options": [
+        {
+          "id": "drip",
+          "label": "The endless 20",
+          "crowd": 49,
+          "reaction": [
+            "The endless [amber]twenty[/amber]. The same small certainty every dawn until the stars burn out. A man who needs to always know the number."
+          ]
+        },
+        {
+          "id": "spike",
+          "label": "One big win",
+          "crowd": 51,
+          "reaction": [
+            "The one big win. Everything at once and nothing after. You would rather blaze bright and broke than glow forever. I have watched you all chapter, so no surprise there."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "question",
+      "id": "forgetting",
+      "number": "3.19",
+      "title": "The cheap forgetting",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "shop", "item": "drifting_memory", "label": "The cheap forgetting", "price": 40 },
+      "ask": [
+        "Cheap, this one. Suspiciously cheap. Someone you hurt, badly, back when you were breathing. For [amber]{price}[/amber] I make them forget you ever did it. Why so cheap? I would not dwell on that."
+      ],
+      "options": [
+        {
+          "id": "buy",
+          "label": "Buy it",
+          "outcome": { "buy": true },
+          "crowd": 44,
+          "profile": { "self_others": -0.1, "broke": { "self_others": 0.06 } },
+          "reaction": {
+            "bought": [
+              "Bought. For [amber]pocket change[/amber], you wiped it out of them. Not what you did, mind. Just their memory of it. You feel lighter already. That is the part that ought to worry you."
+            ],
+            "broke": [
+              "With what, exactly? Not even [amber]pocket change[/amber]. They go on remembering, then."
+            ]
+          }
+        },
+        {
+          "id": "keep",
+          "label": "Keep the money",
+          "crowd": 56,
+          "profile": { "self_others": 0.06 },
+          "reaction": [
+            "You left it. Let them keep all of it, whatever it was you did. Honesty, perhaps. Or some part of you wants to be remembered for it."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["bought it", "kept the money"] }
+    },
+    {
+      "kind": "question",
+      "id": "shirt_shoes",
+      "number": "3.20",
+      "title": "Would you rather: The perfect shirt, or The perfect shoes",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "doodles", "doodles": ["tshirt", "sneaker"] },
+      "ask": [
+        "One thing you wear, made perfect forever. Would you rather a [amber]shirt that never stains[/amber], never creases, never wears, or [amber]shoes that never hurt[/amber], never rub, never wear out."
+      ],
+      "options": [
+        {
+          "id": "shirt",
+          "label": "The perfect shirt",
+          "crowd": 43,
+          "reaction": [
+            "The shirt. You would rather look right than feel right. A man who dresses for the room, not for himself. I cannot say I am surprised."
+          ]
+        },
+        {
+          "id": "shoes",
+          "label": "The perfect shoes",
+          "crowd": 57,
+          "reaction": [
+            "The shoes. Comfort from the ground up, and never mind how it looks. You would walk a thousand quiet miles in a stained shirt. Sensible. Dull, but sensible."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose" }
+    },
+    {
+      "kind": "question",
+      "id": "truth",
+      "number": "3.21",
+      "title": "The truth",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "shop", "item": "question_mark", "label": "The truth", "price": 900 },
+      "ask": [
+        "Last temptation before we cash out. The truth about how you actually [red]died[/red]. Not the tidy story you tell yourself. The real one. It is not quite what you think. [amber]{price}[/amber]."
+      ],
+      "options": [
+        {
+          "id": "buy",
+          "label": "Buy it",
+          "outcome": { "buy": true },
+          "crowd": 68,
+          "profile": { "self_others": -0.04, "broke": {} },
+          "reaction": {
+            "bought": [
+              "Bought, and I am keeping it anyway, because watching you wonder is worth far more to me than [amber]{price}[/amber]. It was the drink. Mostly. Probably. There."
+            ],
+            "broke": [
+              "With what, exactly? No money, no truth. You get to just wonder."
+            ]
+          }
+        },
+        {
+          "id": "keep",
+          "label": "Keep the money",
+          "crowd": 32,
+          "reaction": [
+            "You would rather not know. A man who spent his life deciding what was true, waving off the one verdict that is actually his own. The drink, by the way. Probably."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["bought it", "kept the money"] }
+    },
+    {
+      "kind": "narration",
+      "id": "tease_truth",
+      "lines": [
+        "One more after this. THE one. Everything so far was me clearing my throat. Whatever you have left, hold onto it."
+      ]
+    },
+    {
+      "kind": "question",
+      "id": "cucumber",
+      "number": "3.22",
+      "title": "The cucumber",
+      "verb": "binary",
+      "weight": "light",
+      "stage": { "type": "shop", "item": "cucumber", "label": "The cucumber", "price": 100 },
+      "ask": [
+        "Right. This is it. The one I have been promising you all along. Come closer. It is a cucumber. [amber]{price}[/amber]. No, I will not explain. It is exactly what it looks like."
+      ],
+      "options": [
+        {
+          "id": "buy",
+          "label": "Buy it",
+          "outcome": { "buy": true },
+          "crowd": 18,
+          "reaction": {
+            "bought": [
+              "You bought the cucumber. [amber]{price}[/amber], for a cucumber, after all of that. I told you plainly it was just a cucumber, and you bought it anyway. The single most revealing thing you have done all day."
+            ],
+            "broke": [
+              "You cannot even afford the cucumber. The grand finale I hyped all chapter is a vegetable you cannot buy. Rather poetic."
+            ]
+          }
+        },
+        {
+          "id": "keep",
+          "label": "Keep the money",
+          "crowd": 82,
+          "reaction": [
+            "You passed on the cucumber. All that hype, and you would not part with [amber]{price}[/amber] for it. Holding out for something better. There was never anything better than the cucumber. There was only ever the cucumber."
+          ]
+        }
+      ],
+      "reveal": { "heading": "how others chose", "labels": ["bought the cucumber", "walked away"] }
+    },
+    {
+      "kind": "tableau",
+      "id": "receipt",
+      "number": "3.23",
+      "title": "The Receipt",
+      "weight": "medium",
+      "stage": {
+        "type": "receipt",
+        "title": { "text": "the receipt" },
+        "many": { "text": "{name} x{units}" },
+        "more": { "text": "and {more} more" },
+        "empty": { "text": "you bought nothing at all" },
+        "started": { "text": "started with {start}" },
+        "spent": { "text": "spent {spent}" },
+        "left": { "text": "left with {left}" },
+        "passed": { "caption": "passed on" },
+        "most_rows": 6,
+        "most_passed": 4,
+        "hoard_from": 80,
+        "spend_upto": 20,
+        "nudge": { "self_others": -0.2 }
+      },
+      "lines": {
+        "hoard": [
+          "Look at that. You kept nearly all of it. [red]Dead[/red], in a void, no pockets, no tomorrow, and still you would not let [amber]a single dollar[/amber] go. That is not thrift. That is a man who counts."
+        ],
+        "spend": [
+          "There it is, in ink. You spent nearly all of it, and fast. A man who cannot hold onto a thing: money, a marriage, a lane in the road. Cash does not hide who a person is. It shows it."
+        ],
+        "middle": [
+          "Some spent, some kept. You weighed every one of these. Never all in, never all out. Cash does not hide who a person is, and I have a very clear picture of you now. Clearer than you would like."
+        ]
+      }
+    },
+    {
+      "kind": "narration",
+      "id": "closer",
+      "lines": [
+        "And that is the money game. I know what you clung to, and what you let go far too easily. It all goes in the book.",
+        { "text": "Rest now, or do not. I am always here, and I am always, always adding it up.", "face": "smug" }
+      ]
+    }
+  ]
+}

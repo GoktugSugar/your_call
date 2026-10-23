@@ -4,6 +4,24 @@ Everything not yet settled. Park unknowns here instead of guessing, and decide t
 
 Creative questions are the user's to answer. Technical ones are the developer's, and they are only listed here while they wait on a creative answer.
 
+## To review in the morning
+
+Creative calls made overnight on 2026-10-22, while the user slept. Each is provisional and logged in `DECISIONS.md`; confirm or change them.
+
+**Chapter 3, The Money** (review page: https://claude.ai/artifact/QA5qDmmYa42PervaPb7Kaw)
+- The trimmed copy, 14% shorter. Alternatives: trim harder, or keep more of the original.
+- The teases about the end play as narration after the crowd reveal. Alternative: back after the reaction, before the reveal, as the old build had it.
+- 3.02's brand became burritos. Alternatives: another everyday food, or a placeholder per language later.
+- The 3.08 tease and 3.18 spike line reworded to hold whatever the player has spent. Alternative: two versions of each, picked by the wallet.
+- The cut DUI winks (3.10's ask, 3.16's purchase). Alternative: keep them all.
+- The auction's button comes in from the left. Alternative: from the right, as the script says, walking past the imp's wing.
+- Each auction round is one line from the imp (the needle and the prompt together). Alternative: the needle clears by itself first, then the prompt.
+- The rage's delivery: glaring, voiced with "[exasperated]". Alternative: another direction, or none.
+- The buyback points at the row instead of naming the thing and the amount; he reacts to the first sale and keep only. Alternative: voice each item's name and offer (a take per item and amount).
+- The years cost $100 more each ($700 up), with a line when the money runs out and one after the first year. Alternatives: a flat $700, or a steeper climb.
+- The colours of the items the script left uncoloured.
+- The weights given to Chapter 3's questions.
+
 ## Carried over from the earlier build
 
 These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus the points sections 9 and 14 leave to the user.
@@ -42,7 +60,6 @@ These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus t
 - Why player-facing text has no dashes. The rule holds either way; the reason only matters if it ever needs bending.
 
 **Voice and pacing**
-- Whether narration should ever auto-advance once the imp finishes a box, perhaps as a setting. (Text now syncs with the voice and waits for a click.)
 - Whether the pleas and the confessors are voiced. (The walking button gets its own voice.)
 - Whether the gibberish blip voice survives for anyone (the walking button, perhaps).
 - Whether the imp's per-chapter register shifts are one voice or distinct takes.

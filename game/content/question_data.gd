@@ -2,6 +2,8 @@ class_name QuestionData
 extends BeatData
 ## One question: the imp's lines that pose it, the stage it plays on, its options and its reveal.
 ## Its [member BeatData.id], such as [code]lever[/code], is what saves and the crowd tally key off.
+## A question with no options is a tableau: a stage the imp talks over with nothing to choose, such as
+## the money chapter's receipt.
 
 ## Its number in the script, such as [code]1.02[/code].
 var number := ""
@@ -15,6 +17,9 @@ var weight := &"medium"
 var stage := {}
 ## The imp's lines that pose the question.
 var ask: Array[LineData] = []
+## Other ways to pose it, keyed by name, for a stage that picks how to ask from how the run has gone,
+## such as when the player owns nothing to sell back. Each value is an [code]Array[LineData][/code].
+var asks := {}
 ## Named sets of the imp's lines that the stage says at moments of its own, such as the needling over
 ## a countdown. Each value is an [code]Array[LineData][/code].
 var line_sets := {}
@@ -30,6 +35,18 @@ var reveal_heading := "how others chose"
 var reveal_labels := PackedStringArray()
 ## The name of the line a coordination gamble's crowd had to cross, such as [code]half[/code]. Empty for none.
 var reveal_mark := ""
+
+
+## Whether it is a tableau, with nothing to choose.
+func is_tableau() -> bool:
+	return options.is_empty()
+
+
+## The ask called [param key]: its own lines if it has them, otherwise the plain [member ask].
+func ask_for(key: StringName) -> Array[LineData]:
+	if asks.has(key):
+		return asks[key]
+	return ask
 
 
 ## The option labels, in order.
@@ -62,6 +79,8 @@ func lines_in(set_name: StringName) -> Array[LineData]:
 
 func all_lines() -> Array[LineData]:
 	var lines: Array[LineData] = ask.duplicate()
+	for key: StringName in asks:
+		lines.append_array(asks[key])
 	for set_name: StringName in line_sets:
 		lines.append_array(line_sets[set_name])
 	lines.append_array(stage_lines)

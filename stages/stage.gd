@@ -6,8 +6,9 @@ extends Node2D
 ## The question player drives a stage through [method setup], [method enter], [method set_choosing],
 ## [method play_consequence] and [method leave], awaiting each one. A stage can also report how the
 ## consequence came out, so the imp reacts to it; bring the offer round again; take the player's choice
-## by itself, with no choice row; fill the placeholders in its question's lines; make its own reveal; and
-## cue the imp's face at a moment of its own.
+## by itself, with no choice row; fill the placeholders in its question's lines and labels; pick how the
+## question is asked, or find there is nothing to choose; make its own reveal; and cue the imp's face at
+## a moment of its own. It reads and changes what the run remembers through [member run].
 
 ## Emitted when the pointer moves onto or off an in-scene control. [code]-1[/code] means none.
 signal option_hovered(index: int)
@@ -29,6 +30,9 @@ var question: QuestionData
 ## The dialogue box, handed over by the question player, for a stage whose imp speaks at moments of
 ## its own, such as over a countdown or while a pin spins.
 var dialogue: DialogueBox
+## What the run remembers, handed over by the question player: the profile, the money chapter's wallet,
+## facts such as the walking button having come alive. A stage on its own, as in a sampler, gets a fresh one.
+var run := RunState.new()
 
 
 ## Builds the tableau for [param for_question]. Called once, after the stage is in the tree.
@@ -57,6 +61,28 @@ func set_choosing(_active: bool) -> void:
 ## Shows that an option is under the pointer in the choice row. [code]-1[/code] clears it.
 func highlight_option(_index: int) -> void:
 	pass
+
+
+## Which of the question's asks to pose, by name, such as [code]nothing[/code] when there is nothing
+## to sell back. Empty poses the plain ask.
+func ask_key() -> StringName:
+	return &""
+
+
+## Whether there is anything to choose this time. When there is not, the question is only its ask: no
+## choice, no consequence, no reaction and no reveal.
+func offers_choice() -> bool:
+	return true
+
+
+## The words in the choice row right now, in option order, their placeholders filled. A stage whose
+## options change between rounds, such as an auction's rising bid, gives its own.
+func option_labels() -> PackedStringArray:
+	var labels := PackedStringArray()
+	var values := fills()
+	for label in question.option_labels():
+		labels.append(label.format(values))
+	return labels
 
 
 ## Whether the stage takes the player's choice by itself, with no choice row, as the timer does.

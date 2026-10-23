@@ -70,6 +70,7 @@ func test_every_placeholder_is_one_its_stage_fills() -> void:
 	for question in _questions():
 		var fills := StageFills.names(question)
 		var texts := PackedStringArray(question.stage_texts)
+		texts.append_array(question.option_labels())
 		for line in question.all_lines():
 			texts.append(line.text)
 		for text in texts:
@@ -122,6 +123,21 @@ func test_every_soul_on_a_track_is_a_known_kind() -> void:
 				var kind := str((entry as Dictionary).get("kind", "") if entry is Dictionary else entry)
 				if not SoulKind.exists(StringName(kind)):
 					offenders.append("%s: no soul kind '%s'" % [question.id, kind])
+	assert_eq(offenders, PackedStringArray(), "\n".join(offenders))
+
+
+func test_every_doodle_a_stage_names_exists() -> void:
+	var offenders := PackedStringArray()
+	for question in _questions():
+		var named: Array = question.stage.get("doodles", []).duplicate()
+		if question.stage.has("item"):
+			named.append(question.stage["item"])
+		for id: Variant in named:
+			var doodle := DoodlesStage.make_doodle(str(id))
+			if doodle == null:
+				offenders.append("%s: no doodle '%s'" % [question.id, id])
+			else:
+				doodle.free()
 	assert_eq(offenders, PackedStringArray(), "\n".join(offenders))
 
 

@@ -8,6 +8,8 @@ var id := &""
 var title := ""
 ## Its beats, in play order.
 var beats: Array[BeatData] = []
+## The pot of money the chapter hands the player, such as [code]{"start": 10000}[/code], or empty for none.
+var wallet := {}
 
 
 ## The beat with [param beat_id], or null.

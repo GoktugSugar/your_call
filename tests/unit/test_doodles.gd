@@ -3,10 +3,6 @@ extends GutTest
 ## doodle has, and the stage puts each one over its option and answers the pointer.
 
 const STAGE_SCENE := "res://stages/doodles/doodles_stage.tscn"
-## The doodles the would you rathers use.
-const IDS: PackedStringArray = ["winged_figure", "flexing_figure", "sweet_poop", "foul_ice_cream",
-		"giant_duck", "tiny_horses", "rewind_button", "pause_button", "snowflake", "sun", "third_arm_figure",
-		"two_headed_figure"]
 ## The tallest a doodle may stand above its origin, in pixels.
 const TALLEST := 240.0
 ## The furthest a doodle may spread either side of its origin, so it stays inside its slot.
@@ -15,8 +11,12 @@ const HALF_WIDTH := 200.0
 const SLACK := 8.0
 
 
+func test_there_are_doodles() -> void:
+	assert_gt(DoodlesStage.all_ids().size(), 0)
+
+
 func test_every_doodle_id_makes_a_doodle() -> void:
-	for id in IDS:
+	for id in DoodlesStage.all_ids():
 		var doodle := DoodlesStage.make_doodle(id)
 		assert_not_null(doodle, id)
 		if doodle != null:
@@ -28,7 +28,7 @@ func test_an_unknown_id_makes_nothing() -> void:
 
 
 func test_every_doodle_stands_centred_on_its_origin_and_fits_its_room() -> void:
-	for id in IDS:
+	for id in DoodlesStage.all_ids():
 		var doodle := DoodlesStage.make_doodle(id)
 		var bounds := _bounds(doodle)
 		doodle.free()
