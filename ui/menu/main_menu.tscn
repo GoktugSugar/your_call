@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3]
+[gd_scene load_steps=15 format=3]
 
 [ext_resource type="Script" path="res://ui/menu/main_menu.gd" id="1_menu"]
 [ext_resource type="PackedScene" path="res://ink/paper/paper.tscn" id="2_paper"]
@@ -12,19 +12,22 @@
 [ext_resource type="PackedScene" path="res://stages/trolley/plea.tscn" id="10_words"]
 [ext_resource type="PackedScene" path="res://cinematics/eyelids.tscn" id="11_eyelids"]
 [ext_resource type="PackedScene" path="res://dev/dev_tools.tscn" id="12_dev"]
+[ext_resource type="PackedScene" path="res://ui/menu/endings_page.tscn" id="13_endings"]
 
-[node name="MainMenu" type="Node" node_paths=PackedStringArray("title", "column", "new_game_word", "continue_word", "settings_word", "quit_word", "confirm", "start_over_word", "keep_word", "settings", "menu_imp", "eyelids")]
+[node name="MainMenu" type="Node" node_paths=PackedStringArray("title", "column", "new_game_word", "continue_word", "endings_word", "settings_word", "quit_word", "confirm", "start_over_word", "keep_word", "settings", "endings", "menu_imp", "eyelids")]
 script = ExtResource("1_menu")
 title = NodePath("UI/Screen/Title")
 column = NodePath("UI/Screen/Column")
 new_game_word = NodePath("UI/Screen/Column/NewGame")
 continue_word = NodePath("UI/Screen/Column/Continue")
+endings_word = NodePath("UI/Screen/Column/Endings")
 settings_word = NodePath("UI/Screen/Column/Settings")
 quit_word = NodePath("UI/Screen/Column/Quit")
 confirm = NodePath("UI/Screen/Confirm")
 start_over_word = NodePath("UI/Screen/Confirm/StartOver")
 keep_word = NodePath("UI/Screen/Confirm/Keep")
 settings = NodePath("UI/Screen/Settings")
+endings = NodePath("UI/Screen/Endings")
 menu_imp = NodePath("MenuImp")
 eyelids = NodePath("Eyes/Eyelids")
 dev_tools_scene = ExtResource("12_dev")
@@ -106,6 +109,10 @@ text = "New Game"
 layout_mode = 2
 text = "Continue"
 
+[node name="Endings" parent="UI/Screen/Column" instance=ExtResource("7_word")]
+layout_mode = 2
+text = "Endings"
+
 [node name="Settings" parent="UI/Screen/Column" instance=ExtResource("7_word")]
 layout_mode = 2
 text = "Settings"
@@ -145,6 +152,18 @@ offset_left = -490.0
 offset_top = 390.0
 offset_right = 490.0
 offset_bottom = 900.0
+grow_horizontal = 2
+
+[node name="Endings" parent="UI/Screen" instance=ExtResource("13_endings")]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -700.0
+offset_top = 360.0
+offset_right = 700.0
+offset_bottom = 1040.0
 grow_horizontal = 2
 
 [node name="MenuImp" type="Node" parent="." node_paths=PackedStringArray("imp", "words_parent")]

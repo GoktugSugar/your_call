@@ -18,7 +18,9 @@ const _QUESTION_KEYS: PackedStringArray = ["kind", "id", "number", "title", "ver
 const _TABLEAU_KEYS: PackedStringArray = ["kind", "id", "number", "title", "weight", "stage", "ask", "lines", "ending"]
 const _NARRATION_KEYS: PackedStringArray = ["kind", "id", "lines"]
 const _CINEMATIC_KEYS: PackedStringArray = ["kind", "id", "scene"]
-const _MENU_KEYS: PackedStringArray = ["id", "title", "lines"]
+const _MENU_KEYS: PackedStringArray = ["id", "title", "lines", "endings"]
+const _ENDINGS_KEYS: PackedStringArray = ["heading", "count", "groups"]
+const _ENDING_KEYS: PackedStringArray = ["id", "name"]
 const _OPTION_KEYS: PackedStringArray = ["id", "label", "outcome", "crowd", "profile", "reaction", "ending", "hidden",
 		"if", "unless", "remember"]
 const _LINE_KEYS: PackedStringArray = ["text", "speaker", "voice", "face", "direction", "voiced", "if", "unless"]
@@ -91,8 +93,8 @@ func load_run(run_path: String, chapters_dir: String) -> Array[ChapterData]:
 	return chapters
 
 
-## Reads the main menu's words at [param path]: its title and the imp's sets of lines. Returns null
-## only when the file cannot be read as JSON.
+## Reads the main menu's words at [param path]: its title, the imp's sets of lines and the endings
+## page's words. Returns null only when the file cannot be read as JSON.
 func load_menu(path: String) -> MenuData:
 	var data: Variant = read_json(path)
 	if data == null:
@@ -104,6 +106,7 @@ func load_menu(path: String) -> MenuData:
 	var menu := MenuData.new()
 	menu.id = StringName(_text(data, "id", path, true))
 	menu.title = _text(data, "title", path, true)
+	_endings(data.get("endings", {}), menu, path + " endings")
 	var sets: Variant = data.get("lines", {})
 	if not sets is Dictionary:
 		problems.append("%s: lines needs an object of named sets" % path)
@@ -111,6 +114,30 @@ func load_menu(path: String) -> MenuData:
 	for set_name: Variant in sets:
 		menu.sets[StringName(str(set_name))] = _lines(sets, str(set_name), "%s.%s" % [menu.id, set_name], path)
 	return menu
+
+
+## Reads the endings page's words into [param menu]: a heading, a count, and groups of endings, each an
+## id and a name.
+func _endings(raw: Variant, menu: MenuData, where: String) -> void:
+	if not raw is Dictionary:
+		problems.append("%s: needs an object" % where)
+		return
+	var data: Dictionary = raw
+	_check_keys(data, _ENDINGS_KEYS, where)
+	menu.endings_heading = _text(data, "heading", where)
+	menu.endings_count = _text(data, "count", where)
+	for raw_group: Variant in _list(data, "groups", where):
+		if not raw_group is Array:
+			problems.append("%s: a group needs a list of endings" % where)
+			continue
+		var group: Array[Dictionary] = []
+		for raw_ending: Variant in raw_group:
+			if not raw_ending is Dictionary:
+				problems.append("%s: an ending needs an object" % where)
+				continue
+			_check_keys(raw_ending, _ENDING_KEYS, where)
+			group.append({"id": StringName(_text(raw_ending, "id", where, true)), "name": _text(raw_ending, "name", where, true)})
+		menu.ending_groups.append(group)
 
 
 ## Reads a JSON file, recording a problem if it cannot be read.

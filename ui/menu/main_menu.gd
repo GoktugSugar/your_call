@@ -1,9 +1,11 @@
 class_name MainMenu
 extends Node
-## The main menu, the page the game opens on: the hand-lettered title, then New Game, Continue, Settings
-## and Quit, the current one in amber, with the imp beside them saying his barks. Continue is greyed out
-## when there is no saved run to pick up. New Game asks first when there is one: the imp puts the
-## question and the column turns into its answers. Settings turn the column into the settings page.
+## The main menu, the page the game opens on: the hand-lettered title, then New Game, Continue, Endings,
+## Settings and Quit, the current one in amber, with the imp beside them saying his barks. Continue is
+## greyed out when there is no saved run to pick up; after an ending there is one, just before it.
+## New Game asks first when there is one: the imp puts the question and the column turns into its
+## answers. Endings turns the column into the endings found so far, Settings into the settings page,
+## and the imp keeps quiet over either.
 ## Leaving for the run, the eyes close on the page, and the run opens behind them.
 
 @export_file("*.json") var menu_path := "res://content/menu.json"
@@ -19,6 +21,7 @@ extends Node
 @export var column: MenuList
 @export var new_game_word: MenuWord
 @export var continue_word: MenuWord
+@export var endings_word: MenuWord
 @export var settings_word: MenuWord
 @export var quit_word: MenuWord
 ## The answers to New Game's question, when there is a run to lose.
@@ -27,6 +30,8 @@ extends Node
 @export var keep_word: MenuWord
 ## The settings, in place of the entries.
 @export var settings: SettingsPage
+## The endings found so far, in place of the entries.
+@export var endings: EndingsPage
 ## The imp on the page, and his barks.
 @export var menu_imp: MenuImp
 ## The eyes that close on the page as it is left, and open on it after the run was quit.
@@ -91,6 +96,7 @@ func has_save() -> bool:
 func _wire() -> void:
 	new_game_word.pressed.connect(_on_new_game)
 	continue_word.pressed.connect(_on_continue)
+	endings_word.pressed.connect(_on_endings)
 	settings_word.pressed.connect(_on_settings)
 	quit_word.pressed.connect(func() -> void:
 		if not _leaving:
@@ -98,6 +104,7 @@ func _wire() -> void:
 	start_over_word.pressed.connect(_on_start_over)
 	keep_word.pressed.connect(_on_keep)
 	settings.closed.connect(_on_settings_closed)
+	endings.closed.connect(_on_endings_closed)
 	settings.volume_changed.connect(_on_volume_changed)
 	continue_word.set_greyed(_save == null)
 	confirm.hide()
@@ -172,6 +179,20 @@ func _on_continue() -> void:
 	if _leaving or not has_save():
 		return
 	_leave_for_run(_save)
+
+
+func _on_endings() -> void:
+	if _leaving or menu == null:
+		return
+	column.hide()
+	menu_imp.hush()
+	endings.open(menu, EndingsRecord.seen())
+
+
+func _on_endings_closed() -> void:
+	column.show()
+	column.focus(endings_word)
+	menu_imp.let_go()
 
 
 func _on_settings() -> void:

@@ -1,9 +1,13 @@
 extends GutTest
 ## The main menu's words in content/menu.json load cleanly and follow the text rules, name only what the
 ## menu knows, and the imp never says the same bark twice running nor says Continue is greyed out while
-## there is a run to continue.
+## there is a run to continue. The endings page names every ending the run can reach, once each.
 
 const MENU_PATH := "res://content/menu.json"
+const RUN_PATH := "res://content/run.json"
+const CHAPTERS_DIR := "res://content/chapters"
+## What the endings page's count may fill in.
+const COUNT_FILLS := ["found", "total"]
 ## Barks to pick in a row, to see none comes twice running.
 const PICKS := 200
 
@@ -38,6 +42,44 @@ func test_the_menu_follows_the_text_rules() -> void:
 			offenders.append(text)
 	if Markup.has_tags(_menu.title):
 		offenders.append("the title carries a tag")
+	assert_eq(offenders, PackedStringArray(), "\n".join(offenders))
+
+
+func test_the_endings_page_names_every_ending_the_run_can_reach_once() -> void:
+	var reachable := {}
+	for chapter in ContentLoader.new(Profile.axis_ids()).load_run(RUN_PATH, CHAPTERS_DIR):
+		for beat in chapter.beats:
+			if not beat is QuestionData:
+				continue
+			var question := beat as QuestionData
+			for ending in [question.ending] + question.endings.values():
+				reachable[ending] = true
+			for option in question.options:
+				for ending in [option.ending] + option.endings.values():
+					reachable[ending] = true
+	reachable.erase(&"")
+	var listed := _menu.ending_ids()
+	var twice := listed.filter(func(id: StringName) -> bool: return listed.count(id) > 1)
+	assert_eq(twice, [], "listed twice")
+	assert_eq(listed.filter(func(id: StringName) -> bool: return not reachable.has(id)), [], "listed but never reached")
+	assert_eq(reachable.keys().filter(func(id: StringName) -> bool: return not id in listed), [], "reached but not listed")
+
+
+func test_the_endings_page_follows_the_text_rules() -> void:
+	var offenders := PackedStringArray()
+	var texts := PackedStringArray([_menu.endings_heading])
+	for group in _menu.ending_groups:
+		for ending: Dictionary in group:
+			texts.append(ending["name"])
+	for text in texts:
+		if text.is_empty() or Markup.has_dash(text) or Markup.has_stray_brace(text) or Markup.has_tags(text):
+			offenders.append(text)
+	var count := _menu.endings_count
+	for fill in Markup.placeholders(count):
+		if not fill in COUNT_FILLS:
+			offenders.append("the count fills %s" % fill)
+	if Markup.has_dash(count) or Markup.has_tags(count):
+		offenders.append(count)
 	assert_eq(offenders, PackedStringArray(), "\n".join(offenders))
 
 

@@ -17,5 +17,33 @@
     "new_game": [
       { "text": "Starting over? The run you have goes in the bin.", "face": "smug" }
     ]
+  },
+  "endings": {
+    "heading": "Endings",
+    "count": "{found} of {total}",
+    "groups": [
+      [
+        { "id": "baby", "name": "The Baby" },
+        { "id": "dollar", "name": "One Dollar" },
+        { "id": "cigarettes", "name": "The Cigarettes" },
+        { "id": "shot_imp", "name": "The Referee" },
+        { "id": "cheat", "name": "The Cheat" }
+      ],
+      [
+        { "id": "posted_lever", "name": "The Lever" },
+        { "id": "posted_plea", "name": "The Plea" },
+        { "id": "posted_curtain", "name": "The Curtain" },
+        { "id": "posted_gavel", "name": "The Gavel" },
+        { "id": "posted_trolley", "name": "The Trolley" },
+        { "id": "posted_rails", "name": "The Rails" },
+        { "id": "posted_clerk", "name": "The Clerk" },
+        { "id": "posted_button", "name": "The Button" },
+        { "id": "posted_die", "name": "The Die" },
+        { "id": "posted_crowd", "name": "The Crowd" },
+        { "id": "posted_pin", "name": "The Pin" },
+        { "id": "posted_paper", "name": "The Paper" },
+        { "id": "posted_imp", "name": "Your Call" }
+      ]
+    ]
   }
 }
