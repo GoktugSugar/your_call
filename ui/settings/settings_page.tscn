@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://ui/settings/settings_page.gd" id="1_page"]
+[ext_resource type="PackedScene" path="res://ui/settings/volume_row.tscn" id="2_volume"]
+[ext_resource type="PackedScene" path="res://ui/settings/toggle_row.tscn" id="3_toggle"]
+[ext_resource type="PackedScene" path="res://ui/menu/menu_word.tscn" id="4_word"]
+[ext_resource type="AudioStream" path="res://assets/sfx/gavel.mp3" id="5_gavel"]
+
+[node name="SettingsPage" type="VBoxContainer" node_paths=PackedStringArray("volumes", "fullscreen", "auto_skip", "back", "sample_player")]
+offset_right = 980.0
+offset_bottom = 520.0
+theme_override_constants/separation = 12
+alignment = 1
+script = ExtResource("1_page")
+volumes = [NodePath("Music"), NodePath("SoundEffects"), NodePath("Voice")]
+fullscreen = NodePath("Fullscreen")
+auto_skip = NodePath("AutoSkip")
+back = NodePath("Back")
+sample_player = NodePath("Sample")
+
+[node name="Music" parent="." instance=ExtResource("2_volume")]
+layout_mode = 2
+bus = &"Music"
+
+[node name="SoundEffects" parent="." instance=ExtResource("2_volume")]
+layout_mode = 2
+bus = &"SFX"
+
+[node name="Name" parent="SoundEffects" index="0"]
+text = "Sound effects"
+
+[node name="Voice" parent="." instance=ExtResource("2_volume")]
+layout_mode = 2
+bus = &"Voice"
+
+[node name="Name" parent="Voice" index="0"]
+text = "Voice"
+
+[node name="Fullscreen" parent="." instance=ExtResource("3_toggle")]
+layout_mode = 2
+
+[node name="AutoSkip" parent="." instance=ExtResource("3_toggle")]
+layout_mode = 2
+
+[node name="Name" parent="AutoSkip" index="0"]
+text = "Auto skip"
+
+[node name="Back" parent="." instance=ExtResource("4_word")]
+layout_mode = 2
+text = "Back"
+
+[node name="Sample" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_gavel")
+bus = &"SFX"
