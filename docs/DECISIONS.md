@@ -303,3 +303,4 @@ The user picked three of the chapter ideas to build (The Show, Everyone Else, Th
 - **Tableaux can fire endings.** Dev: a tableau's `ending`, keyed by outcome like an option's.
 - **The portrait stage says its own lines.** Dev: one line set per axis and pole, said from the dialogue box as each scale lights, so no line needs a condition on a fact a stage remembers.
 - **Four props.** Dev: drawn by a helper in a worktree of its own (`helper/portrait-props`), with Everyone Else's two: the notebook, the gavel (seen at last), the booth's curtain on its own, and a clipboard of forms for the clerk.
+- **Voiced.** User. Dev: 47 takes, 4,021 characters, with `eleven_v3`: all eighteen of the portrait's lines and all thirteen postings, though each run hears six and one.

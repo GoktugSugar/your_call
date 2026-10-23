@@ -113,7 +113,7 @@ Built on 2026-10-23 from the outline the user picked. The copy waits for the use
 
 Built on 2026-10-23 from the outline the user picked. The copy waits for the user's sign off before it is voiced; the rest is provisional and logged in `DECISIONS.md`.
 
-- The copy, as outlined, unvoiced. The notebook writes the run's rarest picks; the imp does not read them out.
+- The copy, as outlined, voiced at the user's word. The notebook writes the run's rarest picks; the imp does not read them out.
 - The thirteen postings, and how the posting is picked: the strongest lean against two nudges' worth of doubt, the imp's job under 0.2.
 - Showing the portrait at all, as scales with no numbers.
 - The order of the six scales and their poles' names, straight from `content/profile_axes.json`.
