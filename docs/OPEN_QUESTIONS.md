@@ -90,6 +90,17 @@ Built on 2026-10-23. The creative calls were the user's; these look and feel cal
 - Whether Chapter 8's closer should roll the credits until the real endings exist. For now the game goes back to the menu.
 - A text speed, a master volume and a language setting, left off the settings for now (2026-10-23).
 
+## To review: Chapter 6
+
+Built on 2026-10-23 from the outline the user picked. The copy waits for the user's sign off before it is voiced; the rest is provisional and logged in `DECISIONS.md`.
+
+- The copy, as outlined, unvoiced.
+- The show's name, Your Call.
+- The trapdoor and the collapse: two deaths on stage in a lighter chapter, neither counted in the kill tally.
+- The studio's look: the valance, the audience from behind at the foot of the page, the trapdoor's drop.
+- The props' colours: the wheel's amber pointer and grey stand, the podium's grey band, the card's grey back, the white gift box with a red ribbon.
+- Every crowd seed and the room's random share in each round.
+
 ## Carried over from the earlier build
 
 These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus the points sections 9 and 14 leave to the user.
@@ -100,7 +111,6 @@ These came from `PREMISE.md` on 2026-10-21: all of its former section 16, plus t
 - The endings:
   - how many there are, what each says, how the profile picks one, and how the imp's delivery shifts between them
   - whether Yourself or The Person Who Wants You To should become secret endings too
-- What Chapter 6 is, if anything. Chapters 7 and 8 keep their numbers, so one can slot in later (2026-10-23).
 - The total question count, and the light/medium/heavy ratio, for 5 to 6 hours. The original estimate of 25 to 35 full scenes predates the shift to mostly light questions.
 - Whether allocation and self-sacrifice get dedicated beats, or the presentations in section 5 of `PREMISE.md` already cover that ground.
 - Guess the crowd: how often it happens, how it's presented, and whether a right or wrong guess gets a reaction.
