@@ -164,4 +164,3 @@ func _on_talking_changed(talking: bool) -> void:
 ## page sets his face.
 func _on_imp_face_cued(face: StringName) -> void:
 	imp.set_face(ImpDrawing.face_named(face))
-
