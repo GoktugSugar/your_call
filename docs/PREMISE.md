@@ -497,7 +497,7 @@ There is one linear run, the same for everyone. All the content is in `SCRIPT.md
 ## 14. Audio and voice
 
 **Music and SFX**
-- Keep them spare, to match the visual minimalism.
+- Sound effects are many, for immersion (2026-10-23; they used to be kept spare, to match the visual minimalism). They sit under the voices and never tire: each is picked by ear from a batch of takes, varies a little every time it plays, and dips while anyone talks.
 - The earlier build had a single quiet looped track under everything, carried unbroken from the menu into the game, and sparse SFX (a gunshot, a button click).
 - All of the earlier audio was placeholder.
 
