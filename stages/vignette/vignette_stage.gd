@@ -3,13 +3,13 @@ extends Stage
 ## A doodle that sets the scene while the imp narrates, such as the campaign's tavern, its beast or its
 ## dragon, with the options offered in the choice row. Picked, the doodle answers the way the option
 ## says: it hops, shakes, falls over and dissolves, or backs away, fading.
-## Stage data: [code]{"type": "vignette", "doodle": "dragon"}[/code]. An option's outcome can say how
-## the doodle answers: [code]{"doodle": "fall"}[/code], or [code]shake[/code] or [code]leave[/code];
-## it hops otherwise.
+## Stage data: [code]{"type": "vignette", "doodle": "dragon"}[/code], with [code]"scale"[/code] to draw
+## the doodle at another size than [member doodle_scale]. An option's outcome can say how the doodle
+## answers: [code]{"doodle": "fall"}[/code], or [code]shake[/code] or [code]leave[/code]; it hops otherwise.
 
 ## Where the doodle stands: its origin goes on this node's.
 @export var slot: Node2D
-## The size the doodle is drawn at, as a multiple of its natural size.
+## The size the doodle is drawn at, as a multiple of its natural size, when the stage data does not say.
 @export_range(0.2, 3.0, 0.01) var doodle_scale := 1.3
 
 @export_group("Hop")
@@ -57,13 +57,17 @@ const FALL := &"fall"
 const LEAVE := &"leave"
 
 const _DOODLE_KEY := "doodle"
+const _SCALE_KEY := "scale"
 
 var _doodle: InkDrawing
+## The size the doodle is drawn at.
+var _scale := 1.0
 
 
 func setup(for_question: QuestionData) -> void:
 	super.setup(for_question)
-	slot.scale = Vector2.ONE * doodle_scale
+	_scale = float(for_question.stage.get(_SCALE_KEY, doodle_scale))
+	slot.scale = Vector2.ONE * _scale
 	var id := str(for_question.stage.get(_DOODLE_KEY, ""))
 	_doodle = DoodlesStage.make_doodle(id)
 	if _doodle == null:
@@ -119,7 +123,7 @@ func _fall() -> void:
 ## It backs away, fading as it goes.
 func _back_away() -> void:
 	var away := create_tween().set_parallel(true)
-	away.tween_property(_doodle, ^"position:x", leave_distance * leave_way / doodle_scale, leave_time) \
+	away.tween_property(_doodle, ^"position:x", leave_distance * leave_way / _scale, leave_time) \
 			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	away.tween_property(_doodle, ^"dissolve", 1.0, leave_time).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	await away.finished

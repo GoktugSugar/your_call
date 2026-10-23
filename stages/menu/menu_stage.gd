@@ -9,7 +9,7 @@ extends DoodlesStage
 ## The scene each label is made from.
 @export var word_scene: PackedScene
 ## How far apart the first and last doodles stand, middle to middle.
-@export_range(100.0, 1800.0, 1.0) var row_width := 1240.0
+@export_range(100.0, 1800.0, 1.0) var row_width := 1100.0
 ## Where the middle of the row stands, on its baseline.
 @export var row_middle := Vector2(960.0, 560.0)
 ## The size the doodles are drawn at, as a multiple of their natural size.

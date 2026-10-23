@@ -224,7 +224,7 @@ A row of doodles, one per option left to right, each over its label: the doodles
 "stage": { "type": "vignette", "doodle": "dragon" }
 ```
 
-One doodle sets the scene while the imp narrates; the options are in the choice row. An option's `outcome` can say how the doodle answers the pick: `{ "doodle": "fall" }` (it topples and dissolves), `"shake"`, `"leave"` (it backs away, fading), or it hops.
+One doodle sets the scene while the imp narrates, at `scale` times its own size if the stage says (1.3 otherwise); the options are in the choice row. An option's `outcome` can say how the doodle answers the pick: `{ "doodle": "fall" }` (it topples and dissolves), `"shake"`, `"leave"` (it backs away, fading), or it hops.
 
 ### The dice stage
 

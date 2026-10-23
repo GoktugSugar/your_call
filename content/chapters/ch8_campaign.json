@@ -469,7 +469,7 @@
       "title": "The Boss",
       "verb": "multiple_choice",
       "weight": "heavy",
-      "stage": { "type": "vignette", "doodle": "dragon" },
+      "stage": { "type": "vignette", "doodle": "dragon", "scale": 1.7 },
       "ask": [
         "The dragon. The one I built the whole evening around. It is bigger than it strictly needed to be, because I got excited making it. It uncoils out of the dark and fixes on you.",
         { "text": "Your companion is at your shoulder, hood down at last, blade drawn. The stranger you trusted is still here. Most people reach my dragon having burned every bridge behind them. Not you. Huh.", "if": "companion_trusted" },
