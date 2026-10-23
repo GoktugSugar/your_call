@@ -22,6 +22,8 @@ signal changed(level: int)
 @export_range(0.0, 1.0, 0.01) var recolor_duration := 0.12
 ## Seconds the underline takes to draw on.
 @export_range(0.0, 1.0, 0.01) var underline_duration := 0.14
+## Played as the player makes the row current, with the keys or the pointer.
+@export var point_sound: SoundCue = preload("res://game/audio/cues/menu_point.tres")
 
 @export_group("Look")
 ## Palette role of the name at rest.
@@ -49,7 +51,10 @@ func _ready() -> void:
 	mouse_entered.connect(func() -> void:
 		if not has_focus():
 			grab_focus())
-	focus_entered.connect(_show_look)
+	focus_entered.connect(func() -> void:
+		_show_look()
+		if not MenuList.focusing:
+			Sfx.play(point_sound))
 	focus_exited.connect(_show_look)
 	underline.reveal = 0.0
 	label.resized.connect(_fit_underline)

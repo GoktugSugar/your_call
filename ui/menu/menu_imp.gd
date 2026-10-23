@@ -165,6 +165,7 @@ func _say(line: LineData, turn: int) -> void:
 	imp.set_speech(words.spoken_character)
 	imp.set_talking(true)
 	Music.duck(true)
+	Sfx.duck(true)
 	words.write_on(VoiceLibrary.clip_for(line))
 	while turn == _turn and is_inside_tree() and is_instance_valid(words) and words.is_saying():
 		await get_tree().process_frame
@@ -191,6 +192,7 @@ func _clear_words(at_once := false) -> void:
 func _quiet() -> void:
 	imp.set_talking(false)
 	Music.duck(false)
+	Sfx.duck(false)
 
 
 func _next_turn() -> int:

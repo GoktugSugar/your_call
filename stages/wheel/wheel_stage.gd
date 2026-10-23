@@ -71,6 +71,8 @@ func play_consequence(_index: int) -> StringName:
 	if doubled:
 		celebrate(Vector2(contestant_x, floor_y - confetti_height))
 		await hop(_contestant, hop_height, 0.5)
+	else:
+		lose()
 	await get_tree().create_timer(after_hold, false).timeout
 	return &"doubled" if doubled else &"lost"
 

@@ -59,6 +59,7 @@ func _ready() -> void:
 	PlayerSettings.load_saved()
 	get_tree().paused = false
 	Music.duck(false)
+	Sfx.duck(false)
 	var loader := ContentLoader.new(Profile.axis_ids())
 	chapters = loader.load_run(run_path, chapters_dir)
 	menu = loader.load_menu(menu_path)

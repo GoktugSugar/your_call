@@ -64,6 +64,8 @@ signal advanced
 @export_range(0.0, 1.0, 0.01) var voice_tail := 0.3
 ## Seconds a page's sound stops short of the next page's first word.
 @export_range(0.0, 0.5, 0.005) var next_word_margin := 0.04
+## Played as the player's click moves on from a page; never when a page moves on by itself.
+@export var advance_sound: SoundCue = preload("res://game/audio/cues/advance.tres")
 
 @export_group("Opening and closing")
 ## Seconds the frame takes to draw itself on when the box opens.
@@ -139,6 +141,8 @@ func _process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if (_typing or _waiting) and not _interjecting and event.is_action_pressed(&"advance"):
 		get_viewport().set_input_as_handled()
+		if _waiting and not _typing:
+			Sfx.play(advance_sound)
 		advance()
 
 

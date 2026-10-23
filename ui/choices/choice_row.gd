@@ -3,6 +3,7 @@ extends Control
 ## The choice row: the options as muted hand-lettered words in a row just above the dialogue box,
 ## with no box and no divider. Point at a word to light it, then click it or press its number.
 ## A control on the stage can light and pick options too. It listens for input only while it offers.
+## A pen strokes as an option is picked, wherever it was picked.
 
 ## Emitted when the pointer moves onto a word, or off all of them ([code]-1[/code]).
 signal hovered(index: int)
@@ -27,6 +28,8 @@ signal committed(index: int)
 @export_range(0.0, 200.0, 1.0) var min_separation := 36.0
 ## Room kept clear at each side of the screen.
 @export_range(0.0, 400.0, 1.0) var side_margin := 48.0
+## Played as an option is picked.
+@export var commit_sound: SoundCue = preload("res://game/audio/cues/choice_commit.tres")
 
 var _words: Array[ChoiceWord] = []
 ## The gap between words when there is room for it, from the row's theme.
@@ -102,6 +105,7 @@ func commit(index: int) -> void:
 	_live = false
 	for word in _words:
 		word.look = ChoiceWord.Look.PICKED if word.index == index else ChoiceWord.Look.PASSED
+	Sfx.play(commit_sound)
 	committed.emit(index)
 	var tween := create_tween()
 	tween.tween_interval(linger)

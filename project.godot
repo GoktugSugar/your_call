@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 
 Ink="*res://ink/ink.gd"
 Music="*res://game/audio/music.tscn"
+Sfx="*res://game/audio/sfx.tscn"
 
 [display]
 

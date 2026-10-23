@@ -3,7 +3,8 @@ extends Button
 ## One entry of a menu: a hand-lettered word, muted at rest, like a word of the choice row. The current
 ## entry, reached with the keys or pointed at, turns amber and a line draws itself underneath; pointing
 ## at an entry makes it the current one, so the keys and the pointer never disagree. A greyed out entry
-## is faded, and neither the keys nor the pointer can reach it.
+## is faded, and neither the keys nor the pointer can reach it. A pencil ticks as the player makes an
+## entry current, and a pen taps as one is pressed.
 
 ## The line drawn under the word while it is the current entry.
 @export var underline: InkUnderline
@@ -20,6 +21,12 @@ extends Button
 ## Palette role of a greyed out entry.
 @export var greyed_role := &"faded"
 
+@export_group("Sound")
+## Played as the player makes the entry current, with the keys or the pointer.
+@export var point_sound: SoundCue = preload("res://game/audio/cues/menu_point.tres")
+## Played as the entry is pressed.
+@export var press_sound: SoundCue = preload("res://game/audio/cues/menu_press.tres")
+
 ## The font colours a button picks between by its state. All of them follow the word's look.
 const _FONT_COLORS: Array[StringName] = [&"font_color", &"font_hover_color", &"font_focus_color",
 		&"font_pressed_color", &"font_hover_pressed_color", &"font_disabled_color"]
@@ -35,8 +42,9 @@ func _ready() -> void:
 	for box in _BOXES:
 		add_theme_stylebox_override(box, nothing)
 	mouse_entered.connect(_on_pointed)
-	focus_entered.connect(_show_look)
+	focus_entered.connect(_on_focused)
 	focus_exited.connect(_show_look)
+	pressed.connect(func() -> void: Sfx.play(press_sound))
 	underline.reveal = 0.0
 	_set_color(_look_color())
 	_set_greyed_cursor()
@@ -60,6 +68,12 @@ func is_current() -> bool:
 func _on_pointed() -> void:
 	if not disabled and not has_focus():
 		grab_focus()
+
+
+func _on_focused() -> void:
+	_show_look()
+	if not MenuList.focusing:
+		Sfx.play(point_sound)
 
 
 func _show_look() -> void:

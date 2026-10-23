@@ -2,7 +2,9 @@ class_name StudioStage
 extends Stage
 ## The studio of The Show, under every one of its rounds: a curtain valance across the top of the page,
 ## the stage floor, and the studio audience seen from behind along the foot of the page, swaying with the
-## boil and clapping on cue. A round extends this and stages its own act on the floor.
+## boil and clapping on cue. A round extends this and stages its own act on the floor. The room murmurs
+## while its votes are counted and applauds on cue; a happy moment dings and pops its confetti, and a
+## loss gets the buzzer.
 ## The room votes in every round. Its share for the first option is that option's seeded crowd, with
 ## [code]random[/code] percent of the room voting at random instead, drawn once each play
 ## ([method room_share]); the room picks the first option when that share passes [code]line[/code].
@@ -47,6 +49,20 @@ extends Stage
 @export var room_seed := 0
 ## Seconds the room takes to vote, the audience bobbing while it is counted.
 @export_range(0.0, 5.0, 0.05) var counting := 1.3
+
+@export_group("Sound")
+## The room murmuring while its votes are counted.
+@export var murmur_sound: SoundCue = preload("res://game/audio/cues/murmur.tres")
+## The room applauding on cue.
+@export var applause_sound: SoundCue = preload("res://game/audio/cues/applause.tres")
+## The show's ding for a happy moment.
+@export var win_sound: SoundCue = preload("res://game/audio/cues/win_ding.tres")
+## The pop of the confetti.
+@export var popper_sound: SoundCue = preload("res://game/audio/cues/party_popper.tres")
+## The show's buzzer for a loss.
+@export var lose_sound: SoundCue = preload("res://game/audio/cues/lose_buzzer.tres")
+## Seconds a murmur or applause takes to fade once it is done.
+@export_range(0.0, 3.0, 0.05) var crowd_fade := 0.6
 
 ## The valance across the top of the page.
 var valance: StudioValance
@@ -119,10 +135,23 @@ func room_picks_first() -> bool:
 	return room_share() > room_line()
 
 
-## The room votes: the audience bobs while it is counted.
+## The room votes: the audience bobs and murmurs while it is counted.
 func count_votes() -> void:
 	audience.clap(counting)
+	var murmur := Sfx.play(murmur_sound)
 	await get_tree().create_timer(counting, false).timeout
+	Sfx.release(murmur, crowd_fade)
+
+
+## The audience claps for [param seconds], applauding.
+func applaud(seconds: float) -> void:
+	audience.clap(seconds)
+	Sfx.release(Sfx.play(applause_sound), crowd_fade, seconds)
+
+
+## The show's buzzer, for a loss.
+func lose() -> void:
+	Sfx.play(lose_sound)
 
 
 ## A soul of the kind [param kind_id] standing on the floor at [param x], at the studio's size, or at
@@ -151,10 +180,12 @@ func add_prop(id: String, x: float, size := 1.0, at := Vector2.INF) -> InkDrawin
 	return prop
 
 
-## Throws confetti up from [param at], when the studio throws it.
+## The show's ding, and confetti thrown up from [param at] when the studio throws it.
 func celebrate(at: Vector2) -> void:
+	Sfx.play(win_sound)
 	if not confetti:
 		return
+	Sfx.play(popper_sound)
 	var pieces := Confetti.new()
 	pieces.position = at
 	pieces.z_index = 5

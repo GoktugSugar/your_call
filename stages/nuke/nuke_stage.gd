@@ -57,6 +57,10 @@ const SPIN_SET := &"spin"
 @export_range(0.0, 5.0, 0.05) var spin_after := 0.3
 ## Seconds the pin takes to drop onto its country.
 @export_range(0.05, 3.0, 0.05) var drop_time := 0.55
+## Whirs while the pin goes round, for as long as it does.
+@export var whirr_sound: SoundCue = preload("res://game/audio/cues/pin_whirr.tres")
+## Thunks as the pin drops onto the country.
+@export var drop_sound: SoundCue = preload("res://game/audio/cues/pin_drop.tres")
 
 @export_group("Words")
 ## Size of the country's name.
@@ -81,6 +85,8 @@ const SPIN_SET := &"spin"
 @export_group("Cloud")
 ## Seconds the mushroom cloud takes to doodle itself on.
 @export_range(0.05, 5.0, 0.05) var cloud_draw := 1.4
+## Booms, muffled, as the cloud doodles itself on.
+@export var boom_sound: SoundCue = preload("res://game/audio/cues/boom.tres")
 ## Seconds the stage holds once the cloud is up.
 @export_range(0.0, 5.0, 0.05) var after_hold := 0.8
 
@@ -89,6 +95,9 @@ const SPIN_SET := &"spin"
 @export var home_override := ""
 ## A country code the pin always lands on. Empty picks at random.
 @export var target_override := ""
+
+## How far into a bounce eased out, as a share of its time, it first strikes home: one over this.
+const _BOUNCE_LANDS := 2.75
 
 var _countries: Array[Dictionary] = []
 var _target := {}
@@ -157,6 +166,7 @@ func play_consequence(index: int) -> StringName:
 	cloud.position = pin.position
 	cloud.visible = true
 	run.kills.add(&"people", int(_target.get("people", 0)))
+	Sfx.play(boom_sound)
 	await cloud.draw_on(cloud_draw).finished
 	await get_tree().create_timer(after_hold, false).timeout
 	return _outcome()
@@ -271,6 +281,7 @@ func _spin_while_he_talks() -> void:
 	await arrive.finished
 	_spinning = true
 	set_process(true)
+	var whirr := Sfx.play(whirr_sound)
 	var lines := question.lines_in(SPIN_SET)
 	if not lines.is_empty():
 		await dialogue.say(lines, false, true)
@@ -278,6 +289,7 @@ func _spin_while_he_talks() -> void:
 	await get_tree().create_timer(spin_after, false).timeout
 	_spinning = false
 	set_process(false)
+	Sfx.release(whirr)
 
 
 ## Where on its loop over the map the pin is, [param phase] turns round, from the middle of the map.
@@ -290,6 +302,8 @@ func _drop_on_target() -> void:
 	var spot := world.position + world.project(float(_target.get("lon", 0.0)), float(_target.get("lat", 0.0)))
 	var drop := create_tween()
 	drop.tween_property(pin, ^"position", spot, drop_time).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	# A bounce eased out first strikes home just over a third of the way through.
+	drop.parallel().tween_callback(Sfx.play.bind(drop_sound)).set_delay(drop_time / _BOUNCE_LANDS)
 	await drop.finished
 
 

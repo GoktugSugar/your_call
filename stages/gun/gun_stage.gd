@@ -135,6 +135,10 @@ const AIM_ANY := "any"
 @export_range(1.0, 6.0, 0.05) var charge_ease := 2.4
 ## Seconds it takes to cover the rest of the way once it is shot or left to come.
 @export_range(0.05, 5.0, 0.05) var arrive_time := 0.7
+## Its footsteps, thundering closer while it charges.
+@export var charge_sound: SoundCue = preload("res://game/audio/cues/charge_steps.tres")
+## Seconds its footsteps take to fade once it stops or arrives.
+@export_range(0.0, 2.0, 0.01) var steps_fade := 0.15
 ## The walking button's size against the thing's, once it turns out to be the button.
 @export_range(0.1, 3.0, 0.01) var button_size := 0.8
 ## How it holds its arms, hurt, and saying hello.
@@ -180,6 +184,8 @@ var _rng := RandomNumberGenerator.new()
 var _thing: Node2D
 var _charge := 0.0
 var _charging := false
+## The charging thing's footsteps while they sound.
+var _steps: AudioStreamPlayer
 var _walker: WalkingButton
 var _sight_home := Vector2.ZERO
 ## The time scale to go back to once a shot stops holding the world still, or below zero when nothing holds.
@@ -259,6 +265,8 @@ func set_choosing(active: bool) -> void:
 		sight.modulate.a = 1.0
 		if _thing != null and not _charging and _charge < 1.0:
 			_charging = true
+			if _steps == null:
+				_steps = Sfx.play(charge_sound)
 	else:
 		_charging = false
 		if _aimed != "":
@@ -698,6 +706,7 @@ func _set_charge(share: float) -> void:
 ## [param said] and holds its arms in [param arms].
 func _turn_into_button(said: StringName, arms: ButtonArmPose) -> void:
 	_charging = false
+	Sfx.release(_steps, steps_fade)
 	if walker_scene == null:
 		await _settle()
 		return

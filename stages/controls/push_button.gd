@@ -4,7 +4,7 @@ extends InkDrawing
 ## A round push button in ink: a cap coloured in with crayon inside a pen line, sitting in a base.
 ## While it is live, pointing at it lifts the cap and clicking it presses it; a control elsewhere can
 ## light it too. Its [ButtonLook] sets the colour in the cap and the mark on it, and it can carry a word,
-## such as "press". The cap sinks behind the front of the base when pressed.
+## such as "press". The cap sinks behind the front of the base when pressed, with a click.
 ## Its origin is the middle of the bottom of its base.
 
 ## Emitted when the pointer moves onto or off the button while it is live.
@@ -120,6 +120,8 @@ signal clicked
 @export_range(0.0, 1.0, 0.01) var press_hold := 0.06
 ## Seconds it takes to spring back up.
 @export_range(0.01, 2.0, 0.01) var press_up_time := 0.3
+## Played as the cap goes down.
+@export var press_sound: SoundCue = preload("res://game/audio/cues/button_press.tres")
 
 @export_group("Word")
 ## Size of the word's letters.
@@ -199,6 +201,7 @@ func press() -> void:
 	highlighted = false
 	if _press_tween != null and _press_tween.is_valid():
 		_press_tween.kill()
+	Sfx.play(press_sound)
 	_press_tween = create_tween()
 	_press_tween.tween_property(self, ^"depth", 1.0, press_down_time).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	_press_tween.tween_interval(press_hold)

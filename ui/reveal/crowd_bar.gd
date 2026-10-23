@@ -4,6 +4,9 @@ extends Control
 ## One bar of the crowd reveal: a solid ink bar with a living edge, as long as its share of the crowd,
 ## with its bare number just past its end. It inks in from the left as [member fill] goes from 0 to 1.
 
+## Emitted when the number past the bar's end changes, as it counts up while the bar inks in.
+signal counted(number: int)
+
 ## The share of the crowd, from 0 to 100.
 @export_range(0.0, 100.0, 0.1) var value := 50.0:
 	set(new_value):
@@ -38,6 +41,8 @@ extends Control
 @export var number_label: Label
 
 var _seed := 0
+## The number shown past the bar's end.
+var _shown := -1
 
 
 func _ready() -> void:
@@ -70,11 +75,15 @@ func _refresh() -> void:
 	queue_redraw()
 	if number_label == null:
 		return
-	number_label.text = str(roundi(value * fill))
+	var number := roundi(value * fill)
+	number_label.text = str(number)
 	number_label.add_theme_color_override(&"font_color", InkPalette.get_default().color(color_role))
 	var label_size := number_label.get_combined_minimum_size()
 	number_label.size = label_size
 	number_label.position = Vector2(_length() + number_gap, (size.y - label_size.y) * 0.5)
+	if number != _shown:
+		_shown = number
+		counted.emit(number)
 
 
 func _length() -> float:

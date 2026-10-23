@@ -4,8 +4,9 @@ extends Control
 ## The bars ink in from the left while their bare numbers count up past their ends. The player's pick
 ## is amber and the crowd is darker ink; bars that carry a meaning, such as the blue and red buttons,
 ## keep their colours and only the pick's label goes amber. A coordination gamble also shows the line
-## the crowd had to cross. No container, no flash, no bounce. While the reveal is up, it is the only
-## thing listening: the first input finishes the inking, the next dismisses it.
+## the crowd had to cross. No container, no flash, no bounce. A tally counter ticks while the numbers
+## count up. While the reveal is up, it is the only thing listening: the first input finishes the
+## inking, the next dismisses it.
 
 ## Emitted when the player dismisses the reveal.
 signal dismissed
@@ -27,6 +28,8 @@ signal settled
 @export var pick_role := &"amber"
 ## Palette role of every other option.
 @export var crowd_role := &"crowd"
+## Ticks while the numbers count up; its cue's cool down sets how often.
+@export var count_sound: SoundCue = preload("res://game/audio/cues/count_tick.tres")
 
 @export_group("Timing")
 ## Seconds the reveal takes to fade in.
@@ -78,6 +81,7 @@ func present(split: RevealSplit) -> void:
 		var bar_role := meaning if meaning != &"" else (pick_role if i == split.pick else crowd_role)
 		var label_role := pick_role if i == split.pick else bar_role
 		row.setup(split.labels[i], split.shares[i] if i < split.shares.size() else 0.0, bar_role, label_role)
+		row.bar.counted.connect(func(_number: int) -> void: Sfx.play(count_sound))
 		_rows.append(row)
 	content.reset_size()
 	content.position = center - content.get_combined_minimum_size() * 0.5

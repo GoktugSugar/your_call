@@ -78,6 +78,8 @@ func play_consequence(index: int) -> StringName:
 	_take_it(1, outcome in [&"shared", &"robbed"])
 	if outcome == &"shared":
 		celebrate(Vector2(pot_x, floor_y - confetti_height))
+	elif outcome in [&"robbed", &"nothing"]:
+		lose()
 	await get_tree().create_timer(after_hold, false).timeout
 	return outcome
 

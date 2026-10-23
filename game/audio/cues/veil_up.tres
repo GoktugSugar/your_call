@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SoundCue" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://game/audio/sound_cue.gd" id="1_cue"]
+[ext_resource type="AudioStream" path="res://assets/sfx/veil_up.wav" id="2_take"]
+
+[resource]
+script = ExtResource("1_cue")
+takes = Array[AudioStream]([ExtResource("2_take")])
+volume_db = -21.0
+pitch_spread = 0.03
+through_pause = true

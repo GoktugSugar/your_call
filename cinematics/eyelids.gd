@@ -3,8 +3,9 @@ extends ColorRect
 ## The dark of shut eyes, over everything. The eyes open the way heavy eyes do: the dark clears in
 ## uneven blotches from the middle out, a first open, a heavy blink, then the rest of the way, the
 ## blotches drifting and sharpening as the eyes focus. They close the same way backwards, with their
-## own timing: they droop, flutter back up once and shut, losing focus as they go. The rect's colour
-## is the dark, and [code]eyelids.gdshader[/code] clears it. Once open, the lids hide.
+## own timing: they droop, flutter back up once and shut, losing focus as they go. A slow breath comes
+## with each: in as they open, out as they close. The rect's colour is the dark, and
+## [code]eyelids.gdshader[/code] clears it. Once open, the lids hide.
 
 ## Emitted when the eyes come to rest, open or shut, or are stopped on the way.
 signal settled
@@ -29,6 +30,12 @@ signal settled
 @export_range(0.05, 5.0, 0.05) var flutter_time := 0.35
 ## Seconds the eyes take to shut from there.
 @export_range(0.05, 5.0, 0.05) var shut_time := 0.8
+
+@export_group("Sound")
+## The breath in as the eyes open.
+@export var open_sound: SoundCue = preload("res://game/audio/cues/breath_in.tres")
+## The breath out as the eyes close.
+@export var close_sound: SoundCue = preload("res://game/audio/cues/breath_out.tres")
 
 @export_group("Focus")
 ## How far the blotches drift out of focus, across and up and down, in pixels. The drift settles to
@@ -66,6 +73,7 @@ func closing_time() -> float:
 ## sway them on its own clock. Returns once the eyes are open or stopped.
 func open(sway_from := 0.0) -> void:
 	_start(0.0, sway_from, opening_time(), false)
+	Sfx.play(open_sound)
 	_clearing.tween_method(_set_clear, 0.0, first_open, first_open_time) \
 			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	_clearing.tween_method(_set_clear, first_open, blink_close, blink_time) \
@@ -81,6 +89,7 @@ func open(sway_from := 0.0) -> void:
 ## once the eyes are shut or stopped.
 func close(sway_from := 0.0) -> void:
 	_start(1.0, sway_from, closing_time(), true)
+	Sfx.play(close_sound)
 	_clearing.tween_method(_set_clear, 1.0, blink_close, droop_time) \
 			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	_clearing.tween_method(_set_clear, blink_close, first_open, flutter_time) \

@@ -46,11 +46,11 @@ func enter() -> void:
 	await figure.play_motion(FALL)
 	if _sign != null:
 		_sign.set(&"lit", true)
-	audience.clap(clap_time)
+	applaud(clap_time)
 
 
 func play_consequence(_index: int) -> StringName:
-	audience.clap(clap_time * 0.5)
+	applaud(clap_time * 0.5)
 	await get_tree().create_timer(lie_time, false).timeout
 	var figure := _contestant as StickFigure
 	if figure != null:

@@ -70,6 +70,7 @@ func _ready() -> void:
 	question_player.imp_face_cued.connect(_on_imp_face_cued)
 	dialogue.talking_changed.connect(_on_talking_changed)
 	dialogue.talking_changed.connect(Music.duck)
+	dialogue.talking_changed.connect(Sfx.duck)
 	imp.set_speech(dialogue.spoken_character)
 	pause_menu.quit_requested.connect(_leave_for_menu)
 	auto_save.run = run
@@ -94,6 +95,7 @@ func _leave_for_menu() -> void:
 	pause_menu.active = false
 	get_tree().paused = false
 	Music.duck(false)
+	Sfx.duck(false)
 	get_tree().change_scene_to_file(menu_scene)
 
 

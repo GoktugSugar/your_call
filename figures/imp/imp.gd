@@ -127,6 +127,10 @@ enum Wing { LEFT, RIGHT }
 @export_range(0.0, 2.0, 0.01) var pop_settle := 0.3
 ## Seconds he takes to dissolve when he leaves.
 @export_range(0.05, 3.0, 0.01) var vanish_duration := 0.5
+## Played as he scribbles into being.
+@export var appear_sound: SoundCue = preload("res://game/audio/cues/imp_scribble.tres")
+## Played as he dissolves away.
+@export var vanish_sound: SoundCue = preload("res://game/audio/cues/imp_dissolve.tres")
 
 ## Which wing he is in.
 var wing: Wing = Wing.RIGHT
@@ -201,6 +205,7 @@ func appear(in_wing: Wing = Wing.RIGHT) -> void:
 	visible = true
 	drawing.dissolve = 0.0
 	scale = Vector2.ONE * scribble_scale
+	Sfx.play(appear_sound)
 	var tween := create_tween()
 	tween.tween_property(drawing, ^"reveal", 1.0, scribble_duration).from(0.0)
 	tween.parallel().tween_property(self, ^"scale", Vector2.ONE * pop_scale, scribble_duration) \
@@ -297,6 +302,7 @@ func set_face(face: ImpDrawing.Face) -> void:
 ## Dissolves him away.
 func vanish() -> void:
 	motion.stop()
+	Sfx.play(vanish_sound)
 	await drawing.dissolve_away(vanish_duration).finished
 	visible = false
 

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SoundCue" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/audio/sound_cue.gd" id="1_cue"]
+
+[resource]
+script = ExtResource("1_cue")
+takes = Array[AudioStream]([])
+volume_db = -12.0
+pitch_spread = 0.0

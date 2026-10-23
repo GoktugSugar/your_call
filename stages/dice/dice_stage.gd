@@ -47,6 +47,10 @@ const MISSED := &"missed"
 @export_range(0.0, 300.0, 1.0) var hop_height := 70.0
 ## Seconds its amber flash lasts once it lands.
 @export_range(0.0, 3.0, 0.05) var flash_time := 0.6
+## The die rattling across the table as it rolls.
+@export var roll_sound: SoundCue = preload("res://game/audio/cues/die_roll.tres")
+## The chime of its amber flash as it lands.
+@export var land_sound: SoundCue = preload("res://game/audio/cues/die_chime.tres")
 ## Palette role of the flash.
 @export var flash_role := &"amber"
 ## Seconds the die rests on its face before the stage moves on.
@@ -164,6 +168,7 @@ func _roll() -> int:
 	var sides := int(question.stage.get("sides", 6))
 	var face := _rng.randi_range(1, sides)
 	var rest := die.position
+	Sfx.play(roll_sound)
 	var tumble := create_tween().set_parallel(true)
 	tumble.tween_property(die, ^"rotation", die.rotation + TAU * tumble_turns, roll_time) \
 			.set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
@@ -183,6 +188,7 @@ func _roll() -> int:
 	die.position = rest
 	_rolled = face
 	die.color_override = flash_role
+	Sfx.play(land_sound)
 	await get_tree().create_timer(flash_time, false).timeout
 	die.color_override = &""
 	return face

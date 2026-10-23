@@ -1,10 +1,10 @@
 class_name PauseMenu
 extends CanvasLayer
-## The pause: Esc holds the run still under a veil of paper and offers Resume, Save, Settings and Quit to
-## Menu, the current one in amber. The ink behind keeps boiling and the music plays on, as everywhere the
-## game holds still. Save keeps the moment the beat under way began, again, and says so; with nothing to
-## keep, once an ending has been reached, it is greyed out. Quit to Menu closes the eyes on the page, then
-## asks to go. Esc, or Resume, lets the run carry on.
+## The pause: Esc holds the run still under a veil of paper, laid down and lifted off with a rustle, and
+## offers Resume, Save, Settings and Quit to Menu, the current one in amber. The ink behind keeps boiling
+## and the music plays on, as everywhere the game holds still. Save keeps the moment the beat under way
+## began, again, and says so; with nothing to keep, once an ending has been reached, it is greyed out.
+## Quit to Menu closes the eyes on the page, then asks to go. Esc, or Resume, lets the run carry on.
 
 ## Emitted once the eyes have closed on the page after Quit to Menu.
 signal quit_requested
@@ -41,6 +41,12 @@ signal quit_requested
 @export_range(0.0, 1.0, 0.01) var veil_alpha := 0.84
 ## Seconds the veil takes to come down and lift.
 @export_range(0.0, 2.0, 0.01) var fade_duration := 0.18
+
+@export_group("Sound")
+## Played as the veil of paper is laid over the page.
+@export var veil_down_sound: SoundCue = preload("res://game/audio/cues/veil_down.tres")
+## Played as the veil is lifted off.
+@export var veil_up_sound: SoundCue = preload("res://game/audio/cues/veil_up.tres")
 
 ## Whether Esc may pause the run now. Main turns it on while a run plays.
 var active := false
@@ -81,6 +87,7 @@ func open() -> void:
 	get_tree().paused = true
 	save_word.text = _save_text
 	save_word.set_greyed(auto_save == null or not auto_save.can_save())
+	Sfx.play(veil_down_sound)
 	_show_veil(true)
 	column.show()
 	column.link()
@@ -94,6 +101,7 @@ func resume() -> void:
 	_open = false
 	settings.close()
 	column.hide()
+	Sfx.play(veil_up_sound)
 	_show_veil(false)
 	get_tree().paused = false
 

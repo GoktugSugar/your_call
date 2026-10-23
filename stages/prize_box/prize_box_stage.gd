@@ -23,6 +23,8 @@ extends StudioStage
 @export_range(0.05, 3.0, 0.05) var rise_time := 0.7
 ## Seconds the box takes to open.
 @export_range(0.05, 3.0, 0.05) var open_time := 0.5
+## Played as the box opens.
+@export var open_sound: SoundCue = preload("res://game/audio/cues/gift_box.tres")
 ## How far over the floor the confetti bursts, over the money or the cucumber.
 @export_range(0.0, 800.0, 1.0) var confetti_height := 280.0
 ## How high the finalist hops.
@@ -62,6 +64,7 @@ func play_consequence(_index: int) -> StringName:
 func _open_box() -> void:
 	if _box == null:
 		return
+	Sfx.play(open_sound)
 	var open := create_tween()
 	open.tween_property(_box, ^"open", 1.0, open_time)
 	await open.finished
