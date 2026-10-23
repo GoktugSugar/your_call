@@ -184,8 +184,8 @@ var _rng := RandomNumberGenerator.new()
 var _thing: Node2D
 var _charge := 0.0
 var _charging := false
-## The charging thing's footsteps while they sound.
-var _steps: AudioStreamPlayer
+## The number the charging thing's footsteps play under, once they have started.
+var _steps := 0
 var _walker: WalkingButton
 var _sight_home := Vector2.ZERO
 ## The time scale to go back to once a shot stops holding the world still, or below zero when nothing holds.
@@ -265,7 +265,7 @@ func set_choosing(active: bool) -> void:
 		sight.modulate.a = 1.0
 		if _thing != null and not _charging and _charge < 1.0:
 			_charging = true
-			if _steps == null:
+			if _steps == 0:
 				_steps = Sfx.play(charge_sound)
 	else:
 		_charging = false
